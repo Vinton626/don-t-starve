@@ -1,0 +1,323 @@
+{
+  "id": "wilson",
+  "name": "威尔逊",
+  "points": 15,
+  "groups": [
+    { "id": "torch", "name": "火炬", "x": -205 },
+    { "id": "alchemy", "name": "炼金术", "x": -74 },
+    { "id": "beard", "name": "胡须", "x": 69 },
+    { "id": "affinity", "name": "亲和", "x": 188 }
+  ],
+  "skills": [
+    {
+      "id": "torch_range_1",
+      "n": 1,
+      "group": "torch",
+      "name": "一级火炬范围",
+      "desc": "火炬照明范围 + 56%",
+      "requires": [],
+      "x": -224, "y": -112, "w": 32, "h": 32
+    },
+    {
+      "id": "torch_range_2",
+      "n": 2,
+      "group": "torch",
+      "name": "二级火炬范围",
+      "desc": "火炬照明范围 + 125%",
+      "requires": ["torch_range_1"],
+      "x": -224, "y": -74, "w": 32, "h": 32
+    },
+    {
+      "id": "torch_range_3",
+      "n": 3,
+      "group": "torch",
+      "name": "三级火炬范围",
+      "desc": "火炬照明范围 + 162.5%",
+      "requires": ["torch_range_1", "torch_range_2"],
+      "x": -224, "y": -36, "w": 32, "h": 32
+    },
+    {
+      "id": "torch_longevity_1",
+      "n": 4,
+      "group": "torch",
+      "name": "一级火炬寿命",
+      "desc": "火炬耐久消耗速率 - 16%\n（90 秒）",
+      "requires": [],
+      "x": -186, "y": -112, "w": 32, "h": 32
+    },
+    {
+      "id": "torch_longevity_2",
+      "n": 5,
+      "group": "torch",
+      "name": "二级火炬寿命",
+      "desc": "火炬耐久消耗速率 - 32%\n（110 秒）",
+      "requires": ["torch_longevity_1"],
+      "x": -186, "y": -74, "w": 32, "h": 32
+    },
+    {
+      "id": "torch_longevity_3",
+      "n": 6,
+      "group": "torch",
+      "name": "三级火炬寿命",
+      "desc": "火炬耐久消耗速率 - 50%\n（150 秒）",
+      "requires": ["torch_longevity_1", "torch_longevity_2"],
+      "x": -186, "y": -36, "w": 32, "h": 32
+    },
+    {
+      "id": "torch_toss",
+      "n": 7,
+      "group": "torch",
+      "name": "丢火炬",
+      "desc": "右键可以抛出火炬，掉到地上后仍然提供照明，继续消耗耐久。任何具有灭火效果的东西命中投出的火炬后，火炬都会以物品形式掉落。",
+      "requires": [],
+      "lock": "lock_torch",
+      "x": -206, "y": 44, "w": 32, "h": 32
+    },
+    {
+      "id": "transmute",
+      "n": 8,
+      "group": "alchemy",
+      "name": "转化",
+      "desc": "习得配方：",
+      "recipes": ["3 树枝 → 1 木头", "1 木头 → 2 树枝"],
+      "requires": [],
+      "x": -112, "y": -112, "w": 32, "h": 32
+    },
+    {
+      "id": "icky_1",
+      "n": 9,
+      "group": "alchemy",
+      "name": "腐朽转化 I",
+      "desc": "习得配方：",
+      "recipes": ["3 小肉 → 1 大肉", "1 大肉 → 2 小肉"],
+      "requires": ["transmute"],
+      "x": -112, "y": -58, "w": 32, "h": 32
+    },
+    {
+      "id": "icky_2",
+      "n": 10,
+      "group": "alchemy",
+      "name": "腐朽转化 II",
+      "desc": "习得配方：",
+      "recipes": ["2 牛毛 → 1 胡须", "2 胡须 → 1 牛毛"],
+      "requires": ["transmute", "icky_1"],
+      "x": -112, "y": -20, "w": 32, "h": 32
+    },
+    {
+      "id": "icky_3",
+      "n": 11,
+      "group": "alchemy",
+      "name": "腐朽转化 III",
+      "desc": "习得配方：",
+      "recipes": ["2 犬牙 → 1 骨片", "2 骨片 → 1 犬牙", "6 腐烂物 → 1 便便"],
+      "requires": ["transmute", "icky_1", "icky_2"],
+      "x": -112, "y": 18, "w": 32, "h": 32
+    },
+    {
+      "id": "gems_1",
+      "n": 12,
+      "group": "alchemy",
+      "name": "宝石转化 I",
+      "desc": "习得配方：",
+      "recipes": ["2 红宝石 → 1 蓝宝石", "2 蓝宝石 → 1 红宝石", "1 蓝宝石 + 1 红宝石 → 1 紫宝石"],
+      "requires": ["transmute"],
+      "x": -74, "y": -58, "w": 32, "h": 32
+    },
+    {
+      "id": "gems_2",
+      "n": 13,
+      "group": "alchemy",
+      "name": "宝石转化 II",
+      "desc": "习得配方：",
+      "recipes": ["3 紫宝石 → 1 橙宝石", "3 橙宝石 → 1 黄宝石"],
+      "requires": ["transmute", "gems_1"],
+      "x": -74, "y": -20, "w": 32, "h": 32
+    },
+    {
+      "id": "gems_3",
+      "n": 14,
+      "group": "alchemy",
+      "name": "宝石转化 III",
+      "desc": "习得配方：",
+      "recipes": ["3 黄宝石 → 1 绿宝石", "黄/橙/绿/紫/红/蓝宝石各 1 → 1 彩虹宝石"],
+      "requires": ["transmute", "gems_1", "gems_2"],
+      "x": -74, "y": 18, "w": 32, "h": 32
+    },
+    {
+      "id": "ore_1",
+      "n": 15,
+      "group": "alchemy",
+      "name": "矿石转化 I",
+      "desc": "习得配方：",
+      "recipes": ["3 石头 → 1 燧石", "2 燧石 → 1 石头"],
+      "requires": ["transmute"],
+      "x": -36, "y": -58, "w": 32, "h": 32
+    },
+    {
+      "id": "ore_2",
+      "n": 16,
+      "group": "alchemy",
+      "name": "矿石转化 II",
+      "desc": "习得配方：",
+      "recipes": ["3 硝石 → 1 金块", "2 金块 → 1 硝石"],
+      "requires": ["transmute", "ore_1"],
+      "x": -36, "y": -20, "w": 32, "h": 32
+    },
+    {
+      "id": "ore_3",
+      "n": 17,
+      "group": "alchemy",
+      "name": "矿石转化 III",
+      "desc": "习得配方：",
+      "recipes": ["2 石砖 → 1 大理石", "1 大理石 → 1 石砖", "2 大理石 → 1 月岩"],
+      "requires": ["transmute", "ore_1", "ore_2"],
+      "x": -36, "y": 18, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_ins_1",
+      "n": 18,
+      "group": "beard",
+      "name": "胡须保温 I",
+      "desc": "+ 20%\n即第 1/2/3 阶段胡须的保暖增加至 18 / 54 / 162",
+      "requires": [],
+      "x": 50, "y": -112, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_ins_2",
+      "n": 19,
+      "group": "beard",
+      "name": "胡须保温 II",
+      "desc": "+ 40%\n即第 1/2/3 阶段胡须的保暖增加至 21 / 63 / 189",
+      "requires": ["beard_ins_1"],
+      "x": 50, "y": -74, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_ins_3",
+      "n": 20,
+      "group": "beard",
+      "name": "胡须保温 III",
+      "desc": "+ 70%\n即第 1/2/3 阶段胡须的保暖增加至 25.5 / 76.5 / 229.5",
+      "requires": ["beard_ins_1", "beard_ins_2"],
+      "x": 50, "y": -36, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_growth_1",
+      "n": 21,
+      "group": "beard",
+      "name": "胡须生长 I",
+      "desc": "第 1/2/3 阶段胡须生长所需的时间缩短至 3 / 7 / 15 天",
+      "requires": [],
+      "x": 88, "y": -112, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_growth_2",
+      "n": 22,
+      "group": "beard",
+      "name": "胡须生长 II",
+      "desc": "第 1/2/3 阶段胡须生长所需的时间缩短至 3 / 6 / 12 天",
+      "requires": ["beard_growth_1"],
+      "x": 88, "y": -74, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_growth_3",
+      "n": 23,
+      "group": "beard",
+      "name": "胡须生长 III",
+      "desc": "第 1/2/3 阶段胡须生长所需的时间缩短至 2 / 5 / 10 天",
+      "requires": ["beard_growth_1", "beard_growth_2"],
+      "x": 88, "y": -36, "w": 32, "h": 32
+    },
+    {
+      "id": "beard_storage",
+      "n": 24,
+      "group": "beard",
+      "name": "胡须贮藏术",
+      "desc": "胡须可以储藏食物\n1/2/3 级胡须分别有 1/2/3 个物品栏",
+      "requires": [],
+      "lock": "lock_beard",
+      "x": 66, "y": 44, "w": 32, "h": 32
+    },
+    {
+      "id": "shadow",
+      "n": 25,
+      "group": "affinity",
+      "name": "暗影廷臣",
+      "desc": "威尔逊获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
+      "recipes": ["1 绝望石 → 2 纯粹恐惧", "3 纯粹恐惧 → 1 绝望石", "1 纯粹恐惧 → 2 噩梦燃料"],
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": ["lunar"],
+      "x": 166, "y": 26, "w": 32, "h": 32
+    },
+    {
+      "id": "lunar",
+      "n": 26,
+      "group": "affinity",
+      "name": "月光创新者",
+      "desc": "威尔逊获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
+      "recipes": ["3 注能月岩 → 1 纯粹辉煌", "1 纯粹辉煌 → 2 注能月岩"],
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": ["shadow"],
+      "x": 210, "y": 26, "w": 32, "h": 32
+    }
+  ],
+  "locks": [
+    {
+      "id": "lock_torch",
+      "group": "torch",
+      "count": 3,
+      "fromGroups": ["torch"],
+      "desc": "学习 3 个火炬技能后解锁「丢火炬」",
+      "nodes": [{ "x": -202.8, "y": 9.2, "w": 25.6, "h": 25.6 }]
+    },
+    {
+      "id": "lock_beard",
+      "group": "beard",
+      "count": 3,
+      "fromGroups": ["beard"],
+      "desc": "学习 3 个胡须技能后解锁「胡须贮藏术」",
+      "nodes": [{ "x": 69.2, "y": 9.2, "w": 25.6, "h": 25.6 }]
+    },
+    {
+      "id": "lock_affinity",
+      "group": "affinity",
+      "count": 12,
+      "fromGroups": ["torch", "alchemy", "beard"],
+      "desc": "学习 12 个其他技能后解锁亲和分支",
+      "nodes": [
+        { "x": 191.2, "y": -108.8, "w": 25.6, "h": 25.6 },
+        { "x": 169.2, "y": -60.8, "w": 25.6, "h": 25.6 },
+        { "x": 213.2, "y": -60.8, "w": 25.6, "h": 25.6 },
+        { "x": 169.2, "y": -16.8, "w": 25.6, "h": 25.6 },
+        { "x": 213.2, "y": -16.8, "w": 25.6, "h": 25.6 }
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "id": "init",
+      "name": "初始化加点建议",
+      "skills": [
+        "torch_range_1", "torch_range_2", "torch_range_3",
+        "torch_longevity_1", "torch_longevity_2", "torch_longevity_3",
+        "torch_toss",
+        "transmute", "ore_1", "ore_2", "ore_3",
+        "beard_ins_1", "beard_ins_2", "beard_ins_3",
+        "beard_growth_1"
+      ]
+    },
+    {
+      "id": "alchemy",
+      "name": "炼金开局",
+      "skills": [
+        "transmute",
+        "icky_1", "icky_2", "icky_3",
+        "gems_1", "gems_2", "gems_3",
+        "ore_1", "ore_2", "ore_3",
+        "torch_range_1", "torch_range_2", "torch_range_3",
+        "torch_longevity_1", "torch_longevity_2"
+      ]
+    }
+  ]
+}

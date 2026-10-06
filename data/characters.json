@@ -1,0 +1,9 @@
+{
+  "characters": [
+    {
+      "id": "wilson",
+      "name": "威尔逊",
+      "data": "data/wilson.json"
+    }
+  ]
+}
