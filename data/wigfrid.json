@@ -1,0 +1,559 @@
+{
+  "id": "wigfrid",
+  "name": "薇格弗德",
+  "points": 15,
+  "groups": [
+    {
+      "id": "songs",
+      "name": "压轴巨星",
+      "x": -193
+    },
+    {
+      "id": "combat",
+      "name": "神秘韧性",
+      "x": -209
+    },
+    {
+      "id": "arsenal",
+      "name": "武器",
+      "x": -52
+    },
+    {
+      "id": "beefalo",
+      "name": "骑士",
+      "x": 92
+    },
+    {
+      "id": "affinity",
+      "name": "亲和",
+      "x": 185
+    }
+  ],
+  "skills": [
+    {
+      "id": "wathgrithr_songs_instantsong_cd",
+      "n": 1,
+      "group": "songs",
+      "name": "战斗之诵",
+      "desc": "激励值足够时吟唱战吼不消耗激励值，但吟唱完后会进入冷却时间。粗鲁插曲、惊心独白的冷却时间为 10 秒，战士重奏为 150 秒，每个战吼曲谱的冷却时间相互独立计算。",
+      "requires": [],
+      "lock": "lock_songs_instantsong_cd",
+      "x": -193,
+      "y": -116,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_songs_container",
+      "n": 2,
+      "group": "songs",
+      "name": "战斗号子罐",
+      "desc": "可以打开战斗号子罐、往战斗号子罐中存放物品。习得配方：",
+      "recipes": [
+        "2 木板 + 3 金块 + 2 蔚蓝羽毛 + 2 蜂蜡 → 1 战斗号子罐"
+      ],
+      "requires": [],
+      "lock": "lock_songs_container",
+      "x": -193,
+      "y": -78,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_songs_revivewarrior",
+      "n": 3,
+      "group": "songs",
+      "name": "返场表演",
+      "desc": "可以使用战士重奏。习得配方：",
+      "recipes": [
+        "1 纸莎草 + 1 羽毛笔 + 3 绒羽 → 1 战士重奏"
+      ],
+      "requires": [],
+      "lock": "lock_songs_revivewarrior",
+      "x": -193,
+      "y": -40,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_combat_defense",
+      "n": 4,
+      "group": "combat",
+      "name": "神秘韧性",
+      "desc": "自带 5 点位面防御。",
+      "requires": [],
+      "x": -209,
+      "y": 42,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_spear_1",
+      "n": 5,
+      "group": "arsenal",
+      "name": "一级布拉基的祝福",
+      "desc": "使用战斗长矛、奔雷矛或充能奔雷矛攻击时，灵感增长速度加快 25%。",
+      "requires": [],
+      "x": -69.5,
+      "y": -116,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_spear_2",
+      "n": 6,
+      "group": "arsenal",
+      "name": "二级布拉基的祝福",
+      "desc": "使用战斗长矛、奔雷矛或充能奔雷矛攻击时，灵感增长速度加快 50%。",
+      "requires": [
+        "wathgrithr_arsenal_spear_1"
+      ],
+      "x": -69.5,
+      "y": -78,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_spear_3",
+      "n": 7,
+      "group": "arsenal",
+      "name": "奔雷矛",
+      "desc": "习得配方：",
+      "recipes": [
+        "2 树枝 + 2 伏特羊角 + 1 牛毛 → 1 奔雷矛"
+      ],
+      "requires": [
+        "wathgrithr_arsenal_spear_1",
+        "wathgrithr_arsenal_spear_2"
+      ],
+      "x": -69.5,
+      "y": -40,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_spear_4",
+      "n": 8,
+      "group": "arsenal",
+      "name": "一级奔雷矛加强",
+      "desc": "装备奔雷矛或充能奔雷矛时可以进行闪电突袭，对突袭路径上的所有生物造成 85 点伤害。如果用的是充能奔雷矛，闪电突袭每命中一个生物恢复 2% 的耐久，最多恢复 4% 耐久。",
+      "requires": [
+        "wathgrithr_arsenal_spear_1",
+        "wathgrithr_arsenal_spear_2",
+        "wathgrithr_arsenal_spear_3"
+      ],
+      "x": -126.5,
+      "y": -59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_spear_5",
+      "n": 9,
+      "group": "arsenal",
+      "name": "二级奔雷矛加强",
+      "desc": "可以使用约束静电将奔雷矛升级为充能奔雷矛，最大耐久提升 50 次，移动速度 ×1.2，攻击额外附加 20 点位面伤害。可以装备充能奔雷矛。",
+      "requires": [
+        "wathgrithr_arsenal_spear_1",
+        "wathgrithr_arsenal_spear_2",
+        "wathgrithr_arsenal_spear_3"
+      ],
+      "x": -126.5,
+      "y": -21,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_helmet_1",
+      "n": 10,
+      "group": "arsenal",
+      "name": "一级硬头盔",
+      "desc": "装备的战斗头盔和统帅头盔消耗的耐久减少 10%。",
+      "requires": [],
+      "x": -29.5,
+      "y": -116,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_helmet_2",
+      "n": 11,
+      "group": "arsenal",
+      "name": "二级硬头盔",
+      "desc": "装备的战斗头盔和统帅头盔消耗的耐久减少 20%。",
+      "requires": [
+        "wathgrithr_arsenal_helmet_1"
+      ],
+      "x": -29.5,
+      "y": -78,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_helmet_3",
+      "n": 12,
+      "group": "arsenal",
+      "name": "统帅头盔",
+      "desc": "习得配方：",
+      "recipes": [
+        "2 金块 + 2 牛毛 + 1 大理石 → 1 统帅头盔"
+      ],
+      "requires": [
+        "wathgrithr_arsenal_helmet_1",
+        "wathgrithr_arsenal_helmet_2"
+      ],
+      "x": -29.5,
+      "y": -40,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_helmet_4",
+      "n": 13,
+      "group": "arsenal",
+      "name": "一级统帅头盔加强",
+      "desc": "统帅头盔具有 8 点位面防御。",
+      "requires": [
+        "wathgrithr_arsenal_helmet_1",
+        "wathgrithr_arsenal_helmet_2",
+        "wathgrithr_arsenal_helmet_3"
+      ],
+      "x": 27.5,
+      "y": -59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_helmet_5",
+      "n": 14,
+      "group": "arsenal",
+      "name": "二级统帅头盔加强",
+      "desc": "薇格弗德满血时，头戴统帅头盔进行攻击可以回复头盔耐久。",
+      "requires": [
+        "wathgrithr_arsenal_helmet_1",
+        "wathgrithr_arsenal_helmet_2",
+        "wathgrithr_arsenal_helmet_3"
+      ],
+      "x": 27.5,
+      "y": -21,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_shield_1",
+      "n": 15,
+      "group": "arsenal",
+      "name": "战斗圆盾",
+      "desc": "习得配方：可以装备战斗圆盾。",
+      "recipes": [
+        "4 金块 + 3 牛毛 → 1 战斗圆盾"
+      ],
+      "requires": [
+        "wathgrithr_arsenal_helmet_1",
+        "wathgrithr_arsenal_helmet_2",
+        "wathgrithr_arsenal_helmet_3"
+      ],
+      "x": -49.5,
+      "y": 7,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_shield_2",
+      "n": 16,
+      "group": "arsenal",
+      "name": "一级战斗圆盾加强",
+      "desc": "战斗圆盾的格挡时间会延长。",
+      "requires": [
+        "wathgrithr_arsenal_shield_1"
+      ],
+      "x": -69.5,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_arsenal_shield_3",
+      "n": 17,
+      "group": "arsenal",
+      "name": "二级战斗圆盾加强",
+      "desc": "战斗圆盾格挡成功后，5 秒内的下一次攻击将会增加。",
+      "requires": [
+        "wathgrithr_arsenal_shield_1",
+        "wathgrithr_arsenal_shield_2"
+      ],
+      "x": -29.5,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_beefalo_1",
+      "n": 18,
+      "group": "beefalo",
+      "name": "一级尊贵坐骑",
+      "desc": "皮弗娄牛的驯化速度提高 15%。",
+      "requires": [],
+      "x": 92,
+      "y": -116,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_beefalo_2",
+      "n": 19,
+      "group": "beefalo",
+      "name": "二级尊贵坐骑",
+      "desc": "骑乘皮弗娄牛的时间延长 30%。",
+      "requires": [
+        "wathgrithr_beefalo_1"
+      ],
+      "x": 92,
+      "y": -78,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_beefalo_3",
+      "n": 20,
+      "group": "beefalo",
+      "name": "三级尊贵坐骑",
+      "desc": "骑乘皮弗娄牛时，激励值不会下降，若低于 50 则会缓慢增加到 50 点（不足以吟唱第 2 种范围增益的战歌）。",
+      "requires": [
+        "wathgrithr_beefalo_1",
+        "wathgrithr_beefalo_2"
+      ],
+      "x": 92,
+      "y": -40,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_beefalo_saddle",
+      "n": 21,
+      "group": "beefalo",
+      "name": "战斗鞍具",
+      "desc": "习得配方：",
+      "recipes": [
+        "4 金块 + 3 大理石 + 6 蔚蓝羽毛 → 1 战斗鞍具"
+      ],
+      "requires": [
+        "wathgrithr_beefalo_1",
+        "wathgrithr_beefalo_2",
+        "wathgrithr_beefalo_3"
+      ],
+      "x": 92,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_allegiance_shadow",
+      "n": 22,
+      "group": "affinity",
+      "name": "暗影歌姬",
+      "desc": "薇格弗德获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。可以使用黑暗悲歌。习得配方：",
+      "recipes": [
+        "1 纸莎草 + 1 羽毛笔 + 3 纯粹恐惧 → 1 黑暗悲歌"
+      ],
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": [
+        "wathgrithr_allegiance_lunar"
+      ],
+      "x": 162,
+      "y": 21,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wathgrithr_allegiance_lunar",
+      "n": 23,
+      "group": "affinity",
+      "name": "月曲歌唱家",
+      "desc": "薇格弗德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。可以使用启迪摇篮曲。习得配方：",
+      "recipes": [
+        "1 纸莎草 + 1 羽毛笔 + 3 纯粹辉煌 → 1 启迪摇篮曲"
+      ],
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": [
+        "wathgrithr_allegiance_shadow"
+      ],
+      "x": 209,
+      "y": 21,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "locks": [
+    {
+      "id": "lock_songs_instantsong_cd",
+      "group": "songs",
+      "count": 0,
+      "fromGroups": [
+        "songs"
+      ],
+      "desc": "学习前置战歌技能后解锁「战斗之诵」",
+      "nodes": [
+        {
+          "x": -227.8,
+          "y": -112.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置战歌技能后解锁「战斗之诵」"
+        }
+      ]
+    },
+    {
+      "id": "lock_songs_container",
+      "group": "songs",
+      "count": 0,
+      "fromGroups": [
+        "songs"
+      ],
+      "desc": "学习前置战歌技能后解锁「战斗号子罐」",
+      "nodes": [
+        {
+          "x": -227.8,
+          "y": -74.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置战歌技能后解锁「战斗号子罐」"
+        }
+      ]
+    },
+    {
+      "id": "lock_songs_revivewarrior",
+      "group": "songs",
+      "count": 0,
+      "fromGroups": [
+        "songs"
+      ],
+      "desc": "学习前置战歌技能后解锁「返场表演」",
+      "nodes": [
+        {
+          "x": -227.8,
+          "y": -36.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置战歌技能后解锁「返场表演」"
+        }
+      ]
+    },
+    {
+      "id": "lock_affinity",
+      "group": "affinity",
+      "count": 12,
+      "fromGroups": [
+        "songs",
+        "combat",
+        "arsenal",
+        "beefalo"
+      ],
+      "desc": "学习 12 个其他技能后解锁亲和分支",
+      "nodes": [
+        {
+          "x": 189.2,
+          "y": -112.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习 12 个其他技能后解锁亲和分支"
+        },
+        {
+          "x": 165.2,
+          "y": -73.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 212.2,
+          "y": -73.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 165.2,
+          "y": -28.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 212.2,
+          "y": -28.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        }
+      ]
+    }
+  ],
+  "builds": [],
+  "modes": [
+    {
+      "id": "solo-lunar",
+      "tags": [
+        "单人",
+        "月后"
+      ],
+      "name": "单人月后",
+      "text": "在这里写单人月后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-shadow",
+      "tags": [
+        "单人",
+        "影后"
+      ],
+      "name": "单人影后",
+      "text": "在这里写单人影后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-both",
+      "tags": [
+        "单人",
+        "月后",
+        "影后"
+      ],
+      "name": "单人月后影后",
+      "text": "在这里写单人月后影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-lunar",
+      "tags": [
+        "多人",
+        "月后"
+      ],
+      "name": "多人月后",
+      "text": "在这里写多人月后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-shadow",
+      "tags": [
+        "多人",
+        "影后"
+      ],
+      "name": "多人影后",
+      "text": "在这里写多人影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-both",
+      "tags": [
+        "多人",
+        "月后",
+        "影后"
+      ],
+      "name": "多人月后影后",
+      "text": "在这里写多人月后影后加点",
+      "skills": []
+    }
+  ]
+}

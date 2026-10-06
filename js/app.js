@@ -12,6 +12,7 @@ const state = {
   lunar: false,
   shadow: false,
   players: null,
+  preset: false,
   altDown: false,
   mouseX: 0,
   mouseY: 0,
@@ -120,9 +121,14 @@ async function loadJSON(path) {
   return res.json();
 }
 
+function hasSkillTree(c) {
+  return c.skillTree !== false && !!c.data;
+}
+
 function charFromQuery(list) {
+  const playable = list.filter(hasSkillTree);
   const q = new URLSearchParams(location.search).get("char");
-  return list.find(c => c.id === q) || list[0];
+  return playable.find(c => c.id === q) || playable[0] || list[0];
 }
 
 async function boot() {
@@ -141,17 +147,43 @@ async function boot() {
 }
 
 function fillCharSelect(chars, currentId) {
-  const sel = $("char-select");
-  sel.innerHTML = "";
+  const btn = $("char-picker-btn");
+  const menu = $("char-picker-menu");
+  const current = chars.find(c => c.id === currentId);
+  $("char-picker-label").textContent = current ? current.name : "选择人物";
+  menu.innerHTML = "";
   chars.forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c.id;
+    const opt = document.createElement("button");
+    opt.type = "button";
+    opt.className = "char-option";
     opt.textContent = c.name;
-    if (c.id === currentId) opt.selected = true;
-    sel.appendChild(opt);
+    if (c.id === currentId) opt.classList.add("current");
+    if (!hasSkillTree(c)) {
+      opt.classList.add("is-locked");
+      opt.dataset.tip = "该角色尚未领悟技能树";
+    }
+    opt.addEventListener("click", e => {
+      e.stopPropagation();
+      if (!hasSkillTree(c)) {
+        showModeTip(opt, true);
+        return;
+      }
+      location.search = "?char=" + encodeURIComponent(c.id);
+    });
+    opt.addEventListener("mouseenter", () => {
+      if (!hasSkillTree(c)) showModeTip(opt, true);
+    });
+    opt.addEventListener("mouseleave", hideModeTip);
+    menu.appendChild(opt);
   });
-  sel.addEventListener("change", () => {
-    location.search = "?char=" + encodeURIComponent(sel.value);
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+    if (menu.hidden) hideModeTip();
+  });
+  document.addEventListener("click", () => {
+    menu.hidden = true;
+    hideModeTip();
   });
 }
 
@@ -167,6 +199,11 @@ function initTree(tree) {
   fitViewBox();
   buildDescColumns();
   fillBuildSelect();
+  state.preset = false;
+  state.lunar = false;
+  state.shadow = false;
+  state.players = null;
+  syncPresetChrome();
   render();
 }
 
@@ -551,6 +588,7 @@ function render() {
 }
 
 function pickNode(id) {
+  leavePreset();
   if (state.learned.has(id)) {
     state.focusedId = id;
     state.stickyId = id;
@@ -576,6 +614,7 @@ function pickNode(id) {
 }
 
 function learnSelected() {
+  leavePreset();
   if (state.selected.size === 0) return;
   state.selected.forEach(id => state.learned.add(id));
   state.points -= state.selected.size;
@@ -584,6 +623,7 @@ function learnSelected() {
 }
 
 function resetAll() {
+  leavePreset();
   state.learned.clear();
   state.selected.clear();
   state.points = state.tree.points;
@@ -611,11 +651,49 @@ function applySkillList(ids) {
   render();
 }
 
+function selectedBuild() {
+  const id = $("build-select").value;
+  return (state.tree.builds || []).find(b => b.id === id) || null;
+}
+
+function showPresetAllocation() {
+  const scheme = currentModeScheme();
+  if (scheme && (scheme.skills || []).length) {
+    applySkillList(scheme.skills);
+    return scheme;
+  }
+  const build = selectedBuild();
+  if (build) applySkillList(build.skills);
+  return scheme;
+}
+
+function syncPresetChrome() {
+  $("mode-stack").classList.toggle("is-open", state.preset);
+  $("stage-head").classList.toggle("preset", state.preset);
+  paintModes();
+}
+
+function leavePreset() {
+  if (!state.preset) return;
+  state.preset = false;
+  state.lunar = false;
+  state.shadow = false;
+  state.players = null;
+  $("build-select").value = "";
+  hideModeTip();
+  syncPresetChrome();
+}
+
 function applyBuild(buildId) {
   const build = (state.tree.builds || []).find(b => b.id === buildId);
   if (!build) return;
-  applySkillList(build.skills);
-  showDataPop(build.name, build.text || "", true);
+  state.preset = true;
+  syncPresetChrome();
+  const scheme = showPresetAllocation();
+  const body = scheme
+    ? [scheme.name, scheme.text].filter(Boolean).join("\n")
+    : (build.text || "");
+  showDataPop(scheme ? affinityLine() : build.name, body, true);
 }
 
 function currentModeScheme() {
@@ -675,8 +753,8 @@ function hideModeTip() {
   if (tip) tip.hidden = true;
 }
 
-function showModeTip(btn) {
-  if (window.matchMedia("(max-width: 720px)").matches) return;
+function showModeTip(btn, force) {
+  if (!force && window.matchMedia("(max-width: 720px)").matches) return;
   const tip = $("mode-tip");
   if (!tip || !btn.dataset.tip) return;
   tip.hidden = false;
@@ -696,19 +774,16 @@ function showModeTip(btn) {
 }
 
 function onModeClick(kind) {
+  if (!state.preset) return;
   hideModeTip();
   if (kind === "lunar") state.lunar = !state.lunar;
   else if (kind === "shadow") state.shadow = !state.shadow;
   else state.players = state.players === kind ? null : kind;
   paintModes();
-  const scheme = currentModeScheme();
+  const scheme = showPresetAllocation();
   const title = kind === "solo" || kind === "multi" ? playerLine(kind) : affinityLine();
-  if (scheme && (scheme.text || (scheme.skills || []).length)) {
-    showDataPop(title, [scheme.name, scheme.text].filter(Boolean).join("\n"), true);
-    if ((scheme.skills || []).length) applySkillList(scheme.skills);
-    return;
-  }
-  showDataPop(title, "", false);
+  const body = scheme ? [scheme.name, scheme.text].filter(Boolean).join("\n") : "";
+  showDataPop(title, body, !!body);
 }
 
 $("nodes").addEventListener("click", e => {
@@ -786,6 +861,7 @@ $("btn-learn").addEventListener("click", learnSelected);
 $("btn-reset").addEventListener("click", resetAll);
 $("build-select").addEventListener("change", e => {
   if (e.target.value) applyBuild(e.target.value);
+  else leavePreset();
 });
 
 $("mode-stack").addEventListener("click", e => {

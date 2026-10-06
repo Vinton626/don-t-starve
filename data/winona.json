@@ -1,0 +1,613 @@
+{
+  "id": "winona",
+  "name": "薇诺娜",
+  "points": 15,
+  "groups": [
+    {
+      "id": "low",
+      "name": "底层",
+      "x": -100
+    },
+    {
+      "id": "mid",
+      "name": "中层",
+      "x": -166
+    },
+    {
+      "id": "affinity",
+      "name": "亲和",
+      "x": 179
+    }
+  ],
+  "skills": [
+    {
+      "id": "winona_spotlight_heated",
+      "n": 1,
+      "group": "low",
+      "name": "热光灯",
+      "desc": "薇诺娜的聚光灯的光照成为热源，夏季不提供加热效果，冬季全天发光。",
+      "requires": [],
+      "x": -141,
+      "y": 59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_spotlight_range",
+      "n": 2,
+      "group": "low",
+      "name": "宽敞聚光灯",
+      "desc": "薇诺娜的聚光灯的光照范围增加。",
+      "requires": [],
+      "x": -91,
+      "y": 59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_portable_structures",
+      "n": 3,
+      "group": "low",
+      "name": "便携移动",
+      "desc": "习得配方：薇诺娜可以使用称手遥控器发出“武装投石机”指令。薇诺娜可以收回她的机械建筑。",
+      "recipes": [
+        "1 电子元件 → 1 称手遥控器"
+      ],
+      "requires": [],
+      "lock": "lock_portable_structures",
+      "x": -16,
+      "y": 59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_gadget_recharge",
+      "n": 4,
+      "group": "low",
+      "name": "快速充电",
+      "desc": "称手遥控器、薇机人和传送伞的充电速率 + 100%。",
+      "requires": [
+        "winona_portable_structures"
+      ],
+      "x": 34,
+      "y": 59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_battery_idledrain",
+      "n": 5,
+      "group": "low",
+      "name": "节能模式",
+      "desc": "闲置的薇诺娜的发电机和薇诺娜的宝石发电机以及用电器不再消耗电力。",
+      "requires": [],
+      "x": 109,
+      "y": 59,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_speed_1",
+      "n": 6,
+      "group": "mid",
+      "name": "一级快速开火",
+      "desc": "薇诺娜的投石机的攻击频率 + 5%。",
+      "requires": [],
+      "lock": "lock_midshelf",
+      "x": -116,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_speed_2",
+      "n": 7,
+      "group": "mid",
+      "name": "二级快速开火",
+      "desc": "薇诺娜的投石机的攻击频率 + 10%。",
+      "requires": [
+        "winona_catapult_speed_1"
+      ],
+      "lock": "lock_midshelf",
+      "x": -166,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_speed_3",
+      "n": 8,
+      "group": "mid",
+      "name": "三级快速开火",
+      "desc": "薇诺娜的投石机的攻击频率 + 20%。",
+      "requires": [
+        "winona_catapult_speed_1",
+        "winona_catapult_speed_2"
+      ],
+      "lock": "lock_midshelf",
+      "x": -216,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_aoe_1",
+      "n": 9,
+      "group": "mid",
+      "name": "一级高爆弹",
+      "desc": "薇诺娜的投石机投出的石块的伤害半径 + 25%。",
+      "requires": [],
+      "lock": "lock_midshelf",
+      "x": -116,
+      "y": -41,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_aoe_2",
+      "n": 10,
+      "group": "mid",
+      "name": "二级高爆弹",
+      "desc": "薇诺娜的投石机投出的石块的伤害半径 + 50%。",
+      "requires": [
+        "winona_catapult_aoe_1"
+      ],
+      "lock": "lock_midshelf",
+      "x": -166,
+      "y": -41,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_aoe_3",
+      "n": 11,
+      "group": "mid",
+      "name": "三级高爆弹",
+      "desc": "薇诺娜的投石机投出的石块的伤害半径 + 100%。",
+      "requires": [
+        "winona_catapult_aoe_1",
+        "winona_catapult_aoe_2"
+      ],
+      "lock": "lock_midshelf",
+      "x": -216,
+      "y": -41,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_battery_efficiency_1",
+      "n": 12,
+      "group": "mid",
+      "name": "一级大发电机",
+      "desc": "薇诺娜的发电机和薇诺娜的宝石发电机的发电效率 + 25%。",
+      "requires": [],
+      "lock": "lock_midshelf",
+      "x": 84,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_battery_efficiency_2",
+      "n": 13,
+      "group": "mid",
+      "name": "二级大发电机",
+      "desc": "薇诺娜的发电机和薇诺娜的宝石发电机的发电效率 + 50%。",
+      "requires": [
+        "winona_battery_efficiency_1"
+      ],
+      "lock": "lock_midshelf",
+      "x": 134,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_battery_efficiency_3",
+      "n": 14,
+      "group": "mid",
+      "name": "三级大发电机",
+      "desc": "薇诺娜的发电机和薇诺娜的宝石发电机的发电效率 + 100%。",
+      "requires": [
+        "winona_battery_efficiency_1",
+        "winona_battery_efficiency_2"
+      ],
+      "lock": "lock_midshelf",
+      "x": 184,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_volley_1",
+      "n": 15,
+      "group": "mid",
+      "name": "精确瞄准",
+      "desc": "薇诺娜可以使用称手遥控器发出“瞄准”指令。",
+      "requires": [
+        "winona_portable_structures"
+      ],
+      "lock": "lock_midshelf",
+      "x": -51,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_catapult_boost_1",
+      "n": 16,
+      "group": "mid",
+      "name": "齐射",
+      "desc": "薇诺娜可以使用称手遥控器发出“齐射”指令。",
+      "requires": [
+        "winona_portable_structures"
+      ],
+      "lock": "lock_midshelf",
+      "x": 19,
+      "y": -1,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_shadow_1",
+      "n": 17,
+      "group": "affinity",
+      "name": "噩梦发电机",
+      "desc": "薇诺娜可以用噩梦燃料为薇诺娜的发电机添加燃料。",
+      "requires": [],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": -136,
+      "y": -101,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_shadow_2",
+      "n": 18,
+      "group": "affinity",
+      "name": "纯粹恐惧发电机",
+      "desc": "薇诺娜可以用纯粹恐惧为薇诺娜的发电机添加燃料。",
+      "requires": [
+        "winona_shadow_1"
+      ],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": -126,
+      "y": -141,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_shadow_3",
+      "n": 19,
+      "group": "affinity",
+      "name": "暗影袭击",
+      "desc": "薇诺娜可以用称手遥控器发出“位面袭击”指令，只有由含有纯粹恐惧的薇诺娜的发电机提供动力的薇诺娜的投石机会响应指令。",
+      "requires": [
+        "winona_portable_structures",
+        "winona_shadow_1",
+        "winona_shadow_2"
+      ],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": -76,
+      "y": -141,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_charlie_1",
+      "n": 20,
+      "group": "affinity",
+      "name": "一级寻觅暗影",
+      "desc": "薇诺娜装备玫瑰色眼镜时可以进行仔细检查。习得配方：",
+      "recipes": [
+        "12 花瓣 + 3 树枝 → 1 玫瑰色眼镜"
+      ],
+      "requires": [],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": -186,
+      "y": -101,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_charlie_2",
+      "n": 21,
+      "group": "affinity",
+      "name": "二级寻觅暗影",
+      "desc": "薇诺娜在黑暗中不再被查理袭击。可以使用脆弱玫瑰复活。仔细检查时将有概率获得纯粹恐惧。用玫瑰色眼镜仔细检查虫洞或硕大的泥坑并激活黑暗痕迹，可以传送至任意一个已经在地图上探索出来的虫洞或硕大的泥坑处。",
+      "requires": [
+        "winona_charlie_1"
+      ],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": -236,
+      "y": -141,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_lunar_1",
+      "n": 22,
+      "group": "affinity",
+      "name": "启迪宝石发电机",
+      "desc": "可以将启迪碎片插入薇诺娜的宝石发电机来发电。",
+      "requires": [],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": 104,
+      "y": -101,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_lunar_2",
+      "n": 23,
+      "group": "affinity",
+      "name": "辉煌宝石发电机",
+      "desc": "可以将纯粹辉煌插入薇诺娜的宝石发电机来发电。",
+      "requires": [
+        "winona_lunar_1"
+      ],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": 94,
+      "y": -141,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_lunar_3",
+      "n": 24,
+      "group": "affinity",
+      "name": "启迪袭击",
+      "desc": "薇诺娜可以用称手遥控器发出“位面袭击”指令，只有由含有纯粹辉煌的薇诺娜的宝石发电机提供动力的薇诺娜的投石机会响应指令。",
+      "requires": [
+        "winona_portable_structures",
+        "winona_lunar_1",
+        "winona_lunar_2"
+      ],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": 44,
+      "y": -141,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_wagstaff_1",
+      "n": 25,
+      "group": "affinity",
+      "name": "一级创始人宝物猎人",
+      "desc": "可以装备检查专用镜。可以部署薇机人。习得配方：",
+      "recipes": [
+        "1 时尚护目镜 + 2 电子元件 → 1 检查专用镜"
+      ],
+      "requires": [],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": 154,
+      "y": -101,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "winona_wagstaff_2",
+      "n": 26,
+      "group": "affinity",
+      "name": "二级创始人宝物猎人",
+      "desc": "装备检查专用镜时，有 25% 概率刷出高级藏物箱。可以使用传送伞和部署传送运输站。",
+      "requires": [
+        "winona_wagstaff_1"
+      ],
+      "locks": [
+        "lock_lowshelf",
+        "lock_midshelf"
+      ],
+      "x": 204,
+      "y": -141,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "locks": [
+    {
+      "id": "lock_lowshelf",
+      "group": "low",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "解锁底层技能",
+      "nodes": [
+        {
+          "x": -232.8,
+          "y": 32.2,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "解锁底层技能"
+        }
+      ]
+    },
+    {
+      "id": "lock_midshelf",
+      "group": "mid",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "解锁中层技能",
+      "nodes": [
+        {
+          "x": -232.8,
+          "y": -67.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "解锁中层技能"
+        }
+      ]
+    },
+    {
+      "id": "lock_portable_structures",
+      "group": "low",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "学习前置技能后解锁「便携移动」",
+      "nodes": [
+        {
+          "x": -12.8,
+          "y": -17.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置技能后解锁「便携移动」"
+        }
+      ]
+    },
+    {
+      "id": "lock_shadow_3",
+      "group": "affinity",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "学习前置技能后解锁「暗影袭击」",
+      "nodes": [
+        {
+          "x": -72.8,
+          "y": -97.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置技能后解锁「暗影袭击」"
+        }
+      ]
+    },
+    {
+      "id": "lock_charlie_2",
+      "group": "affinity",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "学习前置技能后解锁「二级寻觅暗影」",
+      "nodes": [
+        {
+          "x": -222.8,
+          "y": -97.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置技能后解锁「二级寻觅暗影」"
+        }
+      ]
+    },
+    {
+      "id": "lock_lunar_3",
+      "group": "affinity",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "学习前置技能后解锁「启迪袭击」",
+      "nodes": [
+        {
+          "x": 47.2,
+          "y": -97.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置技能后解锁「启迪袭击」"
+        }
+      ]
+    },
+    {
+      "id": "lock_wagstaff_2",
+      "group": "affinity",
+      "count": 0,
+      "fromGroups": [],
+      "desc": "学习前置技能后解锁「二级创始人宝物猎人」",
+      "nodes": [
+        {
+          "x": 197.2,
+          "y": -97.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习前置技能后解锁「二级创始人宝物猎人」"
+        }
+      ]
+    }
+  ],
+  "builds": [],
+  "modes": [
+    {
+      "id": "solo-lunar",
+      "tags": [
+        "单人",
+        "月后"
+      ],
+      "name": "单人月后",
+      "text": "在这里写单人月后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-shadow",
+      "tags": [
+        "单人",
+        "影后"
+      ],
+      "name": "单人影后",
+      "text": "在这里写单人影后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-both",
+      "tags": [
+        "单人",
+        "月后",
+        "影后"
+      ],
+      "name": "单人月后影后",
+      "text": "在这里写单人月后影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-lunar",
+      "tags": [
+        "多人",
+        "月后"
+      ],
+      "name": "多人月后",
+      "text": "在这里写多人月后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-shadow",
+      "tags": [
+        "多人",
+        "影后"
+      ],
+      "name": "多人影后",
+      "text": "在这里写多人影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-both",
+      "tags": [
+        "多人",
+        "月后",
+        "影后"
+      ],
+      "name": "多人月后影后",
+      "text": "在这里写多人月后影后加点",
+      "skills": []
+    }
+  ]
+}

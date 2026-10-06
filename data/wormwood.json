@@ -1,0 +1,554 @@
+{
+  "id": "wormwood",
+  "name": "沃姆伍德",
+  "points": 15,
+  "groups": [
+    {
+      "id": "root",
+      "name": "根技能",
+      "x": -8
+    },
+    {
+      "id": "left",
+      "name": "左分枝",
+      "x": -158
+    },
+    {
+      "id": "right",
+      "name": "右分枝",
+      "x": 142
+    },
+    {
+      "id": "affinity",
+      "name": "亲和",
+      "x": -210
+    }
+  ],
+  "skills": [
+    {
+      "id": "wormwood_identify_plants2",
+      "n": 1,
+      "group": "root",
+      "name": "种子侦探",
+      "desc": "检查刚种下的普通种子，可以确定它们会长成什么农作物。即使玩家还没有将其登记到植物登记表中。选定杂草和农作物时，也会显示它们的真名。",
+      "requires": [],
+      "x": -8,
+      "y": 64,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_saplingcrafting",
+      "n": 2,
+      "group": "left",
+      "name": "树苗制造",
+      "desc": "习得配方：",
+      "recipes": [
+        "5 生命值降低 + 5 树枝 → 1 月亮树苗"
+      ],
+      "requires": [
+        "wormwood_identify_plants2"
+      ],
+      "x": -108,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_berrybushcrafting",
+      "n": 3,
+      "group": "left",
+      "name": "浆果丛制造",
+      "desc": "习得配方：",
+      "recipes": [
+        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 浆果丛",
+        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 浆果丛（二号）"
+      ],
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_saplingcrafting"
+      ],
+      "x": -158,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_juicyberrybushcrafting",
+      "n": 4,
+      "group": "left",
+      "name": "多汁浆果丛制造",
+      "desc": "习得配方：",
+      "recipes": [
+        "10 生命值降低 + 3 腐烂物 + 8 浆果 → 1 多汁浆果丛"
+      ],
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_saplingcrafting",
+        "wormwood_berrybushcrafting"
+      ],
+      "x": -178,
+      "y": 6,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_reedscrafting",
+      "n": 5,
+      "group": "left",
+      "name": "猴尾草制造",
+      "desc": "习得配方：",
+      "recipes": [
+        "15 生命值降低 + 1 洞穴香蕉 + 4 切制芦苇 → 1 猴尾草"
+      ],
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_saplingcrafting",
+        "wormwood_berrybushcrafting"
+      ],
+      "x": -208,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_lureplantbulbcrafting",
+      "n": 6,
+      "group": "left",
+      "name": "食人花制造",
+      "desc": "习得配方：",
+      "recipes": [
+        "25 生命值降低 + 2 堆肥包 + 5 叶肉 → 1 食人花种子"
+      ],
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_saplingcrafting",
+        "wormwood_berrybushcrafting",
+        "wormwood_reedscrafting"
+      ],
+      "x": -238,
+      "y": 6,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_mushroomplanter_ratebonus1",
+      "n": 7,
+      "group": "left",
+      "name": "蘑菇精通 I",
+      "desc": "种植在蘑菇农场中的蘑菇生长时间缩短为原来的 0.9 倍。",
+      "requires": [
+        "wormwood_identify_plants2"
+      ],
+      "x": -43,
+      "y": -6,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_mushroomplanter_ratebonus2",
+      "n": 8,
+      "group": "left",
+      "name": "蘑菇精通 II",
+      "desc": "种植在蘑菇农场中的蘑菇生长时间缩短为原来的 0.8 倍。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_mushroomplanter_ratebonus1"
+      ],
+      "x": -98,
+      "y": -36,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_syrupcrafting",
+      "n": 9,
+      "group": "left",
+      "name": "可怜的树液",
+      "desc": "习得配方：",
+      "recipes": [
+        "1 红蘑菇 + 1 蜂蜜 + 1 腐烂物 → 1 吐根糖浆"
+      ],
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_mushroomplanter_ratebonus1",
+        "wormwood_mushroomplanter_ratebonus2"
+      ],
+      "x": -38,
+      "y": -71,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_mushroomplanter_upgrade",
+      "n": 10,
+      "group": "left",
+      "name": "蘑菇增产器",
+      "desc": "蘑菇种入蘑菇农场也能达到与种植蘑菇孢子相同的最大产量（6 个）。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_mushroomplanter_ratebonus1",
+        "wormwood_mushroomplanter_ratebonus2"
+      ],
+      "x": -98,
+      "y": -91,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_moon_cap_eating",
+      "n": 11,
+      "group": "left",
+      "name": "月亮蘑菇云",
+      "desc": "食用月亮蘑菇时原地释放催眠孢子云，自身不受月亮蘑菇的催眠效果和催眠孢子云影响。可以将月亮蘑菇种入蘑菇农场。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_mushroomplanter_ratebonus1",
+        "wormwood_mushroomplanter_ratebonus2",
+        "wormwood_mushroomplanter_upgrade"
+      ],
+      "x": -78,
+      "y": -136,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_speed1",
+      "n": 12,
+      "group": "right",
+      "name": "成长冲刺 I",
+      "desc": "开花期的前两个阶段所需成长值 -10%。",
+      "requires": [
+        "wormwood_identify_plants2"
+      ],
+      "x": 92,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_speed2",
+      "n": 13,
+      "group": "right",
+      "name": "成长冲刺 II",
+      "desc": "开花期的前两个阶段所需成长值 -25%。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_speed1"
+      ],
+      "x": 142,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_overheatprotection",
+      "n": 14,
+      "group": "right",
+      "name": "遮荫植物",
+      "desc": "最大开花阶段获得 180 隔热值。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_speed1",
+        "wormwood_blooming_speed2"
+      ],
+      "x": 152,
+      "y": 4,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_max_upgrade",
+      "n": 15,
+      "group": "right",
+      "name": "花朵力量",
+      "desc": "沃姆伍德为自己施肥加速开花值的效果 +30%。将沃姆伍德开花第三阶段的初始开花值提升至 2160，开花值上限提升至 3600。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_speed1",
+        "wormwood_blooming_speed2"
+      ],
+      "x": 192,
+      "y": 54,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_photosynthesis",
+      "n": 16,
+      "group": "right",
+      "name": "光合作用",
+      "desc": "最大开花阶段，位于白天的森林世界，或位于自然光源的光照范围内时，每 10 秒回复 1 text-center。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_speed1",
+        "wormwood_blooming_speed2",
+        "wormwood_blooming_max_upgrade"
+      ],
+      "x": 207,
+      "y": 4,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_farmrange1",
+      "n": 17,
+      "group": "right",
+      "name": "农场工人",
+      "desc": "最大开花阶段，自动照料的范围从 4 距离单位升级到 6 单位。更快地收获农作物。",
+      "requires": [
+        "wormwood_identify_plants2"
+      ],
+      "x": 47,
+      "y": -25,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_quick_selffertilizer",
+      "n": 18,
+      "group": "right",
+      "name": "肥料护理",
+      "desc": "使用肥料包时动作加快。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_farmrange1"
+      ],
+      "x": 87,
+      "y": -61,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_bugs",
+      "n": 19,
+      "group": "right",
+      "name": "平易近蜂",
+      "desc": "蝴蝶与月蛾不会逃离沃姆伍德。靠近杀人蜂蜂窝时不会引出杀人蜂。从蜂箱采集蜂蜜时不会激怒里面的蜜蜂。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_farmrange1",
+        "wormwood_quick_selffertilizer"
+      ],
+      "x": 35,
+      "y": -96,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_blooming_trapbramble",
+      "n": 20,
+      "group": "right",
+      "name": "荆棘陷阱专家",
+      "desc": "最大开花阶段时，自动重置附近的荆棘陷阱。对同一个陷阱有 3 秒的冷却时间。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_farmrange1",
+        "wormwood_quick_selffertilizer"
+      ],
+      "x": 129,
+      "y": -91,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_armor_bramble",
+      "n": 21,
+      "group": "right",
+      "name": "荆棘外壳专家",
+      "desc": "装备荆棘外壳或荆棘茄甲时：每攻击三次且中途没有受到攻击时，荆棘外壳/荆棘茄甲就会释放尖刺，造成范围伤害。",
+      "requires": [
+        "wormwood_identify_plants2",
+        "wormwood_blooming_farmrange1",
+        "wormwood_quick_selffertilizer",
+        "wormwood_blooming_max_upgrade"
+      ],
+      "x": 112,
+      "y": -133,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_allegiance_lunar_mutations_1",
+      "n": 22,
+      "group": "affinity",
+      "name": "月亮耕耘者 I",
+      "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。消耗 1 个胡萝卜和 5 text-center 制作一个特殊的胡萝卜鼠，自动为你拾取周围的食物并送入物品栏。具有 25 点生命值，持续 3 天，至多召唤 4 只。",
+      "requires": [],
+      "lock": "lock_affinity",
+      "x": -210,
+      "y": -126,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_allegiance_lunar_mutations_2",
+      "n": 23,
+      "group": "affinity",
+      "name": "月亮耕耘者 II",
+      "desc": "消耗 1 个荧光果和 10 text-center 制作一个特殊的球状光虫，跟随玩家并照明。具有 25 点生命值，持续 2.5 天，至多召唤 6 只。召唤的球状光虫数量越多，照明范围越大。",
+      "requires": [
+        "wormwood_allegiance_lunar_mutations_1"
+      ],
+      "lock": "lock_affinity",
+      "x": -237,
+      "y": -169,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_allegiance_lunar_mutations_3",
+      "n": 24,
+      "group": "affinity",
+      "name": "月亮耕耘者 III",
+      "desc": "消耗 1 个火龙果和 25 text-center 制作一个特殊的沙拉蝾螈，为你作战。具有 600 点生命值和 40 点攻击力，持续 2 天，至多召唤 2 只。召唤 2 只沙拉蝾螈时，沙拉蝾螈的生命值提高到 900。",
+      "requires": [
+        "wormwood_allegiance_lunar_mutations_1"
+      ],
+      "lock": "lock_affinity",
+      "x": -183,
+      "y": -169,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_allegiance_lunar_plant_gear_1",
+      "n": 25,
+      "group": "affinity",
+      "name": "月亮守卫 I",
+      "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。穿着亮茄盔甲时受到攻击会禁锢攻击者 6 秒。习得配方：",
+      "recipes": [
+        "1 亮茄盔甲 + 1 荆棘外壳 → 1 荆棘茄甲"
+      ],
+      "requires": [],
+      "lock": "lock_affinity",
+      "x": 203.5,
+      "y": -129,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wormwood_allegiance_lunar_plant_gear_2",
+      "n": 26,
+      "group": "affinity",
+      "name": "月亮守卫 II",
+      "desc": "使用亮茄剑、亮茄粉碎者或亮茄锄铲进行攻击时，每次攻击有 20% 概率召唤一个亮茄触手。",
+      "requires": [
+        "wormwood_allegiance_lunar_plant_gear_1"
+      ],
+      "lock": "lock_affinity",
+      "x": 203.5,
+      "y": -169,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "locks": [
+    {
+      "id": "lock_affinity",
+      "group": "affinity",
+      "count": 12,
+      "fromGroups": [
+        "root",
+        "left",
+        "right"
+      ],
+      "desc": "学习 12 个其他技能后解锁亲和分支",
+      "nodes": [
+        {
+          "x": -206.8,
+          "y": -82.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习 12 个其他技能后解锁亲和分支"
+        },
+        {
+          "x": -206.8,
+          "y": -52.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 206.7,
+          "y": -88.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 206.7,
+          "y": -55.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        }
+      ]
+    }
+  ],
+  "builds": [],
+  "modes": [
+    {
+      "id": "solo-lunar",
+      "tags": [
+        "单人",
+        "月后"
+      ],
+      "name": "单人月后",
+      "text": "在这里写单人月后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-shadow",
+      "tags": [
+        "单人",
+        "影后"
+      ],
+      "name": "单人影后",
+      "text": "在这里写单人影后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-both",
+      "tags": [
+        "单人",
+        "月后",
+        "影后"
+      ],
+      "name": "单人月后影后",
+      "text": "在这里写单人月后影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-lunar",
+      "tags": [
+        "多人",
+        "月后"
+      ],
+      "name": "多人月后",
+      "text": "在这里写多人月后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-shadow",
+      "tags": [
+        "多人",
+        "影后"
+      ],
+      "name": "多人影后",
+      "text": "在这里写多人影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-both",
+      "tags": [
+        "多人",
+        "月后",
+        "影后"
+      ],
+      "name": "多人月后影后",
+      "text": "在这里写多人月后影后加点",
+      "skills": []
+    }
+  ]
+}

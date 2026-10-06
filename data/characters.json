@@ -14,6 +14,81 @@
       "id": "wolfgang",
       "name": "沃尔夫冈",
       "data": "data/wolfgang.json"
+    },
+    {
+      "id": "wendy",
+      "name": "温蒂",
+      "data": "data/wendy.json"
+    },
+    {
+      "id": "WX-78",
+      "name": "机器人",
+      "data": "data/WX-78.json"
+    },
+    {
+      "id": "wickerbottom",
+      "name": "薇克巴顿",
+      "skillTree": false
+    },
+    {
+      "id": "woodie",
+      "name": "伍迪",
+      "data": "data/woodie.json"
+    },
+    {
+      "id": "wes",
+      "name": "韦斯",
+      "skillTree": false
+    },
+    {
+      "id": "maxwell",
+      "name": "麦斯威尔",
+      "skillTree": false
+    },
+    {
+      "id": "wigfrid",
+      "name": "薇格弗德",
+      "data": "data/wigfrid.json"
+    },
+    {
+      "id": "webber",
+      "name": "韦伯",
+      "skillTree": false
+    },
+    {
+      "id": "winona",
+      "name": "薇诺娜",
+      "data": "data/winona.json"
+    },
+    {
+      "id": "warly",
+      "name": "沃利",
+      "skillTree": false
+    },
+    {
+      "id": "wormwood",
+      "name": "沃姆伍德",
+      "data": "data/wormwood.json"
+    },
+    {
+      "id": "wortox",
+      "name": "沃拓克斯",
+      "data": "data/wortox.json"
+    },
+    {
+      "id": "wurt",
+      "name": "沃特",
+      "data": "data/wurt.json"
+    },
+    {
+      "id": "walter",
+      "name": "沃尔特",
+      "data": "data/walter.json"
+    },
+    {
+      "id": "wanda",
+      "name": "旺达",
+      "skillTree": false
     }
   ]
 }

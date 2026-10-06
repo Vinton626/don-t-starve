@@ -1,0 +1,564 @@
+{
+  "id": "wurt",
+  "name": "沃特",
+  "points": 15,
+  "groups": [
+    {
+      "id": "amphibian",
+      "name": "两栖动物",
+      "x": -202
+    },
+    {
+      "id": "merm",
+      "name": "鱼人国度",
+      "x": -8
+    },
+    {
+      "id": "affinity",
+      "name": "亲和",
+      "x": 186
+    }
+  ],
+  "skills": [
+    {
+      "id": "wurt_amphibian_sanity_1",
+      "n": 1,
+      "group": "amphibian",
+      "name": "一级精神流淌",
+      "desc": "沃特的潮湿度会线性地提供理智值增益，满潮湿度时会 + 4.4 text-center/分钟。",
+      "requires": [],
+      "x": -202,
+      "y": -108,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_amphibian_sanity_2",
+      "n": 2,
+      "group": "amphibian",
+      "name": "二级精神流淌",
+      "desc": "满潮湿度时会 + 6.7 text-center/分钟。",
+      "requires": [
+        "wurt_amphibian_sanity_1"
+      ],
+      "x": -202,
+      "y": -69,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_amphibian_temperature",
+      "n": 3,
+      "group": "amphibian",
+      "name": "全天候鳞片",
+      "desc": "潮湿对沃特的降温效果会降至原来的 33.3%。热源对沃特的干燥速率会降低。",
+      "requires": [
+        "wurt_amphibian_sanity_1",
+        "wurt_amphibian_sanity_2"
+      ],
+      "x": -202,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_amphibian_thickskin_1",
+      "n": 4,
+      "group": "amphibian",
+      "name": "一级光滑表皮",
+      "desc": "沃特每 3.3333 text-center 会代替 1 text-center 的直接损失。",
+      "requires": [
+        "wurt_amphibian_sanity_1",
+        "wurt_amphibian_sanity_2",
+        "wurt_amphibian_temperature"
+      ],
+      "x": -221,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_amphibian_thickskin_2",
+      "n": 5,
+      "group": "amphibian",
+      "name": "二级光滑表皮",
+      "desc": "沃特每 2 text-center 会代替 1 text-center 的直接损失。沃特在月亮沼泽地块或暗影沼泽地块上时会 + 0.5 text-center/秒，与二级水疗不叠加。",
+      "requires": [
+        "wurt_amphibian_sanity_1",
+        "wurt_amphibian_sanity_2",
+        "wurt_amphibian_temperature",
+        "wurt_amphibian_thickskin_1"
+      ],
+      "x": -221,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_amphibian_healing_1",
+      "n": 6,
+      "group": "amphibian",
+      "name": "一级水疗",
+      "desc": "沃特的潮湿度会线性地提供生命值增益，满潮湿度时会 + 0.5 text-center/6.5 秒。",
+      "requires": [
+        "wurt_amphibian_sanity_1",
+        "wurt_amphibian_sanity_2",
+        "wurt_amphibian_temperature"
+      ],
+      "x": -183,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_amphibian_healing_2",
+      "n": 7,
+      "group": "amphibian",
+      "name": "二级水疗",
+      "desc": "满潮湿度时会 + 0.5 text-center/4 秒。沃特在月亮沼泽地块或暗影沼泽地块上时会 + 0.5 text-center/秒，与二级光滑表皮不叠加。",
+      "requires": [
+        "wurt_amphibian_sanity_1",
+        "wurt_amphibian_sanity_2",
+        "wurt_amphibian_temperature",
+        "wurt_amphibian_healing_1"
+      ],
+      "x": -183,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_mosquito_craft_1",
+      "n": 8,
+      "group": "merm",
+      "name": "匿名蚊子",
+      "desc": "习得配方：",
+      "recipes": [
+        "1 蚊子血袋 + 1 牛毛 → 1 小痒痒"
+      ],
+      "requires": [],
+      "x": -61,
+      "y": -108,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_mosquito_craft_2",
+      "n": 9,
+      "group": "merm",
+      "name": "一级痒术",
+      "desc": "习得配方：",
+      "recipes": [
+        "1 蚊子血袋 + 4 蚊子 → 1 蚊子炸弹",
+        "1 蚊子血袋 + 2 硝石 + 1 便便 → 1 嗡嗡肥料",
+        "2 蚊子血袋 → 1 蚊血注射液"
+      ],
+      "requires": [
+        "wurt_mosquito_craft_1"
+      ],
+      "x": -61,
+      "y": -69,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_mosquito_craft_3",
+      "n": 10,
+      "group": "merm",
+      "name": "二级痒术",
+      "desc": "提升沃特使用小痒痒、蚊子炸弹、嗡嗡肥料和蚊血注射液的效果。",
+      "requires": [
+        "wurt_mosquito_craft_1",
+        "wurt_mosquito_craft_2"
+      ],
+      "x": -61,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_mermkingshoulders",
+      "n": 11,
+      "group": "merm",
+      "name": "国王的肩甲任务",
+      "desc": "沃特可以向鱼人之王献上大理石甲来获得如下增益：沃特获得 -10% 的生命值端伤害倍率。沃特所雇佣的鱼人和忠诚鱼人守卫等获得 15% 减伤。",
+      "requires": [],
+      "x": -8,
+      "y": -108,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_mermkingcrown",
+      "n": 12,
+      "group": "merm",
+      "name": "国王的皇冠任务",
+      "desc": "沃特可以向鱼人之王献上铥矿皇冠来获得如下增益：沃特降低 5% 疯狂光环的影响。沃特所雇佣的忠诚鱼人守卫等获得有 10 秒冷却的闪避技能。",
+      "requires": [
+        "wurt_mermkingshoulders"
+      ],
+      "x": -8,
+      "y": -69,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_mermkingtrident",
+      "n": 13,
+      "group": "merm",
+      "name": "国王的三叉戟任务",
+      "desc": "沃特可以向鱼人之王献上刺耳三叉戟来获得如下增益：沃特及其所雇佣的鱼人和忠诚鱼人守卫等 +5% 物理伤害。沃特所雇佣的忠诚鱼人守卫等攻击时有 33% 概率使用三重连击——连续进行三次物理伤害为原来 0.5 倍的攻击。",
+      "requires": [
+        "wurt_mermkingshoulders",
+        "wurt_mermkingcrown"
+      ],
+      "x": -8,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_merm_king_hunger_1",
+      "n": 14,
+      "group": "merm",
+      "name": "一级饱君",
+      "desc": "沃特喂食鱼人之王时，鱼人之王的最大饥饿值会提升至 250。鱼人之王的饥饿值 = 0 时失效（下同）。",
+      "requires": [],
+      "x": 45,
+      "y": -108,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_merm_king_hunger_2",
+      "n": 15,
+      "group": "merm",
+      "name": "二级饱君",
+      "desc": "沃特喂食鱼人之王时，鱼人之王的最大饥饿值会提升至 300。",
+      "requires": [
+        "wurt_merm_king_hunger_1"
+      ],
+      "x": 45,
+      "y": -69,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_merm_king_hunger_3",
+      "n": 16,
+      "group": "merm",
+      "name": "三级饱君",
+      "desc": "沃特喂食鱼人之王时，鱼人之王的饥饿值消耗速度会降低 15%（即 -21.25 text-center/天）。",
+      "requires": [
+        "wurt_merm_king_hunger_1",
+        "wurt_merm_king_hunger_2"
+      ],
+      "x": 45,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_civ_1",
+      "n": 17,
+      "group": "merm",
+      "name": "一级集体喂食",
+      "desc": "习得配方：",
+      "recipes": [
+        "2 木板 + 2 切制芦苇 → 1 公共海带盘"
+      ],
+      "requires": [],
+      "x": -46,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_civ_1_2",
+      "n": 18,
+      "group": "merm",
+      "name": "二级集体喂食",
+      "desc": "习得配方：",
+      "recipes": [
+        "3 木板 + 3 切制芦苇 + 1 触手皮 → 1 高级公共海带盘"
+      ],
+      "requires": [
+        "wurt_civ_1"
+      ],
+      "x": -46,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_civ_2",
+      "n": 19,
+      "group": "merm",
+      "name": "一级勤奋鱼人",
+      "desc": "习得配方：",
+      "recipes": [
+        "2 木板 + 5 树枝 + 5 石头 → 1 简陋工具棚"
+      ],
+      "requires": [],
+      "x": -8,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_civ_2_2",
+      "n": 20,
+      "group": "merm",
+      "name": "二级勤奋鱼人",
+      "desc": "习得配方：",
+      "recipes": [
+        "4 木板 + 1 触手皮 + 5 树枝 + 5 石头 → 1 稍好工具棚"
+      ],
+      "requires": [
+        "wurt_civ_2"
+      ],
+      "x": -8,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_civ_3",
+      "n": 21,
+      "group": "merm",
+      "name": "一级硬脑袋",
+      "desc": "习得配方：",
+      "recipes": [
+        "2 木板 + 5 木头 + 5 切制草 → 1 军械库"
+      ],
+      "requires": [],
+      "x": 30,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_civ_3_2",
+      "n": 22,
+      "group": "merm",
+      "name": "二级硬脑袋",
+      "desc": "习得配方：",
+      "recipes": [
+        "4 木板 + 1 触手皮 + 5 木头 + 5 切制草 → 1 高级军械库"
+      ],
+      "requires": [
+        "wurt_civ_3"
+      ],
+      "x": 30,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_merm_flee",
+      "n": 23,
+      "group": "merm",
+      "name": "理智的沼泽战士",
+      "desc": "沃特所雇佣的忠诚鱼人守卫等，生命值百分比 ≤ 20% 时不会再参与战斗，而是会和仇恨目标保持 5 ~ 15 距离单位。",
+      "requires": [],
+      "x": -95.2,
+      "y": 28.5,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_pathfinder",
+      "n": 24,
+      "group": "merm",
+      "name": "沼泽探路人",
+      "desc": "沃特附近 30 距离单位内的其他角色在沼泽地块、月亮沼泽地块或暗影沼泽地块上时，获得 移动速度 ×1.3 的效果。",
+      "requires": [],
+      "x": 79.2,
+      "y": 28.5,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_lunar_allegiance_1",
+      "n": 25,
+      "group": "affinity",
+      "name": "月亮变异鱼人",
+      "desc": "沃特获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。沃特可以将月亮碎片或注能月亮碎片给予其所雇佣的鱼人/忠诚鱼人守卫来让它们转化为变异鱼人/变异鱼人守卫。沃特可以使用纯粹辉煌施放法术，使其所雇佣的变异鱼人和变异鱼人守卫获得持续半天的增益——转化 20 物理伤害为 20 位面伤害。",
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": [
+        "wurt_shadow_allegiance_1"
+      ],
+      "x": 167,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_lunar_allegiance_2",
+      "n": 26,
+      "group": "affinity",
+      "name": "大地变异",
+      "desc": "习得配方：沃特可以使用光芒投泥带创造一片短暂存在的月亮沼泽地块，使周围沃特所雇佣的鱼人/忠诚鱼人守卫转化为变异鱼人/变异鱼人守卫，并使周围沃特所雇佣的变异鱼人和变异鱼人守卫获得持续半天的增益（同上）。",
+      "recipes": [
+        "1 浮木片 + 1 沼泽地皮 + 1 纯粹辉煌 → 1 光芒投泥带"
+      ],
+      "requires": [
+        "wurt_lunar_allegiance_1"
+      ],
+      "lock": "lock_affinity",
+      "x": 167,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_shadow_allegiance_1",
+      "n": 27,
+      "group": "affinity",
+      "name": "暗影复活鱼人",
+      "desc": "沃特获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。沃特所雇佣的鱼人/忠诚鱼人守卫死亡时会转化为暗影鱼人/暗影鱼人守卫。沃特可以使用纯粹恐惧施放法术，使其所雇佣的暗影鱼人和暗影鱼人守卫获得持续半天的增益——转化 20 物理伤害为 20 位面伤害。",
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": [
+        "wurt_lunar_allegiance_1"
+      ],
+      "x": 205,
+      "y": 9,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wurt_shadow_allegiance_2",
+      "n": 28,
+      "group": "affinity",
+      "name": "大地腐蚀",
+      "desc": "习得配方：沃特可以使用绝望投泥带创造一片短暂存在的暗影沼泽地块，沃特及其所雇佣的鱼人和忠诚鱼人守卫等在暗影沼泽地块上攻击时有 50% 概率会尝试在攻击目标周围生成一个暗影触手辅助攻击该目标。",
+      "recipes": [
+        "1 浮木片 + 1 沼泽地皮 + 1 纯粹恐惧 → 1 绝望投泥带"
+      ],
+      "requires": [
+        "wurt_shadow_allegiance_1"
+      ],
+      "lock": "lock_affinity",
+      "x": 205,
+      "y": 48,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "locks": [
+    {
+      "id": "lock_affinity",
+      "group": "affinity",
+      "count": 12,
+      "fromGroups": [
+        "amphibian",
+        "merm"
+      ],
+      "desc": "学习 12 个其他技能后解锁亲和分支",
+      "nodes": [
+        {
+          "x": 189.2,
+          "y": -104.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "学习 12 个其他技能后解锁亲和分支"
+        },
+        {
+          "x": 170.2,
+          "y": -65.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 208.2,
+          "y": -65.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 170.2,
+          "y": -26.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        },
+        {
+          "x": 208.2,
+          "y": -26.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "这里有锁文案需要替换"
+        }
+      ]
+    }
+  ],
+  "builds": [],
+  "modes": [
+    {
+      "id": "solo-lunar",
+      "tags": [
+        "单人",
+        "月后"
+      ],
+      "name": "单人月后",
+      "text": "在这里写单人月后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-shadow",
+      "tags": [
+        "单人",
+        "影后"
+      ],
+      "name": "单人影后",
+      "text": "在这里写单人影后加点",
+      "skills": []
+    },
+    {
+      "id": "solo-both",
+      "tags": [
+        "单人",
+        "月后",
+        "影后"
+      ],
+      "name": "单人月后影后",
+      "text": "在这里写单人月后影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-lunar",
+      "tags": [
+        "多人",
+        "月后"
+      ],
+      "name": "多人月后",
+      "text": "在这里写多人月后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-shadow",
+      "tags": [
+        "多人",
+        "影后"
+      ],
+      "name": "多人影后",
+      "text": "在这里写多人影后加点",
+      "skills": []
+    },
+    {
+      "id": "multi-both",
+      "tags": [
+        "多人",
+        "月后",
+        "影后"
+      ],
+      "name": "多人月后影后",
+      "text": "在这里写多人月后影后加点",
+      "skills": []
+    }
+  ]
+}

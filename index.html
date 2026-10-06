@@ -53,7 +53,8 @@
     font-size: 14px;
     color: #cbb892;
   }
-  .toolbar select {
+  .toolbar select,
+  .char-picker-btn {
     background: rgba(28, 20, 12, .9);
     color: #f0e2c0;
     border: 1px solid #8a6a32;
@@ -61,6 +62,47 @@
     padding: 5px 8px;
     font-size: 14px;
     font-family: inherit;
+  }
+  .char-picker { position: relative; }
+  .char-picker-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 7.5em;
+    cursor: pointer;
+  }
+  .char-picker-menu {
+    position: absolute;
+    z-index: 15;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 100%;
+    padding: 4px 0;
+    background: rgba(22, 16, 10, .98);
+    border: 1px solid #8a6a32;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.45);
+  }
+  .char-option {
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    background: transparent;
+    border: 0;
+    color: #f0e2c0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .char-option:hover,
+  .char-option.current { color: #f0d060; background: #3a3418; }
+  .char-option.is-locked,
+  .char-option.is-locked:hover {
+    color: #6d5c48;
+    background: transparent;
+    cursor: default;
   }
   .status-bar {
     display: flex;
@@ -207,18 +249,19 @@
     justify-content: center;
     align-items: center;
     gap: 12px;
-    min-height: 86px;
     padding: 12px 16px;
   }
+  .stage-head.preset .insight-bar { min-height: 86px; }
   .mode-stack {
+    display: none;
     justify-self: end;
     align-self: start;
-    display: flex;
     flex-direction: column;
     gap: 6px;
     padding: 8px 12px 0 0;
     z-index: 2;
   }
+  .mode-stack.is-open { display: flex; }
   .mode-row { display: flex; gap: 6px; }
   .mode-btn {
     width: 28px;
@@ -338,7 +381,9 @@
       flex-direction: column;
       align-items: stretch;
     }
-    .toolbar select { width: 100%; }
+    .toolbar select,
+    .char-picker,
+    .char-picker-btn { width: 100%; }
     .stage-head { display: flex; flex-direction: column; }
     .mode-stack {
       order: -1;
@@ -363,7 +408,13 @@
 
 <div class="toolbar">
   <div>
-    <select id="char-select"></select>
+    <div class="char-picker" id="char-picker">
+      <button type="button" class="char-picker-btn" id="char-picker-btn">
+        <span id="char-picker-label">选择人物</span>
+        <span aria-hidden="true">▾</span>
+      </button>
+      <div class="char-picker-menu" id="char-picker-menu" hidden></div>
+    </div>
   </div>
   <select id="build-select">
     <option value="">自由加点</option>
@@ -372,7 +423,7 @@
 
 <div class="load-error" id="load-error" hidden></div>
 
-<div class="stage-head">
+<div class="stage-head" id="stage-head">
   <div class="insight-bar">
     <span class="insight-box" id="points-text">15</span>
     <span class="insight-label">剩余洞察</span>
