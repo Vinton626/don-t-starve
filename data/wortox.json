@@ -522,35 +522,35 @@
         "naughty",
         "neutral"
       ],
-      "desc": "学习 12 个其他技能后解锁亲和分支",
+      "desc": "亲和锁",
       "nodes": [
         {
           "x": -28.8,
           "y": 5.3,
           "w": 25.6,
           "h": 25.6,
-          "tip": "学习 12 个其他技能后解锁亲和分支"
+          "tip": "找到并击败天体英雄"
         },
         {
           "x": 11.2,
           "y": 5.3,
           "w": 25.6,
           "h": 25.6,
-          "tip": "这里有锁文案需要替换"
+          "tip": "找到并击败远古织影者"
         },
         {
           "x": -28.8,
           "y": -28.7,
           "w": 25.6,
           "h": 25.6,
-          "tip": "这里有锁文案需要替换"
+          "tip": "没有暗影亲和"
         },
         {
           "x": 11.2,
           "y": -28.7,
           "w": 25.6,
           "h": 25.6,
-          "tip": "这里有锁文案需要替换"
+          "tip": "没有月亮亲和"
         }
       ]
     }
@@ -558,8 +558,8 @@
   "builds": [
     {
       "id": "init",
-      "name": "初始化加点建议",
-      "text": "在这里写初始化加点建议",
+      "name": "汋月的加点建议",
+      "text": "在这里写汋月的加点建议",
       "skills": [],
       "modes": [
         {
@@ -572,7 +572,19 @@
           ],
           "name": "单人月前影前·好孩子",
           "text": "在这里写单人月前影前好孩子加点",
-          "skills": []
+          "skills": [
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_soulprotector_3",
+            "wortox_soulprotector_4"
+          ]
         },
         {
           "id": "solo-none-naughty",
@@ -759,7 +771,7 @@
   ],
   "scale": {
     "x": 0,
-    "y": 123,
+    "y": -168,
     "note": [
       "如果沃拓克斯学习的好孩子技能比淘气包技能多 3 个及以上，那么将获得“好孩子倾向”；反之，如果学习的淘气包技能比好孩子技能多 3 个及以上，那么将获得“淘气包倾向”。",
       "如果学习了任意亲和技能，获得倾向只需一侧技能比另一侧多 2 个及以上即可。",
