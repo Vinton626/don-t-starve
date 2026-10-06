@@ -837,7 +837,7 @@ function cardHTML(skill, extraClass) {
         ${num}
         <span class="desc-name">${skill.name}</span>
       </div>
-      <div class="desc-body">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
+      <div class="desc-text">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
       ${recipes ? `<ul class="desc-recipes">${recipes}</ul>` : ""}
       ${prereq}
     </div>`;
@@ -1084,12 +1084,15 @@ function applySkillList(ids) {
   state.learned.clear();
   state.selected.clear();
   state.points = state.tree.points;
+  const budget = state.points;
   for (const id of ids || []) {
-    if (state.selected.size >= state.points) break;
-    const next = ownedSet();
+    if (state.learned.size >= budget) break;
+    const next = new Set(state.learned);
     next.add(id);
-    if (canSelect(id, next)) state.selected.add(id);
+    if (!canSelect(id, next)) continue;
+    state.learned.add(id);
   }
+  state.points = budget - state.learned.size;
   state.focusedId = (ids && ids[ids.length - 1]) || null;
   state.stickyId = state.focusedId;
   render();
@@ -1119,18 +1122,18 @@ function schemeGap(scheme) {
   return { title: matched[1], body: matched[2].trim() || matched[1] };
 }
 
-function announceScheme(scheme) {
+function announceScheme(scheme, sticky) {
   const gap = schemeGap(scheme);
   if (gap) {
-    showDataPop(gap.title, gap.body, true);
+    showDataPop(gap.title, gap.body, sticky);
     return;
   }
   if (!scheme) {
-    showDataPop("没有方案", "这个组合还没有写入加点", true);
+    showDataPop("没有方案", "这个组合还没有写入加点", sticky);
     return;
   }
   const body = [scheme.name, scheme.text].filter(Boolean).join("\n");
-  showDataPop(modeLine(), body, !!body);
+  showDataPop(modeLine(), body, sticky);
 }
 
 function syncPresetChrome() {
@@ -1172,7 +1175,7 @@ function applyBuild(buildId, opts = {}) {
   const scheme = showPresetAllocation();
   writeSelectionQuery();
   if (opts.quiet) return;
-  announceScheme(scheme);
+  announceScheme(scheme, true);
 }
 
 function usesAlignment(build) {
@@ -1237,8 +1240,9 @@ function showDataPop(title, body, sticky) {
   text.textContent = body || "";
   text.hidden = !body;
   if (close) close.hidden = !sticky;
+  pop.classList.toggle("is-toast", !sticky);
   pop.hidden = false;
-  if (!sticky) schemeTimer = setTimeout(() => { pop.hidden = true; }, 1600);
+  if (!sticky) schemeTimer = setTimeout(() => { pop.hidden = true; }, 2400);
 }
 
 function hideModeTip() {
@@ -1275,7 +1279,7 @@ function onModeClick(kind) {
   paintModes();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
-  announceScheme(scheme);
+  announceScheme(scheme, false);
 }
 
 function onAlignClick(kind) {
@@ -1285,7 +1289,7 @@ function onAlignClick(kind) {
   paintModes();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
-  announceScheme(scheme);
+  announceScheme(scheme, false);
 }
 
 $("nodes").addEventListener("click", e => {
