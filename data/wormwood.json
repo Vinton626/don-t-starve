@@ -17,11 +17,6 @@
       "id": "right",
       "name": "右分枝",
       "x": 142
-    },
-    {
-      "id": "affinity",
-      "name": "亲和",
-      "x": -210
     }
   ],
   "skills": [
@@ -371,7 +366,7 @@
     {
       "id": "wormwood_allegiance_lunar_mutations_1",
       "n": 22,
-      "group": "affinity",
+      "group": "left",
       "name": "月亮耕耘者 I",
       "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。消耗 1 个胡萝卜和 5 text-center 制作一个特殊的胡萝卜鼠，自动为你拾取周围的食物并送入物品栏。具有 25 点生命值，持续 3 天，至多召唤 4 只。",
       "requires": [],
@@ -384,7 +379,7 @@
     {
       "id": "wormwood_allegiance_lunar_mutations_2",
       "n": 23,
-      "group": "affinity",
+      "group": "left",
       "name": "月亮耕耘者 II",
       "desc": "消耗 1 个荧光果和 10 text-center 制作一个特殊的球状光虫，跟随玩家并照明。具有 25 点生命值，持续 2.5 天，至多召唤 6 只。召唤的球状光虫数量越多，照明范围越大。",
       "requires": [
@@ -399,7 +394,7 @@
     {
       "id": "wormwood_allegiance_lunar_mutations_3",
       "n": 24,
-      "group": "affinity",
+      "group": "left",
       "name": "月亮耕耘者 III",
       "desc": "消耗 1 个火龙果和 25 text-center 制作一个特殊的沙拉蝾螈，为你作战。具有 600 点生命值和 40 点攻击力，持续 2 天，至多召唤 2 只。召唤 2 只沙拉蝾螈时，沙拉蝾螈的生命值提高到 900。",
       "requires": [
@@ -414,7 +409,7 @@
     {
       "id": "wormwood_allegiance_lunar_plant_gear_1",
       "n": 25,
-      "group": "affinity",
+      "group": "right",
       "name": "月亮守卫 I",
       "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。穿着亮茄盔甲时受到攻击会禁锢攻击者 6 秒。习得配方：",
       "recipes": [
@@ -430,7 +425,7 @@
     {
       "id": "wormwood_allegiance_lunar_plant_gear_2",
       "n": 26,
-      "group": "affinity",
+      "group": "right",
       "name": "月亮守卫 II",
       "desc": "使用亮茄剑、亮茄粉碎者或亮茄锄铲进行攻击时，每次攻击有 20% 概率召唤一个亮茄触手。",
       "requires": [

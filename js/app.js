@@ -13,9 +13,6 @@ const state = {
   shadow: false,
   players: null,
   preset: false,
-  altDown: false,
-  mouseX: 0,
-  mouseY: 0,
   selected: new Set(),
   learned: new Set(),
   nodeEls: {},
@@ -43,14 +40,57 @@ function skillLockIds(skill) {
   return [];
 }
 
-function lockSatisfied(lock, owned) {
+function scopeGroupIds(scope, lock) {
+  if (scope === "其他" || scope === "其它") {
+    return state.tree.groups.filter(g => g.id !== lock.group).map(g => g.id);
+  }
+  const names = scope.split(/和|与|、|或|及/).map(s => s.trim()).filter(Boolean);
+  const ids = [];
+  names.forEach(name => {
+    state.tree.groups.forEach(g => {
+      if (g.name === name) ids.push(g.id);
+    });
+  });
+  return ids;
+}
+
+function learnedMatches(lock, owned, groupIds, nameNeedle) {
   let n = 0;
   for (const s of state.tree.skills) {
-    if (!lock.fromGroups.includes(s.group)) continue;
     if (skillLockIds(s).includes(lock.id)) continue;
+    if (groupIds) {
+      if (!groupIds.includes(s.group)) continue;
+    } else if (!s.name || !s.name.includes(nameNeedle)) {
+      continue;
+    }
     if (owned.has(s.id)) n++;
   }
-  return n >= lock.count;
+  return n;
+}
+
+// 锁开不开只看描述里写的条件，不再默认「亲和要 12 个」。
+function lockTextMet(text, lock, owned) {
+  const raw = text || "";
+  const counted = raw.match(/学习\s*(\d+)\s*个(.+?)技能/);
+  if (counted) {
+    const need = Number(counted[1]);
+    const scope = counted[2].trim();
+    const groupIds = scopeGroupIds(scope, lock);
+    const n = groupIds.length
+      ? learnedMatches(lock, owned, groupIds)
+      : learnedMatches(lock, owned, null, scope);
+    return n >= need;
+  }
+  const named = raw.match(/需要学会「([^」]+)」/);
+  if (named) {
+    const skill = state.tree.skills.find(s => s.name === named[1]);
+    return !!(skill && owned.has(skill.id));
+  }
+  return true;
+}
+
+function lockSatisfied(lock, owned) {
+  return lockTextMet(lock.desc || "", lock, owned);
 }
 
 function affinityTaken(kind) {
@@ -297,29 +337,54 @@ function groupFrame(groupId, fallbackX) {
   };
 }
 
-function titlePoint(frame) {
-  // 竖直块：名称在块顶正中。
-  // 横向块：同样以包围盒水平居中，但基线跟着这一块自己的上沿，不跟其他列对齐。
-  return { x: frame.cx, y: frame.top - 16 };
+function titlePoint(frame, group) {
+  if (group && group.titleAt) {
+    return { x: group.titleAt.x, y: group.titleAt.y, middle: true };
+  }
+  // 名称在这一块自己的上沿正中，不跟其他列对齐。
+  return { x: frame.cx, y: frame.top - 16, middle: false };
 }
 
-function buildGroupTitles() {
-  const layer = $("group-titles");
-  layer.innerHTML = "";
-  state.tree.groups.forEach(g => {
-    const frame = groupFrame(g.id, g.x);
-    const at = titlePoint(frame);
-    g._cx = frame.cx;
-    const hit = svgEl("rect", {
-      class: "group-title-hit",
-      x: at.x,
-      y: at.y,
-      width: 1,
-      height: 1,
-      fill: "transparent"
+function appendGroupTitle(layer, g, frame) {
+  const texts = [];
+  if (g.titleSide === "left" || g.titleSide === "right") {
+    const chars = Array.from(g.name);
+    const step = 18;
+    let x;
+    let start;
+    if (g.titlePin) {
+      const skill = state.tree.skills.find(s => s.n === g.titlePin.n);
+      const cy = skill.y + skill.h / 2;
+      const idx = Math.max(0, chars.indexOf(g.titlePin.char));
+      start = cy - idx * step;
+      const gap = 20;
+      x = g.titleSide === "left" ? skill.x - gap : skill.x + skill.w + gap;
+    } else if (g.titleSide === "left") {
+      x = frame.left - 20;
+      start = frame.cy - ((chars.length - 1) * step) / 2;
+    } else {
+      x = frame.left + frame.width + 20;
+      start = frame.cy - ((chars.length - 1) * step) / 2;
+    }
+    chars.forEach((ch, i) => {
+      const title = svgEl("text", {
+        class: "group-title",
+        x,
+        y: start + i * step,
+        "text-anchor": "middle",
+        "dominant-baseline": "middle",
+        "font-size": "14",
+        "font-weight": "bold",
+        fill: "#8a7030"
+      });
+      title.dataset.group = g.id;
+      title.textContent = ch;
+      layer.appendChild(title);
+      texts.push(title);
     });
-    hit.dataset.group = g.id;
-    const title = svgEl("text", {
+  } else {
+    const at = titlePoint(frame, g);
+    const attrs = {
       class: "group-title",
       x: at.x,
       y: at.y,
@@ -328,23 +393,50 @@ function buildGroupTitles() {
       "font-weight": "bold",
       "letter-spacing": "3",
       fill: "#8a7030"
-    });
+    };
+    if (at.middle) attrs["dominant-baseline"] = "middle";
+    const title = svgEl("text", attrs);
     title.dataset.group = g.id;
     title.textContent = g.name;
-    if (g.tip) {
-      hit.classList.add("has-note");
-      title.classList.add("has-note");
-      hit.dataset.tip = g.tip;
-      hit.addEventListener("mouseenter", () => showNoteTip(hit));
-      hit.addEventListener("mouseleave", scheduleHideNoteTip);
-    }
     layer.appendChild(title);
+    texts.push(title);
+  }
+
+  const hit = svgEl("rect", {
+    class: "group-title-hit",
+    fill: "transparent"
+  });
+  hit.dataset.group = g.id;
+  if (g.tip) {
+    hit.classList.add("has-note");
+    texts.forEach(title => title.classList.add("has-note"));
+    hit.dataset.tip = g.tip;
+    hit.addEventListener("mouseenter", () => showNoteTip(hit));
+    hit.addEventListener("mouseleave", scheduleHideNoteTip);
+  }
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  texts.forEach(title => {
     const box = title.getBBox();
-    hit.setAttribute("x", box.x - 4);
-    hit.setAttribute("y", box.y - 2);
-    hit.setAttribute("width", box.width + 8);
-    hit.setAttribute("height", box.height + 4);
-    layer.appendChild(hit);
+    minX = Math.min(minX, box.x);
+    minY = Math.min(minY, box.y);
+    maxX = Math.max(maxX, box.x + box.width);
+    maxY = Math.max(maxY, box.y + box.height);
+  });
+  hit.setAttribute("x", minX - 4);
+  hit.setAttribute("y", minY - 2);
+  hit.setAttribute("width", Math.max(1, maxX - minX + 8));
+  hit.setAttribute("height", Math.max(1, maxY - minY + 4));
+  layer.appendChild(hit);
+}
+
+function buildGroupTitles() {
+  const layer = $("group-titles");
+  layer.innerHTML = "";
+  state.tree.groups.forEach(g => {
+    appendGroupTitle(layer, g, groupFrame(g.id, g.x != null ? g.x : 0));
   });
 }
 
@@ -377,8 +469,6 @@ function buildDescColumns() {
     const label = document.createElement("div");
     label.className = "parent-label";
     label.dataset.group = g.id;
-    const cx = g._cx != null ? g._cx : g.x;
-    label.style.left = ((cx + 300) / 600) * 100 + "%";
     label.textContent = g.name;
     if (g.tip) {
       label.classList.add("has-note");
@@ -467,7 +557,7 @@ function updateNodeVisual(id) {
     const lock = state.lockMap[el.dataset.lock];
     const idx = Number(String(id).slice(lock.id.length + 1));
     const node = lock.nodes[idx];
-    const open = !nodeIsSealed(node, lock) && lockSatisfied(lock, state.learned);
+    const open = !nodeIsSealed(node, lock) && lockTextMet((node && node.tip) || lock.desc || "", lock, state.learned);
     const hot = state.hoveredLockNode === id;
     el.setAttribute("fill", open ? "#3a3418" : "#241816");
     el.setAttribute("stroke", hot ? "#f2f2f2" : (open ? "#c9a227" : "#6a3030"));
@@ -560,22 +650,26 @@ function scheduleHideNoteTip() {
 function placeLockTip() {
   const tip = $("lock-tip");
   if (!tip) return;
-  if (!state.altDown || !state.lockTip) {
+  const el = state.hoveredLockNode ? state.nodeEls[state.hoveredLockNode] : null;
+  if (!state.lockTip || !el) {
     tip.hidden = true;
     return;
   }
   tip.hidden = false;
   tip.textContent = state.lockTip;
   const pad = 12;
-  let x = state.mouseX + 16;
-  let y = state.mouseY + 18;
+  const anchor = el.getBoundingClientRect();
+  const maxW = Math.max(140, Math.min(280, window.innerWidth - pad * 2));
+  tip.style.maxWidth = maxW + "px";
+  tip.style.left = pad + "px";
+  tip.style.top = pad + "px";
+  const box = tip.getBoundingClientRect();
+  let x = anchor.left + anchor.width / 2 - box.width / 2;
+  let y = anchor.bottom + 8;
+  x = Math.min(Math.max(pad, x), Math.max(pad, window.innerWidth - pad - box.width));
+  if (y + box.height > window.innerHeight - pad) y = Math.max(pad, anchor.top - box.height - 8);
   tip.style.left = x + "px";
   tip.style.top = y + "px";
-  const rect = tip.getBoundingClientRect();
-  if (x + rect.width > window.innerWidth - pad) x = state.mouseX - rect.width - 12;
-  if (y + rect.height > window.innerHeight - pad) y = state.mouseY - rect.height - 12;
-  tip.style.left = Math.max(pad, x) + "px";
-  tip.style.top = Math.max(pad, y) + "px";
 }
 
 function render() {
@@ -825,31 +919,6 @@ $("nodes").addEventListener("mouseout", e => {
     state.hoveredId = null;
   }
   render();
-});
-
-window.addEventListener("mousemove", e => {
-  state.mouseX = e.clientX;
-  state.mouseY = e.clientY;
-  state.altDown = e.altKey;
-  placeLockTip();
-});
-
-window.addEventListener("keydown", e => {
-  if (e.key !== "Alt") return;
-  e.preventDefault();
-  state.altDown = true;
-  placeLockTip();
-});
-
-window.addEventListener("keyup", e => {
-  if (e.key !== "Alt") return;
-  state.altDown = false;
-  placeLockTip();
-});
-
-window.addEventListener("blur", () => {
-  state.altDown = false;
-  placeLockTip();
 });
 
 window.addEventListener("resize", () => {

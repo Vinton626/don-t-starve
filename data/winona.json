@@ -6,17 +6,17 @@
     {
       "id": "low",
       "name": "底层",
-      "x": -100
+      "titleAt": { "x": 0, "y": 45 }
     },
     {
       "id": "mid",
       "name": "中层",
-      "x": -166
+      "titleAt": { "x": 0, "y": -55 }
     },
     {
-      "id": "affinity",
-      "name": "亲和",
-      "x": 179
+      "id": "high",
+      "name": "高层",
+      "titleAt": { "x": 0, "y": -85 }
     }
   ],
   "skills": [
@@ -54,7 +54,6 @@
         "1 电子元件 → 1 称手遥控器"
       ],
       "requires": [],
-      "lock": "lock_portable_structures",
       "x": -16,
       "y": 59,
       "w": 32,
@@ -93,7 +92,7 @@
       "name": "一级快速开火",
       "desc": "薇诺娜的投石机的攻击频率 + 5%。",
       "requires": [],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -116,
       "y": -1,
       "w": 32,
@@ -108,7 +107,7 @@
       "requires": [
         "winona_catapult_speed_1"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -166,
       "y": -1,
       "w": 32,
@@ -124,7 +123,7 @@
         "winona_catapult_speed_1",
         "winona_catapult_speed_2"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -216,
       "y": -1,
       "w": 32,
@@ -137,7 +136,7 @@
       "name": "一级高爆弹",
       "desc": "薇诺娜的投石机投出的石块的伤害半径 + 25%。",
       "requires": [],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -116,
       "y": -41,
       "w": 32,
@@ -152,7 +151,7 @@
       "requires": [
         "winona_catapult_aoe_1"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -166,
       "y": -41,
       "w": 32,
@@ -168,7 +167,7 @@
         "winona_catapult_aoe_1",
         "winona_catapult_aoe_2"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -216,
       "y": -41,
       "w": 32,
@@ -181,7 +180,7 @@
       "name": "一级大发电机",
       "desc": "薇诺娜的发电机和薇诺娜的宝石发电机的发电效率 + 25%。",
       "requires": [],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": 84,
       "y": -1,
       "w": 32,
@@ -196,7 +195,7 @@
       "requires": [
         "winona_battery_efficiency_1"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": 134,
       "y": -1,
       "w": 32,
@@ -212,7 +211,7 @@
         "winona_battery_efficiency_1",
         "winona_battery_efficiency_2"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": 184,
       "y": -1,
       "w": 32,
@@ -227,7 +226,7 @@
       "requires": [
         "winona_portable_structures"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": -51,
       "y": -1,
       "w": 32,
@@ -242,7 +241,7 @@
       "requires": [
         "winona_portable_structures"
       ],
-      "lock": "lock_midshelf",
+      "lock": "lock_lowshelf",
       "x": 19,
       "y": -1,
       "w": 32,
@@ -251,12 +250,11 @@
     {
       "id": "winona_shadow_1",
       "n": 17,
-      "group": "affinity",
+      "group": "high",
       "name": "噩梦发电机",
       "desc": "薇诺娜可以用噩梦燃料为薇诺娜的发电机添加燃料。",
       "requires": [],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": -136,
@@ -267,14 +265,13 @@
     {
       "id": "winona_shadow_2",
       "n": 18,
-      "group": "affinity",
+      "group": "high",
       "name": "纯粹恐惧发电机",
       "desc": "薇诺娜可以用纯粹恐惧为薇诺娜的发电机添加燃料。",
       "requires": [
         "winona_shadow_1"
       ],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": -126,
@@ -285,7 +282,7 @@
     {
       "id": "winona_shadow_3",
       "n": 19,
-      "group": "affinity",
+      "group": "high",
       "name": "暗影袭击",
       "desc": "薇诺娜可以用称手遥控器发出“位面袭击”指令，只有由含有纯粹恐惧的薇诺娜的发电机提供动力的薇诺娜的投石机会响应指令。",
       "requires": [
@@ -294,7 +291,6 @@
         "winona_shadow_2"
       ],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": -76,
@@ -305,7 +301,7 @@
     {
       "id": "winona_charlie_1",
       "n": 20,
-      "group": "affinity",
+      "group": "high",
       "name": "一级寻觅暗影",
       "desc": "薇诺娜装备玫瑰色眼镜时可以进行仔细检查。习得配方：",
       "recipes": [
@@ -313,7 +309,6 @@
       ],
       "requires": [],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": -186,
@@ -324,14 +319,13 @@
     {
       "id": "winona_charlie_2",
       "n": 21,
-      "group": "affinity",
+      "group": "high",
       "name": "二级寻觅暗影",
       "desc": "薇诺娜在黑暗中不再被查理袭击。可以使用脆弱玫瑰复活。仔细检查时将有概率获得纯粹恐惧。用玫瑰色眼镜仔细检查虫洞或硕大的泥坑并激活黑暗痕迹，可以传送至任意一个已经在地图上探索出来的虫洞或硕大的泥坑处。",
       "requires": [
         "winona_charlie_1"
       ],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": -236,
@@ -342,12 +336,11 @@
     {
       "id": "winona_lunar_1",
       "n": 22,
-      "group": "affinity",
+      "group": "high",
       "name": "启迪宝石发电机",
       "desc": "可以将启迪碎片插入薇诺娜的宝石发电机来发电。",
       "requires": [],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": 104,
@@ -358,14 +351,13 @@
     {
       "id": "winona_lunar_2",
       "n": 23,
-      "group": "affinity",
+      "group": "high",
       "name": "辉煌宝石发电机",
       "desc": "可以将纯粹辉煌插入薇诺娜的宝石发电机来发电。",
       "requires": [
         "winona_lunar_1"
       ],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": 94,
@@ -376,7 +368,7 @@
     {
       "id": "winona_lunar_3",
       "n": 24,
-      "group": "affinity",
+      "group": "high",
       "name": "启迪袭击",
       "desc": "薇诺娜可以用称手遥控器发出“位面袭击”指令，只有由含有纯粹辉煌的薇诺娜的宝石发电机提供动力的薇诺娜的投石机会响应指令。",
       "requires": [
@@ -385,7 +377,6 @@
         "winona_lunar_2"
       ],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": 44,
@@ -396,7 +387,7 @@
     {
       "id": "winona_wagstaff_1",
       "n": 25,
-      "group": "affinity",
+      "group": "high",
       "name": "一级创始人宝物猎人",
       "desc": "可以装备检查专用镜。可以部署薇机人。习得配方：",
       "recipes": [
@@ -404,7 +395,6 @@
       ],
       "requires": [],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": 154,
@@ -415,14 +405,13 @@
     {
       "id": "winona_wagstaff_2",
       "n": 26,
-      "group": "affinity",
+      "group": "high",
       "name": "二级创始人宝物猎人",
       "desc": "装备检查专用镜时，有 25% 概率刷出高级藏物箱。可以使用传送伞和部署传送运输站。",
       "requires": [
         "winona_wagstaff_1"
       ],
       "locks": [
-        "lock_lowshelf",
         "lock_midshelf"
       ],
       "x": 204,
@@ -435,32 +424,37 @@
     {
       "id": "lock_lowshelf",
       "group": "low",
-      "count": 0,
-      "fromGroups": [],
-      "desc": "解锁底层技能",
+      "count": 3,
+      "fromGroups": [
+        "low"
+      ],
+      "desc": "学习 3 个底层技能后解锁中层",
       "nodes": [
         {
           "x": -232.8,
           "y": 32.2,
           "w": 25.6,
           "h": 25.6,
-          "tip": "解锁底层技能"
+          "tip": "学习 3 个底层技能后解锁中层"
         }
       ]
     },
     {
       "id": "lock_midshelf",
       "group": "mid",
-      "count": 0,
-      "fromGroups": [],
-      "desc": "解锁中层技能",
+      "count": 6,
+      "fromGroups": [
+        "low",
+        "mid"
+      ],
+      "desc": "学习 6 个底层和中层技能后解锁高层",
       "nodes": [
         {
           "x": -232.8,
           "y": -67.8,
           "w": 25.6,
           "h": 25.6,
-          "tip": "解锁中层技能"
+          "tip": "学习 6 个底层和中层技能后解锁高层"
         }
       ]
     },
@@ -469,20 +463,20 @@
       "group": "low",
       "count": 0,
       "fromGroups": [],
-      "desc": "学习前置技能后解锁「便携移动」",
+      "desc": "需要学会「便携移动」",
       "nodes": [
         {
           "x": -12.8,
           "y": -17.8,
           "w": 25.6,
           "h": 25.6,
-          "tip": "学习前置技能后解锁「便携移动」"
+          "tip": "需要学会「便携移动」"
         }
       ]
     },
     {
       "id": "lock_shadow_3",
-      "group": "affinity",
+      "group": "high",
       "count": 0,
       "fromGroups": [],
       "desc": "学习前置技能后解锁「暗影袭击」",
@@ -498,7 +492,7 @@
     },
     {
       "id": "lock_charlie_2",
-      "group": "affinity",
+      "group": "high",
       "count": 0,
       "fromGroups": [],
       "desc": "学习前置技能后解锁「二级寻觅暗影」",
@@ -514,7 +508,7 @@
     },
     {
       "id": "lock_lunar_3",
-      "group": "affinity",
+      "group": "high",
       "count": 0,
       "fromGroups": [],
       "desc": "学习前置技能后解锁「启迪袭击」",
@@ -530,7 +524,7 @@
     },
     {
       "id": "lock_wagstaff_2",
-      "group": "affinity",
+      "group": "high",
       "count": 0,
       "fromGroups": [],
       "desc": "学习前置技能后解锁「二级创始人宝物猎人」",

@@ -1,604 +1,613 @@
 {
-  "id": "woodie",
-  "name": "伍迪",
-  "points": 15,
-  "groups": [
-    {
-      "id": "curse",
-      "name": "诅咒",
-      "x": -141
-    },
-    {
-      "id": "human",
-      "name": "伐木工",
-      "x": 55
-    },
-    {
-      "id": "affinity",
-      "name": "亲和",
-      "x": 184
-    }
-  ],
-  "skills": [
-    {
-      "id": "woodie_curse_weremeter_1",
-      "n": 1,
-      "group": "curse",
-      "name": "变形计时 I",
-      "desc": "变身时长 +20%。",
-      "requires": [],
-      "x": -223,
-      "y": -107,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_weremeter_2",
-      "n": 2,
-      "group": "curse",
-      "name": "变形计时 II",
-      "desc": "变身时长 +40%。",
-      "requires": [
-        "woodie_curse_weremeter_1"
-      ],
-      "x": -223,
-      "y": -68,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_weremeter_3",
-      "n": 3,
-      "group": "curse",
-      "name": "变形计时 III",
-      "desc": "变身时长 +80%。",
-      "requires": [
-        "woodie_curse_weremeter_1",
-        "woodie_curse_weremeter_2"
-      ],
-      "x": -223,
-      "y": -29,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_beaver_1",
-      "n": 4,
-      "group": "curse",
-      "name": "海狸人 I",
-      "desc": "海狸人啃咬的挖矿效率 +150%。（啃咬大部分岩石需要的次数 11 次 → 5 次）",
-      "requires": [],
-      "x": -158,
-      "y": -107,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_beaver_2",
-      "n": 5,
-      "group": "curse",
-      "name": "海狸人 II",
-      "desc": "海狸人啃咬的砍树效率 +80%。（啃咬大部分最大形态的树需要的次数 4 次 → 3 次）",
-      "requires": [
-        "woodie_curse_beaver_1"
-      ],
-      "x": -158,
-      "y": -68,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_beaver_3",
-      "n": 6,
-      "group": "curse",
-      "name": "海狸人 III",
-      "desc": "海狸人啃咬变为强力开采。",
-      "requires": [
-        "woodie_curse_beaver_1",
-        "woodie_curse_beaver_2"
-      ],
-      "x": -158,
-      "y": -29,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_epic_beaver",
-      "n": 7,
-      "group": "curse",
-      "name": "海狸人精通",
-      "desc": "海狸人可以进行拍击，效果为：\n- 消耗 5 变身值\n- 对 8 距离单位内的可作业实体进行 7 次作业\n- 对 2.5 距离单位内的可攻击对象造成 27.2 伤害。",
-      "requires": [
-        "woodie_curse_beaver_1",
-        "woodie_curse_beaver_2",
-        "woodie_curse_beaver_3"
-      ],
-      "lock": "lock_curse_beaver",
-      "x": -158,
-      "y": 49,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_moose_1",
-      "n": 8,
-      "group": "curse",
-      "name": "鹿人 I",
-      "desc": "鹿人冲撞撞击建筑后受到的减速效果时长 -85%。移除鹿人的 0.9 移动速度倍率。",
-      "requires": [],
-      "x": -113.5,
-      "y": -107,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_moose_2",
-      "n": 9,
-      "group": "curse",
-      "name": "鹿人 II",
-      "desc": "鹿人每 5 秒恢复 1.5 text-center。",
-      "requires": [
-        "woodie_curse_moose_1"
-      ],
-      "x": -113.5,
-      "y": -68,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_moose_3",
-      "n": 10,
-      "group": "curse",
-      "name": "鹿人 III",
-      "desc": "鹿人冲撞期间，点按任意移动键即可立刻停止冲撞。",
-      "requires": [
-        "woodie_curse_moose_1",
-        "woodie_curse_moose_2"
-      ],
-      "x": -113.5,
-      "y": -29,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_epic_moose",
-      "n": 11,
-      "group": "curse",
-      "name": "鹿人精通",
-      "desc": "鹿人连续攻击时，每两次攻击后，第三次攻击就会变成特殊的范围攻击。鹿人获得 15 位面防御。",
-      "requires": [
-        "woodie_curse_moose_1",
-        "woodie_curse_moose_2",
-        "woodie_curse_moose_3"
-      ],
-      "lock": "lock_curse_moose",
-      "x": -113.5,
-      "y": 49,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_goose_1",
-      "n": 12,
-      "group": "curse",
-      "name": "鹅人 I",
-      "desc": "鹅人的移动速度 +19%。（即由 8.4 提升至 10）",
-      "requires": [],
-      "x": -70,
-      "y": -107,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_goose_2",
-      "n": 13,
-      "group": "curse",
-      "name": "鹅人 II",
-      "desc": "鹅人获得 100% 防水。",
-      "requires": [
-        "woodie_curse_goose_1"
-      ],
-      "x": -70,
-      "y": -68,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_goose_3",
-      "n": 14,
-      "group": "curse",
-      "name": "鹅人 III",
-      "desc": "鹅人受攻击时，可以闪避该次伤害，该效果有 5 秒冷却。（与骨头盔甲相同）",
-      "requires": [
-        "woodie_curse_goose_1",
-        "woodie_curse_goose_2"
-      ],
-      "x": -70,
-      "y": -29,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_epic_goose",
-      "n": 15,
-      "group": "curse",
-      "name": "鹅人精通",
-      "desc": "鹅人可以进行腾飞。消耗 20 变身值传送到当前世界的随机位置（远古档案馆群系除外）。",
-      "requires": [
-        "woodie_curse_goose_1",
-        "woodie_curse_goose_2",
-        "woodie_curse_goose_3"
-      ],
-      "lock": "lock_curse_goose",
-      "x": -70,
-      "y": 49,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_curse_master",
-      "n": 16,
-      "group": "curse",
-      "name": "拥抱诅咒",
-      "desc": "食用俗气雕像不再降低生命值和理智值。变身结束后保留 22.5 text-center。",
-      "requires": [],
-      "lock": "lock_curse_master",
-      "x": -223,
-      "y": 49,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_quickpicker_1",
-      "n": 17,
-      "group": "human",
-      "name": "快速捡拾者 I",
-      "desc": "采集东西的速度 +15%。",
-      "requires": [],
-      "x": 19,
-      "y": -107,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_quickpicker_2",
-      "n": 18,
-      "group": "human",
-      "name": "快速捡拾者 II",
-      "desc": "采集东西的速度 +30%。",
-      "requires": [
-        "woodie_human_quickpicker_1"
-      ],
-      "x": 19,
-      "y": -70,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_quickpicker_3",
-      "n": 19,
-      "group": "human",
-      "name": "快速捡拾者 III",
-      "desc": "采集东西的速度 +45%。",
-      "requires": [
-        "woodie_human_quickpicker_1",
-        "woodie_human_quickpicker_2"
-      ],
-      "x": 19,
-      "y": -33,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_treeguard_1",
-      "n": 20,
-      "group": "human",
-      "name": "树精守卫伐木者 I",
-      "desc": "对树精守卫造成的伤害增加 41.41%。",
-      "requires": [],
-      "x": 91,
-      "y": -107,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_treeguard_2",
-      "n": 21,
-      "group": "human",
-      "name": "树精守卫伐木者 II",
-      "desc": "对树精守卫造成的伤害增加 100%。",
-      "requires": [
-        "woodie_human_treeguard_1"
-      ],
-      "x": 91,
-      "y": -70,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_treeguard_max",
-      "n": 22,
-      "group": "human",
-      "name": "树精守卫伐木者 III",
-      "desc": "习得配方：",
-      "recipes": [
-        "3 切制草 + 2 活木 + 5 噩梦燃料 → 1 树精雕像"
-      ],
-      "requires": [
-        "woodie_human_treeguard_1",
-        "woodie_human_treeguard_2"
-      ],
-      "x": 91,
-      "y": -33,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_lucy_1",
-      "n": 23,
-      "group": "human",
-      "name": "木工",
-      "desc": "习得新的木板配方：",
-      "recipes": [
-        "3 木头 → 1 木板（无需露西斧）"
-      ],
-      "requires": [],
-      "x": 55,
-      "y": 16,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_lucy_2",
-      "n": 24,
-      "group": "human",
-      "name": "帽子雕刻",
-      "desc": "习得配方：",
-      "recipes": [
-        "6 木头 + 1 松果 → 1 硬木帽"
-      ],
-      "requires": [
-        "woodie_human_lucy_1"
-      ],
-      "x": 27,
-      "y": 55,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_human_lucy_3",
-      "n": 25,
-      "group": "human",
-      "name": "拐杖雕刻",
-      "desc": "习得配方：",
-      "recipes": [
-        "3 木头 + 1 木炭 → 1 木制手杖"
-      ],
-      "requires": [
-        "woodie_human_lucy_1"
-      ],
-      "x": 86,
-      "y": 55,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_allegiance_shadow",
-      "n": 26,
-      "group": "affinity",
-      "name": "暗影牧人",
-      "desc": "伍迪获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。任意变身状态期间，暗影臣民不主动仇恨伍迪。",
-      "requires": [],
-      "lock": "lock_affinity",
-      "exclusiveWith": [
-        "woodie_allegiance_lunar"
-      ],
-      "x": 160,
-      "y": 26,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "id": "woodie_allegiance_lunar",
-      "n": 27,
-      "group": "affinity",
-      "name": "月亮叛徒",
-      "desc": "伍迪获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。满月时，伍迪不会强制变身。",
-      "requires": [],
-      "lock": "lock_affinity",
-      "exclusiveWith": [
-        "woodie_allegiance_shadow"
-      ],
-      "x": 207,
-      "y": 26,
-      "w": 32,
-      "h": 32
-    }
-  ],
-  "locks": [
-    {
-      "id": "lock_curse_beaver",
-      "group": "curse",
-      "count": 3,
-      "fromGroups": [
-        "curse"
-      ],
-      "desc": "学习 3 个海狸人技能后解锁「海狸人精通」",
-      "nodes": [
-        {
-          "x": -154.8,
-          "y": 13.2,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "学习 3 个海狸人技能后解锁「海狸人精通」"
-        }
-      ]
-    },
-    {
-      "id": "lock_curse_moose",
-      "group": "curse",
-      "count": 3,
-      "fromGroups": [
-        "curse"
-      ],
-      "desc": "学习 3 个鹿人技能后解锁「鹿人精通」",
-      "nodes": [
-        {
-          "x": -110.3,
-          "y": 13.2,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "学习 3 个鹿人技能后解锁「鹿人精通」"
-        }
-      ]
-    },
-    {
-      "id": "lock_curse_goose",
-      "group": "curse",
-      "count": 3,
-      "fromGroups": [
-        "curse"
-      ],
-      "desc": "学习 3 个鹅人技能后解锁「鹅人精通」",
-      "nodes": [
-        {
-          "x": -66.8,
-          "y": 13.2,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "学习 3 个鹅人技能后解锁「鹅人精通」"
-        }
-      ]
-    },
-    {
-      "id": "lock_curse_master",
-      "group": "curse",
-      "count": 12,
-      "fromGroups": [
-        "curse"
-      ],
-      "desc": "学习 12 个诅咒技能后解锁「拥抱诅咒」",
-      "nodes": [
-        {
-          "x": -219.8,
-          "y": 13.2,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "学习 12 个诅咒技能后解锁「拥抱诅咒」"
-        }
-      ]
-    },
-    {
-      "id": "lock_affinity",
-      "group": "affinity",
-      "count": 12,
-      "fromGroups": [
-        "curse",
-        "human"
-      ],
-      "desc": "学习 12 个其他技能后解锁亲和分支",
-      "nodes": [
-        {
-          "x": 186.2,
-          "y": -103.8,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "学习 12 个其他技能后解锁亲和分支"
-        },
-        {
-          "x": 163.2,
-          "y": -60.8,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "这里有锁文案需要替换"
-        },
-        {
-          "x": 210.2,
-          "y": -60.8,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "这里有锁文案需要替换"
-        },
-        {
-          "x": 163.2,
-          "y": -16.8,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "这里有锁文案需要替换"
-        },
-        {
-          "x": 210.2,
-          "y": -16.8,
-          "w": 25.6,
-          "h": 25.6,
-          "tip": "这里有锁文案需要替换"
-        }
-      ]
-    }
-  ],
-  "builds": [],
-  "modes": [
-    {
-      "id": "solo-lunar",
-      "tags": [
-        "单人",
-        "月后"
-      ],
-      "name": "单人月后",
-      "text": "在这里写单人月后加点",
-      "skills": []
-    },
-    {
-      "id": "solo-shadow",
-      "tags": [
-        "单人",
-        "影后"
-      ],
-      "name": "单人影后",
-      "text": "在这里写单人影后加点",
-      "skills": []
-    },
-    {
-      "id": "solo-both",
-      "tags": [
-        "单人",
-        "月后",
-        "影后"
-      ],
-      "name": "单人月后影后",
-      "text": "在这里写单人月后影后加点",
-      "skills": []
-    },
-    {
-      "id": "multi-lunar",
-      "tags": [
-        "多人",
-        "月后"
-      ],
-      "name": "多人月后",
-      "text": "在这里写多人月后加点",
-      "skills": []
-    },
-    {
-      "id": "multi-shadow",
-      "tags": [
-        "多人",
-        "影后"
-      ],
-      "name": "多人影后",
-      "text": "在这里写多人影后加点",
-      "skills": []
-    },
-    {
-      "id": "multi-both",
-      "tags": [
-        "多人",
-        "月后",
-        "影后"
-      ],
-      "name": "多人月后影后",
-      "text": "在这里写多人月后影后加点",
-      "skills": []
-    }
-  ]
-}
+    "id": "woodie",
+    "name": "伍迪",
+    "points": 15,
+    "groups": [
+      {
+        "id": "curse",
+        "name": "诅咒",
+        "x": -141,
+        "note": [
+          "当在变身期间站立不动且未执行那些重置下降速度的特定操作时，上述三个变身计时技能点将暂时不生效，变身值下降速度将提升至未开启技能点时的下降速度。",
+          "鹿人的特殊攻击具体效果如下：",
+          "- 第二击和第三击动作期间，免疫受击硬直；",
+          "- 第三击对 2 距离单位内的单位造成 136 点物理伤害；若具有位面实体抵抗，还将额外造成 80 点位面伤害。",
+          "- 第三击对具有位面实体抵抗的单位总计会造成 146.6 伤害。"
+        ]
+      },
+      {
+        "id": "human",
+        "name": "伐木工",
+        "x": 55,
+        "note": []
+      },
+      {
+        "id": "affinity",
+        "name": "亲和",
+        "x": 184,
+        "note": []
+      }
+    ],
+    "skills": [
+      {
+        "id": "woodie_curse_weremeter_1",
+        "n": 1,
+        "group": "curse",
+        "name": "变形计时 I",
+        "desc": "变身时长 +20%。",
+        "requires": [],
+        "x": -223,
+        "y": -107,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_weremeter_2",
+        "n": 2,
+        "group": "curse",
+        "name": "变形计时 II",
+        "desc": "变身时长 +40%。",
+        "requires": [
+          "woodie_curse_weremeter_1"
+        ],
+        "x": -223,
+        "y": -68,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_weremeter_3",
+        "n": 3,
+        "group": "curse",
+        "name": "变形计时 III",
+        "desc": "变身时长 +80%。",
+        "requires": [
+          "woodie_curse_weremeter_1",
+          "woodie_curse_weremeter_2"
+        ],
+        "x": -223,
+        "y": -29,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_beaver_1",
+        "n": 4,
+        "group": "curse",
+        "name": "海狸人 I",
+        "desc": "海狸人啃咬的挖矿效率 +150%。（啃咬大部分岩石需要的次数 11 次 → 5 次）",
+        "requires": [],
+        "x": -158,
+        "y": -107,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_beaver_2",
+        "n": 5,
+        "group": "curse",
+        "name": "海狸人 II",
+        "desc": "海狸人啃咬的砍树效率 +80%。（啃咬大部分最大形态的树需要的次数 4 次 → 3 次）",
+        "requires": [
+          "woodie_curse_beaver_1"
+        ],
+        "x": -158,
+        "y": -68,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_beaver_3",
+        "n": 6,
+        "group": "curse",
+        "name": "海狸人 III",
+        "desc": "海狸人啃咬变为强力开采。",
+        "requires": [
+          "woodie_curse_beaver_1",
+          "woodie_curse_beaver_2"
+        ],
+        "x": -158,
+        "y": -29,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_epic_beaver",
+        "n": 7,
+        "group": "curse",
+        "name": "海狸人精通",
+        "desc": "海狸人可以进行拍击，效果为：\n- 消耗 5 变身值\n- 对 8 距离单位内的可作业实体进行 7 次作业\n- 对 2.5 距离单位内的可攻击对象造成 27.2 伤害。",
+        "requires": [
+          "woodie_curse_beaver_1",
+          "woodie_curse_beaver_2",
+          "woodie_curse_beaver_3"
+        ],
+        "lock": "lock_curse_beaver",
+        "x": -158,
+        "y": 49,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_moose_1",
+        "n": 8,
+        "group": "curse",
+        "name": "鹿人 I",
+        "desc": "鹿人冲撞撞击建筑后受到的减速效果时长 -85%。移除鹿人的 0.9 移动速度倍率。",
+        "requires": [],
+        "x": -113.5,
+        "y": -107,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_moose_2",
+        "n": 9,
+        "group": "curse",
+        "name": "鹿人 II",
+        "desc": "鹿人每 5 秒恢复 1.5 text-center。",
+        "requires": [
+          "woodie_curse_moose_1"
+        ],
+        "x": -113.5,
+        "y": -68,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_moose_3",
+        "n": 10,
+        "group": "curse",
+        "name": "鹿人 III",
+        "desc": "鹿人冲撞期间，点按任意移动键即可立刻停止冲撞。",
+        "requires": [
+          "woodie_curse_moose_1",
+          "woodie_curse_moose_2"
+        ],
+        "x": -113.5,
+        "y": -29,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_epic_moose",
+        "n": 11,
+        "group": "curse",
+        "name": "鹿人精通",
+        "desc": "鹿人连续攻击时，每两次攻击后，第三次攻击就会变成特殊的范围攻击。鹿人获得 15 位面防御。",
+        "requires": [
+          "woodie_curse_moose_1",
+          "woodie_curse_moose_2",
+          "woodie_curse_moose_3"
+        ],
+        "lock": "lock_curse_moose",
+        "x": -113.5,
+        "y": 49,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_goose_1",
+        "n": 12,
+        "group": "curse",
+        "name": "鹅人 I",
+        "desc": "鹅人的移动速度 +19%。（即由 8.4 提升至 10）",
+        "requires": [],
+        "x": -70,
+        "y": -107,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_goose_2",
+        "n": 13,
+        "group": "curse",
+        "name": "鹅人 II",
+        "desc": "鹅人获得 100% 防水。",
+        "requires": [
+          "woodie_curse_goose_1"
+        ],
+        "x": -70,
+        "y": -68,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_goose_3",
+        "n": 14,
+        "group": "curse",
+        "name": "鹅人 III",
+        "desc": "鹅人受攻击时，可以闪避该次伤害，该效果有 5 秒冷却。（与骨头盔甲相同）",
+        "requires": [
+          "woodie_curse_goose_1",
+          "woodie_curse_goose_2"
+        ],
+        "x": -70,
+        "y": -29,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_epic_goose",
+        "n": 15,
+        "group": "curse",
+        "name": "鹅人精通",
+        "desc": "鹅人可以进行腾飞。消耗 20 变身值传送到当前世界的随机位置（远古档案馆群系除外）。",
+        "requires": [
+          "woodie_curse_goose_1",
+          "woodie_curse_goose_2",
+          "woodie_curse_goose_3"
+        ],
+        "lock": "lock_curse_goose",
+        "x": -70,
+        "y": 49,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_curse_master",
+        "n": 16,
+        "group": "curse",
+        "name": "拥抱诅咒",
+        "desc": "食用俗气雕像不再降低生命值和理智值。变身结束后保留 22.5 text-center。",
+        "requires": [],
+        "lock": "lock_curse_master",
+        "x": -223,
+        "y": 49,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_quickpicker_1",
+        "n": 17,
+        "group": "human",
+        "name": "快速捡拾者 I",
+        "desc": "采集东西的速度 +15%。",
+        "requires": [],
+        "x": 19,
+        "y": -107,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_quickpicker_2",
+        "n": 18,
+        "group": "human",
+        "name": "快速捡拾者 II",
+        "desc": "采集东西的速度 +30%。",
+        "requires": [
+          "woodie_human_quickpicker_1"
+        ],
+        "x": 19,
+        "y": -70,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_quickpicker_3",
+        "n": 19,
+        "group": "human",
+        "name": "快速捡拾者 III",
+        "desc": "采集东西的速度 +45%。",
+        "requires": [
+          "woodie_human_quickpicker_1",
+          "woodie_human_quickpicker_2"
+        ],
+        "x": 19,
+        "y": -33,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_treeguard_1",
+        "n": 20,
+        "group": "human",
+        "name": "树精守卫伐木者 I",
+        "desc": "对树精守卫造成的伤害增加 41.41%。",
+        "requires": [],
+        "x": 91,
+        "y": -107,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_treeguard_2",
+        "n": 21,
+        "group": "human",
+        "name": "树精守卫伐木者 II",
+        "desc": "对树精守卫造成的伤害增加 100%。",
+        "requires": [
+          "woodie_human_treeguard_1"
+        ],
+        "x": 91,
+        "y": -70,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_treeguard_max",
+        "n": 22,
+        "group": "human",
+        "name": "树精守卫伐木者 III",
+        "desc": "习得配方：",
+        "recipes": [
+          "3 切制草 + 2 活木 + 5 噩梦燃料 → 1 树精雕像"
+        ],
+        "requires": [
+          "woodie_human_treeguard_1",
+          "woodie_human_treeguard_2"
+        ],
+        "x": 91,
+        "y": -33,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_lucy_1",
+        "n": 23,
+        "group": "human",
+        "name": "木工",
+        "desc": "习得新的木板配方：",
+        "recipes": [
+          "3 木头 → 1 木板（无需露西斧）"
+        ],
+        "requires": [],
+        "x": 55,
+        "y": 16,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_lucy_2",
+        "n": 24,
+        "group": "human",
+        "name": "帽子雕刻",
+        "desc": "习得配方：",
+        "recipes": [
+          "6 木头 + 1 松果 → 1 硬木帽"
+        ],
+        "requires": [
+          "woodie_human_lucy_1"
+        ],
+        "x": 27,
+        "y": 55,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_human_lucy_3",
+        "n": 25,
+        "group": "human",
+        "name": "拐杖雕刻",
+        "desc": "习得配方：",
+        "recipes": [
+          "3 木头 + 1 木炭 → 1 木制手杖"
+        ],
+        "requires": [
+          "woodie_human_lucy_1"
+        ],
+        "x": 86,
+        "y": 55,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_allegiance_shadow",
+        "n": 26,
+        "group": "affinity",
+        "name": "暗影牧人",
+        "desc": "伍迪获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。任意变身状态期间，暗影臣民不主动仇恨伍迪。",
+        "requires": [],
+        "lock": "lock_affinity",
+        "exclusiveWith": [
+          "woodie_allegiance_lunar"
+        ],
+        "x": 160,
+        "y": 26,
+        "w": 32,
+        "h": 32
+      },
+      {
+        "id": "woodie_allegiance_lunar",
+        "n": 27,
+        "group": "affinity",
+        "name": "月亮叛徒",
+        "desc": "伍迪获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。满月时，伍迪不会强制变身。",
+        "requires": [],
+        "lock": "lock_affinity",
+        "exclusiveWith": [
+          "woodie_allegiance_shadow"
+        ],
+        "x": 207,
+        "y": 26,
+        "w": 32,
+        "h": 32
+      }
+    ],
+    "locks": [
+      {
+        "id": "lock_curse_beaver",
+        "group": "curse",
+        "count": 3,
+        "fromGroups": [
+          "curse"
+        ],
+        "desc": "学习 3 个海狸人技能后解锁「海狸人精通」",
+        "nodes": [
+          {
+            "x": -154.8,
+            "y": 13.2,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "学习 3 个海狸人技能后解锁「海狸人精通」"
+          }
+        ]
+      },
+      {
+        "id": "lock_curse_moose",
+        "group": "curse",
+        "count": 3,
+        "fromGroups": [
+          "curse"
+        ],
+        "desc": "学习 3 个鹿人技能后解锁「鹿人精通」",
+        "nodes": [
+          {
+            "x": -110.3,
+            "y": 13.2,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "学习 3 个鹿人技能后解锁「鹿人精通」"
+          }
+        ]
+      },
+      {
+        "id": "lock_curse_goose",
+        "group": "curse",
+        "count": 3,
+        "fromGroups": [
+          "curse"
+        ],
+        "desc": "学习 3 个鹅人技能后解锁「鹅人精通」",
+        "nodes": [
+          {
+            "x": -66.8,
+            "y": 13.2,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "学习 3 个鹅人技能后解锁「鹅人精通」"
+          }
+        ]
+      },
+      {
+        "id": "lock_curse_master",
+        "group": "curse",
+        "count": 12,
+        "fromGroups": [
+          "curse"
+        ],
+        "desc": "学习 12 个诅咒技能后解锁「拥抱诅咒」",
+        "nodes": [
+          {
+            "x": -219.8,
+            "y": 13.2,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "学习 12 个诅咒技能后解锁「拥抱诅咒」"
+          }
+        ]
+      },
+      {
+        "id": "lock_affinity",
+        "group": "affinity",
+        "count": 12,
+        "fromGroups": [
+          "curse",
+          "human"
+        ],
+        "desc": "学习 12 个其他技能后解锁亲和分支",
+        "nodes": [
+          {
+            "x": 186.2,
+            "y": -103.8,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "学习 12 个其他技能后解锁亲和分支"
+          },
+          {
+            "x": 163.2,
+            "y": -60.8,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          },
+          {
+            "x": 210.2,
+            "y": -60.8,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          },
+          {
+            "x": 163.2,
+            "y": -16.8,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          },
+          {
+            "x": 210.2,
+            "y": -16.8,
+            "w": 25.6,
+            "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          }
+        ]
+      }
+    ],
+    "builds": [],
+    "modes": [
+      {
+        "id": "solo-lunar",
+        "tags": [
+          "单人",
+          "月后"
+        ],
+        "name": "单人月后",
+        "text": "在这里写单人月后加点",
+        "skills": []
+      },
+      {
+        "id": "solo-shadow",
+        "tags": [
+          "单人",
+          "影后"
+        ],
+        "name": "单人影后",
+        "text": "在这里写单人影后加点",
+        "skills": []
+      },
+      {
+        "id": "solo-both",
+        "tags": [
+          "单人",
+          "月后",
+          "影后"
+        ],
+        "name": "单人月后影后",
+        "text": "在这里写单人月后影后加点",
+        "skills": []
+      },
+      {
+        "id": "multi-lunar",
+        "tags": [
+          "多人",
+          "月后"
+        ],
+        "name": "多人月后",
+        "text": "在这里写多人月后加点",
+        "skills": []
+      },
+      {
+        "id": "multi-shadow",
+        "tags": [
+          "多人",
+          "影后"
+        ],
+        "name": "多人影后",
+        "text": "在这里写多人影后加点",
+        "skills": []
+      },
+      {
+        "id": "multi-both",
+        "tags": [
+          "多人",
+          "月后",
+          "影后"
+        ],
+        "name": "多人月后影后",
+        "text": "在这里写多人月后影后加点",
+        "skills": []
+      }
+    ]
+  }

@@ -21,27 +21,26 @@
     {
       "id": "ghostflower",
       "name": "哀悼荣耀",
-      "x": -112
+      "x": -112,
+      "titleSide": "left",
+      "titlePin": { "n": 11, "char": "悼" }
     },
     {
-      "id": "avenging",
-      "name": "鬼魂复仇",
-      "x": -63
-    },
-    {
-      "id": "gravestone",
-      "name": "墓碑",
-      "x": -6
+      "id": "ghostgrave",
+      "name": "鬼魂与墓碑",
+      "titleAt": { "x": -6.4, "y": -27 }
     },
     {
       "id": "ghostcommand",
       "name": "幽灵团队",
-      "x": 122
+      "x": 122,
+      "titleSide": "right",
+      "titlePin": { "n": 19, "char": "灵" }
     },
     {
       "id": "affinity",
       "name": "亲和",
-      "x": 16
+      "titleAt": { "x": -9, "y": 82 }
     }
   ],
   "skills": [
@@ -244,7 +243,7 @@
     {
       "id": "wendy_avenging_ghost",
       "n": 14,
-      "group": "avenging",
+      "group": "ghostgrave",
       "name": "鬼魂复仇",
       "desc": "在 40 距离单位以内死亡的玩家，其玩家鬼魂会每隔 1.2 秒对周围 1.5 单位以内除幽灵以外的所有生物造成伤害。伤害取决于时间：白天 15，黄昏 25，夜晚 40；同时会受到角色自身伤害倍率的影响。持续 30 秒。",
       "requires": [],
@@ -256,7 +255,7 @@
     {
       "id": "wendy_gravestone_1",
       "n": 15,
-      "group": "gravestone",
+      "group": "ghostgrave",
       "name": "坟墓美化",
       "desc": "温蒂可以用三个花瓣升级墓碑。靠近升级的墓碑会生成大惊吓。采摘邪恶花将会恢复 5 理智值而不是扣除理智值。温蒂可以使用灵魂容器。",
       "requires": [],
@@ -268,7 +267,7 @@
     {
       "id": "wendy_makegravemounds",
       "n": 16,
-      "group": "gravestone",
+      "group": "ghostgrave",
       "name": "温蒂手作墓碑",
       "desc": "习得配方：",
       "recipes": [
@@ -435,8 +434,7 @@
         "potion",
         "sisturn",
         "ghostflower",
-        "avenging",
-        "gravestone",
+        "ghostgrave",
         "ghostcommand"
       ],
       "desc": "学习 12 个其他技能后解锁亲和分支",

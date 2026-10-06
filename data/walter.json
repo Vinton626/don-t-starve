@@ -26,7 +26,8 @@
     {
       "id": "affinity",
       "name": "亲和",
-      "x": 185
+      "x": 185,
+      "titleSide": "right"
     }
   ],
   "skills": [
@@ -526,7 +527,7 @@
     },
     {
       "id": "lock_affinity",
-      "group": "woby",
+      "group": "affinity",
       "count": 12,
       "fromGroups": [
         "ammo",

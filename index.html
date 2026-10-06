@@ -126,14 +126,15 @@
     padding: 12px 14px 14px;
   }
   .desc-labels {
-    position: relative;
-    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6px;
+    min-height: 32px;
     flex-shrink: 0;
   }
   .parent-label {
-    position: absolute;
-    top: 0;
-    transform: translateX(-50%);
+    flex: 0 1 auto;
     text-align: center;
     font-size: 15px;
     letter-spacing: 2px;
