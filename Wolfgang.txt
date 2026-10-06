@@ -1,0 +1,310 @@
+// data/wolfgang.js
+window.SKILL_DATA = window.SKILL_DATA || {};
+window.SKILL_DATA.wolfgang = {
+  name: "沃尔夫冈",
+  points: 15,
+  skills: [
+    // ===== 杂务分支 =====
+    { id: 1,  group: "杂务", x: -228, y: -106, desc: "杂物锻炼 I" },
+    { id: 2,  group: "杂务", x: -228, y: -68,  desc: "杂物锻炼 II" },
+    { id: 3,  group: "杂务", x: -228, y: -30,  desc: "杂物锻炼 III" },
+
+    // ===== 训练分支 =====
+    { id: 4,  group: "训练", x: -141, y: -106, desc: "健身房精通" },
+    { id: 5,  group: "训练", x: -103, y: -106, desc: "沃尔夫冈教练" },
+    { id: 6,  group: "训练", x: -103, y: -68,  desc: "练腿日" },
+    { id: 7,  group: "训练", x: -65,  y: -106, desc: "哑铃开发者" },
+    { id: 8,  group: "训练", x: -65,  y: -68,  desc: "重击手 I" },
+    { id: 9,  group: "训练", x: -65,  y: -30,  desc: "重击手 II" },
+
+    // ===== 突破分支 =====
+    { id: 10, group: "突破", x: -27, y: -106, desc: "突破极限 I" },
+    { id: 11, group: "突破", x: -27, y: -68,  desc: "突破极限 II" },
+    { id: 12, group: "突破", x: -27, y: -30,  desc: "突破极限 III" },
+    { id: 13, group: "突破", x: -27, y: 8,    desc: "突破极限 IV" },
+    { id: 14, group: "突破", x: -27, y: 46,   desc: "突破极限 V" },
+
+    // ===== 威力分支 =====
+    { id: 15, group: "威力", x: 74, y: -106, desc: "威力武器 I" },
+    { id: 16, group: "威力", x: 74, y: -68,  desc: "威力武器 II" },
+    { id: 17, group: "威力", x: 74, y: -30,  desc: "威力武器 III" },
+    { id: 18, group: "威力", x: 74, y: 8,    desc: "威力武器 IV" },
+    { id: 19, group: "威力", x: 74, y: 46,   desc: "威力武器 V" },
+
+    // ===== 亲和分支 =====
+    { id: 20, group: "亲和", x: 165, y: -30, desc: "暗影守卫 I" },
+    { id: 21, group: "亲和", x: 165, y: 8,   desc: "暗影守卫 II" },
+    { id: 22, group: "亲和", x: 165, y: 46,  desc: "暗影守卫 III" },
+    { id: 23, group: "亲和", x: 203, y: -30, desc: "月亮战略家 I" },
+    { id: 24, group: "亲和", x: 203, y: 8,   desc: "月亮战略家 II" },
+    { id: 25, group: "亲和", x: 203, y: 46,  desc: "月亮战略家 III" },
+
+    // ===== 锁定技能 =====
+    { id: "L1", group: "锁定", x: 168.2, y: -102.8, locked: true, desc: "锁定" },
+    { id: "L2", group: "锁定", x: 206.2, y: -102.8, locked: true, desc: "锁定" },
+    { id: "L3", group: "锁定", x: 168.2, y: -64.8,  locked: true, desc: "锁定" },
+    { id: "L4", group: "锁定", x: 206.2, y: -64.8,  locked: true, desc: "锁定" }
+  ]
+};
+// data/wolfgang.js
+window.SKILL_DATA = window.SKILL_DATA || {};
+window.SKILL_DATA.wolfgang = {
+  name: "沃尔夫冈",
+  points: 15,
+
+  data: {
+
+    // ==================== 杂务 ====================
+    杂务: {
+
+      // 杂物锻炼 I
+      // 强壮状态下工作的秒杀概率提升至 5%
+      // 前置节点：无
+      wolfgang_critwork_1: {
+        name: "杂物锻炼 I",
+        desc: "强壮状态下工作的秒杀概率提升至 5%。",
+        prereq: []
+      },
+
+      // 杂物锻炼 II
+      // 强壮状态下工作的秒杀概率提升至 10%
+      // 前置节点：杂物锻炼 I
+      wolfgang_critwork_2: {
+        name: "杂物锻炼 II",
+        desc: "强壮状态下工作的秒杀概率提升至 10%。",
+        prereq: ["wolfgang_critwork_1"]
+      },
+
+      // 杂物锻炼 III
+      // 强壮状态下工作的秒杀概率提升至 15%
+      // 前置节点：杂物锻炼 I、杂物锻炼 II
+      wolfgang_critwork_3: {
+        name: "杂物锻炼 III",
+        desc: "强壮状态下工作的秒杀概率提升至 15%。",
+        prereq: ["wolfgang_critwork_1", "wolfgang_critwork_2"]
+      }
+    },
+
+    // ==================== 训练 ====================
+    训练: {
+
+      // 健身房精通
+      // 自动完成强大健身房的小游戏。
+      // 前置节点：无
+      wolfgang_autogym: {
+        name: "健身房精通",
+        desc: "自动完成强大健身房的小游戏。",
+        prereq: []
+      },
+
+      // 沃尔夫冈教练
+      // 习得配方：燧石 x1 + 绳子 x1 → 教练口哨 x1
+      // 前置节点：无
+      wolfgang_normal_coach: {
+        name: "沃尔夫冈教练",
+        desc: "习得配方：燧石 x1 + 绳子 x1 → 教练口哨 x1。",
+        prereq: []
+      },
+
+      // 练腿日
+      // 正常状态下的沃尔夫冈移速增加 10%。
+      // 前置节点：沃尔夫冈教练
+      wolfgang_normal_speed: {
+        name: "练腿日",
+        desc: "正常状态下的沃尔夫冈移速增加 10%。",
+        prereq: ["wolfgang_normal_coach"]
+      },
+
+      // 哑铃开发者
+      // 习得配方：
+      // 石头 x12 + 镐子 x1 + 燧石 x4 → 温度哑铃 x1
+      // 铥矿 x2 + 红宝石 x1 + 树枝 x1 → 火焰哑铃 x1
+      // 铥矿 x2 + 蓝宝石 x1 + 树枝 x1 → 冰冻哑铃 x1
+      // 前置节点：无
+      wolfgang_dumbbell_crafting: {
+        name: "哑铃开发者",
+        desc: "习得配方：石头 x12 + 镐子 x1 + 燧石 x4 → 温度哑铃 x1；铥矿 x2 + 红宝石 x1 + 树枝 x1 → 火焰哑铃 x1；铥矿 x2 + 蓝宝石 x1 + 树枝 x1 → 冰冻哑铃 x1。",
+        prereq: []
+      },
+
+      // 重击手 I
+      // 投掷哑铃的伤害增加 50%。
+      // 前置节点：哑铃开发者
+      wolfgang_dumbbell_throwing_1: {
+        name: "重击手 I",
+        desc: "投掷哑铃的伤害增加 50%。",
+        prereq: ["wolfgang_dumbbell_crafting"]
+      },
+
+      // 重击手 II
+      // 投掷哑铃的伤害增加 100%。
+      // 前置节点：哑铃开发者、重击手 I
+      wolfgang_dumbbell_throwing_2: {
+        name: "重击手 II",
+        desc: "投掷哑铃的伤害增加 100%。",
+        prereq: ["wolfgang_dumbbell_crafting", "wolfgang_dumbbell_throwing_1"]
+      }
+    },
+
+    // ==================== 突破 ====================
+    突破: {
+
+      // 突破极限 I
+      // 使用强大健身房锻炼时，力量值上限可以达到 110。
+      // 前置节点：无
+      wolfgang_overbuff_1: {
+        name: "突破极限 I",
+        desc: "使用强大健身房锻炼时，力量值上限可以达到 110。",
+        prereq: []
+      },
+
+      // 突破极限 II
+      // 使用强大健身房锻炼时，力量值上限可以达到 120。
+      // 前置节点：突破极限 I
+      wolfgang_overbuff_2: {
+        name: "突破极限 II",
+        desc: "使用强大健身房锻炼时，力量值上限可以达到 120。",
+        prereq: ["wolfgang_overbuff_1"]
+      },
+
+      // 突破极限 III
+      // 使用强大健身房锻炼时，力量值上限可以达到 130。
+      // 前置节点：突破极限 I、突破极限 II
+      wolfgang_overbuff_3: {
+        name: "突破极限 III",
+        desc: "使用强大健身房锻炼时，力量值上限可以达到 130。",
+        prereq: ["wolfgang_overbuff_1", "wolfgang_overbuff_2"]
+      },
+
+      // 突破极限 IV
+      // 使用强大健身房锻炼时，力量值上限可以达到 140。
+      // 前置节点：突破极限 I、突破极限 II、突破极限 III
+      wolfgang_overbuff_4: {
+        name: "突破极限 IV",
+        desc: "使用强大健身房锻炼时，力量值上限可以达到 140。",
+        prereq: ["wolfgang_overbuff_1", "wolfgang_overbuff_2", "wolfgang_overbuff_3"]
+      },
+
+      // 突破极限 V
+      // 使用强大健身房锻炼时，力量值上限可以达到 150。
+      // 前置节点：突破极限 I、突破极限 II、突破极限 III、突破极限 IV
+      wolfgang_overbuff_5: {
+        name: "突破极限 V",
+        desc: "使用强大健身房锻炼时，力量值上限可以达到 150。",
+        prereq: ["wolfgang_overbuff_1", "wolfgang_overbuff_2", "wolfgang_overbuff_3", "wolfgang_overbuff_4"]
+      }
+    },
+
+    // ==================== 威力 ====================
+    威力: {
+
+      // 威力武器 I
+      // 在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +5
+      // 前置节点：无
+      wolfgang_planardamage_1: {
+        name: "威力武器 I",
+        desc: "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +5。",
+        prereq: []
+      },
+
+      // 威力武器 II
+      // 在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +10
+      // 前置节点：威力武器 I
+      wolfgang_planardamage_2: {
+        name: "威力武器 II",
+        desc: "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +10。",
+        prereq: ["wolfgang_planardamage_1"]
+      },
+
+      // 威力武器 III
+      // 在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +15
+      // 前置节点：威力武器 I、威力武器 II
+      wolfgang_planardamage_3: {
+        name: "威力武器 III",
+        desc: "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +15。",
+        prereq: ["wolfgang_planardamage_1", "wolfgang_planardamage_2"]
+      },
+
+      // 威力武器 IV
+      // 在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +20
+      // 前置节点：威力武器 I、威力武器 II、威力武器 III
+      wolfgang_planardamage_4: {
+        name: "威力武器 IV",
+        desc: "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +20。",
+        prereq: ["wolfgang_planardamage_1", "wolfgang_planardamage_2", "wolfgang_planardamage_3"]
+      },
+
+      // 威力武器 V
+      // 在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +25
+      // 前置节点：威力武器 I、威力武器 II、威力武器 III、威力武器 IV
+      wolfgang_planardamage_5: {
+        name: "威力武器 V",
+        desc: "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +25。",
+        prereq: ["wolfgang_planardamage_1", "wolfgang_planardamage_2", "wolfgang_planardamage_3", "wolfgang_planardamage_4"]
+      },
+
+      // 注释：远程武器（如亮茄魔杖、嚎弹炮）以及不带有位面伤害的武器（如暗夜剑）不受到威力武器的加成。
+      notes: [
+        "远程武器（如亮茄魔杖、嚎弹炮）以及不带有位面伤害的武器（如暗夜剑）不受到威力武器的加成。"
+      ]
+    },
+
+    // ==================== 亲和 ====================
+    亲和: {
+
+      // 暗影守卫 I
+      // 沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。
+      // 前置节点：Lock、Lock
+      wolfgang_allegiance_shadow_1: {
+        name: "暗影守卫 I",
+        desc: "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
+        prereq: ["Lock", "Lock"]
+      },
+
+      // 暗影守卫 II
+      // 沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.2 倍的伤害。
+      // 前置节点：Lock、Lock、暗影守卫 I
+      wolfgang_allegiance_shadow_2: {
+        name: "暗影守卫 II",
+        desc: "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.2 倍的伤害。",
+        prereq: ["Lock", "Lock", "wolfgang_allegiance_shadow_1"]
+      },
+
+      // 暗影守卫 III
+      // 沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.3 倍的伤害。
+      // 前置节点：Lock、Lock、暗影守卫 I、暗影守卫 II
+      wolfgang_allegiance_shadow_3: {
+        name: "暗影守卫 III",
+        desc: "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.3 倍的伤害。",
+        prereq: ["Lock", "Lock", "wolfgang_allegiance_shadow_1", "wolfgang_allegiance_shadow_2"]
+      },
+
+      // 月亮战略家 I
+      // 沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。
+      // 前置节点：Lock、Lock
+      wolfgang_allegiance_lunar_1: {
+        name: "月亮战略家 I",
+        desc: "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
+        prereq: ["Lock", "Lock"]
+      },
+
+      // 月亮战略家 II
+      // 沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.2 倍的伤害。
+      // 前置节点：Lock、Lock、月亮战略家 I
+      wolfgang_allegiance_lunar_2: {
+        name: "月亮战略家 II",
+        desc: "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.2 倍的伤害。",
+        prereq: ["Lock", "Lock", "wolfgang_allegiance_lunar_1"]
+      },
+
+      // 月亮战略家 III
+      // 沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.3 倍的伤害。
+      // 前置节点：Lock、Lock、月亮战略家 I、月亮战略家 II
+      wolfgang_allegiance_lunar_3: {
+        name: "月亮战略家 III",
+        desc: "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.3 倍的伤害。",
+        prereq: ["Lock", "Lock", "wolfgang_allegiance_lunar_1", "wolfgang_allegiance_lunar_2"]
+      }
+    }
+  }
+};

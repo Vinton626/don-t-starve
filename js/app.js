@@ -60,7 +60,8 @@ function canSelect(id, owned) {
     others.delete(id);
     if (!lockSatisfied(lock, others)) return false;
   }
-  if ((s.exclusiveWith || []).some(e => owned.has(e))) return false;
+  const taken = new Set([...owned, ...state.selected, ...state.learned]);
+  if ((s.exclusiveWith || []).some(e => e !== id && taken.has(e))) return false;
   return true;
 }
 
@@ -172,14 +173,16 @@ function buildNodes() {
     const el = svgEl("rect", {
       class: "node",
       x: s.x, y: s.y, width: s.w, height: s.h, rx: 4,
-      fill: "#3a3a3a", stroke: "#666", "stroke-width": 1
+      fill: "#2c241c", stroke: "#6a5434", "stroke-width": 1
     });
     el.dataset.id = s.id;
     el.style.cursor = "pointer";
     nodes.appendChild(el);
     state.nodeEls[s.id] = el;
-    addLabel(s.x, s.y, s.w, s.h, String(s.n), "#ccc", s.id);
+    addLabel(s.x, s.y, s.w, s.h, String(s.n), "#e6d3a4", s.id);
   });
+
+  buildGroupTitles();
 
   state.tree.locks.forEach(lock => {
     lock.nodes.forEach((n, i) => {
@@ -187,7 +190,7 @@ function buildNodes() {
       const el = svgEl("rect", {
         class: "node lock",
         x: n.x, y: n.y, width: n.w, height: n.h, rx: 4,
-        fill: "#2a2222", stroke: "#5a2020", "stroke-width": 1
+        fill: "#241816", stroke: "#6a3030", "stroke-width": 1
       });
       el.dataset.lock = lock.id;
       el.dataset.id = id;
@@ -197,6 +200,44 @@ function buildNodes() {
       state.nodeEls[id] = el;
       addLabel(n.x, n.y, n.w, n.h, "🔒", "#8b0000", null);
     });
+  });
+}
+
+function buildGroupTitles() {
+  const layer = $("group-titles");
+  layer.innerHTML = "";
+  state.tree.groups.forEach(g => {
+    const y = -128;
+    const hit = svgEl("rect", {
+      class: "group-title-hit",
+      x: g.x - 40,
+      y: y - 16,
+      width: 80,
+      height: 22,
+      fill: "transparent"
+    });
+    hit.dataset.group = g.id;
+    const title = svgEl("text", {
+      class: "group-title",
+      x: g.x,
+      y: y,
+      "text-anchor": "middle",
+      "font-size": "14",
+      "font-weight": "bold",
+      "letter-spacing": "3",
+      fill: "#8a7030"
+    });
+    title.dataset.group = g.id;
+    title.textContent = g.name;
+    if (g.tip) {
+      hit.classList.add("has-note");
+      title.classList.add("has-note");
+      hit.dataset.tip = g.tip;
+      hit.addEventListener("mouseenter", () => showNoteTip(hit));
+      hit.addEventListener("mouseleave", scheduleHideNoteTip);
+    }
+    layer.appendChild(hit);
+    layer.appendChild(title);
   });
 }
 
@@ -279,6 +320,10 @@ function updateDesc() {
   document.querySelectorAll(".parent-label").forEach(label => {
     label.classList.toggle("active", !!(skill && skill.group === label.dataset.group));
   });
+  document.querySelectorAll(".group-title").forEach(title => {
+    const on = !!(skill && skill.group === title.dataset.group);
+    title.setAttribute("fill", on ? "#f0d060" : "#8a7030");
+  });
   const body = $("desc-body");
   if (!body) return;
   if (!skill) {
@@ -294,10 +339,10 @@ function updateNodeVisual(id) {
 
   if (el.dataset.lock) {
     const lock = state.lockMap[el.dataset.lock];
-    const open = lockSatisfied(lock, ownedSet());
+    const open = lockSatisfied(lock, state.learned);
     const hot = state.hoveredLockNode === id;
-    el.setAttribute("fill", open ? "#3a3418" : "#2a2222");
-    el.setAttribute("stroke", hot ? "#f2f2f2" : (open ? "#c9a227" : "#5a2020"));
+    el.setAttribute("fill", open ? "#3a3418" : "#241816");
+    el.setAttribute("stroke", hot ? "#f2f2f2" : (open ? "#c9a227" : "#6a3030"));
     el.setAttribute("stroke-width", hot || open ? "2" : "1");
     return;
   }
@@ -305,29 +350,28 @@ function updateNodeVisual(id) {
   const isLearned = state.learned.has(id);
   const isPicked = state.selected.has(id);
   const isHovered = state.hoveredId === id;
-  const owned = ownedSet();
-  const available = isLearned || isPicked || canSelect(id, new Set([...owned, id]));
+  const available = isLearned || isPicked || canSelect(id, state.learned);
 
-  let fill = available ? "#3a3a3a" : "#2a2a2a";
-  let stroke = available ? "#555" : "#3a3a3a";
+  let fill = available ? "#3a3024" : "#241c16";
+  let stroke = available ? "#7a6240" : "#3d3228";
   let sw = 1;
-  let labelFill = available ? "#ccc" : "#666";
+  let labelFill = available ? "#e6d3a4" : "#6d5c48";
 
   if (isLearned) {
     fill = "#c9a227";
     stroke = "#f0d060";
     sw = 2;
-    labelFill = "#1a1a1a";
+    labelFill = "#1a120c";
   } else if (isPicked) {
-    fill = "#3a3a3a";
+    fill = "#3a3024";
     stroke = "#ffffff";
     sw = 3;
     labelFill = "#fff";
   } else if (isHovered) {
-    fill = "#3a3a3a";
-    stroke = "#9a9a9a";
+    fill = "#4a3c2a";
+    stroke = "#cbb892";
     sw = 2;
-    labelFill = "#ddd";
+    labelFill = "#f6edd8";
   }
 
   el.setAttribute("fill", fill);
@@ -342,12 +386,12 @@ function updateButtons() {
   const canReset = state.learned.size > 0 || state.selected.size > 0;
   $("btn-learn").style.cursor = canLearn ? "pointer" : "not-allowed";
   $("btn-reset").style.cursor = canReset ? "pointer" : "not-allowed";
-  $("learn-bg").setAttribute("fill", canLearn ? "#c9a227" : "#3a3a3a");
-  $("learn-bg").setAttribute("stroke", canLearn ? "#f0d060" : "#555");
-  $("learn-text").setAttribute("fill", canLearn ? "#1a1a1a" : "#666");
-  $("reset-bg").setAttribute("fill", canReset ? "#5a5a5a" : "#3a3a3a");
-  $("reset-bg").setAttribute("stroke", canReset ? "#aaa" : "#555");
-  $("reset-text").setAttribute("fill", canReset ? "#eee" : "#666");
+  $("learn-bg").setAttribute("fill", canLearn ? "#c9a227" : "#2a2118");
+  $("learn-bg").setAttribute("stroke", canLearn ? "#f0d060" : "#6e5428");
+  $("learn-text").setAttribute("fill", canLearn ? "#1a120c" : "#6d5c48");
+  $("reset-bg").setAttribute("fill", canReset ? "#4a3824" : "#2a2118");
+  $("reset-bg").setAttribute("stroke", canReset ? "#cbb892" : "#6e5428");
+  $("reset-text").setAttribute("fill", canReset ? "#f6edd8" : "#6d5c48");
 }
 
 let noteHideTimer = 0;
@@ -404,7 +448,7 @@ function placeLockTip() {
 function render() {
   Object.keys(state.nodeEls).forEach(updateNodeVisual);
   updateDesc();
-  $("points-text").textContent = String(state.points - state.selected.size);
+  $("points-text").textContent = String(state.points);
   $("learned-count").textContent = String(state.learned.size);
   updateButtons();
   placeLockTip();
@@ -425,10 +469,8 @@ function pickNode(id) {
     render();
     return;
   }
-  if (state.points - state.selected.size <= 0) return;
-  const next = ownedSet();
-  next.add(id);
-  if (!canSelect(id, next)) return;
+  if (state.selected.size >= state.points) return;
+  if (!canSelect(id, state.learned)) return;
   state.selected.add(id);
   state.focusedId = id;
   state.stickyId = id;
