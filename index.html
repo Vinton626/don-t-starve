@@ -290,6 +290,25 @@
     border-color: #f0d060;
     box-shadow: 0 0 0 1px #c9a227;
   }
+  .align-btn {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2118;
+    border: 1.5px solid #6e5428;
+    border-radius: 2px;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .align-btn[hidden] { display: none; }
+  .align-btn.on {
+    border-color: #f0d060;
+    box-shadow: 0 0 0 1px #c9a227;
+  }
   .scheme-pop {
     position: fixed;
     z-index: 30;
@@ -426,7 +445,9 @@
 
 <div class="stage-head" id="stage-head">
   <div class="insight-bar">
+    <button type="button" class="align-btn" id="align-nice" data-align="nice" data-tip="好孩子加点" hidden aria-pressed="false">😇</button>
     <span class="insight-box" id="points-text">15</span>
+    <button type="button" class="align-btn" id="align-naughty" data-align="naughty" data-tip="淘气包加点" hidden aria-pressed="false">😈</button>
     <span class="insight-label">剩余洞察</span>
   </div>
   <div class="mode-stack" id="mode-stack">

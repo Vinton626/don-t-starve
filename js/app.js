@@ -12,12 +12,14 @@ const state = {
   lunar: false,
   shadow: false,
   players: null,
+  align: null,
   preset: false,
   selected: new Set(),
   learned: new Set(),
   nodeEls: {},
   skillMap: {},
-  lockMap: {}
+  lockMap: {},
+  pipEls: { nice: [], naughty: [] }
 };
 
 function $(id) {
@@ -46,9 +48,10 @@ function scopeGroupIds(scope, lock) {
   }
   const names = scope.split(/和|与|、|或|及/).map(s => s.trim()).filter(Boolean);
   const ids = [];
+  const fold = name => name.replace(/分支/g, "分枝");
   names.forEach(name => {
     state.tree.groups.forEach(g => {
-      if (g.name === name) ids.push(g.id);
+      if (fold(g.name) === fold(name)) ids.push(g.id);
     });
   });
   return ids;
@@ -60,7 +63,7 @@ function learnedMatches(lock, owned, groupIds, nameNeedle) {
     if (skillLockIds(s).includes(lock.id)) continue;
     if (groupIds) {
       if (!groupIds.includes(s.group)) continue;
-    } else if (!s.name || !s.name.includes(nameNeedle)) {
+    } else if (nameNeedle && (!s.name || !s.name.includes(nameNeedle))) {
       continue;
     }
     if (owned.has(s.id)) n++;
@@ -68,11 +71,33 @@ function learnedMatches(lock, owned, groupIds, nameNeedle) {
   return n;
 }
 
-// 锁开不开只看描述里写的条件，不再默认「亲和要 12 个」。
-function lockTextMet(text, lock, owned) {
-  const raw = text || "";
-  const counted = raw.match(/学习\s*(\d+)\s*个(.+?)技能/);
-  if (counted) {
+function skillByName(name) {
+  return state.tree.skills.find(s => s.name === name);
+}
+
+function handSet(owned) {
+  return new Set([...(owned || []), ...state.selected, ...state.learned]);
+}
+
+function skillGrantsAffinity(skill, kind, seen = new Set()) {
+  if (!skill || seen.has(skill.id)) return false;
+  seen.add(skill.id);
+  if (skill.desc && skill.desc.includes("获得" + kind + "亲和")) return true;
+  return (skill.requires || []).some(id => skillGrantsAffinity(state.skillMap[id], kind, seen));
+}
+
+// 锁开不开只看这把锁自己的说明。打不过的 Boss、喊口号这类局内行为，加点器里算作已经满足。
+function clauseMet(clause, lock, owned, skill) {
+  if (skillGrantsAffinity(skill, "暗影") && /没有暗影亲和|没有暗影阵营技能/.test(clause)) return true;
+  if (skillGrantsAffinity(skill, "月亮") && /没有月亮亲和|没有月亮阵营技能/.test(clause)) return true;
+  if (/找到并击败|击败|施展|演奏|物品中拥有/.test(clause)) return true;
+  if (/这里有锁文案需要替换|在这里写锁的描述|学习前置技能后解锁/.test(clause)) return true;
+
+  if (/没有月亮亲和|没有月亮阵营技能/.test(clause)) return !affinityTaken("月亮");
+  if (/没有暗影亲和|没有暗影阵营技能/.test(clause)) return !affinityTaken("暗影");
+
+  const counted = clause.match(/(?:学习|解锁)(?:至少)?\s*(\d+)\s*[个项](.+?)技能/);
+  if (counted && counted[2].trim()) {
     const need = Number(counted[1]);
     const scope = counted[2].trim();
     const groupIds = scopeGroupIds(scope, lock);
@@ -81,16 +106,71 @@ function lockTextMet(text, lock, owned) {
       : learnedMatches(lock, owned, null, scope);
     return n >= need;
   }
-  const named = raw.match(/需要学会「([^」]+)」/);
+  const anyCount = clause.match(/(?:学习|解锁)(?:至少)?\s*(\d+)\s*项技能/);
+  if (anyCount) return learnedMatches(lock, owned, null) >= Number(anyCount[1]);
+
+  const blocked = clause.match(/没有解锁「([^」]+)」/);
+  if (blocked) {
+    const target = skillByName(blocked[1]);
+    return !(target && handSet(owned).has(target.id));
+  }
+  const named = clause.match(/(?:需要学会|学习)「([^」]+)」/);
   if (named) {
-    const skill = state.tree.skills.find(s => s.name === named[1]);
-    return !!(skill && owned.has(skill.id));
+    const target = skillByName(named[1]);
+    return !!(target && owned.has(target.id));
+  }
+  if (clause.startsWith("没有")) {
+    const names = [...clause.matchAll(/[“「]([^”」]+)[”」]/g)].map(m => m[1]);
+    if (names.length) {
+      const hand = handSet(owned);
+      return names.every(name => {
+        const target = skillByName(name);
+        return !(target && hand.has(target.id));
+      });
+    }
+  }
+  const craft = clause.match(/可以制作\s*(.+)/);
+  if (craft) {
+    const item = craft[1].trim();
+    return state.tree.skills.some(s => owned.has(s.id) && (s.recipes || []).some(r => r.includes(item)));
   }
   return true;
 }
 
-function lockSatisfied(lock, owned) {
-  return lockTextMet(lock.desc || "", lock, owned);
+function lockTextMet(text, lock, owned, skill) {
+  const raw = (text || "").trim();
+  if (!raw) return true;
+  if (/这里有锁文案需要替换|在这里写锁的描述|^学习前置技能后解锁/.test(raw) && !/「/.test(raw)) return true;
+  const clauses = raw.split(/，|、|并且|且/).map(s => s.trim()).filter(Boolean);
+  return clauses.every(clause => clauseMet(clause, lock, owned, skill));
+}
+
+function textHasRule(text) {
+  const raw = text || "";
+  if (/(?:学习|解锁)(?:至少)?\s*\d+\s*[个项].+?技能/.test(raw)) return true;
+  if (/(?:学习|解锁)(?:至少)?\s*\d+\s*项技能/.test(raw)) return true;
+  if (/(?:需要学会|学习)「[^」]+」/.test(raw)) return true;
+  if (/没有解锁「/.test(raw)) return true;
+  if (/没有[“「]/.test(raw)) return true;
+  if (/没有月亮亲和|没有暗影亲和|没有月亮阵营技能|没有暗影阵营技能/.test(raw)) return true;
+  if (/可以制作/.test(raw)) return true;
+  return false;
+}
+
+function tipAppliesToSkill(tip, skill) {
+  if (!skill || !skill.group) return true;
+  const group = (state.tree.groups || []).find(g => g.id === skill.group);
+  const name = group ? group.name : "";
+  if (/左分[支枝]/.test(name) && /右分[支枝]/.test(tip)) return false;
+  if (/右分[支枝]/.test(name) && /左分[支枝]/.test(tip)) return false;
+  return true;
+}
+
+function lockSatisfied(lock, owned, skill) {
+  if (textHasRule(lock.desc)) return lockTextMet(lock.desc, lock, owned, skill);
+  const tips = (lock.nodes || []).map(node => node.tip).filter(tip => tip && tipAppliesToSkill(tip, skill));
+  if (!tips.length) return true;
+  return tips.every(tip => lockTextMet(tip, lock, owned, skill));
 }
 
 function affinityTaken(kind) {
@@ -104,8 +184,8 @@ function affinityTaken(kind) {
 
 function nodeIsSealed(node, lock) {
   const text = `${(node && node.tip) || ""} ${lock.desc || ""}`;
-  if (text.includes("没有月亮亲和") && affinityTaken("月亮")) return true;
-  if (text.includes("没有暗影亲和") && affinityTaken("暗影")) return true;
+  if (/没有月亮亲和|没有月亮阵营技能/.test(text) && affinityTaken("月亮")) return true;
+  if (/没有暗影亲和|没有暗影阵营技能/.test(text) && affinityTaken("暗影")) return true;
   return false;
 }
 
@@ -122,7 +202,7 @@ function canSelect(id, owned) {
     if (!lock) continue;
     const others = new Set(owned);
     others.delete(id);
-    if (!lockSatisfied(lock, others)) return false;
+    if (!lockSatisfied(lock, others, s)) return false;
   }
   const taken = new Set([...owned, ...state.selected, ...state.learned]);
   if ((s.exclusiveWith || []).some(e => e !== id && taken.has(e))) return false;
@@ -186,6 +266,27 @@ async function boot() {
   }
 }
 
+function selectionSearch(charId) {
+  const q = new URLSearchParams();
+  if (charId) q.set("char", charId);
+  if (state.preset) {
+    const build = selectedBuild();
+    if (build) q.set("build", build.id);
+    q.set("lunar", state.lunar ? "1" : "0");
+    q.set("shadow", state.shadow ? "1" : "0");
+    q.set("players", state.players === "solo" ? "solo" : "multi");
+    if (state.align === "nice" || state.align === "naughty") q.set("align", state.align);
+  }
+  const text = q.toString();
+  return text ? "?" + text : "";
+}
+
+function writeSelectionQuery() {
+  const char = new URLSearchParams(location.search).get("char");
+  const search = selectionSearch(char);
+  if (search !== location.search) history.replaceState(null, "", search || location.pathname);
+}
+
 function fillCharSelect(chars, currentId) {
   const btn = $("char-picker-btn");
   const menu = $("char-picker-menu");
@@ -208,7 +309,7 @@ function fillCharSelect(chars, currentId) {
         showModeTip(opt, true);
         return;
       }
-      location.search = "?char=" + encodeURIComponent(c.id);
+      location.search = selectionSearch(c.id);
     });
     opt.addEventListener("mouseenter", () => {
       if (!hasSkillTree(c)) showModeTip(opt, true);
@@ -227,7 +328,32 @@ function fillCharSelect(chars, currentId) {
   });
 }
 
+function normalizeTree(tree) {
+  if (!Array.isArray(tree.skills)) {
+    const skills = [];
+    Object.entries(tree.data || {}).forEach(([groupId, block]) => {
+      (block.skills || []).forEach(skill => {
+        skills.push(Object.assign({}, skill, { group: skill.group || groupId }));
+      });
+    });
+    tree.skills = skills;
+  }
+  const lockIds = new Set((tree.locks || []).map(l => l.id));
+  tree.skills.forEach(s => {
+    const req = s.requires || [];
+    const fromReq = req.filter(id => lockIds.has(id));
+    if (!fromReq.length) return;
+    s.requires = req.filter(id => !lockIds.has(id));
+    const have = new Set(skillLockIds(s));
+    fromReq.forEach(id => have.add(id));
+    const list = [...have];
+    if (list.length > 1) s.locks = list;
+    else s.lock = list[0];
+  });
+}
+
 function initTree(tree) {
+  normalizeTree(tree);
   state.tree = tree;
   state.points = tree.points;
   state.skillMap = Object.fromEntries(tree.skills.map(s => [s.id, s]));
@@ -239,12 +365,30 @@ function initTree(tree) {
   fitViewBox();
   buildDescColumns();
   fillBuildSelect();
-  state.preset = false;
-  state.lunar = false;
-  state.shadow = false;
-  state.players = null;
-  syncPresetChrome();
-  render();
+  const saved = new URLSearchParams(location.search);
+  const buildId = saved.get("build") || "";
+  const hasBuild = (tree.builds || []).some(b => b.id === buildId);
+  if (hasBuild) {
+    state.lunar = saved.get("lunar") === "1";
+    state.shadow = saved.get("shadow") === "1";
+    state.players = saved.get("players") === "solo" ? "solo" : "multi";
+    state.align = saved.get("align") === "naughty" ? "naughty" : saved.get("align") === "nice" ? "nice" : null;
+    if (!saved.has("lunar") && !saved.has("shadow") && !saved.has("players")) {
+      state.lunar = true;
+      state.shadow = true;
+      state.players = "multi";
+    }
+    applyBuild(buildId, { keepModes: true, quiet: true });
+  } else {
+    state.preset = false;
+    state.lunar = false;
+    state.shadow = false;
+    state.players = null;
+    state.align = null;
+    syncPresetChrome();
+    if (buildId) writeSelectionQuery();
+    render();
+  }
 }
 
 function addLabel(x, y, w, h, text, fill, forId) {
@@ -268,6 +412,7 @@ function buildNodes() {
   nodes.innerHTML = "";
   labels.innerHTML = "";
   state.nodeEls = {};
+  state.pipEls = { nice: [], naughty: [] };
 
   state.tree.skills.forEach(s => {
     const el = svgEl("rect", {
@@ -301,6 +446,171 @@ function buildNodes() {
       addLabel(n.x, n.y, n.w, n.h, "🔒", "#8b0000", null);
     });
   });
+
+  buildScale();
+}
+
+function scaleCopy(note) {
+  const lines = note || [];
+  const niceAt = lines.findIndex(l => String(l).trim().startsWith("好孩子倾向"));
+  const naughtyAt = lines.findIndex(l => String(l).trim().startsWith("淘气包倾向"));
+  const cut = niceAt >= 0 ? niceAt : lines.length;
+  const niceLines = niceAt >= 0 ? lines.slice(niceAt, naughtyAt >= 0 ? naughtyAt : lines.length) : [];
+  const naughtyLines = naughtyAt >= 0 ? lines.slice(naughtyAt) : [];
+  const titleOf = (block, fallback) => (block[0] || fallback).replace(/：$/, "").trim() || fallback;
+  return {
+    scale: lines.slice(0, cut).join("\n"),
+    niceName: titleOf(niceLines, "好孩子倾向"),
+    nice: niceLines.slice(1).join("\n"),
+    naughtyName: titleOf(naughtyLines, "淘气包倾向"),
+    naughty: naughtyLines.slice(1).join("\n")
+  };
+}
+
+function registerPlain(id, name, desc) {
+  state.skillMap[id] = { id, name, desc, plain: true, requires: [] };
+}
+
+function addStaticNode(parent, id, x, y, w, h, label, side) {
+  const el = svgEl("rect", {
+    class: "node",
+    x, y, width: w, height: h, rx: 4,
+    fill: "#2c241c", stroke: "#7a6240", "stroke-width": 1
+  });
+  el.dataset.id = id;
+  el.dataset.static = "1";
+  if (side) {
+    el.dataset.side = side;
+    el.dataset.lit = "0";
+  }
+  el.style.cursor = "pointer";
+  parent.appendChild(el);
+  state.nodeEls[id] = el;
+  if (label) addLabel(x, y, w, h, label, "#6d5c48", id);
+  return el;
+}
+
+function drawScaleIcon(parent, cx, cy) {
+  const g = svgEl("g", { "pointer-events": "none" });
+  const add = (name, attrs) => g.appendChild(svgEl(name, attrs));
+  add("polygon", {
+    points: `${cx},${cy + 10} ${cx - 6},${cy + 2} ${cx + 6},${cy + 2}`,
+    fill: "#cbb892"
+  });
+  add("line", {
+    x1: cx, y1: cy - 7, x2: cx, y2: cy + 2,
+    stroke: "#e6d3a4", "stroke-width": "1.6"
+  });
+  add("line", {
+    x1: cx - 12, y1: cy - 7, x2: cx + 12, y2: cy - 7,
+    stroke: "#e6d3a4", "stroke-width": "1.8", "stroke-linecap": "round"
+  });
+  [-12, 12].forEach(dx => {
+    add("line", {
+      x1: cx + dx, y1: cy - 7, x2: cx + dx, y2: cy + 1,
+      stroke: "#cbb892", "stroke-width": "1"
+    });
+    add("path", {
+      d: `M ${cx + dx - 5} ${cy + 1} Q ${cx + dx} ${cy + 7} ${cx + dx + 5} ${cy + 1}`,
+      fill: "none", stroke: "#e6d3a4", "stroke-width": "1.3"
+    });
+  });
+  parent.appendChild(g);
+}
+
+function addPip(parent, side, slot, x, y, r) {
+  const el = svgEl("circle", {
+    class: "scale-pip",
+    cx: x, cy: y, r,
+    fill: "#1c1814", stroke: "#4a4034", "stroke-width": "1",
+    "pointer-events": "none"
+  });
+  el.dataset.side = side;
+  el.dataset.slot = String(slot);
+  parent.appendChild(el);
+  state.pipEls[side][slot] = el;
+}
+
+function buildScale() {
+  const scale = state.tree.scale;
+  if (!scale || !Array.isArray(scale.note)) return;
+  const copy = scaleCopy(scale.note);
+  const cx = scale.x != null ? scale.x : 0;
+  const cy = scale.y != null ? scale.y : 123;
+  registerPlain("scale-balance", "天秤", copy.scale);
+  registerPlain("scale-nice", copy.niceName, copy.nice);
+  registerPlain("scale-naughty", copy.naughtyName, copy.naughty);
+
+  const nodes = $("nodes");
+  const scaleW = 34;
+  const pipR = 5;
+  const pipGap = 6;
+  addStaticNode(nodes, "scale-balance", cx - scaleW / 2, cy - scaleW / 2, scaleW, scaleW, "", "");
+  drawScaleIcon(nodes, cx, cy);
+  for (let i = 0; i < 3; i++) {
+    const d = scaleW / 2 + 8 + pipR + i * (pipR * 2 + pipGap);
+    addPip(nodes, "nice", i, cx - d, cy, pipR);
+    addPip(nodes, "naughty", i, cx + d, cy, pipR);
+  }
+  const outer = scaleW / 2 + 8 + pipR + 2 * (pipR * 2 + pipGap) + pipR + 8;
+  const btnW = 88;
+  const btnH = 30;
+  addStaticNode(nodes, "scale-nice", cx - outer - btnW, cy - btnH / 2, btnW, btnH, copy.niceName, "nice");
+  addStaticNode(nodes, "scale-naughty", cx + outer, cy - btnH / 2, btnW, btnH, copy.naughtyName, "naughty");
+}
+
+const PIP_PAINT = {
+  "": { fill: "#1c1814", stroke: "#4a4034" },
+  blue: { fill: "#2c5a86", stroke: "#4a86b8" },
+  red: { fill: "#7c323c", stroke: "#b05a62" },
+  purple: { fill: "#4a3568", stroke: "#6d5294" }
+};
+
+function meterSlots(lead, affinity, color) {
+  const slots = ["", "", ""];
+  if (affinity) slots[0] = "purple";
+  const start = affinity ? 1 : 0;
+  const n = Math.min(3 - start, lead);
+  for (let i = 0; i < n; i++) slots[start + i] = color;
+  return slots;
+}
+
+function groupIdByName(name) {
+  const g = (state.tree.groups || []).find(item => item.name === name);
+  return g ? g.id : "";
+}
+
+function updateMeter() {
+  if (!state.tree || !state.tree.scale || !state.pipEls) return;
+  const owned = ownedSet();
+  const niceId = groupIdByName("好孩子");
+  const naughtyId = groupIdByName("淘气包");
+  const affinityId = groupIdByName("亲和");
+  let nice = 0;
+  let naughty = 0;
+  let affinity = false;
+  for (const s of state.tree.skills) {
+    if (!owned.has(s.id)) continue;
+    if (s.group === niceId) nice++;
+    else if (s.group === naughtyId) naughty++;
+    else if (s.group === affinityId) affinity = true;
+  }
+  const diff = nice - naughty;
+  paintSide("nice", meterSlots(diff > 0 ? diff : 0, affinity, "blue"), "scale-nice");
+  paintSide("naughty", meterSlots(diff < 0 ? -diff : 0, affinity, "red"), "scale-naughty");
+}
+
+function paintSide(side, slots, btnId) {
+  (state.pipEls[side] || []).forEach((el, i) => {
+    if (!el) return;
+    const kind = slots[i] || "";
+    const paint = PIP_PAINT[kind] || PIP_PAINT[""];
+    el.setAttribute("fill", paint.fill);
+    el.setAttribute("stroke", paint.stroke);
+    el.setAttribute("stroke-width", kind ? "1.5" : "1");
+  });
+  const btn = state.nodeEls[btnId];
+  if (btn) btn.dataset.lit = slots.every(Boolean) ? "1" : "0";
 }
 
 function groupFrame(groupId, fallbackX) {
@@ -519,15 +829,17 @@ function cardHTML(skill, extraClass) {
   const recipes = (skill.recipes || [])
     .map(r => `<li>${r}</li>`)
     .join("");
+  const num = skill.n == null ? "" : `<span class="desc-num">${skill.n}</span>`;
+  const prereq = skill.plain ? "" : `<div class="desc-prereq">前置：${prereqText(skill)}</div>`;
   return `
     <div class="desc-card ${extraClass}">
       <div class="desc-head">
-        <span class="desc-num">${skill.n}</span>
+        ${num}
         <span class="desc-name">${skill.name}</span>
       </div>
-      <div class="desc-body">${skill.desc.replace(/\n/g, "<br>")}</div>
+      <div class="desc-body">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
       ${recipes ? `<ul class="desc-recipes">${recipes}</ul>` : ""}
-      <div class="desc-prereq">前置：${prereqText(skill)}</div>
+      ${prereq}
     </div>`;
 }
 
@@ -552,6 +864,43 @@ function updateDesc() {
 function updateNodeVisual(id) {
   const el = state.nodeEls[id];
   if (!el) return;
+
+  if (el.dataset.static) {
+    const hot = state.hoveredId === id;
+    const lit = el.dataset.lit === "1";
+    const side = el.dataset.side || "";
+    let fill = "#2c241c";
+    let stroke = "#7a6240";
+    let labelFill = "#e6d3a4";
+    let sw = 1;
+    if (side === "nice" || side === "naughty") {
+      fill = "#241c16";
+      stroke = "#4a3c30";
+      labelFill = "#6d5c48";
+      if (lit && side === "nice") {
+        fill = "#1a4060";
+        stroke = "#5a94c4";
+        labelFill = "#e4f0fa";
+        sw = 2;
+      } else if (lit && side === "naughty") {
+        fill = "#642830";
+        stroke = "#c46870";
+        labelFill = "#fde8e8";
+        sw = 2;
+      }
+    }
+    if (hot) {
+      stroke = "#ffffff";
+      sw = 3;
+    }
+    el.setAttribute("fill", fill);
+    el.setAttribute("stroke", stroke);
+    el.setAttribute("stroke-width", String(sw));
+    document.querySelectorAll(`[data-label-for="${id}"]`).forEach(label => {
+      label.setAttribute("fill", labelFill);
+    });
+    return;
+  }
 
   if (el.dataset.lock) {
     const lock = state.lockMap[el.dataset.lock];
@@ -673,6 +1022,7 @@ function placeLockTip() {
 }
 
 function render() {
+  updateMeter();
   Object.keys(state.nodeEls).forEach(updateNodeVisual);
   updateDesc();
   $("points-text").textContent = String(state.points);
@@ -752,18 +1102,42 @@ function selectedBuild() {
 
 function showPresetAllocation() {
   const scheme = currentModeScheme();
-  if (scheme && (scheme.skills || []).length) {
+  if (scheme) {
     applySkillList(scheme.skills);
     return scheme;
   }
-  const build = selectedBuild();
-  if (build) applySkillList(build.skills);
-  return scheme;
+  applySkillList([]);
+  return null;
+}
+
+function schemeGap(scheme) {
+  if (!scheme) return { title: "没有方案", body: "这个组合还没有写入加点" };
+  if ((scheme.skills || []).length) return null;
+  const text = (scheme.text || "").trim();
+  const matched = text.match(/^(没有方案|不合适)\s*[：:]\s*([\s\S]*)$/);
+  if (!matched) return null;
+  return { title: matched[1], body: matched[2].trim() || matched[1] };
+}
+
+function announceScheme(scheme) {
+  const gap = schemeGap(scheme);
+  if (gap) {
+    showDataPop(gap.title, gap.body, true);
+    return;
+  }
+  if (!scheme) {
+    showDataPop("没有方案", "这个组合还没有写入加点", true);
+    return;
+  }
+  const body = [scheme.name, scheme.text].filter(Boolean).join("\n");
+  showDataPop(modeLine(), body, !!body);
 }
 
 function syncPresetChrome() {
-  $("mode-stack").classList.toggle("is-open", state.preset);
-  $("stage-head").classList.toggle("preset", state.preset);
+  const build = selectedBuild();
+  const open = !!(state.preset && build && (build.modes || []).length);
+  $("mode-stack").classList.toggle("is-open", open);
+  $("stage-head").classList.toggle("preset", open);
   paintModes();
 }
 
@@ -773,29 +1147,49 @@ function leavePreset() {
   state.lunar = false;
   state.shadow = false;
   state.players = null;
+  state.align = null;
   $("build-select").value = "";
   hideModeTip();
   syncPresetChrome();
+  writeSelectionQuery();
 }
 
-function applyBuild(buildId) {
+function applyBuild(buildId, opts = {}) {
   const build = (state.tree.builds || []).find(b => b.id === buildId);
   if (!build) return;
   state.preset = true;
+  $("build-select").value = build.id;
+  if (!opts.keepModes) {
+    state.lunar = true;
+    state.shadow = true;
+    state.players = "multi";
+    if (usesAlignment()) state.align = "nice";
+  } else if (state.players !== "solo" && state.players !== "multi") {
+    state.players = "multi";
+  }
+  if (usesAlignment() && state.align !== "nice" && state.align !== "naughty") state.align = "nice";
   syncPresetChrome();
   const scheme = showPresetAllocation();
-  const body = scheme
-    ? [scheme.name, scheme.text].filter(Boolean).join("\n")
-    : (build.text || "");
-  showDataPop(scheme ? affinityLine() : build.name, body, true);
+  writeSelectionQuery();
+  if (opts.quiet) return;
+  announceScheme(scheme);
+}
+
+function usesAlignment(build) {
+  const target = build || selectedBuild();
+  return !!(target && (target.modes || []).some(mode => (mode.tags || []).some(tag => tag === "好孩子" || tag === "淘气包")));
 }
 
 function currentModeScheme() {
-  if (!state.players || (!state.lunar && !state.shadow)) return null;
-  const need = new Set([state.players === "solo" ? "单人" : "多人"]);
-  if (state.lunar) need.add("月后");
-  if (state.shadow) need.add("影后");
-  return (state.tree.modes || []).find(mode => {
+  const build = selectedBuild();
+  if (!build || (state.players !== "solo" && state.players !== "multi")) return null;
+  const need = new Set([
+    state.players === "solo" ? "单人" : "多人",
+    state.lunar ? "月后" : "月前",
+    state.shadow ? "影后" : "影前"
+  ]);
+  if (usesAlignment(build)) need.add(state.align === "naughty" ? "淘气包" : "好孩子");
+  return (build.modes || []).find(mode => {
     const tags = new Set(mode.tags || []);
     if (tags.size !== need.size) return false;
     for (const tag of need) if (!tags.has(tag)) return false;
@@ -812,18 +1206,23 @@ function paintModes() {
     btn.classList.toggle("on", on);
     btn.setAttribute("aria-pressed", on ? "true" : "false");
   });
+  const showAlign = !!(state.preset && usesAlignment());
+  document.querySelectorAll(".align-btn").forEach(btn => {
+    btn.hidden = !showAlign;
+    const on = showAlign && state.align === btn.dataset.align;
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  });
 }
 
-function affinityLine() {
-  if (state.lunar && state.shadow) return "已切换到月后影后";
-  if (state.lunar) return "已切换到月后加点";
-  if (state.shadow) return "已切换到影后加点";
-  return "已关闭月后与影后加点";
-}
-
-function playerLine(kind) {
-  if (state.players === kind) return kind === "solo" ? "已切换到单人模式" : "已切换到多人模式";
-  return kind === "solo" ? "已关闭单人模式" : "已关闭多人模式";
+function modeLine() {
+  const who = state.players === "solo" ? "单人" : "多人";
+  let affinity = "月前影前";
+  if (state.lunar && state.shadow) affinity = "月后影后";
+  else if (state.lunar) affinity = "月后";
+  else if (state.shadow) affinity = "影后";
+  const side = usesAlignment() ? (state.align === "naughty" ? " · 淘气包" : " · 好孩子") : "";
+  return "已切换到" + who + affinity + side;
 }
 
 let schemeTimer = 0;
@@ -872,17 +1271,26 @@ function onModeClick(kind) {
   hideModeTip();
   if (kind === "lunar") state.lunar = !state.lunar;
   else if (kind === "shadow") state.shadow = !state.shadow;
-  else state.players = state.players === kind ? null : kind;
+  else state.players = kind;
   paintModes();
   const scheme = showPresetAllocation();
-  const title = kind === "solo" || kind === "multi" ? playerLine(kind) : affinityLine();
-  const body = scheme ? [scheme.name, scheme.text].filter(Boolean).join("\n") : "";
-  showDataPop(title, body, !!body);
+  writeSelectionQuery();
+  announceScheme(scheme);
+}
+
+function onAlignClick(kind) {
+  if (!state.preset || !usesAlignment() || state.align === kind) return;
+  hideModeTip();
+  state.align = kind;
+  paintModes();
+  const scheme = showPresetAllocation();
+  writeSelectionQuery();
+  announceScheme(scheme);
 }
 
 $("nodes").addEventListener("click", e => {
   const el = e.target.closest(".node");
-  if (!el || el.dataset.lock) return;
+  if (!el || el.dataset.lock || el.dataset.static) return;
   pickNode(el.dataset.id);
 });
 
@@ -943,6 +1351,12 @@ $("mode-stack").addEventListener("mouseover", e => {
   const btn = e.target.closest(".mode-btn");
   if (!btn) return;
   showModeTip(btn);
+});
+
+document.querySelectorAll(".align-btn").forEach(btn => {
+  btn.addEventListener("click", () => onAlignClick(btn.dataset.align));
+  btn.addEventListener("mouseenter", () => showModeTip(btn));
+  btn.addEventListener("mouseleave", hideModeTip);
 });
 
 $("mode-stack").addEventListener("mouseout", e => {

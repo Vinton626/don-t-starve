@@ -3,7 +3,11 @@
   "name": "薇洛",
   "points": 15,
   "groups": [
-    { "id": "fire", "name": "火焰", "x": -188 },
+    {
+      "id": "fire",
+      "name": "火焰",
+      "x": -188
+    },
     {
       "id": "bernie",
       "name": "伯尼",
@@ -25,7 +29,10 @@
       "name": "可控燃烧",
       "desc": "薇洛使用打火机与火把攻击生物时，100% 将其点燃。由薇洛造成的所有燃烧状态变为可控燃烧。薇洛可以远程对可控燃烧中的实体进行“拨火”，使其变成普通的燃烧。",
       "requires": [],
-      "x": -223, "y": -112, "w": 32, "h": 32
+      "x": -223,
+      "y": -112,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "burn_duration",
@@ -33,8 +40,13 @@
       "group": "fire",
       "name": "燃烧周期",
       "desc": "被薇洛点燃的生物，燃烧状态持续时长 + 200%。",
-      "requires": ["controlled_burning"],
-      "x": -223, "y": -73, "w": 32, "h": 32
+      "requires": [
+        "controlled_burning"
+      ],
+      "x": -223,
+      "y": -73,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "fire_fighter",
@@ -42,8 +54,14 @@
       "group": "fire",
       "name": "烈火斗士",
       "desc": "被薇洛点燃的生物，受到的燃烧伤害 + 50%。",
-      "requires": ["controlled_burning", "burn_duration"],
-      "x": -223, "y": -34, "w": 32, "h": 32
+      "requires": [
+        "controlled_burning",
+        "burn_duration"
+      ],
+      "x": -223,
+      "y": -34,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "brighter_lighter_1",
@@ -52,7 +70,10 @@
       "name": "明亮的打火机 I",
       "desc": "打火机的照明范围增加 150%，略大于火把。",
       "requires": [],
-      "x": -154, "y": -112, "w": 32, "h": 32
+      "x": -154,
+      "y": -112,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "brighter_lighter_2",
@@ -60,8 +81,13 @@
       "group": "fire",
       "name": "明亮的打火机 II",
       "desc": "打火机的照明范围增加 300%，略小于提灯。",
-      "requires": ["brighter_lighter_1"],
-      "x": -154, "y": -73, "w": 32, "h": 32
+      "requires": [
+        "brighter_lighter_1"
+      ],
+      "x": -154,
+      "y": -73,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_attuned_lighter",
@@ -70,7 +96,10 @@
       "name": "饥饿打火机",
       "desc": "装备打火机时，右键进入吸收火焰状态：移速减少 33%，在半径 2.2 距离单位的范围内，熄灭所有明火和闷烧，将以太余烬吸入物品栏中。薇洛可以使用以太余烬为打火机添加燃料，每个余烬可以恢复 45%。",
       "requires": [],
-      "x": -161, "y": -27, "w": 32, "h": 32
+      "x": -161,
+      "y": -27,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "ember_tender",
@@ -78,8 +107,13 @@
       "group": "fire",
       "name": "余烬照料者",
       "desc": "当部分生物处于薇洛 40 距离单位内，并在燃烧状态下死亡，就会产生以太余烬。薇洛可以使用1个以太余烬释放“火焰投掷”：点燃指定位置 2 距离单位内的全部生物和可燃物，为营火、火坑、咩咩雕像添加 180 燃料值。",
-      "requires": ["willow_attuned_lighter"],
-      "x": -161, "y": 12, "w": 32, "h": 32
+      "requires": [
+        "willow_attuned_lighter"
+      ],
+      "x": -161,
+      "y": 12,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_fire_burst",
@@ -87,8 +121,14 @@
       "group": "fire",
       "name": "自燃术",
       "desc": "薇洛可以使用 4 个以太余烬释放：燃烧术。点燃 10 距离单位内的所有战斗中的非己方生物；如果学习了“燃烧伯尼”技能，还会强化范围内的伯尼！",
-      "requires": ["willow_attuned_lighter", "ember_tender"],
-      "x": -232, "y": 55, "w": 32, "h": 32
+      "requires": [
+        "willow_attuned_lighter",
+        "ember_tender"
+      ],
+      "x": -232,
+      "y": 55,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_fire_ball",
@@ -96,8 +136,14 @@
       "group": "fire",
       "name": "火球术",
       "desc": "薇洛可以使用 2 个以太余烬释放：火球术。召唤一个火球，火球与矮星具有相同的属性，但持续时间为 8 分钟。",
-      "requires": ["willow_attuned_lighter", "ember_tender"],
-      "x": -188, "y": 55, "w": 32, "h": 32
+      "requires": [
+        "willow_attuned_lighter",
+        "ember_tender"
+      ],
+      "x": -188,
+      "y": 55,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "burning_frenzy",
@@ -105,8 +151,14 @@
       "group": "fire",
       "name": "狂热焚烧",
       "desc": "薇洛可以使用 2 个以太余烬释放：狂热焚烧。60 秒内，薇洛对燃烧状态下的生物造成的物理伤害 + 25%。",
-      "requires": ["willow_attuned_lighter", "ember_tender"],
-      "x": -144, "y": 55, "w": 32, "h": 32
+      "requires": [
+        "willow_attuned_lighter",
+        "ember_tender"
+      ],
+      "x": -144,
+      "y": 55,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_bernieregen_1",
@@ -115,7 +167,10 @@
       "name": "打补丁 I",
       "desc": "伯尼！每秒恢复 1 text-center。",
       "requires": [],
-      "x": -54, "y": -102, "w": 32, "h": 32
+      "x": -54,
+      "y": -102,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_bernieregen_2",
@@ -123,8 +178,13 @@
       "group": "bernie",
       "name": "打补丁 II",
       "desc": "伯尼！每秒恢复 2 text-center。",
-      "requires": ["willow_bernieregen_1"],
-      "x": -54, "y": -63, "w": 32, "h": 32
+      "requires": [
+        "willow_bernieregen_1"
+      ],
+      "x": -54,
+      "y": -63,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_berniesanity_1",
@@ -133,7 +193,10 @@
       "name": "理智小熊 I",
       "desc": "伯尼在薇洛的理智值低于 30% 时就会变为伯尼！",
       "requires": [],
-      "x": -10, "y": -102, "w": 32, "h": 32
+      "x": -10,
+      "y": -102,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_berniesanity_2",
@@ -141,8 +204,13 @@
       "group": "bernie",
       "name": "理智小熊 II",
       "desc": "伯尼在薇洛的理智值低于 50% 时就会变为伯尼！",
-      "requires": ["willow_berniesanity_1"],
-      "x": -10, "y": -63, "w": 32, "h": 32
+      "requires": [
+        "willow_berniesanity_1"
+      ],
+      "x": -10,
+      "y": -63,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_bernieai",
@@ -150,8 +218,14 @@
       "group": "bernie",
       "name": "头脑发热",
       "desc": "伯尼！会嘲讽所有暗影阵营和月亮阵营的敌对生物。伯尼在附近有这些生物时会无视玩家的理智值变为伯尼！",
-      "requires": ["willow_berniesanity_1", "willow_berniesanity_2"],
-      "x": -10, "y": -24, "w": 32, "h": 32
+      "requires": [
+        "willow_berniesanity_1",
+        "willow_berniesanity_2"
+      ],
+      "x": -10,
+      "y": -24,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_berniehealth_1",
@@ -161,7 +235,10 @@
       "desc": "伯尼！的生命值上限增加 300。",
       "requires": [],
       "lock": "lock_bernie_health",
-      "x": -56, "y": 15, "w": 32, "h": 32
+      "x": -56,
+      "y": 15,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_berniehealth_2",
@@ -169,9 +246,14 @@
       "group": "bernie",
       "name": "坚硬填料 II",
       "desc": "伯尼！的生命值上限增加 600。",
-      "requires": ["willow_berniehealth_1"],
+      "requires": [
+        "willow_berniehealth_1"
+      ],
       "lock": "lock_bernie_health",
-      "x": -56, "y": 50, "w": 32, "h": 32
+      "x": -56,
+      "y": 50,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_berniespeed_1",
@@ -180,7 +262,10 @@
       "name": "加速剂 I",
       "desc": "伯尼！的移速增加 15%。",
       "requires": [],
-      "x": 34, "y": -102, "w": 32, "h": 32
+      "x": 34,
+      "y": -102,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_berniespeed_2",
@@ -188,8 +273,13 @@
       "group": "bernie",
       "name": "加速剂 II",
       "desc": "伯尼！的移速增加 30%。",
-      "requires": ["willow_berniespeed_1"],
-      "x": 34, "y": -63, "w": 32, "h": 32
+      "requires": [
+        "willow_berniespeed_1"
+      ],
+      "x": 34,
+      "y": -63,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_burnignbernie",
@@ -199,7 +289,10 @@
       "desc": "伯尼！可以被薇洛“点燃”以进行强化，在 20 秒内提供半径为 3 的照明效果。在此期间，伯尼！会对近战攻击它的生物造成 50 点伤害。",
       "requires": [],
       "lock": "lock_bernie_burn",
-      "x": 32, "y": 15, "w": 32, "h": 32
+      "x": 32,
+      "y": 15,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_allegiance_shadow_bernie",
@@ -208,9 +301,18 @@
       "name": "暗影伯尼",
       "desc": "薇洛获得暗影亲和。伯尼！变为暗影阵营、获得位面实体抵抗并增加 5 点位面伤害和 15 点位面防御。薇洛和伯尼！受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
       "requires": [],
-      "locks": ["lock_shadow_gate", "lock_shadow_bernie"],
-      "exclusiveWith": ["willow_allegiance_lunar_bernie", "willow_allegiance_lunar_fire"],
-      "x": 130, "y": -45, "w": 32, "h": 32
+      "locks": [
+        "lock_shadow_gate",
+        "lock_shadow_bernie"
+      ],
+      "exclusiveWith": [
+        "willow_allegiance_lunar_bernie",
+        "willow_allegiance_lunar_fire"
+      ],
+      "x": 130,
+      "y": -45,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_allegiance_lunar_bernie",
@@ -219,9 +321,18 @@
       "name": "月亮伯尼",
       "desc": "薇洛获得月亮亲和。伯尼！变为月亮阵营、获得位面实体抵抗并增加 5 点位面伤害和 15 点位面防御。薇洛和伯尼！受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
       "requires": [],
-      "locks": ["lock_lunar_gate", "lock_lunar_bernie"],
-      "exclusiveWith": ["willow_allegiance_shadow_bernie", "willow_allegiance_shadow_fire"],
-      "x": 130, "y": 56, "w": 32, "h": 32
+      "locks": [
+        "lock_lunar_gate",
+        "lock_lunar_bernie"
+      ],
+      "exclusiveWith": [
+        "willow_allegiance_shadow_bernie",
+        "willow_allegiance_shadow_fire"
+      ],
+      "x": 130,
+      "y": 56,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_allegiance_shadow_fire",
@@ -230,9 +341,18 @@
       "name": "暗焰纵火犯",
       "desc": "薇洛获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。消耗5个以太余烬使用主动技能：暗焰（8 秒cd）。向周围放出 5 团暗影卷须，追踪周围的敌人并对单体造成 60 物理伤害 + 90 位面伤害。该技能对月亮阵营生物造成的伤害提升 10%。",
       "requires": [],
-      "locks": ["lock_shadow_gate", "lock_shadow_fire"],
-      "exclusiveWith": ["willow_allegiance_lunar_bernie", "willow_allegiance_lunar_fire"],
-      "x": 198, "y": -45, "w": 32, "h": 32
+      "locks": [
+        "lock_shadow_gate",
+        "lock_shadow_fire"
+      ],
+      "exclusiveWith": [
+        "willow_allegiance_lunar_bernie",
+        "willow_allegiance_lunar_fire"
+      ],
+      "x": 198,
+      "y": -45,
+      "w": 32,
+      "h": 32
     },
     {
       "id": "willow_allegiance_lunar_fire",
@@ -241,9 +361,18 @@
       "name": "月焰纵火犯",
       "desc": "薇洛获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。消耗5个以太余烬使用主动技能：月焰（13 秒cd）。5 秒间，向鼠标指向的方向持续喷射冷火。每 0.33 秒对其中的所有生物攻击一次，造成 20 物理伤害 + 30 位面伤害。该攻击会将目标的体温设为 -2 度。该攻击对暗影阵营生物造成的伤害提升 10%。",
       "requires": [],
-      "locks": ["lock_lunar_gate", "lock_lunar_fire"],
-      "exclusiveWith": ["willow_allegiance_shadow_bernie", "willow_allegiance_shadow_fire"],
-      "x": 198, "y": 56, "w": 32, "h": 32
+      "locks": [
+        "lock_lunar_gate",
+        "lock_lunar_fire"
+      ],
+      "exclusiveWith": [
+        "willow_allegiance_shadow_bernie",
+        "willow_allegiance_shadow_fire"
+      ],
+      "x": 198,
+      "y": 56,
+      "w": 32,
+      "h": 32
     }
   ],
   "locks": [
@@ -251,74 +380,237 @@
       "id": "lock_shadow_gate",
       "group": "affinity",
       "count": 0,
-      "fromGroups": ["fire", "bernie"],
+      "fromGroups": [
+        "fire",
+        "bernie"
+      ],
       "desc": "击败远古织影者后解锁暗影亲和，没有月亮亲和",
-      "nodes": [{ "x": 167.2, "y": -106.8, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 167.2,
+          "y": -106.8,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_bernie_burn",
       "group": "bernie",
       "count": 8,
-      "fromGroups": ["bernie"],
+      "fromGroups": [
+        "bernie"
+      ],
       "desc": "学习 8 个伯尼技能后解锁「燃烧伯尼」",
-      "nodes": [{ "x": 35.2, "y": -16.8, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 35.2,
+          "y": -16.8,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_shadow_bernie",
       "group": "affinity",
       "count": 6,
-      "fromGroups": ["bernie"],
+      "fromGroups": [
+        "bernie"
+      ],
       "desc": "学习 6 个伯尼技能后解锁「暗影伯尼」",
-      "nodes": [{ "x": 133.2, "y": -76.8, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 133.2,
+          "y": -76.8,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_shadow_fire",
       "group": "affinity",
       "count": 7,
-      "fromGroups": ["fire"],
+      "fromGroups": [
+        "fire"
+      ],
       "desc": "学习 7 个火焰技能后解锁「暗焰纵火犯」",
-      "nodes": [{ "x": 201.2, "y": -76.8, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 201.2,
+          "y": -76.8,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_bernie_health",
       "group": "bernie",
       "count": 4,
-      "fromGroups": ["bernie"],
+      "fromGroups": [
+        "bernie"
+      ],
       "desc": "学习 4 个伯尼技能后解锁「坚硬填料」",
-      "nodes": [{ "x": -52.8, "y": -16.8, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": -52.8,
+          "y": -16.8,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_lunar_gate",
       "group": "affinity",
       "count": 0,
-      "fromGroups": ["fire", "bernie"],
+      "fromGroups": [
+        "fire",
+        "bernie"
+      ],
       "desc": "击败天体英雄后解锁月亮亲和，没有暗影亲和",
-      "nodes": [{ "x": 167.2, "y": -5.8, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 167.2,
+          "y": -5.8,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_lunar_fire",
       "group": "affinity",
       "count": 7,
-      "fromGroups": ["fire"],
+      "fromGroups": [
+        "fire"
+      ],
       "desc": "学习 7 个火焰技能后解锁「月焰纵火犯」",
-      "nodes": [{ "x": 201.2, "y": 24.2, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 201.2,
+          "y": 24.2,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     },
     {
       "id": "lock_lunar_bernie",
       "group": "affinity",
       "count": 6,
-      "fromGroups": ["bernie"],
+      "fromGroups": [
+        "bernie"
+      ],
       "desc": "学习 6 个伯尼技能后解锁「月亮伯尼」",
-      "nodes": [{ "x": 133.2, "y": 24.2, "w": 25.6, "h": 25.6 }]
+      "nodes": [
+        {
+          "x": 133.2,
+          "y": 24.2,
+          "w": 25.6,
+          "h": 25.6
+        }
+      ]
     }
   ],
-  "builds": [],
-  "modes": [
-    { "id": "solo-lunar", "tags": ["单人", "月后"], "name": "单人月后", "text": "在这里写单人月后加点", "skills": [] },
-    { "id": "solo-shadow", "tags": ["单人", "影后"], "name": "单人影后", "text": "在这里写单人影后加点", "skills": [] },
-    { "id": "solo-both", "tags": ["单人", "月后", "影后"], "name": "单人月后影后", "text": "在这里写单人月后影后加点", "skills": [] },
-    { "id": "multi-lunar", "tags": ["多人", "月后"], "name": "多人月后", "text": "在这里写多人月后加点", "skills": [] },
-    { "id": "multi-shadow", "tags": ["多人", "影后"], "name": "多人影后", "text": "在这里写多人影后加点", "skills": [] },
-    { "id": "multi-both", "tags": ["多人", "月后", "影后"], "name": "多人月后影后", "text": "在这里写多人月后影后加点", "skills": [] }
+  "builds": [
+    {
+      "id": "init",
+      "name": "初始化加点建议",
+      "text": "在这里写初始化加点建议",
+      "skills": [],
+      "modes": [
+        {
+          "id": "solo-none",
+          "tags": [
+            "单人",
+            "月前",
+            "影前"
+          ],
+          "name": "单人月前影前",
+          "text": "在这里写单人月前影前加点",
+          "skills": []
+        },
+        {
+          "id": "solo-lunar",
+          "tags": [
+            "单人",
+            "月后",
+            "影前"
+          ],
+          "name": "单人月后",
+          "text": "在这里写单人月后加点",
+          "skills": []
+        },
+        {
+          "id": "solo-shadow",
+          "tags": [
+            "单人",
+            "月前",
+            "影后"
+          ],
+          "name": "单人影后",
+          "text": "在这里写单人影后加点",
+          "skills": []
+        },
+        {
+          "id": "solo-both",
+          "tags": [
+            "单人",
+            "月后",
+            "影后"
+          ],
+          "name": "单人月后影后",
+          "text": "在这里写单人月后影后加点",
+          "skills": []
+        },
+        {
+          "id": "multi-none",
+          "tags": [
+            "多人",
+            "月前",
+            "影前"
+          ],
+          "name": "多人月前影前",
+          "text": "在这里写多人月前影前加点",
+          "skills": []
+        },
+        {
+          "id": "multi-lunar",
+          "tags": [
+            "多人",
+            "月后",
+            "影前"
+          ],
+          "name": "多人月后",
+          "text": "在这里写多人月后加点",
+          "skills": []
+        },
+        {
+          "id": "multi-shadow",
+          "tags": [
+            "多人",
+            "月前",
+            "影后"
+          ],
+          "name": "多人影后",
+          "text": "在这里写多人影后加点",
+          "skills": []
+        },
+        {
+          "id": "multi-both",
+          "tags": [
+            "多人",
+            "月后",
+            "影后"
+          ],
+          "name": "多人月后影后",
+          "text": "在这里写多人月后影后加点",
+          "skills": []
+        }
+      ]
+    }
   ]
 }

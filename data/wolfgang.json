@@ -1,296 +1,549 @@
 {
-    "id": "wolfgang",
-    "name": "沃尔夫冈",
-    "points": 15,
-    "groups": [
-      { "id": "chores", "name": "杂务", "x": -228 },
-      { "id": "training", "name": "训练", "x": -103 },
-      { "id": "overbuff", "name": "突破", "x": -27 },
-      {
-        "id": "power",
-        "name": "威力",
-        "x": 74,
-        "tip": "远程武器（如亮茄魔杖、嚎弹炮）以及不带有位面伤害的武器（如暗夜剑）不受到威力武器的加成。"
-      },
-      { "id": "affinity", "name": "亲和", "x": 184 }
-    ],
-    "skills": [
-      {
-        "id": "wolfgang_critwork_1",
-        "n": 1,
-        "group": "chores",
-        "name": "杂物锻炼 I",
-        "desc": "强壮状态下工作的秒杀概率提升至 5%。",
-        "requires": [],
-        "x": -228, "y": -106, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_critwork_2",
-        "n": 2,
-        "group": "chores",
-        "name": "杂物锻炼 II",
-        "desc": "强壮状态下工作的秒杀概率提升至 10%。",
-        "requires": ["wolfgang_critwork_1"],
-        "x": -228, "y": -68, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_critwork_3",
-        "n": 3,
-        "group": "chores",
-        "name": "杂物锻炼 III",
-        "desc": "强壮状态下工作的秒杀概率提升至 15%。",
-        "requires": ["wolfgang_critwork_1", "wolfgang_critwork_2"],
-        "x": -228, "y": -30, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_autogym",
-        "n": 4,
-        "group": "training",
-        "name": "健身房精通",
-        "desc": "自动完成强大健身房的小游戏。",
-        "requires": [],
-        "x": -141, "y": -106, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_normal_coach",
-        "n": 5,
-        "group": "training",
-        "name": "沃尔夫冈教练",
-        "desc": "习得配方：",
-        "recipes": ["1 燧石 + 1 绳子 → 1 教练口哨"],
-        "requires": [],
-        "x": -103, "y": -106, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_normal_speed",
-        "n": 6,
-        "group": "training",
-        "name": "练腿日",
-        "desc": "正常状态下的沃尔夫冈移速增加 10%。",
-        "requires": ["wolfgang_normal_coach"],
-        "x": -103, "y": -68, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_dumbbell_crafting",
-        "n": 7,
-        "group": "training",
-        "name": "哑铃开发者",
-        "desc": "习得配方：",
-        "recipes": [
-          "12 石头 + 1 镐子 + 4 燧石 → 1 温度哑铃",
-          "2 铥矿 + 1 红宝石 + 1 树枝 → 1 火焰哑铃",
-          "2 铥矿 + 1 蓝宝石 + 1 树枝 → 1 冰冻哑铃"
-        ],
-        "requires": [],
-        "x": -65, "y": -106, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_dumbbell_throwing_1",
-        "n": 8,
-        "group": "training",
-        "name": "重击手 I",
-        "desc": "投掷哑铃的伤害增加 50%。",
-        "requires": ["wolfgang_dumbbell_crafting"],
-        "x": -65, "y": -68, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_dumbbell_throwing_2",
-        "n": 9,
-        "group": "training",
-        "name": "重击手 II",
-        "desc": "投掷哑铃的伤害增加 100%。",
-        "requires": ["wolfgang_dumbbell_crafting", "wolfgang_dumbbell_throwing_1"],
-        "x": -65, "y": -30, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_overbuff_1",
-        "n": 10,
-        "group": "overbuff",
-        "name": "突破极限 I",
-        "desc": "使用强大健身房锻炼时，力量值上限可以达到 110。",
-        "requires": [],
-        "x": -27, "y": -106, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_overbuff_2",
-        "n": 11,
-        "group": "overbuff",
-        "name": "突破极限 II",
-        "desc": "使用强大健身房锻炼时，力量值上限可以达到 120。",
-        "requires": ["wolfgang_overbuff_1"],
-        "x": -27, "y": -68, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_overbuff_3",
-        "n": 12,
-        "group": "overbuff",
-        "name": "突破极限 III",
-        "desc": "使用强大健身房锻炼时，力量值上限可以达到 130。",
-        "requires": ["wolfgang_overbuff_1", "wolfgang_overbuff_2"],
-        "x": -27, "y": -30, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_overbuff_4",
-        "n": 13,
-        "group": "overbuff",
-        "name": "突破极限 IV",
-        "desc": "使用强大健身房锻炼时，力量值上限可以达到 140。",
-        "requires": ["wolfgang_overbuff_1", "wolfgang_overbuff_2", "wolfgang_overbuff_3"],
-        "x": -27, "y": 8, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_overbuff_5",
-        "n": 14,
-        "group": "overbuff",
-        "name": "突破极限 V",
-        "desc": "使用强大健身房锻炼时，力量值上限可以达到 150。",
-        "requires": ["wolfgang_overbuff_1", "wolfgang_overbuff_2", "wolfgang_overbuff_3", "wolfgang_overbuff_4"],
-        "x": -27, "y": 46, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_planardamage_1",
-        "n": 15,
-        "group": "power",
-        "name": "威力武器 I",
-        "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +5。",
-        "requires": [],
-        "x": 74, "y": -106, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_planardamage_2",
-        "n": 16,
-        "group": "power",
-        "name": "威力武器 II",
-        "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +10。",
-        "requires": ["wolfgang_planardamage_1"],
-        "x": 74, "y": -68, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_planardamage_3",
-        "n": 17,
-        "group": "power",
-        "name": "威力武器 III",
-        "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +15。",
-        "requires": ["wolfgang_planardamage_1", "wolfgang_planardamage_2"],
-        "x": 74, "y": -30, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_planardamage_4",
-        "n": 18,
-        "group": "power",
-        "name": "威力武器 IV",
-        "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +20。",
-        "requires": ["wolfgang_planardamage_1", "wolfgang_planardamage_2", "wolfgang_planardamage_3"],
-        "x": 74, "y": 8, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_planardamage_5",
-        "n": 19,
-        "group": "power",
-        "name": "威力武器 V",
-        "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +25。",
-        "requires": ["wolfgang_planardamage_1", "wolfgang_planardamage_2", "wolfgang_planardamage_3", "wolfgang_planardamage_4"],
-        "x": 74, "y": 46, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_allegiance_shadow_1",
-        "n": 20,
-        "group": "affinity",
-        "name": "暗影守卫 I",
-        "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
-        "requires": [],
-        "lock": "lock_affinity",
-        "exclusiveWith": ["wolfgang_allegiance_lunar_1"],
-        "x": 165, "y": -30, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_allegiance_shadow_2",
-        "n": 21,
-        "group": "affinity",
-        "name": "暗影守卫 II",
-        "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.2 倍的伤害。",
-        "requires": ["wolfgang_allegiance_shadow_1"],
-        "lock": "lock_affinity",
-        "x": 165, "y": 8, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_allegiance_shadow_3",
-        "n": 22,
-        "group": "affinity",
-        "name": "暗影守卫 III",
-        "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.3 倍的伤害。",
-        "requires": ["wolfgang_allegiance_shadow_1", "wolfgang_allegiance_shadow_2"],
-        "lock": "lock_affinity",
-        "x": 165, "y": 46, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_allegiance_lunar_1",
-        "n": 23,
-        "group": "affinity",
-        "name": "月亮战略家 I",
-        "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
-        "requires": [],
-        "lock": "lock_affinity",
-        "exclusiveWith": ["wolfgang_allegiance_shadow_1"],
-        "x": 203, "y": -30, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_allegiance_lunar_2",
-        "n": 24,
-        "group": "affinity",
-        "name": "月亮战略家 II",
-        "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.2 倍的伤害。",
-        "requires": ["wolfgang_allegiance_lunar_1"],
-        "lock": "lock_affinity",
-        "x": 203, "y": 8, "w": 32, "h": 32
-      },
-      {
-        "id": "wolfgang_allegiance_lunar_3",
-        "n": 25,
-        "group": "affinity",
-        "name": "月亮战略家 III",
-        "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.3 倍的伤害。",
-        "requires": ["wolfgang_allegiance_lunar_1", "wolfgang_allegiance_lunar_2"],
-        "lock": "lock_affinity",
-        "x": 203, "y": 46, "w": 32, "h": 32
-      }
-    ],
-    "locks": [
-      {
-        "id": "lock_affinity",
-        "group": "affinity",
-        "count": 12,
-        "fromGroups": ["chores", "training", "overbuff", "power"],
-        "desc": "学习 12 个其他技能后解锁亲和分支",
-        "nodes": [
-          {
-            "x": 168.2, "y": -102.8, "w": 25.6, "h": 25.6,
-            "tip": "学习 12 个其他技能后解锁亲和分支"
-          },
-          {
-            "x": 206.2, "y": -102.8, "w": 25.6, "h": 25.6,
-            "tip": "这里有锁文案需要替换"
-          },
-          {
-            "x": 168.2, "y": -64.8, "w": 25.6, "h": 25.6,
-            "tip": "这里有锁文案需要替换",
-            "blocksAffinity": "月亮"
-          },
-          {
-            "x": 206.2, "y": -64.8, "w": 25.6, "h": 25.6,
-            "tip": "这里有锁文案需要替换",
-            "blocksAffinity": "暗影"
-          }
-        ]
-      }
-    ],
-    "builds": [],
-    "modes": [
-      { "id": "solo-lunar", "tags": ["单人", "月后"], "name": "单人月后", "text": "在这里写单人月后加点", "skills": [] },
-      { "id": "solo-shadow", "tags": ["单人", "影后"], "name": "单人影后", "text": "在这里写单人影后加点", "skills": [] },
-      { "id": "solo-both", "tags": ["单人", "月后", "影后"], "name": "单人月后影后", "text": "在这里写单人月后影后加点", "skills": [] },
-      { "id": "multi-lunar", "tags": ["多人", "月后"], "name": "多人月后", "text": "在这里写多人月后加点", "skills": [] },
-      { "id": "multi-shadow", "tags": ["多人", "影后"], "name": "多人影后", "text": "在这里写多人影后加点", "skills": [] },
-      { "id": "multi-both", "tags": ["多人", "月后", "影后"], "name": "多人月后影后", "text": "在这里写多人月后影后加点", "skills": [] }
-    ]
-  }
+  "id": "wolfgang",
+  "name": "沃尔夫冈",
+  "points": 15,
+  "groups": [
+    {
+      "id": "chores",
+      "name": "杂务",
+      "x": -228
+    },
+    {
+      "id": "training",
+      "name": "训练",
+      "x": -103
+    },
+    {
+      "id": "overbuff",
+      "name": "突破",
+      "x": -27
+    },
+    {
+      "id": "power",
+      "name": "威力",
+      "x": 74,
+      "tip": "远程武器（如亮茄魔杖、嚎弹炮）以及不带有位面伤害的武器（如暗夜剑）不受到威力武器的加成。"
+    },
+    {
+      "id": "affinity",
+      "name": "亲和",
+      "x": 184
+    }
+  ],
+  "skills": [
+    {
+      "id": "wolfgang_critwork_1",
+      "n": 1,
+      "group": "chores",
+      "name": "杂物锻炼 I",
+      "desc": "强壮状态下工作的秒杀概率提升至 5%。",
+      "requires": [],
+      "x": -228,
+      "y": -106,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_critwork_2",
+      "n": 2,
+      "group": "chores",
+      "name": "杂物锻炼 II",
+      "desc": "强壮状态下工作的秒杀概率提升至 10%。",
+      "requires": [
+        "wolfgang_critwork_1"
+      ],
+      "x": -228,
+      "y": -68,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_critwork_3",
+      "n": 3,
+      "group": "chores",
+      "name": "杂物锻炼 III",
+      "desc": "强壮状态下工作的秒杀概率提升至 15%。",
+      "requires": [
+        "wolfgang_critwork_1",
+        "wolfgang_critwork_2"
+      ],
+      "x": -228,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_autogym",
+      "n": 4,
+      "group": "training",
+      "name": "健身房精通",
+      "desc": "自动完成强大健身房的小游戏。",
+      "requires": [],
+      "x": -141,
+      "y": -106,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_normal_coach",
+      "n": 5,
+      "group": "training",
+      "name": "沃尔夫冈教练",
+      "desc": "习得配方：",
+      "recipes": [
+        "1 燧石 + 1 绳子 → 1 教练口哨"
+      ],
+      "requires": [],
+      "x": -103,
+      "y": -106,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_normal_speed",
+      "n": 6,
+      "group": "training",
+      "name": "练腿日",
+      "desc": "正常状态下的沃尔夫冈移速增加 10%。",
+      "requires": [
+        "wolfgang_normal_coach"
+      ],
+      "x": -103,
+      "y": -68,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_dumbbell_crafting",
+      "n": 7,
+      "group": "training",
+      "name": "哑铃开发者",
+      "desc": "习得配方：",
+      "recipes": [
+        "12 石头 + 1 镐子 + 4 燧石 → 1 温度哑铃",
+        "2 铥矿 + 1 红宝石 + 1 树枝 → 1 火焰哑铃",
+        "2 铥矿 + 1 蓝宝石 + 1 树枝 → 1 冰冻哑铃"
+      ],
+      "requires": [],
+      "x": -65,
+      "y": -106,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_dumbbell_throwing_1",
+      "n": 8,
+      "group": "training",
+      "name": "重击手 I",
+      "desc": "投掷哑铃的伤害增加 50%。",
+      "requires": [
+        "wolfgang_dumbbell_crafting"
+      ],
+      "x": -65,
+      "y": -68,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_dumbbell_throwing_2",
+      "n": 9,
+      "group": "training",
+      "name": "重击手 II",
+      "desc": "投掷哑铃的伤害增加 100%。",
+      "requires": [
+        "wolfgang_dumbbell_crafting",
+        "wolfgang_dumbbell_throwing_1"
+      ],
+      "x": -65,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_overbuff_1",
+      "n": 10,
+      "group": "overbuff",
+      "name": "突破极限 I",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 110。",
+      "requires": [],
+      "x": -27,
+      "y": -106,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_overbuff_2",
+      "n": 11,
+      "group": "overbuff",
+      "name": "突破极限 II",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 120。",
+      "requires": [
+        "wolfgang_overbuff_1"
+      ],
+      "x": -27,
+      "y": -68,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_overbuff_3",
+      "n": 12,
+      "group": "overbuff",
+      "name": "突破极限 III",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 130。",
+      "requires": [
+        "wolfgang_overbuff_1",
+        "wolfgang_overbuff_2"
+      ],
+      "x": -27,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_overbuff_4",
+      "n": 13,
+      "group": "overbuff",
+      "name": "突破极限 IV",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 140。",
+      "requires": [
+        "wolfgang_overbuff_1",
+        "wolfgang_overbuff_2",
+        "wolfgang_overbuff_3"
+      ],
+      "x": -27,
+      "y": 8,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_overbuff_5",
+      "n": 14,
+      "group": "overbuff",
+      "name": "突破极限 V",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 150。",
+      "requires": [
+        "wolfgang_overbuff_1",
+        "wolfgang_overbuff_2",
+        "wolfgang_overbuff_3",
+        "wolfgang_overbuff_4"
+      ],
+      "x": -27,
+      "y": 46,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_planardamage_1",
+      "n": 15,
+      "group": "power",
+      "name": "威力武器 I",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +5。",
+      "requires": [],
+      "x": 74,
+      "y": -106,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_planardamage_2",
+      "n": 16,
+      "group": "power",
+      "name": "威力武器 II",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +10。",
+      "requires": [
+        "wolfgang_planardamage_1"
+      ],
+      "x": 74,
+      "y": -68,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_planardamage_3",
+      "n": 17,
+      "group": "power",
+      "name": "威力武器 III",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +15。",
+      "requires": [
+        "wolfgang_planardamage_1",
+        "wolfgang_planardamage_2"
+      ],
+      "x": 74,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_planardamage_4",
+      "n": 18,
+      "group": "power",
+      "name": "威力武器 IV",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +20。",
+      "requires": [
+        "wolfgang_planardamage_1",
+        "wolfgang_planardamage_2",
+        "wolfgang_planardamage_3"
+      ],
+      "x": 74,
+      "y": 8,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_planardamage_5",
+      "n": 19,
+      "group": "power",
+      "name": "威力武器 V",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +25。",
+      "requires": [
+        "wolfgang_planardamage_1",
+        "wolfgang_planardamage_2",
+        "wolfgang_planardamage_3",
+        "wolfgang_planardamage_4"
+      ],
+      "x": 74,
+      "y": 46,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_allegiance_shadow_1",
+      "n": 20,
+      "group": "affinity",
+      "name": "暗影守卫 I",
+      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": [
+        "wolfgang_allegiance_lunar_1"
+      ],
+      "x": 165,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_allegiance_shadow_2",
+      "n": 21,
+      "group": "affinity",
+      "name": "暗影守卫 II",
+      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.2 倍的伤害。",
+      "requires": [
+        "wolfgang_allegiance_shadow_1"
+      ],
+      "lock": "lock_affinity",
+      "x": 165,
+      "y": 8,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_allegiance_shadow_3",
+      "n": 22,
+      "group": "affinity",
+      "name": "暗影守卫 III",
+      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.3 倍的伤害。",
+      "requires": [
+        "wolfgang_allegiance_shadow_1",
+        "wolfgang_allegiance_shadow_2"
+      ],
+      "lock": "lock_affinity",
+      "x": 165,
+      "y": 46,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_allegiance_lunar_1",
+      "n": 23,
+      "group": "affinity",
+      "name": "月亮战略家 I",
+      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
+      "requires": [],
+      "lock": "lock_affinity",
+      "exclusiveWith": [
+        "wolfgang_allegiance_shadow_1"
+      ],
+      "x": 203,
+      "y": -30,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_allegiance_lunar_2",
+      "n": 24,
+      "group": "affinity",
+      "name": "月亮战略家 II",
+      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.2 倍的伤害。",
+      "requires": [
+        "wolfgang_allegiance_lunar_1"
+      ],
+      "lock": "lock_affinity",
+      "x": 203,
+      "y": 8,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "id": "wolfgang_allegiance_lunar_3",
+      "n": 25,
+      "group": "affinity",
+      "name": "月亮战略家 III",
+      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.3 倍的伤害。",
+      "requires": [
+        "wolfgang_allegiance_lunar_1",
+        "wolfgang_allegiance_lunar_2"
+      ],
+      "lock": "lock_affinity",
+      "x": 203,
+      "y": 46,
+      "w": 32,
+      "h": 32
+    }
+  ],
+  "locks": [
+    {
+      "id": "lock_affinity",
+      "group": "affinity",
+      "count": 12,
+      "fromGroups": [
+        "chores",
+        "training",
+        "overbuff",
+        "power"
+      ],
+      "desc": "亲和锁",
+      "nodes": [
+        {
+          "x": 168.2,
+          "y": -102.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "找到并击败远古织影者"
+        },
+        {
+          "x": 206.2,
+          "y": -102.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "找到并击败天体英雄"
+        },
+        {
+          "x": 168.2,
+          "y": -64.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "没有月亮亲和",
+          "blocksAffinity": "月亮"
+        },
+        {
+          "x": 206.2,
+          "y": -64.8,
+          "w": 25.6,
+          "h": 25.6,
+          "tip": "没有暗影亲和",
+          "blocksAffinity": "暗影"
+        }
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "id": "init",
+      "name": "初始化加点建议",
+      "text": "在这里写初始化加点建议",
+      "skills": [],
+      "modes": [
+        {
+          "id": "solo-none",
+          "tags": [
+            "单人",
+            "月前",
+            "影前"
+          ],
+          "name": "单人月前影前",
+          "text": "在这里写单人月前影前加点",
+          "skills": []
+        },
+        {
+          "id": "solo-lunar",
+          "tags": [
+            "单人",
+            "月后",
+            "影前"
+          ],
+          "name": "单人月后",
+          "text": "在这里写单人月后加点",
+          "skills": []
+        },
+        {
+          "id": "solo-shadow",
+          "tags": [
+            "单人",
+            "月前",
+            "影后"
+          ],
+          "name": "单人影后",
+          "text": "在这里写单人影后加点",
+          "skills": []
+        },
+        {
+          "id": "solo-both",
+          "tags": [
+            "单人",
+            "月后",
+            "影后"
+          ],
+          "name": "单人月后影后",
+          "text": "在这里写单人月后影后加点",
+          "skills": []
+        },
+        {
+          "id": "multi-none",
+          "tags": [
+            "多人",
+            "月前",
+            "影前"
+          ],
+          "name": "多人月前影前",
+          "text": "在这里写多人月前影前加点",
+          "skills": []
+        },
+        {
+          "id": "multi-lunar",
+          "tags": [
+            "多人",
+            "月后",
+            "影前"
+          ],
+          "name": "多人月后",
+          "text": "在这里写多人月后加点",
+          "skills": []
+        },
+        {
+          "id": "multi-shadow",
+          "tags": [
+            "多人",
+            "月前",
+            "影后"
+          ],
+          "name": "多人影后",
+          "text": "在这里写多人影后加点",
+          "skills": []
+        },
+        {
+          "id": "multi-both",
+          "tags": [
+            "多人",
+            "月后",
+            "影后"
+          ],
+          "name": "多人月后影后",
+          "text": "在这里写多人月后影后加点",
+          "skills": []
+        }
+      ]
+    }
+  ]
+}

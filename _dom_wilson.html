@@ -1,0 +1,509 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>濞佸皵閫?路 鎶€鑳芥爲</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 28px 20px 40px;
+    color: #e6d7b8;
+    font-family: Palatino, "Palatino Linotype", "Songti SC", "STSong", "Noto Serif SC", serif;
+    background-color: #0c0907;
+    background-image:
+      radial-gradient(ellipse at center, rgba(12,8,6,.28) 0%, rgba(6,4,3,.72) 72%, rgba(0,0,0,.88) 100%),
+      linear-gradient(rgba(8,6,4,.5), rgba(8,6,4,.62)),
+      url("img/Pc_background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+  .app {
+    width: 600px;
+    max-width: 100%;
+    background: rgba(16, 11, 8, .84);
+    border: 1px solid #a6843f;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px #2a1c10,
+      0 22px 50px rgba(0,0,0,.72),
+      inset 0 0 80px rgba(0,0,0,.35);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  text { user-select: none; pointer-events: none; }
+  .group-title-hit { cursor: default; }
+  .group-title-hit.has-note { cursor: help; }
+  .group-title.has-note { text-decoration: underline dotted #8a7030; }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(8, 6, 4, .55);
+    border-bottom: 1px solid #6e5428;
+    font-size: 14px;
+    color: #cbb892;
+  }
+  .toolbar select,
+  .char-picker-btn {
+    background: rgba(28, 20, 12, .9);
+    color: #f0e2c0;
+    border: 1px solid #8a6a32;
+    border-radius: 2px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .char-picker { position: relative; }
+  .char-picker-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 7.5em;
+    cursor: pointer;
+  }
+  .char-picker-menu {
+    position: absolute;
+    z-index: 15;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 100%;
+    padding: 4px 0;
+    background: rgba(22, 16, 10, .98);
+    border: 1px solid #8a6a32;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.45);
+  }
+  .char-option {
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    background: transparent;
+    border: 0;
+    color: #f0e2c0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .char-option:hover,
+  .char-option.current { color: #f0d060; background: #3a3418; }
+  .char-option.is-locked,
+  .char-option.is-locked:hover {
+    color: #6d5c48;
+    background: transparent;
+    cursor: default;
+  }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px;
+    background: rgba(8, 6, 4, .55);
+    border-top: 1px solid #6e5428;
+    font-size: 14px;
+    color: #cbb892;
+    letter-spacing: 1px;
+  }
+  .status-bar .points { color: #f0d060; font-weight: bold; }
+
+  .desc-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    background: rgba(10, 8, 6, .35);
+    border-top: 1px solid #6e5428;
+    padding: 12px 14px 14px;
+  }
+  .desc-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6px;
+    min-height: 32px;
+    flex-shrink: 0;
+  }
+  .parent-label {
+    flex: 0 1 auto;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #8d7a58;
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .parent-label.active {
+    color: #f0d060;
+    background: #3a3418;
+    border-color: #c9a227;
+  }
+  .parent-label.has-note {
+    cursor: help;
+    text-decoration: underline dotted #8a7020;
+    text-underline-offset: 3px;
+  }
+  .parent-label.has-note:hover {
+    color: #f0d060;
+    background: #3a3418;
+    border-color: #c9a227;
+    text-decoration-color: #f0d060;
+  }
+  .desc-body {
+    flex: 1;
+    display: flex;
+    min-height: 210px;
+  }
+  .desc-card {
+    flex: 1;
+    width: 100%;
+    padding: 14px 16px 16px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    background: rgba(28, 20, 14, .72);
+    color: #d9c7a4;
+    font-size: 16px;
+    line-height: 1.6;
+    box-shadow: inset 0 0 24px rgba(0,0,0,.28);
+  }
+  .desc-card.hovered { border-color: #8a7044; background: rgba(42, 30, 18, .8); }
+  .desc-card.picked { border-color: #f4efe4; color: #f6edd8; background: rgba(48, 36, 22, .82); }
+  .desc-card.learned {
+    background: rgba(58, 46, 18, .88);
+    color: #f0d060;
+    border-color: #c9a227;
+  }
+  .desc-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .desc-num {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    background: #2a2118;
+    color: #e6d3a4;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .desc-card.learned .desc-num { background: #c9a227; color: #1a1a1a; }
+  .desc-card.picked .desc-num {
+    background: #4a3c28;
+    color: #fff;
+    box-shadow: 0 0 0 1px #fff;
+  }
+  .desc-recipes {
+    margin: 8px 0 0 22px;
+    color: #e4d2ae;
+    font-size: 16px;
+  }
+  .desc-card.learned .desc-recipes { color: #f0d060; }
+  .desc-prereq {
+    margin-top: 10px;
+    color: #a89068;
+    font-size: 15px;
+  }
+  .desc-card.learned .desc-prereq { color: #b89a40; }
+
+  .lock-tip {
+    position: fixed;
+    z-index: 20;
+    max-width: 280px;
+    padding: 10px 12px;
+    background: rgba(12, 9, 6, .94);
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.55);
+    font-size: 15px;
+    line-height: 1.5;
+    pointer-events: none;
+    white-space: pre-wrap;
+  }
+  .stage-head {
+    display: grid;
+    background: rgba(8, 6, 4, .35);
+    border-bottom: 1px solid #6e5428;
+  }
+  .insight-bar,
+  .mode-stack { grid-area: 1 / 1; }
+  .insight-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  .stage-head.preset .insight-bar { min-height: 86px; }
+  .mode-stack {
+    display: none;
+    justify-self: end;
+    align-self: start;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 12px 0 0;
+    z-index: 2;
+  }
+  .mode-stack.is-open { display: flex; }
+  .mode-row { display: flex; gap: 6px; }
+  .mode-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2118;
+    border: 1.5px solid #6e5428;
+    border-radius: 2px;
+    color: #f0d060;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .mode-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .mode-btn.on {
+    border-color: #f0d060;
+    box-shadow: 0 0 0 1px #c9a227;
+  }
+  .align-btn {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2118;
+    border: 1.5px solid #6e5428;
+    border-radius: 2px;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .align-btn[hidden] { display: none; }
+  .align-btn.on {
+    border-color: #f0d060;
+    box-shadow: 0 0 0 1px #c9a227;
+  }
+  .scheme-pop {
+    position: fixed;
+    z-index: 30;
+    left: 50%;
+    top: 18%;
+    transform: translateX(-50%);
+    width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+    padding: 14px 16px 12px;
+    background: rgba(12, 9, 6, .96);
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.6);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .scheme-title { font-weight: bold; letter-spacing: 1px; }
+  .scheme-body {
+    margin-top: 8px;
+    color: #e6d3a4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .scheme-body[hidden],
+  .scheme-close[hidden] { display: none; }
+  .scheme-close {
+    display: block;
+    margin: 12px 0 0 auto;
+    padding: 4px 12px;
+    background: #2a2118;
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .insight-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 46px;
+    height: 46px;
+    padding: 0 8px;
+    background: #3a2c16;
+    border: 1.5px solid #c9a227;
+    border-radius: 2px;
+    color: #f0d060;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+  }
+  .insight-label {
+    color: #f0d060;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  .note-tip {
+    width: max-content;
+    max-width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    pointer-events: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .load-error {
+    margin: 16px;
+    padding: 12px;
+    background: rgba(58, 24, 20, .9);
+    color: #f0a0a0;
+    border: 1px solid #8a4038;
+    border-radius: 2px;
+    font-size: 13px;
+    white-space: pre-wrap;
+  }
+
+  @media (max-width: 720px) {
+    body {
+      padding: 12px 10px 24px;
+      background-image:
+        linear-gradient(rgba(18, 10, 16, .62), rgba(10, 6, 8, .78)),
+        url("img/pe_background.jpg");
+      background-position: center 18%;
+    }
+    .toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .toolbar select,
+    .char-picker,
+    .char-picker-btn { width: 100%; }
+    .stage-head { display: flex; flex-direction: column; }
+    .mode-stack {
+      order: -1;
+      align-self: stretch;
+      align-items: center;
+      padding: 10px 12px 0;
+    }
+    .insight-bar { order: 1; min-height: 0; }
+    .desc-head { font-size: 18px; }
+    .desc-card { font-size: 15px; }
+    .parent-label {
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 2px 4px;
+    }
+    .note-tip { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="toolbar">
+  <div>
+    <div class="char-picker" id="char-picker">
+      <button type="button" class="char-picker-btn" id="char-picker-btn">
+        <span id="char-picker-label">濞佸皵閫?/span>
+        <span aria-hidden="true">鈻?/span>
+      </button>
+      <div class="char-picker-menu" id="char-picker-menu" hidden=""><button type="button" class="char-option current">濞佸皵閫?/button><button type="button" class="char-option">钖囨礇</button><button type="button" class="char-option">娌冨皵澶唸</button><button type="button" class="char-option">娓╄拏</button><button type="button" class="char-option">鏈哄櫒浜?/button><button type="button" class="char-option is-locked" data-tip="璇ヨ鑹插皻鏈鎮熸妧鑳芥爲">钖囧厠宸撮】</button><button type="button" class="char-option">浼嶈开</button><button type="button" class="char-option is-locked" data-tip="璇ヨ鑹插皻鏈鎮熸妧鑳芥爲">闊︽柉</button><button type="button" class="char-option is-locked" data-tip="璇ヨ鑹插皻鏈鎮熸妧鑳芥爲">楹︽柉濞佸皵</button><button type="button" class="char-option">钖囨牸寮楀痉</button><button type="button" class="char-option is-locked" data-tip="璇ヨ鑹插皻鏈鎮熸妧鑳芥爲">闊︿集</button><button type="button" class="char-option">钖囪濞?/button><button type="button" class="char-option is-locked" data-tip="璇ヨ鑹插皻鏈鎮熸妧鑳芥爲">娌冨埄</button><button type="button" class="char-option">娌冨浼嶅痉</button><button type="button" class="char-option">娌冩嫇鍏嬫柉</button><button type="button" class="char-option">娌冪壒</button><button type="button" class="char-option">娌冨皵鐗?/button><button type="button" class="char-option is-locked" data-tip="璇ヨ鑹插皻鏈鎮熸妧鑳芥爲">鏃鸿揪</button></div>
+    </div>
+  </div>
+  <select id="build-select"><option value="">鑷敱鍔犵偣</option><option value="init">鍒濆鍖栧姞鐐瑰缓璁?/option><option value="alchemy">鐐奸噾寮€灞€</option></select>
+</div>
+
+<div class="load-error" id="load-error" hidden=""></div>
+
+<div class="stage-head preset" id="stage-head">
+  <div class="insight-bar">
+    <button type="button" class="align-btn" id="align-nice" data-align="nice" data-tip="濂藉瀛愬姞鐐? hidden="" aria-pressed="false">馃槆</button>
+    <span class="insight-box" id="points-text">15</span>
+    <button type="button" class="align-btn" id="align-naughty" data-align="naughty" data-tip="娣樻皵鍖呭姞鐐? hidden="" aria-pressed="false">馃槇</button>
+    <span class="insight-label">鍓╀綑娲炲療</span>
+  </div>
+  <div class="mode-stack is-open" id="mode-stack">
+    <div class="mode-row">
+      <button type="button" class="mode-btn on" data-mode="lunar" data-tip="鏈堝悗鍔犵偣" aria-pressed="true">
+        <img src="img/moon.png" alt="鏈堝悗" draggable="false">
+      </button>
+      <button type="button" class="mode-btn on" data-mode="shadow" data-tip="褰卞悗鍔犵偣" aria-pressed="true">
+        <img src="img/dark.png" alt="褰卞悗" draggable="false">
+      </button>
+    </div>
+    <div class="mode-row">
+      <button type="button" class="mode-btn mode-emoji" data-mode="solo" data-tip="鍗曚汉妯″紡" aria-pressed="false">馃懁</button>
+      <button type="button" class="mode-btn mode-emoji on" data-mode="multi" data-tip="澶氫汉妯″紡" aria-pressed="true">馃懃</button>
+    </div>
+  </div>
+</div>
+
+<svg viewBox="-300 -159.0506134033203 600 370.0506134033203">
+  <rect id="tree-bg" x="-300" y="-159.0506134033203" width="600" height="370.0506134033203" fill="#120e0b" fill-opacity="0.55"></rect>
+  <g id="group-titles"><text class="group-title" x="-189" y="-128" text-anchor="middle" font-size="14" font-weight="bold" letter-spacing="3" fill="#8a7030" data-group="torch">鐏偓</text><rect class="group-title-hit" fill="transparent" data-group="torch" x="-210.0024871826172" y="-145.0506134033203" width="42.004974365234375" height="23.06410789489746"></rect><text class="group-title" x="-58" y="-128" text-anchor="middle" font-size="14" font-weight="bold" letter-spacing="3" fill="#8a7030" data-group="alchemy">鐐奸噾鏈?/text><rect class="group-title-hit" fill="transparent" data-group="alchemy" x="-88.50318908691406" y="-145.0506134033203" width="60.00299835205078" height="23.06410789489746"></rect><text class="group-title" x="85" y="-128" text-anchor="middle" font-size="14" font-weight="bold" letter-spacing="3" fill="#f0d060" data-group="beard">鑳￠』</text><rect class="group-title-hit" fill="transparent" data-group="beard" x="63.99751281738281" y="-145.0506134033203" width="42.004974365234375" height="23.06410789489746"></rect><text class="group-title" x="204" y="-124.8" text-anchor="middle" font-size="14" font-weight="bold" letter-spacing="3" fill="#8a7030" data-group="affinity">浜插拰</text><rect class="group-title-hit" fill="transparent" data-group="affinity" x="182.9975128173828" y="-141.85060119628906" width="42.004974365234375" height="23.06410789489746"></rect></g>
+  <g id="nodes"><rect class="node" x="-224" y="-112" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_range_1" style="cursor: pointer;"></rect><rect class="node" x="-224" y="-74" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_range_2" style="cursor: pointer;"></rect><rect class="node" x="-224" y="-36" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_range_3" style="cursor: pointer;"></rect><rect class="node" x="-186" y="-112" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_longevity_1" style="cursor: pointer;"></rect><rect class="node" x="-186" y="-74" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_longevity_2" style="cursor: pointer;"></rect><rect class="node" x="-186" y="-36" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_longevity_3" style="cursor: pointer;"></rect><rect class="node" x="-206" y="44" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="torch_toss" style="cursor: pointer;"></rect><rect class="node" x="-74" y="-112" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="transmute" style="cursor: pointer;"></rect><rect class="node" x="-112" y="-58" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="icky_1" style="cursor: pointer;"></rect><rect class="node" x="-112" y="-20" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="icky_2" style="cursor: pointer;"></rect><rect class="node" x="-112" y="18" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="icky_3" style="cursor: pointer;"></rect><rect class="node" x="-74" y="-58" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="gems_1" style="cursor: pointer;"></rect><rect class="node" x="-74" y="-20" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="gems_2" style="cursor: pointer;"></rect><rect class="node" x="-74" y="18" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="gems_3" style="cursor: pointer;"></rect><rect class="node" x="-36" y="-58" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="ore_1" style="cursor: pointer;"></rect><rect class="node" x="-36" y="-20" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="ore_2" style="cursor: pointer;"></rect><rect class="node" x="-36" y="18" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="ore_3" style="cursor: pointer;"></rect><rect class="node" x="50" y="-112" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="beard_ins_1" style="cursor: pointer;"></rect><rect class="node" x="50" y="-74" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="beard_ins_2" style="cursor: pointer;"></rect><rect class="node" x="50" y="-36" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="beard_ins_3" style="cursor: pointer;"></rect><rect class="node" x="88" y="-112" width="32" height="32" rx="4" fill="#3a3024" stroke="#ffffff" stroke-width="3" data-id="beard_growth_1" style="cursor: pointer;"></rect><rect class="node" x="88" y="-74" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="beard_growth_2" style="cursor: pointer;"></rect><rect class="node" x="88" y="-36" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="beard_growth_3" style="cursor: pointer;"></rect><rect class="node" x="66" y="44" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="beard_storage" style="cursor: pointer;"></rect><rect class="node" x="166" y="26" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="shadow" style="cursor: pointer;"></rect><rect class="node" x="210" y="26" width="32" height="32" rx="4" fill="#241c16" stroke="#3d3228" stroke-width="1" data-id="lunar" style="cursor: pointer;"></rect><rect class="node lock" x="-202.8" y="9.2" width="25.6" height="25.6" rx="4" fill="#241816" stroke="#6a3030" stroke-width="1" data-lock="lock_torch" data-id="lock_torch_0" data-tip="瀛︿範 3 涓伀鐐妧鑳藉悗瑙ｉ攣銆屼涪鐏偓銆? style="cursor: pointer;"></rect><rect class="node lock" x="69.2" y="9.2" width="25.6" height="25.6" rx="4" fill="#241816" stroke="#6a3030" stroke-width="1" data-lock="lock_beard" data-id="lock_beard_0" data-tip="瀛︿範 3 涓儭椤绘妧鑳藉悗瑙ｉ攣銆岃儭椤昏串钘忔湳銆? style="cursor: pointer;"></rect><rect class="node lock" x="191.2" y="-108.8" width="25.6" height="25.6" rx="4" fill="#241816" stroke="#6a3030" stroke-width="1" data-lock="lock_affinity" data-id="lock_affinity_0" data-tip="瀛︿範 12 涓叾浠栨妧鑳藉悗瑙ｉ攣浜插拰鍒嗘敮" style="cursor: pointer;"></rect><rect class="node lock" x="169.2" y="-60.8" width="25.6" height="25.6" rx="4" fill="#3a3418" stroke="#c9a227" stroke-width="2" data-lock="lock_affinity" data-id="lock_affinity_1" data-tip="鎵惧埌骞跺嚮璐ヨ繙鍙ょ粐褰辫€? style="cursor: pointer;"></rect><rect class="node lock" x="213.2" y="-60.8" width="25.6" height="25.6" rx="4" fill="#3a3418" stroke="#c9a227" stroke-width="2" data-lock="lock_affinity" data-id="lock_affinity_2" data-tip="娌℃湁鏈堜寒浜插拰" style="cursor: pointer;"></rect><rect class="node lock" x="169.2" y="-16.8" width="25.6" height="25.6" rx="4" fill="#3a3418" stroke="#c9a227" stroke-width="2" data-lock="lock_affinity" data-id="lock_affinity_3" data-tip="鎵惧埌骞跺嚮璐ュぉ浣撹嫳闆? style="cursor: pointer;"></rect><rect class="node lock" x="213.2" y="-16.8" width="25.6" height="25.6" rx="4" fill="#3a3418" stroke="#c9a227" stroke-width="2" data-lock="lock_affinity" data-id="lock_affinity_4" data-tip="娌℃湁鏆楀奖浜插拰" style="cursor: pointer;"></rect></g>
+  <g id="node-labels"><text x="-208" y="-92" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_range_1">1</text><text x="-208" y="-54" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_range_2">2</text><text x="-208" y="-16" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_range_3">3</text><text x="-170" y="-92" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_longevity_1">4</text><text x="-170" y="-54" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_longevity_2">5</text><text x="-170" y="-16" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_longevity_3">6</text><text x="-190" y="64" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="torch_toss">7</text><text x="-58" y="-92" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="transmute">8</text><text x="-96" y="-38" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="icky_1">9</text><text x="-96" y="0" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="icky_2">10</text><text x="-96" y="38" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="icky_3">11</text><text x="-58" y="-38" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="gems_1">12</text><text x="-58" y="0" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="gems_2">13</text><text x="-58" y="38" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="gems_3">14</text><text x="-20" y="-38" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="ore_1">15</text><text x="-20" y="0" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="ore_2">16</text><text x="-20" y="38" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="ore_3">17</text><text x="66" y="-92" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="beard_ins_1">18</text><text x="66" y="-54" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="beard_ins_2">19</text><text x="66" y="-16" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="beard_ins_3">20</text><text x="104" y="-92" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff" pointer-events="none" data-label-for="beard_growth_1">21</text><text x="104" y="-54" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="beard_growth_2">22</text><text x="104" y="-16" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="beard_growth_3">23</text><text x="82" y="64" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="beard_storage">24</text><text x="182" y="46" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="shadow">25</text><text x="226" y="46" text-anchor="middle" font-size="12" font-weight="bold" fill="#6d5c48" pointer-events="none" data-label-for="lunar">26</text><text x="-190" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text><text x="82" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text><text x="204" y="-92" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text><text x="182" y="-44" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text><text x="226" y="-44" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text><text x="182" y="0" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text><text x="226" y="0" text-anchor="middle" font-size="11" font-weight="bold" fill="#8b0000" pointer-events="none">馃敀</text></g>
+  <g id="buttons">
+    <rect id="learn-bg" x="-220" y="150" width="180" height="43" rx="2" fill="#c9a227" stroke="#f0d060" stroke-width="1.5"></rect>
+    <rect id="reset-bg" x="40" y="150" width="180" height="43" rx="2" fill="#4a3824" stroke="#cbb892" stroke-width="1.5"></rect>
+    <text id="learn-text" x="-130" y="177.5" text-anchor="middle" font-size="16" fill="#1a120c">瀛︿範</text>
+    <text id="reset-text" x="130" y="177.5" text-anchor="middle" font-size="16" fill="#f6edd8">閲嶇疆娲炲療</text>
+    <rect id="btn-learn" x="-220" y="150" width="180" height="43" fill="transparent" style="cursor:pointer"></rect>
+    <rect id="btn-reset" x="40" y="150" width="180" height="43" fill="transparent" style="cursor:pointer"></rect>
+  </g>
+</svg>
+
+<div class="status-bar">
+  <span>宸插涔狅細<span class="points" id="learned-count">0</span> / <span id="skill-total">26</span></span>
+</div>
+
+<div class="desc-panel" id="desc-panel"><div class="desc-labels"><div class="parent-label" data-group="torch">鐏偓</div><div class="parent-label" data-group="alchemy">鐐奸噾鏈?/div><div class="parent-label active" data-group="beard">鑳￠』</div><div class="parent-label" data-group="affinity">浜插拰</div></div><div class="desc-body" id="desc-body">
+    <div class="desc-card picked">
+      <div class="desc-head">
+        <span class="desc-num">21</span>
+        <span class="desc-name">鑳￠』鐢熼暱 I</span>
+      </div>
+      <div class="desc-body">绗?1/2/3 闃舵鑳￠』鐢熼暱鎵€闇€鐨勬椂闂寸缉鐭嚦 3 / 7 / 15 澶?/div>
+      
+      <div class="desc-prereq">鍓嶇疆锛氭棤</div>
+    </div></div></div>
+</div>
+
+<div id="lock-tip" class="lock-tip" hidden=""></div>
+<div id="note-tip" class="lock-tip note-tip" hidden="" data-bound="1"></div>
+<div id="mode-tip" class="lock-tip" hidden=""></div>
+<div id="scheme-pop" class="scheme-pop" hidden="">
+  <div class="scheme-title" id="scheme-title"></div>
+  <div class="scheme-body" id="scheme-body"></div>
+  <button type="button" class="scheme-close" id="scheme-close">鍏抽棴</button>
+</div>
+
+<script src="js/app.js"></script>
+
+
+</body></html>
