@@ -4,6 +4,11 @@
       "id": "wilson",
       "name": "威尔逊",
       "data": "data/wilson.json"
+    },
+    {
+      "id": "willow",
+      "name": "薇洛",
+      "data": "data/willow.json"
     }
   ]
 }

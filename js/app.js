@@ -4,8 +4,14 @@ const state = {
   tree: null,
   points: 15,
   hoveredId: null,
+  stickyId: null,
   focusedId: null,
   hoveredLock: null,
+  hoveredLockNode: null,
+  lockTip: null,
+  altDown: false,
+  mouseX: 0,
+  mouseY: 0,
   selected: new Set(),
   learned: new Set(),
   nodeEls: {},
@@ -27,11 +33,17 @@ function ownedSet() {
   return new Set([...state.learned, ...state.selected]);
 }
 
+function skillLockIds(skill) {
+  if (Array.isArray(skill.locks) && skill.locks.length) return skill.locks;
+  if (skill.lock) return [skill.lock];
+  return [];
+}
+
 function lockSatisfied(lock, owned) {
   let n = 0;
   for (const s of state.tree.skills) {
     if (!lock.fromGroups.includes(s.group)) continue;
-    if (s.lock === lock.id) continue;
+    if (skillLockIds(s).includes(lock.id)) continue;
     if (owned.has(s.id)) n++;
   }
   return n >= lock.count;
@@ -41,8 +53,9 @@ function canSelect(id, owned) {
   const s = state.skillMap[id];
   if (!s) return false;
   if ((s.requires || []).some(r => !owned.has(r))) return false;
-  if (s.lock) {
-    const lock = state.lockMap[s.lock];
+  for (const lockId of skillLockIds(s)) {
+    const lock = state.lockMap[lockId];
+    if (!lock) continue;
     const others = new Set(owned);
     others.delete(id);
     if (!lockSatisfied(lock, others)) return false;
@@ -68,14 +81,13 @@ function pruneInvalidSelected() {
 function skillStatus(id) {
   if (state.learned.has(id)) return "learned";
   if (state.selected.has(id)) return "picked";
-  if (state.hoveredId === id) return "hovered";
+  if (state.hoveredId === id || state.stickyId === id) return "hovered";
   return "";
 }
 
 function displaySkill() {
-  if (state.hoveredId) return state.skillMap[state.hoveredId];
-  if (state.focusedId) return state.skillMap[state.focusedId];
-  return null;
+  const id = state.hoveredId || state.stickyId;
+  return id ? state.skillMap[id] : null;
 }
 
 async function loadJSON(path) {
@@ -179,7 +191,8 @@ function buildNodes() {
       });
       el.dataset.lock = lock.id;
       el.dataset.id = id;
-      el.style.cursor = "default";
+      el.setAttribute("data-tip", n.tip || "在这里写锁的描述");
+      el.style.cursor = "pointer";
       nodes.appendChild(el);
       state.nodeEls[id] = el;
       addLabel(n.x, n.y, n.w, n.h, "🔒", "#8b0000", null);
@@ -190,16 +203,35 @@ function buildNodes() {
 function buildDescColumns() {
   const panel = $("desc-panel");
   panel.innerHTML = "";
+  const oldNote = $("note-tip");
+  if (oldNote) oldNote.hidden = true;
+  const labels = document.createElement("div");
+  labels.className = "desc-labels";
   state.tree.groups.forEach(g => {
-    const col = document.createElement("div");
-    col.className = "desc-col";
-    col.dataset.group = g.id;
-    col.style.left = ((g.x + 300) / 600) * 100 + "%";
-    col.innerHTML =
-      `<div class="parent-label">${g.name}</div>` +
-      `<div class="col-body" data-body="${g.id}"></div>`;
-    panel.appendChild(col);
+    const label = document.createElement("div");
+    label.className = "parent-label";
+    label.dataset.group = g.id;
+    label.style.left = ((g.x + 300) / 600) * 100 + "%";
+    label.textContent = g.name;
+    if (g.tip) {
+      label.classList.add("has-note");
+      label.dataset.tip = g.tip;
+      label.addEventListener("mouseenter", () => showNoteTip(label));
+      label.addEventListener("mouseleave", scheduleHideNoteTip);
+    }
+    labels.appendChild(label);
   });
+  const note = $("note-tip");
+  if (note && !note.dataset.bound) {
+    note.dataset.bound = "1";
+    note.addEventListener("mouseenter", () => clearTimeout(noteHideTimer));
+    note.addEventListener("mouseleave", scheduleHideNoteTip);
+  }
+  const body = document.createElement("div");
+  body.className = "desc-body";
+  body.id = "desc-body";
+  panel.appendChild(labels);
+  panel.appendChild(body);
 }
 
 function fillBuildSelect() {
@@ -215,10 +247,10 @@ function fillBuildSelect() {
 
 function prereqText(skill) {
   const names = (skill.requires || []).map(id => state.skillMap[id]?.name || id);
-  if (skill.lock) {
-    const lock = state.lockMap[skill.lock];
-    names.push(lock.desc);
-  }
+  skillLockIds(skill).forEach(lockId => {
+    const lock = state.lockMap[lockId];
+    if (lock) names.push(lock.desc);
+  });
   if (skill.exclusiveWith) {
     const vs = skill.exclusiveWith.map(id => state.skillMap[id]?.name || id);
     names.push("与「" + vs.join("、") + "」互斥");
@@ -244,20 +276,16 @@ function cardHTML(skill, extraClass) {
 
 function updateDesc() {
   const skill = displaySkill();
-  const lock = state.hoveredLock ? state.lockMap[state.hoveredLock] : null;
-
-  document.querySelectorAll(".desc-col").forEach(col => {
-    const gid = col.dataset.group;
-    col.classList.toggle("active", !!(skill && skill.group === gid) || !!(lock && lock.group === gid));
-    const body = col.querySelector(".col-body");
-    if (skill && skill.group === gid) {
-      body.innerHTML = cardHTML(skill, skillStatus(skill.id) || "hovered");
-    } else if (lock && lock.group === gid && !skill) {
-      body.innerHTML = `<div class="desc-card hovered lock-card">${lock.desc}</div>`;
-    } else {
-      body.innerHTML = "";
-    }
+  document.querySelectorAll(".parent-label").forEach(label => {
+    label.classList.toggle("active", !!(skill && skill.group === label.dataset.group));
   });
+  const body = $("desc-body");
+  if (!body) return;
+  if (!skill) {
+    body.innerHTML = "";
+    return;
+  }
+  body.innerHTML = cardHTML(skill, skillStatus(skill.id) || "hovered");
 }
 
 function updateNodeVisual(id) {
@@ -267,9 +295,10 @@ function updateNodeVisual(id) {
   if (el.dataset.lock) {
     const lock = state.lockMap[el.dataset.lock];
     const open = lockSatisfied(lock, ownedSet());
+    const hot = state.hoveredLockNode === id;
     el.setAttribute("fill", open ? "#3a3418" : "#2a2222");
-    el.setAttribute("stroke", open ? "#c9a227" : "#5a2020");
-    el.setAttribute("stroke-width", open ? "2" : "1");
+    el.setAttribute("stroke", hot ? "#f2f2f2" : (open ? "#c9a227" : "#5a2020"));
+    el.setAttribute("stroke-width", hot || open ? "2" : "1");
     return;
   }
 
@@ -292,7 +321,7 @@ function updateNodeVisual(id) {
   } else if (isPicked) {
     fill = "#3a3a3a";
     stroke = "#ffffff";
-    sw = 2.5;
+    sw = 3;
     labelFill = "#fff";
   } else if (isHovered) {
     fill = "#3a3a3a";
@@ -321,18 +350,70 @@ function updateButtons() {
   $("reset-text").setAttribute("fill", canReset ? "#eee" : "#666");
 }
 
+let noteHideTimer = 0;
+
+function showNoteTip(label) {
+  clearTimeout(noteHideTimer);
+  const tip = $("note-tip");
+  if (!tip || !label || !label.dataset.tip) return;
+  tip.hidden = false;
+  tip.textContent = label.dataset.tip;
+  const anchor = label.getBoundingClientRect();
+  const pad = 12;
+  tip.style.left = "0px";
+  tip.style.top = "0px";
+  const box = tip.getBoundingClientRect();
+  let x = anchor.left + anchor.width / 2 - box.width / 2;
+  let y = anchor.bottom + 8;
+  if (x < pad) x = pad;
+  if (x + box.width > window.innerWidth - pad) x = window.innerWidth - pad - box.width;
+  if (y + box.height > window.innerHeight - pad) y = Math.max(pad, anchor.top - box.height - 8);
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+}
+
+function scheduleHideNoteTip() {
+  clearTimeout(noteHideTimer);
+  noteHideTimer = setTimeout(() => {
+    const tip = $("note-tip");
+    if (tip) tip.hidden = true;
+  }, 120);
+}
+
+function placeLockTip() {
+  const tip = $("lock-tip");
+  if (!tip) return;
+  if (!state.altDown || !state.lockTip) {
+    tip.hidden = true;
+    return;
+  }
+  tip.hidden = false;
+  tip.textContent = state.lockTip;
+  const pad = 12;
+  let x = state.mouseX + 16;
+  let y = state.mouseY + 18;
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+  const rect = tip.getBoundingClientRect();
+  if (x + rect.width > window.innerWidth - pad) x = state.mouseX - rect.width - 12;
+  if (y + rect.height > window.innerHeight - pad) y = state.mouseY - rect.height - 12;
+  tip.style.left = Math.max(pad, x) + "px";
+  tip.style.top = Math.max(pad, y) + "px";
+}
+
 function render() {
   Object.keys(state.nodeEls).forEach(updateNodeVisual);
   updateDesc();
   $("points-text").textContent = String(state.points - state.selected.size);
   $("learned-count").textContent = String(state.learned.size);
-  $("picked-count").textContent = String(state.selected.size);
   updateButtons();
+  placeLockTip();
 }
 
 function pickNode(id) {
   if (state.learned.has(id)) {
     state.focusedId = id;
+    state.stickyId = id;
     render();
     return;
   }
@@ -340,6 +421,7 @@ function pickNode(id) {
     state.selected.delete(id);
     pruneInvalidSelected();
     state.focusedId = id;
+    state.stickyId = id;
     render();
     return;
   }
@@ -349,6 +431,7 @@ function pickNode(id) {
   if (!canSelect(id, next)) return;
   state.selected.add(id);
   state.focusedId = id;
+  state.stickyId = id;
   render();
 }
 
@@ -366,6 +449,9 @@ function resetAll() {
   state.points = state.tree.points;
   state.hoveredId = null;
   state.focusedId = null;
+  state.hoveredLock = null;
+  state.hoveredLockNode = null;
+  state.lockTip = null;
   $("build-select").value = "";
   render();
 }
@@ -383,6 +469,7 @@ function applyBuild(buildId) {
     if (canSelect(id, next)) state.selected.add(id);
   }
   state.focusedId = build.skills[build.skills.length - 1] || null;
+  state.stickyId = state.focusedId;
   render();
 }
 
@@ -397,10 +484,15 @@ $("nodes").addEventListener("mouseover", e => {
   if (!el) return;
   if (el.dataset.lock) {
     state.hoveredLock = el.dataset.lock;
+    state.hoveredLockNode = el.dataset.id;
+    state.lockTip = el.getAttribute("data-tip") || "在这里写锁的描述";
     state.hoveredId = null;
   } else {
     state.hoveredLock = null;
+    state.hoveredLockNode = null;
+    state.lockTip = null;
     state.hoveredId = el.dataset.id;
+    state.stickyId = el.dataset.id;
   }
   render();
 });
@@ -408,9 +500,43 @@ $("nodes").addEventListener("mouseover", e => {
 $("nodes").addEventListener("mouseout", e => {
   const el = e.target.closest(".node");
   if (!el) return;
-  state.hoveredId = null;
-  state.hoveredLock = null;
+  const to = e.relatedTarget;
+  if (to && to.closest && to.closest(".node") === el) return;
+  if (el.dataset.lock) {
+    if (state.hoveredLockNode === el.dataset.id) {
+      state.hoveredLock = null;
+      state.hoveredLockNode = null;
+      state.lockTip = null;
+    }
+  } else if (state.hoveredId === el.dataset.id) {
+    state.hoveredId = null;
+  }
   render();
+});
+
+window.addEventListener("mousemove", e => {
+  state.mouseX = e.clientX;
+  state.mouseY = e.clientY;
+  state.altDown = e.altKey;
+  placeLockTip();
+});
+
+window.addEventListener("keydown", e => {
+  if (e.key !== "Alt") return;
+  e.preventDefault();
+  state.altDown = true;
+  placeLockTip();
+});
+
+window.addEventListener("keyup", e => {
+  if (e.key !== "Alt") return;
+  state.altDown = false;
+  placeLockTip();
+});
+
+window.addEventListener("blur", () => {
+  state.altDown = false;
+  placeLockTip();
 });
 
 $("btn-learn").addEventListener("click", learnSelected);
