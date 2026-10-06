@@ -62,12 +62,6 @@
     font-size: 14px;
     font-family: inherit;
   }
-  .char-title {
-    color: #f0d060;
-    font-weight: bold;
-    letter-spacing: 2px;
-  }
-
   .status-bar {
     display: flex;
     justify-content: space-between;
@@ -201,9 +195,124 @@
     pointer-events: none;
     white-space: pre-wrap;
   }
+  .stage-head {
+    display: grid;
+    background: rgba(8, 6, 4, .35);
+    border-bottom: 1px solid #6e5428;
+  }
+  .insight-bar,
+  .mode-stack { grid-area: 1 / 1; }
+  .insight-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    min-height: 86px;
+    padding: 12px 16px;
+  }
+  .mode-stack {
+    justify-self: end;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 12px 0 0;
+    z-index: 2;
+  }
+  .mode-row { display: flex; gap: 6px; }
+  .mode-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2118;
+    border: 1.5px solid #6e5428;
+    border-radius: 2px;
+    color: #f0d060;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .mode-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .mode-btn.on {
+    border-color: #f0d060;
+    box-shadow: 0 0 0 1px #c9a227;
+  }
+  .scheme-pop {
+    position: fixed;
+    z-index: 30;
+    left: 50%;
+    top: 18%;
+    transform: translateX(-50%);
+    width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+    padding: 14px 16px 12px;
+    background: rgba(12, 9, 6, .96);
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.6);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .scheme-title { font-weight: bold; letter-spacing: 1px; }
+  .scheme-body {
+    margin-top: 8px;
+    color: #e6d3a4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .scheme-body[hidden],
+  .scheme-close[hidden] { display: none; }
+  .scheme-close {
+    display: block;
+    margin: 12px 0 0 auto;
+    padding: 4px 12px;
+    background: #2a2118;
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .insight-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 46px;
+    height: 46px;
+    padding: 0 8px;
+    background: #3a2c16;
+    border: 1.5px solid #c9a227;
+    border-radius: 2px;
+    color: #f0d060;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+  }
+  .insight-label {
+    color: #f0d060;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
   .note-tip {
-    max-width: 420px;
+    width: max-content;
+    max-width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
     pointer-events: auto;
+    overflow-wrap: anywhere;
   }
 
   .load-error {
@@ -230,8 +339,22 @@
       align-items: stretch;
     }
     .toolbar select { width: 100%; }
+    .stage-head { display: flex; flex-direction: column; }
+    .mode-stack {
+      order: -1;
+      align-self: stretch;
+      align-items: center;
+      padding: 10px 12px 0;
+    }
+    .insight-bar { order: 1; min-height: 0; }
     .desc-head { font-size: 18px; }
     .desc-card { font-size: 15px; }
+    .parent-label {
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 2px 4px;
+    }
+    .note-tip { font-size: 14px; }
   }
 </style>
 </head>
@@ -241,20 +364,37 @@
 <div class="toolbar">
   <div>
     <select id="char-select"></select>
-    <span class="char-title" id="char-title"></span>
   </div>
   <select id="build-select">
-    <option value="">加点建议…</option>
+    <option value="">自由加点</option>
   </select>
 </div>
 
 <div class="load-error" id="load-error" hidden></div>
 
+<div class="stage-head">
+  <div class="insight-bar">
+    <span class="insight-box" id="points-text">15</span>
+    <span class="insight-label">剩余洞察</span>
+  </div>
+  <div class="mode-stack" id="mode-stack">
+    <div class="mode-row">
+      <button type="button" class="mode-btn" data-mode="lunar" data-tip="月后加点" aria-pressed="false">
+        <img src="img/moon.png" alt="月后" draggable="false">
+      </button>
+      <button type="button" class="mode-btn" data-mode="shadow" data-tip="影后加点" aria-pressed="false">
+        <img src="img/dark.png" alt="影后" draggable="false">
+      </button>
+    </div>
+    <div class="mode-row">
+      <button type="button" class="mode-btn mode-emoji" data-mode="solo" data-tip="单人模式" aria-pressed="false">👤</button>
+      <button type="button" class="mode-btn mode-emoji" data-mode="multi" data-tip="多人模式" aria-pressed="false">👥</button>
+    </div>
+  </div>
+</div>
+
 <svg viewBox="-300 -210 600 460">
-  <rect x="-300" y="-210" width="600" height="460" fill="#120e0b" fill-opacity="0.55"/>
-  <rect x="-22" y="-190" width="50" height="50" rx="2" fill="#3a2c16" stroke="#c9a227" stroke-width="1.5"/>
-  <text x="3" y="-157" text-anchor="middle" font-size="20" fill="#f0d060" id="points-text">15</text>
-  <text x="33" y="-157" font-size="15" fill="#f0d060">剩余洞察</text>
+  <rect id="tree-bg" x="-300" y="-210" width="600" height="460" fill="#120e0b" fill-opacity="0.55"/>
   <g id="group-titles"></g>
   <g id="nodes"></g>
   <g id="node-labels"></g>
@@ -277,6 +417,12 @@
 
 <div id="lock-tip" class="lock-tip" hidden></div>
 <div id="note-tip" class="lock-tip note-tip" hidden></div>
+<div id="mode-tip" class="lock-tip" hidden></div>
+<div id="scheme-pop" class="scheme-pop" hidden>
+  <div class="scheme-title" id="scheme-title"></div>
+  <div class="scheme-body" id="scheme-body"></div>
+  <button type="button" class="scheme-close" id="scheme-close">关闭</button>
+</div>
 
 <script src="js/app.js"></script>
 </body>

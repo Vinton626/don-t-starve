@@ -1,0 +1,276 @@
+{
+    "id": "wx78",
+    "name": "WX-78",
+    "points": 15,
+    "groups": [
+      { "id": "circuitry", "name": "电路", "x": -171 },
+      { "id": "chassis", "name": "底盘", "x": -13 },
+      { "id": "drone", "name": "无人机", "x": 160 },
+      { "id": "affinity", "name": "亲和", "x": 209 }
+    ],
+    "skills": [
+      {
+        "id": "wx78_circuitry_bettercharge",
+        "n": 1,
+        "group": "circuitry",
+        "name": "瓦特提升",
+        "desc": "WX-78 电荷自动恢复所需的时间缩短至 36 秒（原为 90 秒）。拔出插槽数大于 1 的激活的电路板时，损失的电荷减少 1 格。",
+        "requires": [],
+        "x": -108, "y": 31, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_betterunplug",
+        "n": 2,
+        "group": "circuitry",
+        "name": "改装权",
+        "desc": "WX-78 使用电路提取器时，可以随意拔下任意一种电路板中最上方的一个。拔下电路板后，上方的电路板会自动移动到下方插槽。以任意方式拔下电路板只损失 12.5% 耐久（原为 25%）。",
+        "requires": [],
+        "x": -227, "y": 31, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_alphabuffs_1",
+        "n": 3,
+        "group": "circuitry",
+        "name": "一级阿尔法电路改装",
+        "desc": "激活以下阿尔法电路时获得更多额外增益：处理电路、超级处理电路、胃增益电路、超级胃增益电路。",
+        "requires": [],
+        "x": -211, "y": -37, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_alphabuffs_2",
+        "n": 4,
+        "group": "circuitry",
+        "name": "二级阿尔法电路改装",
+        "desc": "激活以下阿尔法电路时获得更多额外增益：坚固电路、超级坚固电路、处理电路、超级处理电路、豆增压电路、胃增益电路、超级胃增益电路。",
+        "requires": ["wx78_circuitry_alphabuffs_1"],
+        "x": -211, "y": -77, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_betabuffs_1",
+        "n": 5,
+        "group": "circuitry",
+        "name": "一级贝塔电路改装",
+        "desc": "激活以下贝塔电路时获得更多额外增益：热能电路、制冷电路、光电电路、合唱盒电路、增程电路。",
+        "requires": [],
+        "x": -171, "y": -19, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_betabuffs_2",
+        "n": 6,
+        "group": "circuitry",
+        "name": "二级贝塔电路改装",
+        "desc": "激活以下贝塔电路时获得更多额外增益：加速电路、超级加速电路、带电电路、照明电路、超级照明电路。",
+        "requires": ["wx78_circuitry_betabuffs_1"],
+        "x": -171, "y": -59, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_gammabuffs_1",
+        "n": 7,
+        "group": "circuitry",
+        "name": "一级伽马电路改装",
+        "desc": "激活以下伽马电路时获得更多额外增益：声波召唤电路、重消化电路、棋术大师电路。",
+        "requires": [],
+        "x": -131, "y": -37, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_gammabuffs_2",
+        "n": 8,
+        "group": "circuitry",
+        "name": "二级伽马电路改装",
+        "desc": "激活以下伽马电路时获得更多额外增益：格挡电路、旋转循环电路。",
+        "requires": ["wx78_circuitry_gammabuffs_1"],
+        "x": -131, "y": -77, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_circuitry_slot_1",
+        "n": 9,
+        "group": "circuitry",
+        "name": "差一错误",
+        "desc": "增加 1 电荷上限，所有插槽各增加一个插口。",
+        "requires": ["wx78_circuitry_alphabuffs_2", "wx78_circuitry_betabuffs_2", "wx78_circuitry_gammabuffs_2"],
+        "x": -171, "y": -99, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_extrabody_1",
+        "n": 10,
+        "group": "chassis",
+        "name": "一级冷备",
+        "desc": "习得配方：",
+        "recipes": ["1 齿轮 + 1 红宝石 → 1 备份底盘"],
+        "requires": [],
+        "x": -13, "y": 44, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_ghostrevive_1",
+        "n": 11,
+        "group": "chassis",
+        "name": "一级寄居械",
+        "desc": "鬼魂状态下，作祟一个已绑定的备份底盘可以通过它复活，效果等同于意识传输，但不会留下新的备份底盘。",
+        "requires": ["wx78_extrabody_1"],
+        "x": -13, "y": -23, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_ghostrevive_2",
+        "n": 12,
+        "group": "chassis",
+        "name": "二级寄居械",
+        "desc": "如果死亡时电荷为满，且备份没有到达上限，那么就会在原地留下一个备份底盘。",
+        "requires": ["wx78_extrabody_1", "wx78_ghostrevive_1"],
+        "x": 27, "y": -41, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_ghostrevive_3",
+        "n": 13,
+        "group": "chassis",
+        "name": "三级寄居械",
+        "desc": "通过备份底盘复活会回复所有生命值。",
+        "requires": ["wx78_extrabody_1", "wx78_ghostrevive_1", "wx78_ghostrevive_2"],
+        "x": 27, "y": -81, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_extrabody_2",
+        "n": 14,
+        "group": "chassis",
+        "name": "二级冷备",
+        "desc": "WX-78 所能绑定的备份底盘数量上限增加至 2。",
+        "requires": ["wx78_extrabody_1", "wx78_ghostrevive_1"],
+        "x": -53, "y": -41, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_extrabody_3",
+        "n": 15,
+        "group": "chassis",
+        "name": "三级冷备",
+        "desc": "WX-78 所能绑定的备份底盘数量上限增加至 3。",
+        "requires": ["wx78_extrabody_1", "wx78_ghostrevive_1", "wx78_extrabody_2"],
+        "x": -53, "y": -81, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_remotebodyswap",
+        "n": 16,
+        "group": "chassis",
+        "name": "远程传输",
+        "desc": "WX-78 可以直接在地图上选择已绑定的备份底盘，对其进行意识传输。",
+        "requires": ["wx78_extrabody_1", "wx78_ghostrevive_1", "wx78_extrabody_2", "wx78_extrabody_3"],
+        "x": -13, "y": -103, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_bodycircuits",
+        "n": 17,
+        "group": "chassis",
+        "name": "温备",
+        "desc": "备份底盘上的贝塔电路会持续生效。",
+        "requires": ["wx78_extrabody_1", "wx78_ghostrevive_1"],
+        "x": -13, "y": -63, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_scoutdrone_1",
+        "n": 18,
+        "group": "drone",
+        "name": "野外勘测",
+        "desc": "可以控制旋翼测绘机。习得配方：",
+        "recipes": ["1 电子元件 + 1 指南针 → 1 旋翼测绘机"],
+        "requires": [],
+        "x": 118, "y": -42, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_deliverydrone_1",
+        "n": 19,
+        "group": "drone",
+        "name": "一级运输",
+        "desc": "可以发送小号的便携储存单元。习得配方：",
+        "recipes": ["1 电子元件 + 3 木板 → 1 便携储存单元"],
+        "requires": [],
+        "x": 98, "y": -2, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_deliverydrone_2",
+        "n": 20,
+        "group": "drone",
+        "name": "二级运输",
+        "desc": "可以发送小号与大号的便携储存单元。习得配方：",
+        "recipes": ["1 电子元件 + 3 木板 → 1 大号便携储存单元"],
+        "requires": ["wx78_deliverydrone_1"],
+        "x": 58, "y": 37, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_zapdrone_1",
+        "n": 21,
+        "group": "drone",
+        "name": "一级遥控机械爱好者",
+        "desc": "可以使用电刑机控制器。习得配方：",
+        "recipes": ["10 生物数据 + 1 电子元件 + 8 废料 → 1 电刑机控制器"],
+        "requires": [],
+        "x": 138, "y": -2, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_zapdrone_2",
+        "n": 22,
+        "group": "drone",
+        "name": "二级遥控机械爱好者",
+        "desc": "电刑机遥控器耐久消耗降低为 1%。",
+        "requires": ["wx78_zapdrone_1"],
+        "x": 180, "y": 34, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_extradronerange",
+        "n": 23,
+        "group": "drone",
+        "name": "信号放大器",
+        "desc": "电刑机、旋翼测绘机、生物扫描分析仪、自动抓取机与破绽放大机的作用范围增加，效果等同于 3 个增程电路的“一级贝塔电路改装”的技能效果。",
+        "requires": [],
+        "x": 205, "y": -41, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_allegiance_shadow",
+        "n": 24,
+        "group": "affinity",
+        "name": "暗影仆从",
+        "desc": "WX-78 获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。可以为自身附加“暗影充能”效果。可以向自身和备份底盘植入特定物品进行强化。",
+        "requires": ["lock_affinity"],
+        "lock": "lock_affinity",
+        "exclusiveWith": ["wx78_allegiance_lunar"],
+        "x": 209, "y": -118, "w": 32, "h": 32
+      },
+      {
+        "id": "wx78_allegiance_lunar",
+        "n": 25,
+        "group": "affinity",
+        "name": "月能载体",
+        "desc": "WX-78 获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。可以使用灵体传输模块。习得配方：",
+        "recipes": ["12 生物数据 + 2 废料 → 1 灵体传输模块"],
+        "requires": ["lock_affinity"],
+        "lock": "lock_affinity",
+        "exclusiveWith": ["wx78_allegiance_shadow"],
+        "x": 106, "y": -121, "w": 32, "h": 32
+      }
+    ],
+    "locks": [
+      {
+        "id": "lock_affinity",
+        "group": "affinity",
+        "count": 12,
+        "fromGroups": ["circuitry", "chassis", "drone"],
+        "desc": "学习 12 个其他技能后解锁亲和分支",
+        "nodes": [
+          {
+            "x": 150.2, "y": -126.8, "w": 25.6, "h": 25.6,
+            "tip": "学习 12 个其他技能后解锁亲和分支"
+          },
+          {
+            "x": 169.2, "y": -99.8, "w": 25.6, "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          }
+        ]
+      }
+    ],
+    "builds": [],
+    "modes": [
+      { "id": "solo-lunar", "tags": ["单人", "月后"], "name": "单人月后", "text": "在这里写单人月后加点", "skills": [] },
+      { "id": "solo-shadow", "tags": ["单人", "影后"], "name": "单人影后", "text": "在这里写单人影后加点", "skills": [] },
+      { "id": "solo-both", "tags": ["单人", "月后", "影后"], "name": "单人月后影后", "text": "在这里写单人月后影后加点", "skills": [] },
+      { "id": "multi-lunar", "tags": ["多人", "月后"], "name": "多人月后", "text": "在这里写多人月后加点", "skills": [] },
+      { "id": "multi-shadow", "tags": ["多人", "影后"], "name": "多人影后", "text": "在这里写多人影后加点", "skills": [] },
+      { "id": "multi-both", "tags": ["多人", "月后", "影后"], "name": "多人月后影后", "text": "在这里写多人月后影后加点", "skills": [] }
+    ]
+  }

@@ -252,7 +252,7 @@
       "group": "affinity",
       "count": 0,
       "fromGroups": ["fire", "bernie"],
-      "desc": "击败远古织影者后解锁暗影亲和",
+      "desc": "击败远古织影者后解锁暗影亲和，没有月亮亲和",
       "nodes": [{ "x": 167.2, "y": -106.8, "w": 25.6, "h": 25.6 }]
     },
     {
@@ -292,7 +292,7 @@
       "group": "affinity",
       "count": 0,
       "fromGroups": ["fire", "bernie"],
-      "desc": "击败天体英雄后解锁月亮亲和",
+      "desc": "击败天体英雄后解锁月亮亲和，没有暗影亲和",
       "nodes": [{ "x": 167.2, "y": -5.8, "w": 25.6, "h": 25.6 }]
     },
     {
@@ -311,5 +311,14 @@
       "desc": "学习 6 个伯尼技能后解锁「月亮伯尼」",
       "nodes": [{ "x": 133.2, "y": 24.2, "w": 25.6, "h": 25.6 }]
     }
+  ],
+  "builds": [],
+  "modes": [
+    { "id": "solo-lunar", "tags": ["单人", "月后"], "name": "单人月后", "text": "在这里写单人月后加点", "skills": [] },
+    { "id": "solo-shadow", "tags": ["单人", "影后"], "name": "单人影后", "text": "在这里写单人影后加点", "skills": [] },
+    { "id": "solo-both", "tags": ["单人", "月后", "影后"], "name": "单人月后影后", "text": "在这里写单人月后影后加点", "skills": [] },
+    { "id": "multi-lunar", "tags": ["多人", "月后"], "name": "多人月后", "text": "在这里写多人月后加点", "skills": [] },
+    { "id": "multi-shadow", "tags": ["多人", "影后"], "name": "多人影后", "text": "在这里写多人影后加点", "skills": [] },
+    { "id": "multi-both", "tags": ["多人", "月后", "影后"], "name": "多人月后影后", "text": "在这里写多人月后影后加点", "skills": [] }
   ]
 }

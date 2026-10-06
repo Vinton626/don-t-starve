@@ -9,6 +9,9 @@ const state = {
   hoveredLock: null,
   hoveredLockNode: null,
   lockTip: null,
+  lunar: false,
+  shadow: false,
+  players: null,
   altDown: false,
   mouseX: 0,
   mouseY: 0,
@@ -47,6 +50,26 @@ function lockSatisfied(lock, owned) {
     if (owned.has(s.id)) n++;
   }
   return n >= lock.count;
+}
+
+function affinityTaken(kind) {
+  const needle = "获得" + kind + "亲和";
+  for (const id of new Set([...state.selected, ...state.learned])) {
+    const skill = state.skillMap[id];
+    if (skill && skill.desc && skill.desc.includes(needle)) return true;
+  }
+  return false;
+}
+
+function nodeIsSealed(node, lock) {
+  const text = `${(node && node.tip) || ""} ${lock.desc || ""}`;
+  if (text.includes("没有月亮亲和") && affinityTaken("月亮")) return true;
+  if (text.includes("没有暗影亲和") && affinityTaken("暗影")) return true;
+  return false;
+}
+
+function pointsLeft() {
+  return state.points - state.selected.size;
 }
 
 function canSelect(id, owned) {
@@ -137,11 +160,11 @@ function initTree(tree) {
   state.points = tree.points;
   state.skillMap = Object.fromEntries(tree.skills.map(s => [s.id, s]));
   state.lockMap = Object.fromEntries(tree.locks.map(l => [l.id, l]));
-  $("char-title").textContent = tree.name;
   document.title = tree.name + " · 技能树";
   $("skill-total").textContent = String(tree.skills.length);
 
   buildNodes();
+  fitViewBox();
   buildDescColumns();
   fillBuildSelect();
   render();
@@ -203,24 +226,66 @@ function buildNodes() {
   });
 }
 
+function groupFrame(groupId, fallbackX) {
+  const boxes = [];
+  state.tree.skills.forEach(s => {
+    if (s.group === groupId) boxes.push(s);
+  });
+  state.tree.locks.forEach(lock => {
+    if (lock.group !== groupId) return;
+    lock.nodes.forEach(n => boxes.push(n));
+  });
+  if (!boxes.length) {
+    return { cx: fallbackX, cy: -96, top: -112, left: fallbackX, width: 0, height: 0 };
+  }
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  boxes.forEach(b => {
+    minX = Math.min(minX, b.x);
+    minY = Math.min(minY, b.y);
+    maxX = Math.max(maxX, b.x + b.w);
+    maxY = Math.max(maxY, b.y + b.h);
+  });
+  const width = maxX - minX;
+  const height = maxY - minY;
+  return {
+    cx: (minX + maxX) / 2,
+    cy: (minY + maxY) / 2,
+    top: minY,
+    left: minX,
+    width,
+    height
+  };
+}
+
+function titlePoint(frame) {
+  // 竖直块：名称在块顶正中。
+  // 横向块：同样以包围盒水平居中，但基线跟着这一块自己的上沿，不跟其他列对齐。
+  return { x: frame.cx, y: frame.top - 16 };
+}
+
 function buildGroupTitles() {
   const layer = $("group-titles");
   layer.innerHTML = "";
   state.tree.groups.forEach(g => {
-    const y = -128;
+    const frame = groupFrame(g.id, g.x);
+    const at = titlePoint(frame);
+    g._cx = frame.cx;
     const hit = svgEl("rect", {
       class: "group-title-hit",
-      x: g.x - 40,
-      y: y - 16,
-      width: 80,
-      height: 22,
+      x: at.x,
+      y: at.y,
+      width: 1,
+      height: 1,
       fill: "transparent"
     });
     hit.dataset.group = g.id;
     const title = svgEl("text", {
       class: "group-title",
-      x: g.x,
-      y: y,
+      x: at.x,
+      y: at.y,
       "text-anchor": "middle",
       "font-size": "14",
       "font-weight": "bold",
@@ -236,9 +301,32 @@ function buildGroupTitles() {
       hit.addEventListener("mouseenter", () => showNoteTip(hit));
       hit.addEventListener("mouseleave", scheduleHideNoteTip);
     }
-    layer.appendChild(hit);
     layer.appendChild(title);
+    const box = title.getBBox();
+    hit.setAttribute("x", box.x - 4);
+    hit.setAttribute("y", box.y - 2);
+    hit.setAttribute("width", box.width + 8);
+    hit.setAttribute("height", box.height + 4);
+    layer.appendChild(hit);
   });
+}
+
+function fitViewBox() {
+  const svg = document.querySelector(".app svg");
+  let minY = Infinity;
+  let maxY = -Infinity;
+  svg.querySelectorAll("#group-titles text, #group-titles rect, #nodes rect, #buttons rect").forEach(el => {
+    const box = el.getBBox();
+    minY = Math.min(minY, box.y);
+    maxY = Math.max(maxY, box.y + box.height);
+  });
+  if (!Number.isFinite(minY)) return;
+  const top = minY - 14;
+  const bottom = maxY + 18;
+  svg.setAttribute("viewBox", `-300 ${top} 600 ${bottom - top}`);
+  const bg = $("tree-bg");
+  bg.setAttribute("y", String(top));
+  bg.setAttribute("height", String(bottom - top));
 }
 
 function buildDescColumns() {
@@ -252,7 +340,8 @@ function buildDescColumns() {
     const label = document.createElement("div");
     label.className = "parent-label";
     label.dataset.group = g.id;
-    label.style.left = ((g.x + 300) / 600) * 100 + "%";
+    const cx = g._cx != null ? g._cx : g.x;
+    label.style.left = ((cx + 300) / 600) * 100 + "%";
     label.textContent = g.name;
     if (g.tip) {
       label.classList.add("has-note");
@@ -277,7 +366,7 @@ function buildDescColumns() {
 
 function fillBuildSelect() {
   const sel = $("build-select");
-  sel.innerHTML = `<option value="">加点建议…</option>`;
+  sel.innerHTML = `<option value="">自由加点</option>`;
   (state.tree.builds || []).forEach(b => {
     const opt = document.createElement("option");
     opt.value = b.id;
@@ -339,7 +428,9 @@ function updateNodeVisual(id) {
 
   if (el.dataset.lock) {
     const lock = state.lockMap[el.dataset.lock];
-    const open = lockSatisfied(lock, state.learned);
+    const idx = Number(String(id).slice(lock.id.length + 1));
+    const node = lock.nodes[idx];
+    const open = !nodeIsSealed(node, lock) && lockSatisfied(lock, state.learned);
     const hot = state.hoveredLockNode === id;
     el.setAttribute("fill", open ? "#3a3418" : "#241816");
     el.setAttribute("stroke", hot ? "#f2f2f2" : (open ? "#c9a227" : "#6a3030"));
@@ -350,7 +441,7 @@ function updateNodeVisual(id) {
   const isLearned = state.learned.has(id);
   const isPicked = state.selected.has(id);
   const isHovered = state.hoveredId === id;
-  const available = isLearned || isPicked || canSelect(id, state.learned);
+  const available = isLearned || isPicked || (pointsLeft() > 0 && canSelect(id, state.learned));
 
   let fill = available ? "#3a3024" : "#241c16";
   let stroke = available ? "#7a6240" : "#3d3228";
@@ -400,17 +491,22 @@ function showNoteTip(label) {
   clearTimeout(noteHideTimer);
   const tip = $("note-tip");
   if (!tip || !label || !label.dataset.tip) return;
+  tip._anchor = label;
   tip.hidden = false;
   tip.textContent = label.dataset.tip;
-  const anchor = label.getBoundingClientRect();
   const pad = 12;
-  tip.style.left = "0px";
-  tip.style.top = "0px";
+  const app = document.querySelector(".app").getBoundingClientRect();
+  const minX = Math.max(pad, app.left + 8);
+  const maxRight = Math.min(window.innerWidth - pad, app.right - 8);
+  const maxW = Math.max(140, Math.min(420, maxRight - minX));
+  tip.style.maxWidth = maxW + "px";
+  tip.style.left = minX + "px";
+  tip.style.top = pad + "px";
   const box = tip.getBoundingClientRect();
+  const anchor = label.getBoundingClientRect();
   let x = anchor.left + anchor.width / 2 - box.width / 2;
   let y = anchor.bottom + 8;
-  if (x < pad) x = pad;
-  if (x + box.width > window.innerWidth - pad) x = window.innerWidth - pad - box.width;
+  x = Math.min(Math.max(minX, x), maxRight - box.width);
   if (y + box.height > window.innerHeight - pad) y = Math.max(pad, anchor.top - box.height - 8);
   tip.style.left = x + "px";
   tip.style.top = y + "px";
@@ -469,11 +565,13 @@ function pickNode(id) {
     render();
     return;
   }
-  if (state.selected.size >= state.points) return;
-  if (!canSelect(id, state.learned)) return;
-  state.selected.add(id);
   state.focusedId = id;
   state.stickyId = id;
+  if (pointsLeft() <= 0 || !canSelect(id, state.learned)) {
+    render();
+    return;
+  }
+  state.selected.add(id);
   render();
 }
 
@@ -498,21 +596,119 @@ function resetAll() {
   render();
 }
 
-function applyBuild(buildId) {
-  const build = (state.tree.builds || []).find(b => b.id === buildId);
-  if (!build) return;
+function applySkillList(ids) {
   state.learned.clear();
   state.selected.clear();
   state.points = state.tree.points;
-  for (const id of build.skills) {
+  for (const id of ids || []) {
     if (state.selected.size >= state.points) break;
     const next = ownedSet();
     next.add(id);
     if (canSelect(id, next)) state.selected.add(id);
   }
-  state.focusedId = build.skills[build.skills.length - 1] || null;
+  state.focusedId = (ids && ids[ids.length - 1]) || null;
   state.stickyId = state.focusedId;
   render();
+}
+
+function applyBuild(buildId) {
+  const build = (state.tree.builds || []).find(b => b.id === buildId);
+  if (!build) return;
+  applySkillList(build.skills);
+  showDataPop(build.name, build.text || "", true);
+}
+
+function currentModeScheme() {
+  if (!state.players || (!state.lunar && !state.shadow)) return null;
+  const need = new Set([state.players === "solo" ? "单人" : "多人"]);
+  if (state.lunar) need.add("月后");
+  if (state.shadow) need.add("影后");
+  return (state.tree.modes || []).find(mode => {
+    const tags = new Set(mode.tags || []);
+    if (tags.size !== need.size) return false;
+    for (const tag of need) if (!tags.has(tag)) return false;
+    return true;
+  }) || null;
+}
+
+function paintModes() {
+  document.querySelectorAll(".mode-btn").forEach(btn => {
+    const mode = btn.dataset.mode;
+    const on = mode === "lunar" ? state.lunar
+      : mode === "shadow" ? state.shadow
+      : state.players === mode;
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+}
+
+function affinityLine() {
+  if (state.lunar && state.shadow) return "已切换到月后影后";
+  if (state.lunar) return "已切换到月后加点";
+  if (state.shadow) return "已切换到影后加点";
+  return "已关闭月后与影后加点";
+}
+
+function playerLine(kind) {
+  if (state.players === kind) return kind === "solo" ? "已切换到单人模式" : "已切换到多人模式";
+  return kind === "solo" ? "已关闭单人模式" : "已关闭多人模式";
+}
+
+let schemeTimer = 0;
+
+function showDataPop(title, body, sticky) {
+  const pop = $("scheme-pop");
+  const close = $("scheme-close");
+  if (!pop) return;
+  clearTimeout(schemeTimer);
+  $("scheme-title").textContent = title;
+  const text = $("scheme-body");
+  text.textContent = body || "";
+  text.hidden = !body;
+  if (close) close.hidden = !sticky;
+  pop.hidden = false;
+  if (!sticky) schemeTimer = setTimeout(() => { pop.hidden = true; }, 1600);
+}
+
+function hideModeTip() {
+  const tip = $("mode-tip");
+  if (tip) tip.hidden = true;
+}
+
+function showModeTip(btn) {
+  if (window.matchMedia("(max-width: 720px)").matches) return;
+  const tip = $("mode-tip");
+  if (!tip || !btn.dataset.tip) return;
+  tip.hidden = false;
+  tip.textContent = btn.dataset.tip;
+  const pad = 12;
+  const anchor = btn.getBoundingClientRect();
+  tip.style.left = "0px";
+  tip.style.top = "0px";
+  const box = tip.getBoundingClientRect();
+  let x = anchor.left + anchor.width / 2 - box.width / 2;
+  let y = anchor.bottom + 8;
+  if (x < pad) x = pad;
+  if (x + box.width > window.innerWidth - pad) x = window.innerWidth - pad - box.width;
+  if (y + box.height > window.innerHeight - pad) y = Math.max(pad, anchor.top - box.height - 8);
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+}
+
+function onModeClick(kind) {
+  hideModeTip();
+  if (kind === "lunar") state.lunar = !state.lunar;
+  else if (kind === "shadow") state.shadow = !state.shadow;
+  else state.players = state.players === kind ? null : kind;
+  paintModes();
+  const scheme = currentModeScheme();
+  const title = kind === "solo" || kind === "multi" ? playerLine(kind) : affinityLine();
+  if (scheme && (scheme.text || (scheme.skills || []).length)) {
+    showDataPop(title, [scheme.name, scheme.text].filter(Boolean).join("\n"), true);
+    if ((scheme.skills || []).length) applySkillList(scheme.skills);
+    return;
+  }
+  showDataPop(title, "", false);
 }
 
 $("nodes").addEventListener("click", e => {
@@ -581,10 +777,40 @@ window.addEventListener("blur", () => {
   placeLockTip();
 });
 
+window.addEventListener("resize", () => {
+  const tip = $("note-tip");
+  if (tip && !tip.hidden && tip._anchor) showNoteTip(tip._anchor);
+});
+
 $("btn-learn").addEventListener("click", learnSelected);
 $("btn-reset").addEventListener("click", resetAll);
 $("build-select").addEventListener("change", e => {
   if (e.target.value) applyBuild(e.target.value);
+});
+
+$("mode-stack").addEventListener("click", e => {
+  const btn = e.target.closest(".mode-btn");
+  if (!btn) return;
+  onModeClick(btn.dataset.mode);
+});
+
+$("mode-stack").addEventListener("mouseover", e => {
+  const btn = e.target.closest(".mode-btn");
+  if (!btn) return;
+  showModeTip(btn);
+});
+
+$("mode-stack").addEventListener("mouseout", e => {
+  const btn = e.target.closest(".mode-btn");
+  if (!btn) return;
+  const to = e.relatedTarget;
+  if (to && btn.contains(to)) return;
+  hideModeTip();
+});
+
+$("scheme-close").addEventListener("click", () => {
+  clearTimeout(schemeTimer);
+  $("scheme-pop").hidden = true;
 });
 
 boot();

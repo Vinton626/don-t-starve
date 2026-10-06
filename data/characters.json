@@ -9,6 +9,11 @@
       "id": "willow",
       "name": "薇洛",
       "data": "data/willow.json"
+    },
+    {
+      "id": "wolfgang",
+      "name": "沃尔夫冈",
+      "data": "data/wolfgang.json"
     }
   ]
 }

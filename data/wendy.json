@@ -1,0 +1,292 @@
+{
+    "id": "wendy",
+    "name": "温蒂",
+    "points": 15,
+    "groups": [
+      { "id": "smallghost", "name": "小惊吓", "x": -153 },
+      { "id": "potion", "name": "灵体草药", "x": -17 },
+      { "id": "sisturn", "name": "姐妹骨灰罐", "x": 128 },
+      { "id": "ghostflower", "name": "哀悼荣耀", "x": -112 },
+      { "id": "avenging", "name": "鬼魂复仇", "x": -63 },
+      { "id": "gravestone", "name": "墓碑", "x": -6 },
+      { "id": "ghostcommand", "name": "幽灵团队", "x": 122 },
+      { "id": "affinity", "name": "亲和", "x": 16 }
+    ],
+    "skills": [
+      {
+        "id": "wendy_smallghost_1",
+        "n": 1,
+        "group": "smallghost",
+        "name": "一级小惊吓任务",
+        "desc": "温蒂使世界上墓碑生成小惊吓概率增加的效果提升至 15%。（原为 5%）协助小惊吓时，丢掉的玩具生成中心点的最远距离降低至 75 距离单位。（原为 125 单位）",
+        "requires": [],
+        "x": -189, "y": -69, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_smallghost_2",
+        "n": 2,
+        "group": "smallghost",
+        "name": "二级小惊吓任务",
+        "desc": "协助小惊吓时，丢掉的玩具生成数量提高至 6 ~ 8 个。（原为 3 ~ 5 个）",
+        "requires": ["wendy_smallghost_1"],
+        "x": -153, "y": -90, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_smallghost_3",
+        "n": 3,
+        "group": "smallghost",
+        "name": "三级小惊吓任务",
+        "desc": "协助小惊吓时，小惊吓会留下双倍的哀悼荣耀。",
+        "requires": ["wendy_smallghost_1", "wendy_smallghost_2"],
+        "x": -117, "y": -109, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_potion_container",
+        "n": 4,
+        "group": "potion",
+        "name": "野餐盒",
+        "desc": "可以打开野餐盒、往野餐盒中存放物品。习得配方：",
+        "recipes": ["6 树枝 + 1 木板 + 4 丝绸 → 1 野餐盒"],
+        "requires": [],
+        "x": -73, "y": -121, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_potion_revive",
+        "n": 5,
+        "group": "potion",
+        "name": "恐怖经历",
+        "desc": "习得配方：",
+        "recipes": ["1 勿忘我 + 3 哀悼荣耀 → 1 恐怖经历"],
+        "requires": ["wendy_potion_container"],
+        "x": -36, "y": -126, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_potion_duration",
+        "n": 6,
+        "group": "potion",
+        "name": "药效强劲",
+        "desc": "使用除灵魂万灵药以外的灵体草药时，药效持续时间增加至原本的 2 倍。（对阿比盖尔使用和通过幽魂花冠对玩家使用都有效。）",
+        "requires": ["wendy_potion_container", "wendy_potion_revive"],
+        "x": 2, "y": -126, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_potion_yield",
+        "n": 7,
+        "group": "potion",
+        "name": "额外产出",
+        "desc": "制作灵体草药时，有 40% 的概率产出两个成品，10% 的概率产出三个成品。",
+        "requires": ["wendy_potion_container", "wendy_potion_revive", "wendy_potion_duration"],
+        "x": 41, "y": -121, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_sisturn_1",
+        "n": 8,
+        "group": "sisturn",
+        "name": "一级受佑姐妹骨灰罐",
+        "desc": "使姐妹骨灰罐中物品的腐烂速度降低 50%。",
+        "requires": [],
+        "x": 87, "y": -109, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_sisturn_2",
+        "n": 9,
+        "group": "sisturn",
+        "name": "二级受佑姐妹骨灰罐",
+        "desc": "当世界上存在被激活的姐妹骨灰罐时，温蒂和温蒂附近 25 距离单位内的玩家受到疯狂光环的影响降低 25%。使被激活的姐妹骨灰罐的理智光环提升至 +40/分钟。（原为 +25/分钟）",
+        "requires": ["wendy_sisturn_1"],
+        "x": 128, "y": -92, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_sisturn_3",
+        "n": 10,
+        "group": "sisturn",
+        "name": "三级受佑姐妹骨灰罐",
+        "desc": "温蒂可以向姐妹骨灰罐中放入深色花瓣和月树花。当世界上存在装满月树花的姐妹骨灰罐时：阿比盖尔被具有对玩家伤害倍率的生物攻击时受到的伤害与玩家相同；使用亡者补药和灵魂万灵药时，每秒获得的治疗减半，但持续时间翻倍。",
+        "requires": ["wendy_sisturn_1", "wendy_sisturn_2"],
+        "x": 169, "y": -72, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_ghostflower_butterfly",
+        "n": 11,
+        "group": "ghostflower",
+        "name": "一级哀悼荣耀",
+        "desc": "习得配方：",
+        "recipes": [
+          "2 哀悼荣耀 + 1 蝴蝶翅膀 → 1 蝴蝶",
+          "4 哀悼荣耀 + 1 月蛾翅膀 → 1 月蛾"
+        ],
+        "requires": [],
+        "x": -184, "y": -7, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_ghostflower_hat",
+        "n": 12,
+        "group": "ghostflower",
+        "name": "二级哀悼荣耀",
+        "desc": "习得配方：",
+        "recipes": ["6 哀悼荣耀 → 1 幽魂花冠"],
+        "requires": ["wendy_ghostflower_butterfly"],
+        "x": -148, "y": -33, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_ghostflower_grave",
+        "n": 13,
+        "group": "ghostflower",
+        "name": "三级哀悼荣耀",
+        "desc": "习得配方：",
+        "recipes": ["10 哀悼荣耀 + 1 切制石砖 + 40 生命值降低 → 1 常年祭坛"],
+        "requires": ["wendy_ghostflower_butterfly", "wendy_ghostflower_hat"],
+        "x": -112, "y": -51, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_avenging_ghost",
+        "n": 14,
+        "group": "avenging",
+        "name": "鬼魂复仇",
+        "desc": "在 40 距离单位以内死亡的玩家，其玩家鬼魂会每隔 1.2 秒对周围 1.5 单位以内除幽灵以外的所有生物造成伤害。伤害取决于时间：白天 15，黄昏 25，夜晚 40；同时会受到角色自身伤害倍率的影响。持续 30 秒。",
+        "requires": [],
+        "x": -63, "y": -73, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_gravestone_1",
+        "n": 15,
+        "group": "gravestone",
+        "name": "坟墓美化",
+        "desc": "温蒂可以用三个花瓣升级墓碑。靠近升级的墓碑会生成大惊吓。采摘邪恶花将会恢复 5 理智值而不是扣除理智值。温蒂可以使用灵魂容器。",
+        "requires": [],
+        "x": -6, "y": -79, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_makegravemounds",
+        "n": 16,
+        "group": "gravestone",
+        "name": "温蒂手作墓碑",
+        "desc": "习得配方：",
+        "recipes": [
+          "1 切制石砖 + 4 深色花瓣 → 1 挖出的墓碑",
+          "1 灰烬 + 1 破碎贝壳 → 1 灵魂容器"
+        ],
+        "requires": ["wendy_gravestone_1"],
+        "x": 33, "y": -72, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_ghostcommand_1",
+        "n": 17,
+        "group": "ghostcommand",
+        "name": "一级幽灵团队",
+        "desc": "可以使用阿比盖尔之花发出“逃离”指令。",
+        "requires": [],
+        "x": 82, "y": -54, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_ghostcommand_2",
+        "n": 18,
+        "group": "ghostcommand",
+        "name": "二级幽灵团队",
+        "desc": "可以使用阿比盖尔之花发出“攻击”指令。",
+        "requires": ["wendy_ghostcommand_1"],
+        "x": 122, "y": -36, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_ghostcommand_3",
+        "n": 19,
+        "group": "ghostcommand",
+        "name": "三级幽灵团队",
+        "desc": "可以使用阿比盖尔之花发出“惊吓”和“作祟”指令。",
+        "requires": ["wendy_ghostcommand_1", "wendy_ghostcommand_2"],
+        "x": 161, "y": -9, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_lunar_1",
+        "n": 20,
+        "group": "affinity",
+        "name": "一级月亮姐妹情",
+        "desc": "温蒂获得月亮亲和。阿比盖尔获得 15 点位面防御并变为月亮阵营。温蒂和阿比盖尔受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
+        "requires": ["lock_affinity"],
+        "lock": "lock_affinity",
+        "exclusiveWith": ["wendy_shadow_1"],
+        "x": -25, "y": -6, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_lunar_2",
+        "n": 21,
+        "group": "affinity",
+        "name": "二级月亮姐妹情",
+        "desc": "习得配方：",
+        "recipes": ["1 纯粹辉煌 + 3 哀悼荣耀 → 1 亮泽之怒"],
+        "requires": ["lock_affinity", "wendy_lunar_1"],
+        "lock": "lock_affinity",
+        "x": 16.272727272727273, "y": -6, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_lunar_3",
+        "n": 22,
+        "group": "affinity",
+        "name": "三级月亮姐妹情",
+        "desc": "温蒂可以与月晷互动来变异阿比盖尔。（需要阿比盖尔处于召唤状态并且处于夜晚的森林世界时才能成功）在满月或渐盈月时能使阿比盖尔转变为虚影形态。在新月或渐亏月时能使虚影形态的阿比盖尔转变回原本的形态。",
+        "requires": ["lock_affinity", "wendy_lunar_1", "wendy_lunar_2"],
+        "lock": "lock_affinity",
+        "x": 57, "y": -6, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_shadow_1",
+        "n": 23,
+        "group": "affinity",
+        "name": "一级暗影姐妹情",
+        "desc": "温蒂获得暗影亲和。阿比盖尔获得 15 点位面防御并变为暗影阵营。温蒂和阿比盖尔受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
+        "requires": ["lock_affinity"],
+        "lock": "lock_affinity",
+        "exclusiveWith": ["wendy_lunar_1"],
+        "x": -25, "y": 32, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_shadow_2",
+        "n": 24,
+        "group": "affinity",
+        "name": "二级暗影姐妹情",
+        "desc": "习得配方：",
+        "recipes": ["1 纯粹恐惧 + 3 哀悼荣耀 → 1 诅咒之恼"],
+        "requires": ["lock_affinity", "wendy_shadow_1"],
+        "lock": "lock_affinity",
+        "x": 16.272727272727273, "y": 32, "w": 32, "h": 32
+      },
+      {
+        "id": "wendy_shadow_3",
+        "n": 25,
+        "group": "affinity",
+        "name": "三级暗影姐妹情",
+        "desc": "温蒂谋杀物品栏中的生物时，阿比盖尔会短暂地受到强化：获得 25 位面伤害和 5 位面防御。强化持续 8 秒，每谋杀一个生物都会使其持续/延长 8 秒，最高不超过 160 秒。如果阿比盖尔死亡，强化就会提前结束。",
+        "requires": ["lock_affinity", "wendy_shadow_1", "wendy_shadow_2"],
+        "lock": "lock_affinity",
+        "x": 57, "y": 32, "w": 32, "h": 32
+      }
+    ],
+    "locks": [
+      {
+        "id": "lock_affinity",
+        "group": "affinity",
+        "count": 12,
+        "fromGroups": ["smallghost", "potion", "sisturn", "ghostflower", "avenging", "gravestone", "ghostcommand"],
+        "desc": "学习 12 个其他技能后解锁亲和分支",
+        "nodes": [
+          {
+            "x": -101.8, "y": -2.8, "w": 25.6, "h": 25.6,
+            "tip": "学习 12 个其他技能后解锁亲和分支"
+          },
+          {
+            "x": -63.8, "y": -2.8, "w": 25.6, "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          },
+          {
+            "x": -101.8, "y": 35.2, "w": 25.6, "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          },
+          {
+            "x": -63.8, "y": 35.2, "w": 25.6, "h": 25.6,
+            "tip": "这里有锁文案需要替换"
+          }
+        ]
+      }
+    ],
+    "builds": []
+  }
