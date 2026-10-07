@@ -557,7 +557,7 @@
   ],
   "builds": [
     {
-      "id": "init",
+      "id": "zhuo-yue",
       "name": "汋月的加点建议",
       "text": "在这里写汋月的加点建议",
       "skills": [],
@@ -571,19 +571,23 @@
             "好孩子"
           ],
           "name": "单人月前影前·好孩子",
-          "text": "在这里写单人月前影前好孩子加点",
+          "text": "这里不建议单人月前使用好孩子，会有很多浪费的点数",
           "skills": [
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_soulprotector_3",
+            "wortox_soulprotector_4",
+            "wortox_lifebringer_1",
             "wortox_liftedspirits_1",
             "wortox_liftedspirits_2",
             "wortox_liftedspirits_3",
             "wortox_liftedspirits_4",
-            "wortox_lifebringer_1",
-            "wortox_lifebringer_2",
-            "wortox_lifebringer_3",
-            "wortox_soulprotector_1",
-            "wortox_soulprotector_2",
-            "wortox_soulprotector_3",
-            "wortox_soulprotector_4"
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
           ]
         },
         {
@@ -595,8 +599,24 @@
             "淘气包"
           ],
           "name": "单人月前影前·淘气包",
-          "text": "在这里写单人月前影前淘气包加点",
-          "skills": []
+          "text": "单人模式下解锁月前影前最舒服的加点",
+          "skills": [
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4",
+            "wortox_souldecoy_1",
+            "wortox_souldecoy_2",
+            "wortox_panflute_playing"
+          ]
         },
         {
           "id": "solo-lunar-nice",
@@ -607,8 +627,24 @@
             "好孩子"
           ],
           "name": "单人月后·好孩子",
-          "text": "在这里写单人月后好孩子加点",
-          "skills": []
+          "text": "好孩子本质奶妈，但是灵魂输出不强，不推荐",
+          "skills": [
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_soulprotector_3",
+            "wortox_soulprotector_4",
+            "wortox_allegiance_lunar",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
         },
         {
           "id": "solo-lunar-naughty",
@@ -619,8 +655,24 @@
             "淘气包"
           ],
           "name": "单人月后·淘气包",
-          "text": "在这里写单人月后淘气包加点",
-          "skills": []
+          "text": "单人解锁月后的淘气包加点属于最强的一种",
+          "skills": [
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4",
+            "wortox_souldecoy_1",
+            "wortox_souldecoy_2",
+            "wortox_panflute_playing"
+          ]
         },
         {
           "id": "solo-shadow-nice",
@@ -631,8 +683,24 @@
             "好孩子"
           ],
           "name": "单人影后·好孩子",
-          "text": "在这里写单人影后好孩子加点",
-          "skills": []
+          "text": "暗影亲和技能仅对镰刀生效，需要灵魂跳跃后才能触发高伤，对输出节奏不友好",
+          "skills": [
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_soulprotector_3",
+            "wortox_soulprotector_4",
+            "wortox_allegiance_shadow",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
         },
         {
           "id": "solo-shadow-naughty",
@@ -644,7 +712,23 @@
           ],
           "name": "单人影后·淘气包",
           "text": "在这里写单人影后淘气包加点",
-          "skills": []
+          "skills": [
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4",
+            "wortox_souldecoy_1",
+            "wortox_allegiance_lunar",
+            "wortox_panflute_playing"
+          ]
         },
         {
           "id": "solo-both-nice",
@@ -655,8 +739,24 @@
             "好孩子"
           ],
           "name": "单人月后影后·好孩子",
-          "text": "在这里写单人月后影后好孩子加点",
-          "skills": []
+          "text": "主点月亲和，仍是不推荐单人玩好孩子",
+          "skills": [
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_soulprotector_3",
+            "wortox_soulprotector_4",
+            "wortox_allegiance_lunar",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
         },
         {
           "id": "solo-both-naughty",
@@ -667,8 +767,140 @@
             "淘气包"
           ],
           "name": "单人月后影后·淘气包",
-          "text": "在这里写单人月后影后淘气包加点",
-          "skills": []
+          "text": "主点月亲和，算是单人解锁月后淘气包固定加点",
+          "skills": [
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4",
+            "wortox_souldecoy_1",
+            "wortox_souldecoy_2",
+            "wortox_panflute_playing"
+          ]
+        },
+        {
+          "id": "solo-none-neutral",
+          "tags": [
+            "单人",
+            "月前",
+            "影前",
+            "无偏好"
+          ],
+          "name": "单人月前影前·无偏好",
+          "text": "为了平衡学习了三级双尾心，可以打包当血包用，其他输出与赶路技能拉满",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_panflute_playing",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
+        },
+        {
+          "id": "solo-lunar-neutral",
+          "tags": [
+            "单人",
+            "月后",
+            "影前",
+            "无偏好"
+          ],
+          "name": "单人月后·无偏好",
+          "text": "为了更适配月后学习了回响，且为了保证输出，导致(14)贪欲泛滥点不了",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_allegiance_lunar",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
+        },
+        {
+          "id": "solo-shadow-neutral",
+          "tags": [
+            "单人",
+            "月前",
+            "影后",
+            "无偏好"
+          ],
+          "name": "单人影后·无偏好",
+          "text": "与月后相同，只是把月亮亲和换位暗影亲和",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_allegiance_shadow",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
+        },
+        {
+          "id": "solo-both-neutral",
+          "tags": [
+            "单人",
+            "月后",
+            "影后",
+            "无偏好"
+          ],
+          "name": "单人月后影后·无偏好",
+          "text": "与月后完全相同",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_allegiance_lunar",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
         },
         {
           "id": "multi-none-nice",
@@ -679,8 +911,24 @@
             "好孩子"
           ],
           "name": "多人月前影前·好孩子",
-          "text": "在这里写多人月前影前好孩子加点",
-          "skills": []
+          "text": "纯辅助，如果有基础可以将(14)贪欲泛滥换为(15)贪心收藏家提升输出好刷灵魂，或换为(23)即兴排箫手提升排箫使用次数。如果有薇洛等队友陪你刷灵魂，则可将(18)一级灵魂穿刺换为(23)即兴排箫手或(25)灵魂诱饵提升跑路能力",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
         },
         {
           "id": "multi-none-naughty",
@@ -691,8 +939,24 @@
             "淘气包"
           ],
           "name": "多人月前影前·淘气包",
-          "text": "在这里写多人月前影前淘气包加点",
-          "skills": []
+          "text": "兼顾复活，赶路与输出，由于没有亲和，也可以将(10)回响换为(23)即兴排箫手提升排箫使用次数，同时如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
         },
         {
           "id": "multi-lunar-nice",
@@ -703,8 +967,24 @@
             "好孩子"
           ],
           "name": "多人月后·好孩子",
-          "text": "在这里写多人月后好孩子加点",
-          "skills": []
+          "text": "纯辅助，如果有基础可以将(14)贪欲泛滥换为(15)贪心收藏家提升输出好刷灵魂，或换为(23)即兴排箫手提升排箫使用次数。如果有薇洛等队友陪你刷灵魂，则可将(18)一级灵魂穿刺换为(23)即兴排箫手或(25)灵魂诱饵提升跑路能力",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_allegiance_lunar",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
         },
         {
           "id": "multi-lunar-naughty",
@@ -715,8 +995,25 @@
             "淘气包"
           ],
           "name": "多人月后·淘气包",
-          "text": "在这里写多人月后淘气包加点",
-          "skills": []
+          "text": "输出拉满不多说,如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_allegiance_lunar",
+            "wortox_panflute_playing",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
         },
         {
           "id": "multi-shadow-nice",
@@ -727,8 +1024,24 @@
             "好孩子"
           ],
           "name": "多人影后·好孩子",
-          "text": "在这里写多人影后好孩子加点",
-          "skills": []
+          "text": "纯辅助，由于影后群体输出能力增强，所以灵魂获取更加便捷，于是舍弃(18)一级灵魂穿刺。如果对赶路要求不大，可以将(11)肆意移动换为(7)做完全体奶妈。除此之外，(7)一级灵魂堡垒与(11)肆意移动还可以替换为(14)贪欲泛滥与(18)一级灵魂穿刺,亦可将二者其一换为(23)即兴排箫手。根据是否有人帮你刷灵魂灵活调整",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_soulprotector_3",
+            "wortox_allegiance_shadow",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_thief_1",
+            "wortox_thief_2"
+          ]
         },
         {
           "id": "multi-shadow-naughty",
@@ -739,8 +1052,25 @@
             "淘气包"
           ],
           "name": "多人影后·淘气包",
-          "text": "在这里写多人影后淘气包加点",
-          "skills": []
+          "text": "输出拉满不多说,如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_allegiance_shadow",
+            "wortox_panflute_playing",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
         },
         {
           "id": "multi-both-nice",
@@ -751,8 +1081,24 @@
             "好孩子"
           ],
           "name": "多人月后影后·好孩子",
-          "text": "在这里写多人月后影后好孩子加点",
-          "skills": []
+          "text": "根据是否有人帮你刷灵魂灵活调整，如果有人帮忙刷灵魂可以选择月亮亲和，如果没有就选暗影亲和。如果还想进一步提高输出则可把(11)肆意移动换为(18)一级灵魂穿刺",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_allegiance_shadow",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_liftedspirits_4",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2"
+          ]
         },
         {
           "id": "multi-both-naughty",
@@ -763,8 +1109,137 @@
             "淘气包"
           ],
           "name": "多人月后影后·淘气包",
-          "text": "在这里写多人月后影后淘气包加点",
-          "skills": []
+          "text": "个人认为两次免伤还是更厉害的，同时如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_allegiance_lunar",
+            "wortox_panflute_playing",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_souljar_3",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3",
+            "wortox_thief_4"
+          ]
+        },
+        {
+          "id": "multi-none-neutral",
+          "tags": [
+            "多人",
+            "月前",
+            "影前",
+            "无偏好"
+          ],
+          "name": "多人月前影前·无偏好",
+          "text": "偏奶妈，不拉魂情况下完全可以如此点，如果会拉魂想偏输出则可将(4)一级灵魂触及与(5)二级灵魂触及替换为(15)贪心收藏家与(19)二级灵魂穿刺",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_soulprotector_2",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_4",
+            "wortox_panflute_playing",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
+        },
+        {
+          "id": "multi-lunar-neutral",
+          "tags": [
+            "多人",
+            "月后",
+            "影前",
+            "无偏好"
+          ],
+          "name": "多人月后·无偏好",
+          "text": "偏奶妈，不拉魂情况下完全可以如此点，如果会拉魂想偏输出则可将(4)一级灵魂触及替换为(15)贪心收藏家",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_panflute_playing",
+            "wortox_allegiance_lunar",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
+        },
+        {
+          "id": "multi-shadow-neutral",
+          "tags": [
+            "多人",
+            "月前",
+            "影后",
+            "无偏好"
+          ],
+          "name": "多人影后·无偏好",
+          "text": "偏奶妈，不拉魂情况下完全可以如此点，如果会拉魂想偏输出则可将(4)一级灵魂触及替换为(15)贪心收藏家",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_panflute_playing",
+            "wortox_allegiance_shadow",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
+        },
+        {
+          "id": "multi-both-neutral",
+          "tags": [
+            "多人",
+            "月后",
+            "影后",
+            "无偏好"
+          ],
+          "name": "多人月后影后·无偏好",
+          "text": "根据需求灵活调整",
+          "skills": [
+            "wortox_lifebringer_1",
+            "wortox_lifebringer_2",
+            "wortox_lifebringer_3",
+            "wortox_soulprotector_1",
+            "wortox_liftedspirits_1",
+            "wortox_liftedspirits_2",
+            "wortox_liftedspirits_3",
+            "wortox_panflute_playing",
+            "wortox_allegiance_lunar",
+            "wortox_nabbag",
+            "wortox_souljar_1",
+            "wortox_souljar_2",
+            "wortox_thief_1",
+            "wortox_thief_2",
+            "wortox_thief_3"
+          ]
         }
       ]
     }
@@ -785,5 +1260,9 @@
       "- 淘气包沃拓克斯受到灵魂治疗效果的默认效果减少至 15 text-center，且不会回复 text-center。",
       "- 淘气包沃拓克斯所持有灵魂数量到达过载阈值时，延迟 10 秒才会过载。如果这段时间内将灵魂数量降低到过载阈值以内或提升过载阈值，就可以避免过载。"
     ]
+  },
+  "notice": {
+    "title": "小结",
+    "text": "根据是否要跑图，是否要奶，是否会拉魂，是否有人帮你打魂来综合判断具体加点，多人下必点三级双尾心，排箫，治疗跟输出灵活切换"
   }
 }

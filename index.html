@@ -426,6 +426,61 @@
       padding: 2px 4px;
     }
     .note-tip { font-size: 14px; }
+    .char-notice { right: 12px; bottom: 12px; }
+  }
+
+  .char-notice {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 25;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .char-notice[hidden] { display: none; }
+  .char-notice-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(28, 20, 12, .48);
+    border: 1.5px solid rgba(201, 162, 39, .45);
+    color: rgba(240, 208, 96, .78);
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .char-notice-btn:hover,
+  .char-notice.is-open .char-notice-btn {
+    background: rgba(42, 30, 16, .88);
+    border-color: #c9a227;
+    color: #f0d060;
+  }
+  .char-notice-panel {
+    width: min(320px, calc(100vw - 36px));
+    max-height: 42vh;
+    overflow: auto;
+    padding: 12px 14px;
+    background: rgba(12, 9, 6, .72);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    border-radius: 2px;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .char-notice-panel[hidden] { display: none; }
+  .char-notice-title {
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
   }
 </style>
 </head>
@@ -451,17 +506,17 @@
 
 <div class="stage-head" id="stage-head">
   <div class="insight-bar">
-    <button type="button" class="align-btn" id="align-nice" data-align="nice" data-tip="好孩子加点" hidden aria-pressed="false">😇</button>
+    <button type="button" class="align-btn" id="align-nice" data-align="nice" data-tip="好孩子加点（再点取消，变为无偏好）" hidden aria-pressed="false">😇</button>
     <span class="insight-box" id="points-text">15</span>
     <span class="insight-label">剩余洞察</span>
-    <button type="button" class="align-btn" id="align-naughty" data-align="naughty" data-tip="淘气包加点" hidden aria-pressed="false">😈</button>
+    <button type="button" class="align-btn" id="align-naughty" data-align="naughty" data-tip="淘气包加点（再点取消，变为无偏好）" hidden aria-pressed="false">😈</button>
   </div>
   <div class="mode-stack" id="mode-stack">
     <div class="mode-row">
-      <button type="button" class="mode-btn" data-mode="lunar" data-tip="月后加点" aria-pressed="false">
+      <button type="button" class="mode-btn" data-mode="lunar" data-tip="解锁月后加点" aria-pressed="false">
         <img src="img/moon.png" alt="月后" draggable="false">
       </button>
-      <button type="button" class="mode-btn" data-mode="shadow" data-tip="影后加点" aria-pressed="false">
+      <button type="button" class="mode-btn" data-mode="shadow" data-tip="解锁影后加点" aria-pressed="false">
         <img src="img/dark.png" alt="影后" draggable="false">
       </button>
     </div>
@@ -497,6 +552,14 @@
 <div id="lock-tip" class="lock-tip" hidden></div>
 <div id="note-tip" class="lock-tip note-tip" hidden></div>
 <div id="mode-tip" class="lock-tip" hidden></div>
+<aside class="char-notice" id="char-notice" hidden>
+  <button type="button" class="char-notice-btn" id="char-notice-btn" aria-expanded="false" aria-controls="char-notice-panel" title="角色总结">!</button>
+  <div class="char-notice-panel" id="char-notice-panel" hidden>
+    <div class="char-notice-title" id="char-notice-title">总结</div>
+    <div class="char-notice-body" id="char-notice-body"></div>
+  </div>
+</aside>
+
 <div id="scheme-pop" class="scheme-pop" hidden>
   <div class="scheme-title" id="scheme-title"></div>
   <div class="scheme-body" id="scheme-body"></div>

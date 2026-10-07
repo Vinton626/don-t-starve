@@ -365,8 +365,10 @@ function initTree(tree) {
   fitViewBox();
   buildDescColumns();
   fillBuildSelect();
+  bindNotice(tree);
   const saved = new URLSearchParams(location.search);
-  const buildId = saved.get("build") || "";
+  let buildId = saved.get("build") || "";
+  if (buildId === "init" && (tree.builds || []).some(b => b.id === "zhuo-yue")) buildId = "zhuo-yue";
   const hasBuild = (tree.builds || []).some(b => b.id === buildId);
   if (hasBuild) {
     state.lunar = saved.get("lunar") === "1";
@@ -812,6 +814,35 @@ function fillBuildSelect() {
   });
 }
 
+function noticePayload(tree) {
+  const n = tree && tree.notice;
+  if (n == null || n === false) return null;
+  if (typeof n === "string") return { title: "总结", text: n };
+  if (Array.isArray(n)) return { title: "总结", text: n.join("\n") };
+  const text = n.text || n.body || (Array.isArray(n.lines) ? n.lines.join("\n") : "");
+  if (!String(text).trim()) return null;
+  return { title: n.title || "总结", text };
+}
+
+function bindNotice(tree) {
+  const wrap = $("char-notice");
+  const panel = $("char-notice-panel");
+  const btn = $("char-notice-btn");
+  if (!wrap || !panel || !btn) return;
+  const payload = noticePayload(tree);
+  wrap.classList.remove("is-open");
+  btn.setAttribute("aria-expanded", "false");
+  panel.hidden = true;
+  if (!payload) {
+    wrap.hidden = true;
+    $("char-notice-body").textContent = "";
+    return;
+  }
+  wrap.hidden = false;
+  $("char-notice-title").textContent = payload.title;
+  $("char-notice-body").textContent = payload.text;
+}
+
 function prereqText(skill) {
   const names = (skill.requires || []).map(id => state.skillMap[id]?.name || id);
   skillLockIds(skill).forEach(lockId => {
@@ -1125,15 +1156,15 @@ function schemeGap(scheme) {
 function announceScheme(scheme, sticky) {
   const gap = schemeGap(scheme);
   if (gap) {
-    showDataPop(gap.title, gap.body, sticky);
+    showDataPop(gap.title, withAlignHint(gap.body), sticky);
     return;
   }
   if (!scheme) {
-    showDataPop("没有方案", "这个组合还没有写入加点", sticky);
+    showDataPop("没有方案", withAlignHint("这个组合还没有写入加点"), sticky);
     return;
   }
   const body = [scheme.name, scheme.text].filter(Boolean).join("\n");
-  showDataPop(modeLine(), body, sticky);
+  showDataPop(modeLine(), withAlignHint(body), sticky);
 }
 
 function syncPresetChrome() {
@@ -1170,7 +1201,6 @@ function applyBuild(buildId, opts = {}) {
   } else if (state.players !== "solo" && state.players !== "multi") {
     state.players = "multi";
   }
-  if (usesAlignment() && state.align !== "nice" && state.align !== "naughty") state.align = "nice";
   syncPresetChrome();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
@@ -1180,7 +1210,26 @@ function applyBuild(buildId, opts = {}) {
 
 function usesAlignment(build) {
   const target = build || selectedBuild();
-  return !!(target && (target.modes || []).some(mode => (mode.tags || []).some(tag => tag === "好孩子" || tag === "淘气包")));
+  return !!(target && (target.modes || []).some(mode => (mode.tags || []).some(tag => tag === "好孩子" || tag === "淘气包" || tag === "无偏好")));
+}
+
+function alignTag() {
+  if (state.align === "naughty") return "淘气包";
+  if (state.align === "nice") return "好孩子";
+  return "无偏好";
+}
+
+const ALIGN_HINTS = {
+  "好孩子": "吃灵魂掉10精神值回25饱食度，释放灵魂回20血回5精神值",
+  "淘气包": "吃掉灵魂不掉精神值回25饱食度，释放灵魂回15血不回精神值",
+  "无偏好": "吃掉灵魂掉5精神值回25饱食度，释放灵魂回20血回2.5精神值"
+};
+
+function withAlignHint(body) {
+  if (!usesAlignment()) return body || "";
+  const hint = ALIGN_HINTS[alignTag()];
+  if (!hint) return body || "";
+  return [body, hint].filter(Boolean).join("\n");
 }
 
 function currentModeScheme() {
@@ -1191,7 +1240,7 @@ function currentModeScheme() {
     state.lunar ? "月后" : "月前",
     state.shadow ? "影后" : "影前"
   ]);
-  if (usesAlignment(build)) need.add(state.align === "naughty" ? "淘气包" : "好孩子");
+  if (usesAlignment(build)) need.add(alignTag());
   return (build.modes || []).find(mode => {
     const tags = new Set(mode.tags || []);
     if (tags.size !== need.size) return false;
@@ -1224,7 +1273,7 @@ function modeLine() {
   if (state.lunar && state.shadow) affinity = "月后影后";
   else if (state.lunar) affinity = "月后";
   else if (state.shadow) affinity = "影后";
-  const side = usesAlignment() ? (state.align === "naughty" ? " · 淘气包" : " · 好孩子") : "";
+  const side = usesAlignment() ? " · " + alignTag() : "";
   return "已切换到" + who + affinity + side;
 }
 
@@ -1283,9 +1332,9 @@ function onModeClick(kind) {
 }
 
 function onAlignClick(kind) {
-  if (!state.preset || !usesAlignment() || state.align === kind) return;
+  if (!state.preset || !usesAlignment()) return;
   hideModeTip();
-  state.align = kind;
+  state.align = state.align === kind ? null : kind;
   paintModes();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
@@ -1339,6 +1388,16 @@ window.addEventListener("resize", () => {
 });
 
 $("btn-learn").addEventListener("click", learnSelected);
+
+window.addEventListener("keydown", e => {
+  if (e.code !== "Space" && e.key !== " ") return;
+  if (e.repeat || e.altKey || e.ctrlKey || e.metaKey) return;
+  const typing = e.target && e.target.closest && e.target.closest("input, textarea, select, [contenteditable='true']");
+  if (typing) return;
+  if (!state.tree || state.selected.size === 0) return;
+  e.preventDefault();
+  learnSelected();
+});
 $("btn-reset").addEventListener("click", resetAll);
 $("build-select").addEventListener("change", e => {
   if (e.target.value) applyBuild(e.target.value);
@@ -1374,6 +1433,25 @@ $("mode-stack").addEventListener("mouseout", e => {
 $("scheme-close").addEventListener("click", () => {
   clearTimeout(schemeTimer);
   $("scheme-pop").hidden = true;
+});
+
+$("char-notice-btn").addEventListener("click", e => {
+  e.stopPropagation();
+  const wrap = $("char-notice");
+  const panel = $("char-notice-panel");
+  const btn = $("char-notice-btn");
+  const open = panel.hidden;
+  panel.hidden = !open;
+  wrap.classList.toggle("is-open", open);
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+});
+
+document.addEventListener("click", e => {
+  const wrap = $("char-notice");
+  if (!wrap || wrap.hidden || wrap.contains(e.target)) return;
+  $("char-notice-panel").hidden = true;
+  wrap.classList.remove("is-open");
+  $("char-notice-btn").setAttribute("aria-expanded", "false");
 });
 
 boot();

@@ -1,6 +1,10 @@
 {
     "id": "maxwell",
     "name": "麦斯威尔",
-    "skillTree": false
+    "skillTree": false,
+    "notice": {
+      "title": "总结",
+      "text": "在这里写角色总结"
+    }
   }
   

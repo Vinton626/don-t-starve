@@ -1,6 +1,10 @@
 {
     "id": "wanda",
     "name": "旺达",
-    "skillTree": false
+    "skillTree": false,
+    "notice": {
+      "title": "总结",
+      "text": "在这里写角色总结"
+    }
   }
   
