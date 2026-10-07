@@ -530,8 +530,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "无亲和就走纯伯尼线，伯尼负责扛伤，薇洛找机会输出即可",
+          "skills": [
+            "controlled_burning",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_bernieai",
+            "willow_berniehealth_1",
+            "willow_berniehealth_2",
+            "willow_burnignbernie"
+          ]
         },
         {
           "id": "solo-lunar",
