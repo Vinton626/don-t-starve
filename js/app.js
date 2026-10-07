@@ -1164,31 +1164,35 @@ function insightCopy(scheme) {
   const gap = schemeGap(scheme);
   if (gap) return { title: gap.title, body: withAlignHint(gap.body) };
   if (!scheme) return { title: "没有方案", body: withAlignHint("这个组合还没有写入加点") };
-  return { title: scheme.name || "见解", body: withAlignHint(scheme.text || "") };
+  return { title: scheme.name || "个人见解", body: withAlignHint(scheme.text || "") };
+}
+
+function paintInsightHandle(open) {
+  const handle = $("insight-drawer-handle");
+  const arrow = $("insight-drawer-arrow");
+  if (handle) handle.setAttribute("aria-expanded", open ? "true" : "false");
+  if (arrow) arrow.textContent = open ? "<" : ">";
 }
 
 function syncInsightDrawer(scheme, open) {
   const drawer = $("insight-drawer");
-  const handle = $("insight-drawer-handle");
   if (!drawer) return;
   if (!state.preset) {
     drawer.hidden = true;
     drawer.classList.remove("is-open");
-    if (handle) handle.setAttribute("aria-expanded", "false");
+    paintInsightHandle(false);
     return;
   }
   const copy = insightCopy(scheme);
   drawer.hidden = false;
   $("insight-drawer-title").textContent = copy.title;
   $("insight-drawer-body").textContent = copy.body;
-  if (open) {
-    drawer.classList.add("is-open");
-    if (handle) handle.setAttribute("aria-expanded", "true");
-  }
+  drawer.classList.toggle("is-open", !!open);
+  paintInsightHandle(!!open);
 }
 
 function announceEnter(scheme) {
-  syncInsightDrawer(scheme, true);
+  syncInsightDrawer(scheme, false);
   const build = selectedBuild();
   const name = build ? build.name : "方案";
   showDataPop("已切换到" + name + " · " + modeCombo(), "", true);
@@ -1489,7 +1493,7 @@ $("insight-drawer-handle").addEventListener("click", e => {
   if (!drawer || drawer.hidden) return;
   const open = !drawer.classList.contains("is-open");
   drawer.classList.toggle("is-open", open);
-  $("insight-drawer-handle").setAttribute("aria-expanded", open ? "true" : "false");
+  paintInsightHandle(open);
 });
 
 $("char-notice-btn").addEventListener("click", e => {

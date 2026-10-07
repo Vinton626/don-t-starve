@@ -525,7 +525,11 @@
     left: 100%;
     top: 28%;
     width: 32px;
-    padding: 12px 6px;
+    padding: 12px 4px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     background: rgba(28, 20, 12, .82);
     color: #f0d060;
     border: 1.5px solid rgba(201, 162, 39, .55);
@@ -534,8 +538,15 @@
     font-family: inherit;
     font-size: 13px;
     letter-spacing: 2px;
-    writing-mode: vertical-rl;
     cursor: pointer;
+  }
+  .insight-drawer-label {
+    writing-mode: vertical-rl;
+  }
+  .insight-drawer-arrow {
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 1;
   }
   .insight-drawer.is-open .insight-drawer-handle {
     background: rgba(42, 30, 16, .92);
@@ -613,10 +624,13 @@
 <div id="mode-tip" class="lock-tip" hidden></div>
 <aside class="insight-drawer" id="insight-drawer" hidden>
   <div class="insight-drawer-panel">
-    <div class="insight-drawer-title" id="insight-drawer-title">见解</div>
+    <div class="insight-drawer-title" id="insight-drawer-title">个人见解</div>
     <div class="insight-drawer-body" id="insight-drawer-body"></div>
   </div>
-  <button type="button" class="insight-drawer-handle" id="insight-drawer-handle" aria-expanded="false">见解</button>
+  <button type="button" class="insight-drawer-handle" id="insight-drawer-handle" aria-expanded="false">
+    <span class="insight-drawer-label">个人见解</span>
+    <span class="insight-drawer-arrow" id="insight-drawer-arrow">&gt;</span>
+  </button>
 </aside>
 
 <aside class="char-notice" id="char-notice" hidden>
