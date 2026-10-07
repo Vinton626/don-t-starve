@@ -1162,9 +1162,9 @@ function schemeGap(scheme) {
 
 function insightCopy(scheme) {
   const gap = schemeGap(scheme);
-  if (gap) return { title: gap.title, body: withAlignHint(gap.body) };
-  if (!scheme) return { title: "没有方案", body: withAlignHint("这个组合还没有写入加点") };
-  return { title: scheme.name || "个人见解", body: withAlignHint(scheme.text || "") };
+  if (gap) return { title: gap.title || "", body: withAlignHint(gap.body || "") };
+  if (!scheme) return { title: "", body: "" };
+  return { title: scheme.name || "", body: withAlignHint((scheme.text || "").trim()) };
 }
 
 function paintInsightHandle(open) {
@@ -1172,6 +1172,13 @@ function paintInsightHandle(open) {
   const arrow = $("insight-drawer-arrow");
   if (handle) handle.setAttribute("aria-expanded", open ? "true" : "false");
   if (arrow) arrow.textContent = open ? "<" : ">";
+}
+
+function sizeInsightPanel() {
+  const panel = document.querySelector(".insight-drawer-panel");
+  const handle = $("insight-drawer-handle");
+  if (!panel || !handle) return;
+  panel.style.minHeight = Math.ceil(handle.getBoundingClientRect().height + 16) + "px";
 }
 
 function syncInsightDrawer(scheme, open) {
@@ -1189,6 +1196,7 @@ function syncInsightDrawer(scheme, open) {
   $("insight-drawer-body").textContent = copy.body;
   drawer.classList.toggle("is-open", !!open);
   paintInsightHandle(!!open);
+  sizeInsightPanel();
 }
 
 function announceEnter(scheme) {
@@ -1437,6 +1445,7 @@ $("nodes").addEventListener("mouseout", e => {
 window.addEventListener("resize", () => {
   const tip = $("note-tip");
   if (tip && !tip.hidden && tip._anchor) showNoteTip(tip._anchor);
+  sizeInsightPanel();
 });
 
 $("btn-learn").addEventListener("click", learnSelected);
@@ -1494,6 +1503,7 @@ $("insight-drawer-handle").addEventListener("click", e => {
   const open = !drawer.classList.contains("is-open");
   drawer.classList.toggle("is-open", open);
   paintInsightHandle(open);
+  sizeInsightPanel();
 });
 
 $("char-notice-btn").addEventListener("click", e => {
