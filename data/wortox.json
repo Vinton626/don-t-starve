@@ -35,10 +35,7 @@
           "recipes": [
             "10 灵魂 → 1 双尾心"
           ],
-          "requires": [
-            "lock_lifebringer"
-          ],
-          "lock": "lock_lifebringer",
+          "requires": [],
           "x": -231,
           "y": 32,
           "w": 32,
@@ -52,7 +49,6 @@
           "requires": [
             "wortox_lifebringer_1"
           ],
-          "lock": "lock_lifebringer",
           "x": -231,
           "y": -8,
           "w": 32,
@@ -79,10 +75,7 @@
           "n": 4,
           "name": "一级灵魂触及",
           "desc": "释放灵魂治疗玩家的范围增加至 11 单位。（原为 8 单位）",
-          "requires": [
-            "lock_soulprotector"
-          ],
-          "lock": "lock_soulprotector",
+          "requires": [],
           "x": -183,
           "y": 43,
           "w": 32,
@@ -96,7 +89,6 @@
           "requires": [
             "wortox_soulprotector_1"
           ],
-          "lock": "lock_soulprotector",
           "x": -183,
           "y": 3,
           "w": 32,
@@ -255,10 +247,7 @@
           "n": 16,
           "name": "一级灵魂窃贼",
           "desc": "沃拓克斯使身边生物死亡生成灵魂的范围由 20 距离单位增加至 30 单位，吸引灵魂的范围由 8 单位增加至 12 单位。",
-          "requires": [
-            "lock_thief"
-          ],
-          "lock": "lock_thief",
+          "requires": [],
           "x": 158,
           "y": 43,
           "w": 32,
@@ -272,7 +261,6 @@
           "requires": [
             "wortox_thief_1"
           ],
-          "lock": "lock_thief",
           "x": 158,
           "y": 3,
           "w": 32,
@@ -316,10 +304,7 @@
           "n": 20,
           "name": "一级灵魂诱饵",
           "desc": "在进行灵魂跳跃（不包括在地图上的远程灵魂跳跃）时，在原地留下一个灵魂诱饵，吸引附近会生成灵魂的生物。",
-          "requires": [
-            "lock_souldecoy"
-          ],
-          "lock": "lock_souldecoy",
+          "requires": [],
           "x": 206,
           "y": 32,
           "w": 32,
@@ -333,7 +318,6 @@
           "requires": [
             "wortox_souldecoy_1"
           ],
-          "lock": "lock_souldecoy",
           "x": 206,
           "y": -8,
           "w": 32,

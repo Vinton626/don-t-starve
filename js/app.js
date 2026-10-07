@@ -1116,15 +1116,22 @@ function applySkillList(ids) {
   state.selected.clear();
   state.points = state.tree.points;
   const budget = state.points;
-  for (const id of ids || []) {
+  const wanted = (ids || []).filter(id => state.skillMap[id]);
+  const pending = wanted.slice();
+  const maxSteps = pending.length;
+  for (let step = 0; step < maxSteps; step++) {
     if (state.learned.size >= budget) break;
-    const next = new Set(state.learned);
-    next.add(id);
-    if (!canSelect(id, next)) continue;
-    state.learned.add(id);
+    const idx = pending.findIndex(id => {
+      const next = new Set(state.learned);
+      next.add(id);
+      return canSelect(id, next);
+    });
+    if (idx < 0) break;
+    state.learned.add(pending[idx]);
+    pending.splice(idx, 1);
   }
   state.points = budget - state.learned.size;
-  state.focusedId = (ids && ids[ids.length - 1]) || null;
+  state.focusedId = wanted[wanted.length - 1] || null;
   state.stickyId = state.focusedId;
   render();
 }
