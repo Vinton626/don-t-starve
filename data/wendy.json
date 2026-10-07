@@ -497,8 +497,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "温蒂算是装饰性休闲类角色，由于墓碑类技能用处较小，所以没有点；重点在于单人玩可以直接找墓碑多的地方建家，不需要到处跑去找小惊吓",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_smallghost_1",
+            "wendy_smallghost_2",
+            "wendy_smallghost_3",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_potion_duration",
+            "wendy_potion_yield",
+            "wendy_sisturn_1",
+            "wendy_sisturn_2",
+            "wendy_sisturn_3",
+            "wendy_ghostcommand_1",
+            "wendy_ghostcommand_2",
+            "wendy_ghostcommand_3"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -508,8 +524,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "舍弃骨灰罐的多余能力以及制药额外产出",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_smallghost_1",
+            "wendy_smallghost_2",
+            "wendy_smallghost_3",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_potion_duration",
+            "wendy_sisturn_1",
+            "wendy_ghostcommand_1",
+            "wendy_ghostcommand_2",
+            "wendy_ghostcommand_3",
+            "wendy_lunar_1",
+            "wendy_lunar_2",
+            "wendy_lunar_3"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -519,8 +551,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "舍弃骨灰罐的多余能力以及制药额外产出",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_smallghost_1",
+            "wendy_smallghost_2",
+            "wendy_smallghost_3",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_potion_duration",
+            "wendy_sisturn_1",
+            "wendy_ghostcommand_1",
+            "wendy_ghostcommand_2",
+            "wendy_ghostcommand_3",
+            "wendy_shadow_1",
+            "wendy_shadow_2",
+            "wendy_shadow_3"
+          ]
         },
         {
           "id": "solo-both",
@@ -530,8 +578,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "非主线玩家可以优先考虑暗影亲和，对群高伤；喜欢对战boss一定要选月亮亲和，单体高伤(单词伤害高于暗影亲和)",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_smallghost_1",
+            "wendy_smallghost_2",
+            "wendy_smallghost_3",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_potion_duration",
+            "wendy_sisturn_1",
+            "wendy_ghostcommand_1",
+            "wendy_ghostcommand_2",
+            "wendy_ghostcommand_3",
+            "wendy_shadow_1",
+            "wendy_shadow_2",
+            "wendy_shadow_3"
+          ]
         },
         {
           "id": "multi-none",
@@ -541,8 +605,23 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "多人情况下额外学习复活技能。多人游玩建家选址一般不会在墓碑处，移植墓碑到家附近做小惊吓任务更合适，同时由于多人情况下可以通过献祭来作祟，故不需要高级幽灵团队(月前影前阿比的输出不算很高，且大部分怪物数值都不高，无需冲刺)",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_ghostflower_grave",
+            "wendy_smallghost_1",
+            "wendy_smallghost_2",
+            "wendy_smallghost_3",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_potion_duration",
+            "wendy_potion_yield",
+            "wendy_sisturn_1",
+            "wendy_gravestone_1",
+            "wendy_makegravemounds",
+            "wendy_ghostcommand_1"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -552,8 +631,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "月亮亲和的阿比在虚化后冲刺没有伤害，且本身就是冲刺攻击，所以不学二级鬼魂团队造成浪费，除此之外牺牲了小惊吓的寻找能力，如果想方便获取爱到荣耀，可以把(6)药效强劲换为(2)二级小惊吓任务",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_ghostflower_grave",
+            "wendy_smallghost_1",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_potion_duration",
+            "wendy_sisturn_1",
+            "wendy_sisturn_2",
+            "wendy_gravestone_1",
+            "wendy_makegravemounds",
+            "wendy_ghostcommand_1",
+            "wendy_lunar_1",
+            "wendy_lunar_2",
+            "wendy_lunar_3"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -563,8 +658,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "暗影亲和的阿比盖尔伤害较高且可以冲刺出伤，故如此加点(由于是多人玩，所以我的推荐是点出(13)三级哀悼荣耀)，其他地方也无可衰减，除非不移植墓碑且可经常碰到小惊吓，可以不点墓碑系列加点，从而把小惊吓系列点满",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_ghostflower_grave",
+            "wendy_smallghost_1",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_sisturn_1",
+            "wendy_sisturn_2",
+            "wendy_gravestone_1",
+            "wendy_makegravemounds",
+            "wendy_ghostcommand_1",
+            "wendy_ghostcommand_2",
+            "wendy_shadow_1",
+            "wendy_shadow_2",
+            "wendy_shadow_3"
+          ]
         },
         {
           "id": "multi-both",
@@ -574,14 +685,30 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "多人我的建议是点出(13)三级哀悼荣耀,方便复活；除此之外暗影亲和与月亮亲和的选择根据自己的喜好来选择，月亮亲和单体高伤，适合对战boss；暗影亲和群体高伤，适合休闲游玩。详细分配可分别见多人模式下的月后加点与影后加点，这里以影后为例(两者有些许差异)",
+          "skills": [
+            "wendy_ghostflower_butterfly",
+            "wendy_ghostflower_hat",
+            "wendy_ghostflower_grave",
+            "wendy_smallghost_1",
+            "wendy_potion_container",
+            "wendy_potion_revive",
+            "wendy_sisturn_1",
+            "wendy_sisturn_2",
+            "wendy_gravestone_1",
+            "wendy_makegravemounds",
+            "wendy_ghostcommand_1",
+            "wendy_ghostcommand_2",
+            "wendy_shadow_1",
+            "wendy_shadow_2",
+            "wendy_shadow_3"
+          ]
         }
       ]
     }
   ],
   "notice": {
     "title": "总结",
-    "text": "在这里写角色总结"
+    "text": "温蒂本身偏休闲，单人游玩时不必点墓碑技能；多人游玩时点好复活技能，墓碑系列技能根据自身情况而定；这些技能都是挤占小惊吓系列技能的位置，所以小惊吓任务可能会做起来较困难，需要多跑几次。暗影亲和群体高伤，休闲玩法推荐；月亮亲和单体高伤，对战boss推荐"
   }
 }

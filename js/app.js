@@ -1160,18 +1160,42 @@ function schemeGap(scheme) {
   return { title: matched[1], body: matched[2].trim() || matched[1] };
 }
 
-function announceScheme(scheme, sticky) {
+function insightCopy(scheme) {
   const gap = schemeGap(scheme);
-  if (gap) {
-    showDataPop(gap.title, withAlignHint(gap.body), sticky);
+  if (gap) return { title: gap.title, body: withAlignHint(gap.body) };
+  if (!scheme) return { title: "没有方案", body: withAlignHint("这个组合还没有写入加点") };
+  return { title: scheme.name || "见解", body: withAlignHint(scheme.text || "") };
+}
+
+function syncInsightDrawer(scheme, open) {
+  const drawer = $("insight-drawer");
+  const handle = $("insight-drawer-handle");
+  if (!drawer) return;
+  if (!state.preset) {
+    drawer.hidden = true;
+    drawer.classList.remove("is-open");
+    if (handle) handle.setAttribute("aria-expanded", "false");
     return;
   }
-  if (!scheme) {
-    showDataPop("没有方案", withAlignHint("这个组合还没有写入加点"), sticky);
-    return;
+  const copy = insightCopy(scheme);
+  drawer.hidden = false;
+  $("insight-drawer-title").textContent = copy.title;
+  $("insight-drawer-body").textContent = copy.body;
+  if (open) {
+    drawer.classList.add("is-open");
+    if (handle) handle.setAttribute("aria-expanded", "true");
   }
-  const body = [scheme.name, scheme.text].filter(Boolean).join("\n");
-  showDataPop(modeLine(), withAlignHint(body), sticky);
+}
+
+function announceEnter(scheme) {
+  syncInsightDrawer(scheme, true);
+  const build = selectedBuild();
+  const name = build ? build.name : "方案";
+  showDataPop("已切换到" + name + " · " + modeCombo(), "", true);
+}
+
+function announceModeSwitch(kind) {
+  showDataPop("切换到" + clickedModeLabel(kind) + "模式", "", false);
 }
 
 function syncPresetChrome() {
@@ -1192,6 +1216,7 @@ function leavePreset() {
   $("build-select").value = "";
   hideModeTip();
   syncPresetChrome();
+  syncInsightDrawer(null, false);
   writeSelectionQuery();
 }
 
@@ -1211,8 +1236,11 @@ function applyBuild(buildId, opts = {}) {
   syncPresetChrome();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
-  if (opts.quiet) return;
-  announceScheme(scheme, true);
+  if (opts.quiet) {
+    syncInsightDrawer(scheme, false);
+    return;
+  }
+  announceEnter(scheme);
 }
 
 function usesAlignment(build) {
@@ -1274,14 +1302,25 @@ function paintModes() {
   });
 }
 
-function modeLine() {
+function modeCombo() {
   const who = state.players === "solo" ? "单人" : "多人";
   let affinity = "月前影前";
   if (state.lunar && state.shadow) affinity = "月后影后";
   else if (state.lunar) affinity = "月后";
   else if (state.shadow) affinity = "影后";
   const side = usesAlignment() ? " · " + alignTag() : "";
-  return "已切换到" + who + affinity + side;
+  return who + affinity + side;
+}
+
+function clickedModeLabel(kind) {
+  if (kind === "lunar") return state.lunar ? "月后" : "月前";
+  if (kind === "shadow") return state.shadow ? "影后" : "影前";
+  if (kind === "solo") return "单人";
+  if (kind === "multi") return "多人";
+  if (kind === "nice") return "好孩子";
+  if (kind === "naughty") return "淘气包";
+  if (kind === "neutral") return "无偏好";
+  return kind;
 }
 
 let schemeTimer = 0;
@@ -1335,7 +1374,8 @@ function onModeClick(kind) {
   paintModes();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
-  announceScheme(scheme, false);
+  syncInsightDrawer(scheme, false);
+  announceModeSwitch(kind);
 }
 
 function onAlignClick(kind) {
@@ -1345,7 +1385,8 @@ function onAlignClick(kind) {
   paintModes();
   const scheme = showPresetAllocation();
   writeSelectionQuery();
-  announceScheme(scheme, false);
+  syncInsightDrawer(scheme, false);
+  announceModeSwitch(state.align ? kind : "neutral");
 }
 
 $("nodes").addEventListener("click", e => {
@@ -1440,6 +1481,15 @@ $("mode-stack").addEventListener("mouseout", e => {
 $("scheme-close").addEventListener("click", () => {
   clearTimeout(schemeTimer);
   $("scheme-pop").hidden = true;
+});
+
+$("insight-drawer-handle").addEventListener("click", e => {
+  e.stopPropagation();
+  const drawer = $("insight-drawer");
+  if (!drawer || drawer.hidden) return;
+  const open = !drawer.classList.contains("is-open");
+  drawer.classList.toggle("is-open", open);
+  $("insight-drawer-handle").setAttribute("aria-expanded", open ? "true" : "false");
 });
 
 $("char-notice-btn").addEventListener("click", e => {

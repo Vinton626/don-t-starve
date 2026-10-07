@@ -427,6 +427,7 @@
     }
     .note-tip { font-size: 14px; }
     .char-notice { right: 12px; bottom: 12px; }
+    .insight-drawer { top: 8vh; max-height: 70vh; }
   }
 
   .char-notice {
@@ -481,6 +482,64 @@
     font-weight: bold;
     letter-spacing: 1px;
     margin-bottom: 8px;
+  }
+
+  .insight-drawer {
+    position: fixed;
+    z-index: 24;
+    left: 0;
+    top: 12vh;
+    max-height: 76vh;
+    display: flex;
+    align-items: stretch;
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+  }
+  .insight-drawer[hidden] { display: none; }
+  .insight-drawer.is-open { transform: translateX(0); }
+  .insight-drawer-panel {
+    width: min(300px, calc(100vw - 52px));
+    overflow: auto;
+    padding: 14px 16px 16px;
+    background: rgba(12, 9, 6, .88);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 8px 10px 28px rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .insight-drawer-title {
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .insight-drawer-body {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .insight-drawer-handle {
+    position: absolute;
+    left: 100%;
+    top: 28%;
+    width: 32px;
+    padding: 12px 6px;
+    background: rgba(28, 20, 12, .82);
+    color: #f0d060;
+    border: 1.5px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 2px;
+    writing-mode: vertical-rl;
+    cursor: pointer;
+  }
+  .insight-drawer.is-open .insight-drawer-handle {
+    background: rgba(42, 30, 16, .92);
+    border-color: #c9a227;
   }
 </style>
 </head>
@@ -552,6 +611,14 @@
 <div id="lock-tip" class="lock-tip" hidden></div>
 <div id="note-tip" class="lock-tip note-tip" hidden></div>
 <div id="mode-tip" class="lock-tip" hidden></div>
+<aside class="insight-drawer" id="insight-drawer" hidden>
+  <div class="insight-drawer-panel">
+    <div class="insight-drawer-title" id="insight-drawer-title">见解</div>
+    <div class="insight-drawer-body" id="insight-drawer-body"></div>
+  </div>
+  <button type="button" class="insight-drawer-handle" id="insight-drawer-handle" aria-expanded="false">见解</button>
+</aside>
+
 <aside class="char-notice" id="char-notice" hidden>
   <button type="button" class="char-notice-btn" id="char-notice-btn" aria-expanded="false" aria-controls="char-notice-panel" title="角色总结">!</button>
   <div class="char-notice-panel" id="char-notice-panel" hidden>
