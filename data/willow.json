@@ -165,7 +165,7 @@
       "n": 11,
       "group": "bernie",
       "name": "打补丁 I",
-      "desc": "伯尼！每秒恢复 1 text-center。",
+      "desc": "伯尼！每秒恢复 1 生命值。",
       "requires": [],
       "x": -54,
       "y": -102,
@@ -177,7 +177,7 @@
       "n": 12,
       "group": "bernie",
       "name": "打补丁 II",
-      "desc": "伯尼！每秒恢复 2 text-center。",
+      "desc": "伯尼！每秒恢复 2 生命值。",
       "requires": [
         "willow_bernieregen_1"
       ],
@@ -538,7 +538,7 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "无亲和就走纯伯尼线，伯尼负责扛伤，薇洛找机会输出即可",
+          "text": "无亲和就走纯伯尼线，伯尼负责扛伤，薇洛找机会输出即可；可以将(1)可控燃烧替换为(19)加速剂II来提高伯尼速度，但是如此需要注意火球术释放位置，同时要注意防火",
           "skills": [
             "controlled_burning",
             "willow_attuned_lighter",
@@ -565,8 +565,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "月后加点纵火犯即可，这里点燃烧周期是为了解锁月焰。伯尼也点起来。但是如果自己不会用月焰，建议按照单人月前影前加点，并可以把(10)狂热焚烧替换为(22)月亮伯尼；或者把(1)可控燃烧替换为(22)月亮伯尼，如此建家时需注意防火",
+          "skills": [
+            "controlled_burning",
+            "burn_duration",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniehealth_1",
+            "willow_allegiance_lunar_bernie",
+            "willow_allegiance_lunar_fire"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -576,8 +592,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "影后加点纵火犯即可，伯尼也点起来。但是如果自己不会用暗焰，建议按照单人月前影前加点，并可以把(10)狂热焚烧替换为(21)暗影伯尼；或者把(1)可控燃烧替换为(21)暗影伯尼，如此建家时需注意防火",
+          "skills": [
+            "controlled_burning",
+            "burn_duration",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniehealth_1",
+            "willow_allegiance_shadow_bernie",
+            "willow_allegiance_shadow_fire"
+          ]
         },
         {
           "id": "solo-both",
@@ -587,8 +619,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "月亮亲和是群体高伤，但是释放时移速变慢，需要精准把握自己的位置；暗影亲和是单体伤害，可以骑牛释放，且为脱手技，根据自身攻击与躲避熟练度学习。但是如果自己不会用月焰或暗焰，建议按照单人月前影前加点，并可以把(1)可控燃烧或(10)狂热焚烧替换为(22)月亮伯尼或(21)暗影伯尼，替换(1)时建家需注意防火;具体使用月亮亲和还是暗影亲和需要结合自己的情况，对付暗影生物多就点月亮亲和，对付月亮生物多就暗影亲和",
+          "skills": [
+            "controlled_burning",
+            "burn_duration",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniehealth_1",
+            "willow_allegiance_lunar_bernie",
+            "willow_allegiance_lunar_fire"
+          ]
         },
         {
           "id": "multi-none",
@@ -598,8 +646,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "多人点(1)可控燃烧更舒适。如果不会处理影怪，可以把(19)加速计II替换为(15)头脑发热，适合新手党",
+          "skills": [
+            "controlled_burning",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniespeed_2",
+            "willow_berniehealth_1",
+            "willow_berniehealth_2",
+            "willow_burnignbernie"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -609,8 +673,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "多人月后跟单人月后一样，但是如果全部是新手，不会处理影怪，可以考虑把(12)打补丁II替换为(15)头脑发热；若不会玩月焰，那建议查看单人月后加点的见解内容",
+          "skills": [
+            "controlled_burning",
+            "burn_duration",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniehealth_1",
+            "willow_allegiance_lunar_bernie",
+            "willow_allegiance_lunar_fire"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -620,8 +700,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "多人影后跟单人影后一样，但是如果全部是新手，不会处理影怪，可以考虑把(12)打补丁II替换为(15)头脑发热；若不会玩暗焰，那建议查看单人影后加点的见解内容",
+          "skills": [
+            "controlled_burning",
+            "burn_duration",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniehealth_1",
+            "willow_allegiance_shadow_bernie",
+            "willow_allegiance_shadow_fire"
+          ]
         },
         {
           "id": "multi-both",
@@ -631,14 +727,30 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "多人月后影后跟单人月后影后一样，但是如果全部是新手，不会处理影怪，可以考虑把(12)打补丁II替换为(15)头脑发热；若不会玩月焰或暗焰，那建议查看单人月后影后加点的见解内容",
+          "skills": [
+            "controlled_burning",
+            "burn_duration",
+            "willow_attuned_lighter",
+            "ember_tender",
+            "willow_fire_burst",
+            "willow_fire_ball",
+            "burning_frenzy",
+            "willow_bernieregen_1",
+            "willow_bernieregen_2",
+            "willow_berniesanity_1",
+            "willow_berniesanity_2",
+            "willow_berniespeed_1",
+            "willow_berniehealth_1",
+            "willow_allegiance_lunar_bernie",
+            "willow_allegiance_lunar_fire"
+          ]
         }
       ]
     }
   ],
   "notice": {
     "title": "总结",
-    "text": "在这里写角色总结"
+    "text": "薇洛本身属于是一个输出角色，如果操作得当，走月焰流与暗焰流是最好的。伯尼本身属于一个肉盾，且需要通过玩家熟练度来决定是否要点(15)头脑发热，且走焰法流时没有足够点数来点燃烧伯尼。所以薇洛的技能点需要统筹安排。多人模式下，只要有(1)可控燃烧与(4)饥饿打火机，就基本不会出现烧家或影响队友的情况，甚至不用做雪球机，极度舒适。尤其是在点亮(9)火球术后，薇洛过冬更是无压力"
   }
 }
