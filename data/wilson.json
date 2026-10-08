@@ -548,8 +548,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "威尔逊本质高级制作台，优先点炼金技能。火把相关内容个人认为太过鸡肋，不如胡须保暖实在，于是点满了胡子技能。如果有骨头碎片需求或是大理石需求，可以将(20)胡须保温III,(22)胡须生长II，(23)胡须生长III替换为(11)腐朽转化III或(17)矿石转化III。删加点时优先去掉生长再去掉保暖，至少保留三个胡子技能，多余的点数可以自行分配给炼金术与火把。威尔逊的丢火把技能是最没用的，如果想拉满娱乐，可以把胡子技能全部或部分转为火把技能。当暗影终章版本更新后，威尔逊的一级二级三级火炬范围才有些许用处，但是丢火把仍是玩具。以上结论基于提灯与矿工帽的使用，如果只用火把那我更推荐把胡子技能转化为火把技能",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_growth_3",
+            "beard_storage"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -559,8 +575,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "本质是高级工作台，具体见解跟单人月前影前一样，优先把胡子生长速度换为月亮亲和",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_storage",
+            "lunar"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -570,8 +602,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "本质是高级工作台，具体见解跟单人月前影前一样，优先把胡子生长速度换为暗影亲和",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_storage",
+            "shadow"
+          ]
         },
         {
           "id": "solo-both",
@@ -581,8 +629,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "个人认为月后玻璃碎片足够，转化天体材料更合适。而绝望石使用较少，且纯粹恐惧获取难度也较大，所以推荐选月亮亲和，装备也主要使用亮茄套装",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_storage",
+            "lunar"
+          ]
         },
         {
           "id": "multi-none",
@@ -592,8 +656,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "多人月前影前见解同单人月前影前，但是要注意，如果队友(如薇洛)对胡须有要求，建议把(23)胡须生长III点满,想点其他技能可以优先去掉胡子保暖系列技能。其他植物人，大力士等如果对便便或大理石有需求也可以按需点(11)腐朽转化III或(17)矿石转化III",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_growth_3",
+            "beard_storage"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -603,8 +683,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "多人月后见解同单人月后，但是要注意，如果队友(如薇洛)对胡须有要求，建议把(23)胡须生长III点满,想点其他技能可以优先去掉胡子保暖系列技能。其他植物人，大力士等如果对便便或大理石有需求也可以按需点(11)腐朽转化III或(17)矿石转化III",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_storage",
+            "lunar"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -614,8 +710,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "多人影后见解同单人影后，但是要注意，如果队友(如薇洛)对胡须有要求，建议把(23)胡须生长III点满,想点其他技能可以优先去掉胡子保暖系列技能。其他植物人，大力士等如果对便便或大理石有需求也可以按需点(11)腐朽转化III或(17)矿石转化III",
+          "skills": [
+            "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
+            "ore_1",
+            "ore_2",
+            "beard_ins_1",
+            "beard_ins_2",
+            "beard_ins_3",
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_storage",
+            "shadow"
+          ]
         },
         {
           "id": "multi-both",
@@ -625,23 +737,23 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
+          "text": "多人月后影后见解同单人月后影后，但是要注意，如果队友(如薇洛)对胡须有要求，建议把(23)胡须生长III点满,想点其他技能可以优先去掉胡子保暖系列技能。其他植物人，大力士等如果对便便或大理石有需求也可以按需点(11)腐朽转化III或(17)矿石转化III",
           "skills": [
-            "torch_range_1",
-            "torch_range_2",
-            "torch_range_3",
-            "torch_longevity_1",
-            "torch_longevity_2",
-            "torch_longevity_3",
-            "torch_toss",
             "transmute",
+            "icky_1",
+            "icky_2",
+            "gems_1",
+            "gems_2",
+            "gems_3",
             "ore_1",
             "ore_2",
-            "ore_3",
             "beard_ins_1",
             "beard_ins_2",
             "beard_ins_3",
-            "beard_growth_1"
+            "beard_growth_1",
+            "beard_growth_2",
+            "beard_storage",
+            "lunar"
           ]
         }
       ]
