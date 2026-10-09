@@ -923,14 +923,13 @@
             "淘气包"
           ],
           "name": "多人月前影前·淘气包",
-          "text": "兼顾复活，赶路与输出，由于没有亲和，也可以将(10)回响换为(23)即兴排箫手提升排箫使用次数，同时如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "text": "兼顾复活，赶路与输出，如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(21)二级灵魂诱饵与(22)三级灵魂诱饵",
           "skills": [
             "wortox_lifebringer_1",
             "wortox_lifebringer_2",
             "wortox_lifebringer_3",
             "wortox_liftedspirits_1",
             "wortox_liftedspirits_2",
-            "wortox_liftedspirits_3",
             "wortox_liftedspirits_4",
             "wortox_nabbag",
             "wortox_souljar_1",
@@ -939,7 +938,8 @@
             "wortox_thief_1",
             "wortox_thief_2",
             "wortox_thief_3",
-            "wortox_thief_4"
+            "wortox_thief_4",
+            "wortox_souldecoy_1"
           ]
         },
         {
@@ -979,7 +979,7 @@
             "淘气包"
           ],
           "name": "多人月后·淘气包",
-          "text": "输出拉满不多说,如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "text": "输出拉满不多说,如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(21)二级灵魂诱饵与(22)三级灵魂诱饵",
           "skills": [
             "wortox_lifebringer_1",
             "wortox_lifebringer_2",
@@ -988,7 +988,6 @@
             "wortox_liftedspirits_2",
             "wortox_liftedspirits_3",
             "wortox_allegiance_lunar",
-            "wortox_panflute_playing",
             "wortox_nabbag",
             "wortox_souljar_1",
             "wortox_souljar_2",
@@ -996,7 +995,8 @@
             "wortox_thief_1",
             "wortox_thief_2",
             "wortox_thief_3",
-            "wortox_thief_4"
+            "wortox_thief_4",
+            "wortox_souldecoy_1"
           ]
         },
         {
@@ -1036,7 +1036,7 @@
             "淘气包"
           ],
           "name": "多人影后·淘气包",
-          "text": "输出拉满不多说,如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "text": "输出拉满不多说,如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(21)二级灵魂诱饵与(22)三级灵魂诱饵",
           "skills": [
             "wortox_lifebringer_1",
             "wortox_lifebringer_2",
@@ -1044,8 +1044,7 @@
             "wortox_liftedspirits_1",
             "wortox_liftedspirits_2",
             "wortox_liftedspirits_3",
-            "wortox_allegiance_shadow",
-            "wortox_panflute_playing",
+            "wortox_allegiance_lunar",
             "wortox_nabbag",
             "wortox_souljar_1",
             "wortox_souljar_2",
@@ -1053,7 +1052,8 @@
             "wortox_thief_1",
             "wortox_thief_2",
             "wortox_thief_3",
-            "wortox_thief_4"
+            "wortox_thief_4",
+            "wortox_souldecoy_1"
           ]
         },
         {
@@ -1093,7 +1093,7 @@
             "淘气包"
           ],
           "name": "多人月后影后·淘气包",
-          "text": "个人认为两次免伤还是更厉害的，同时如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(20)一级灵魂诱饵与(21)二级灵魂诱饵",
+          "text": "个人认为两次免伤还是更厉害的，同时如果不拉魂打伤害，则可将(15)贪心收藏家与(19)二级灵魂穿刺转变为(21)二级灵魂诱饵与(22)三级灵魂诱饵",
           "skills": [
             "wortox_lifebringer_1",
             "wortox_lifebringer_2",
@@ -1102,7 +1102,6 @@
             "wortox_liftedspirits_2",
             "wortox_liftedspirits_3",
             "wortox_allegiance_lunar",
-            "wortox_panflute_playing",
             "wortox_nabbag",
             "wortox_souljar_1",
             "wortox_souljar_2",
@@ -1110,7 +1109,8 @@
             "wortox_thief_1",
             "wortox_thief_2",
             "wortox_thief_3",
-            "wortox_thief_4"
+            "wortox_thief_4",
+            "wortox_souldecoy_1"
           ]
         },
         {
