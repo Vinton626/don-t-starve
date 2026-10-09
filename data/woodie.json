@@ -145,7 +145,7 @@
       "n": 9,
       "group": "curse",
       "name": "鹿人 II",
-      "desc": "鹿人每 5 秒恢复 1.5 text-center。",
+      "desc": "鹿人每 5 秒恢复 1.5 生命值。",
       "requires": [
         "woodie_curse_moose_1"
       ],
@@ -249,7 +249,7 @@
       "n": 16,
       "group": "curse",
       "name": "拥抱诅咒",
-      "desc": "食用俗气雕像不再降低生命值和理智值。变身结束后保留 22.5 text-center。",
+      "desc": "食用俗气雕像不再降低生命值和理智值。变身结束后保留 22.5 饥饿值。",
       "requires": [],
       "lock": "lock_curse_master",
       "x": -223,
@@ -560,8 +560,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "伍迪三个形态，单人模式下战斗最重要，所以把鹿人点满。如果对护甲和步行手杖没需求(硬木帽和木制手杖)，可以把(23)木工(24)帽子雕刻和(25)拐杖雕刻换成(4)海狸人I(5)海狸人II(6)海狸人III来解锁强力开采并提高石头与木头的采集效率。如果没有足够的能力刷怪物肉，做不了太多海狸雕像，还可以换为(18)快速捡拾者II(19)快速捡拾者III来提高人形采集效率，多余的一点给海狸。鹅人只有开局探图用得上，不用点，更何况寻找月到有固定公式，且奶奶岛仅需开一个瓶子即可找到；猴岛和漩涡有基础鹅人也足够。点树人雕像系列一个是为了刷活木，另一个是可以用来逃课；且伍迪本身伐木召唤树精的概率就比其他角色高，点了这些技能后更好应对",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_quickpicker_1",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -571,8 +587,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "点了月亮亲和，于是我这里省掉了(17)快速捡拾者I,其他见解同单人月前影前",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3",
+            "woodie_allegiance_lunar"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -582,8 +614,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "点了暗影亲和，于是我这里省掉了(17)快速捡拾者I,其他见解同单人月前影前",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3",
+            "woodie_allegiance_shadow"
+          ]
         },
         {
           "id": "solo-both",
@@ -593,8 +641,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "同单人影后，月亮亲和仅能防止满月不变身，而暗影亲和可以使伍迪变身形态不被影怪打扰，省去了鹅人与海狸的烦恼，也同时使鹿人打高掉sand boss时不会被打扰。除此之外，技能点的分配见解可见单人月前影前",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3",
+            "woodie_allegiance_shadow"
+          ]
         },
         {
           "id": "multi-none",
@@ -604,8 +668,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "多人模式下，硬木帽与木制手杖的性价比会非常高，因此建议点满。此外，根据图队需求(一般都是缺输出/承伤)点鹿人精通或海狸精通(采集)，要是需要你前期探图再考虑点鹅人精通。树人系列依旧是逃课等内容的首选。当然，(17)快速捡拾者I及以后的快速捡拾者系列也可以考虑，整体是需要跟除点出精通以外的其他两个诅咒抢技能点数的",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_quickpicker_1",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -615,8 +695,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "多人模式下，硬木帽与木制手杖的性价比会非常高，因此建议点满，其余见解与多人月前影前基本一致",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3",
+            "woodie_allegiance_lunar"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -626,8 +722,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "多人模式下，硬木帽与木制手杖的性价比会非常高，因此建议点满，其余见解与多人月前影前基本一致",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3",
+            "woodie_allegiance_shadow"
+          ]
         },
         {
           "id": "multi-both",
@@ -637,8 +749,24 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "多人模式下，硬木帽与木制手杖的性价比会非常高，因此建议点满.月亮亲和仅能防止满月不变身，而暗影亲和可以使伍迪变身形态不被影怪打扰，省去了鹅人与海狸的烦恼，也同时使鹿人打高掉sand boss时不会被打扰。其余见解与多人月前影前基本一致",
+          "skills": [
+            "woodie_curse_weremeter_1",
+            "woodie_curse_weremeter_2",
+            "woodie_curse_weremeter_3",
+            "woodie_curse_master",
+            "woodie_curse_moose_1",
+            "woodie_curse_moose_2",
+            "woodie_curse_moose_3",
+            "woodie_curse_epic_moose",
+            "woodie_human_treeguard_1",
+            "woodie_human_treeguard_2",
+            "woodie_human_treeguard_max",
+            "woodie_human_lucy_1",
+            "woodie_human_lucy_2",
+            "woodie_human_lucy_3",
+            "woodie_allegiance_shadow"
+          ]
         }
       ]
     }
