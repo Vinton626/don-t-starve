@@ -719,10 +719,11 @@ function appendGroupTitle(layer, g, frame) {
     fill: "transparent"
   });
   hit.dataset.group = g.id;
-  if (g.tip) {
+  const note = groupNote(g);
+  if (note) {
     hit.classList.add("has-note");
     texts.forEach(title => title.classList.add("has-note"));
-    hit.dataset.tip = g.tip;
+    hit.dataset.tip = note;
     hit.addEventListener("mouseenter", () => showNoteTip(hit));
     hit.addEventListener("mouseleave", scheduleHideNoteTip);
   }
@@ -742,6 +743,15 @@ function appendGroupTitle(layer, g, frame) {
   hit.setAttribute("width", Math.max(1, maxX - minX + 8));
   hit.setAttribute("height", Math.max(1, maxY - minY + 4));
   layer.appendChild(hit);
+}
+
+function groupNote(group) {
+  if (!group) return "";
+  if (group.tip) return group.tip;
+  if (Array.isArray(group.note) && group.note.some(line => String(line).trim())) {
+    return group.note.join("\n");
+  }
+  return "";
 }
 
 function buildGroupTitles() {
@@ -782,9 +792,10 @@ function buildDescColumns() {
     label.className = "parent-label";
     label.dataset.group = g.id;
     label.textContent = g.name;
-    if (g.tip) {
+    const note = groupNote(g);
+    if (note) {
       label.classList.add("has-note");
-      label.dataset.tip = g.tip;
+      label.dataset.tip = note;
       label.addEventListener("mouseenter", () => showNoteTip(label));
       label.addEventListener("mouseleave", scheduleHideNoteTip);
     }
@@ -1063,7 +1074,6 @@ function render() {
 }
 
 function pickNode(id) {
-  leavePreset();
   if (state.learned.has(id)) {
     state.focusedId = id;
     state.stickyId = id;
@@ -1089,7 +1099,6 @@ function pickNode(id) {
 }
 
 function learnSelected() {
-  leavePreset();
   if (state.selected.size === 0) return;
   state.selected.forEach(id => state.learned.add(id));
   state.points -= state.selected.size;
