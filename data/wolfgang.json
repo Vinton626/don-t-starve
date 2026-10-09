@@ -463,8 +463,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法，这样会导致(4)健身房精通与(10)突破极限I浪费，偶尔用一下健身房可能用到。如过节奏比较慢，从建家开始，建议建造健身房，这样就可以把(8)重击手I与(9)重击手II换为(11)突破极限II与(12)突破极限III，如果觉得自动完成锻炼没用，那也建议把(4)健身房精通换为(13)突破极限IV",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_autogym",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_dumbbell_throwing_2",
+            "wolfgang_overbuff_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -474,8 +490,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(8)重击手I换为(4)健身房精通或者(10)突破极限I。此外要注意月亮亲和要使用亮茄剑才有用",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5",
+            "wolfgang_allegiance_lunar_1",
+            "wolfgang_allegiance_lunar_2",
+            "wolfgang_allegiance_lunar_3"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -485,8 +517,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(8)重击手I换为(4)健身房精通或者(10)突破极限I。此外要注意暗影亲和要使用暗影收割者才有用",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5",
+            "wolfgang_allegiance_shadow_1",
+            "wolfgang_allegiance_shadow_2",
+            "wolfgang_allegiance_shadow_3"
+          ]
         },
         {
           "id": "solo-both",
@@ -496,8 +544,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "一般来说，月后影后更适合此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(8)重击手I换为(4)健身房精通或者(10)突破极限I。此外要注意月亮亲和要使用亮茄剑才有用，暗影亲和要使用暗影收割者才有用",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5",
+            "wolfgang_allegiance_lunar_1",
+            "wolfgang_allegiance_lunar_2",
+            "wolfgang_allegiance_lunar_3"
+          ]
         },
         {
           "id": "multi-none",
@@ -507,8 +571,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "沃尔夫冈没什么团队增益，见解同单人月前影前",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_autogym",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_dumbbell_throwing_2",
+            "wolfgang_overbuff_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -518,8 +598,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "沃尔夫冈没什么团队增益，见解同单人月后",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5",
+            "wolfgang_allegiance_lunar_1",
+            "wolfgang_allegiance_lunar_2",
+            "wolfgang_allegiance_lunar_3"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -529,8 +625,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "沃尔夫冈没什么团队增益，见解同单人影后",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5",
+            "wolfgang_allegiance_shadow_1",
+            "wolfgang_allegiance_shadow_2",
+            "wolfgang_allegiance_shadow_3"
+          ]
         },
         {
           "id": "multi-both",
@@ -540,14 +652,30 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "沃尔夫冈没什么团队增益，见解同单人月后影后",
+          "skills": [
+            "wolfgang_critwork_1",
+            "wolfgang_critwork_2",
+            "wolfgang_critwork_3",
+            "wolfgang_normal_coach",
+            "wolfgang_normal_speed",
+            "wolfgang_dumbbell_crafting",
+            "wolfgang_dumbbell_throwing_1",
+            "wolfgang_planardamage_1",
+            "wolfgang_planardamage_2",
+            "wolfgang_planardamage_3",
+            "wolfgang_planardamage_4",
+            "wolfgang_planardamage_5",
+            "wolfgang_allegiance_lunar_1",
+            "wolfgang_allegiance_lunar_2",
+            "wolfgang_allegiance_lunar_3"
+          ]
         }
       ]
     }
   ],
   "notice": {
     "title": "总结",
-    "text": "在这里写角色总结"
+    "text": "刚子就是输出机器，0团队增益，只要把杂物锻炼与威力武器以及根据需求把亲和点满就可以了。(6)练腿日也是必点技能，控好形态前期就能获取加速，开图快人一步"
   }
 }
