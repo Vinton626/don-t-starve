@@ -506,8 +506,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "奔雷矛与统帅头盔是女武神高级专武，很强，要点。除此之外，要根据是否会骑牛战斗来判断是否学习(21)战斗鞍具，如果需要就把(14)二级统帅头盔加强替换。如果完全不驯牛(临时用牛搬东西也属于我这里的不驯牛)，则可以将(18)一级尊贵坐骑(19)二级尊贵坐骑(20)三级尊贵坐骑换为(15)战斗圆盾(16)一级战斗圆盾加强(17)二级战斗圆盾加强。这三个盾牌类技能会解锁新的战斗方式，需要进一步学习与判断，且仅适合对战boss。若确实有较高的boss对战需求再点，同时可以把统帅头盔系列技能(14)二级统帅头盔加强(13)一级统帅头盔加强以及(12)统帅头盔舍弃",
+          "skills": [
+            "wathgrithr_songs_container",
+            "wathgrithr_combat_defense",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_arsenal_helmet_4",
+            "wathgrithr_arsenal_helmet_5",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -517,8 +533,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "有亲和点亲和，但是个人认为是没有其他可替代品的。只是(14)统帅头盔加强并不是什么实质性的提升，所以替换掉了",
+          "skills": [
+            "wathgrithr_songs_container",
+            "wathgrithr_combat_defense",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_arsenal_helmet_4",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3",
+            "wathgrithr_allegiance_lunar"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -528,8 +560,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "有亲和点亲和，但是个人认为是没有其他可替代品的。只是(14)统帅头盔加强并不是什么实质性的提升，所以替换掉了",
+          "skills": [
+            "wathgrithr_songs_container",
+            "wathgrithr_combat_defense",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_arsenal_helmet_4",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3",
+            "wathgrithr_allegiance_shadow"
+          ]
         },
         {
           "id": "solo-both",
@@ -539,8 +587,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "有亲和点亲和，但是个人认为是没有其他可替代品的。只是(14)统帅头盔加强并不是什么实质性的提升，所以替换掉了。亲和加点看个人情况，需要刷什么套就点对面的亲和，单纯为了打得更快。同时根据是否要长期开天体圆月判断点哪个",
+          "skills": [
+            "wathgrithr_songs_container",
+            "wathgrithr_combat_defense",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_arsenal_helmet_4",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3",
+            "wathgrithr_allegiance_lunar"
+          ]
         },
         {
           "id": "multi-none",
@@ -550,8 +614,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "基本见解同单人月前影前。单人模式是需要点(3)返厂表演用来群体复活队友的。如果想用盾或骑牛，推荐直接舍弃头盔系列剩余的4点，从而把盾牌系列与牛牛系列点满",
+          "skills": [
+            "wathgrithr_combat_defense",
+            "wathgrithr_songs_container",
+            "wathgrithr_songs_revivewarrior",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_arsenal_helmet_4",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -561,8 +641,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "在驯牛的前提下可如此点，如果更偏向盾牌，可以把头盔系列全部去掉。因为绝望石头也很适配女武神，所以没必要硬出没有天赋的统帅头盔。如果不驯牛，也可以把驯牛系列舍弃，替换为盾牌系列或仅点(15)战斗圆盾(前提是用的熟练)，剩余两点点满统帅头盔系列",
+          "skills": [
+            "wathgrithr_combat_defense",
+            "wathgrithr_songs_container",
+            "wathgrithr_songs_revivewarrior",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3",
+            "wathgrithr_allegiance_lunar"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -572,8 +668,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "在驯牛的前提下可如此点，如果更偏向盾牌，可以把头盔系列全部去掉。因为绝望石头也很适配女武神，所以没必要硬出没有天赋的统帅头盔。如果不驯牛，也可以把驯牛系列舍弃，替换为盾牌系列或仅点(15)战斗圆盾(前提是用的熟练)，剩余两点点满统帅头盔系列",
+          "skills": [
+            "wathgrithr_combat_defense",
+            "wathgrithr_songs_container",
+            "wathgrithr_songs_revivewarrior",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3",
+            "wathgrithr_allegiance_shadow"
+          ]
         },
         {
           "id": "multi-both",
@@ -583,14 +695,30 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "在驯牛的前提下可如此点，如果更偏向盾牌，可以把头盔系列全部去掉。因为绝望石头也很适配女武神，所以没必要硬出没有天赋的统帅头盔。如果不驯牛，也可以把驯牛系列舍弃，替换为盾牌系列或仅点(15)战斗圆盾(前提是用的熟练)，剩余两点点满统帅头盔系列。亲和点哪个主要看自己需求，如果自身不喜欢打架，要根据队友的需求学习对应亲和来为队友提供buff",
+          "skills": [
+            "wathgrithr_combat_defense",
+            "wathgrithr_songs_container",
+            "wathgrithr_songs_revivewarrior",
+            "wathgrithr_arsenal_spear_1",
+            "wathgrithr_arsenal_spear_2",
+            "wathgrithr_arsenal_spear_3",
+            "wathgrithr_arsenal_spear_4",
+            "wathgrithr_arsenal_spear_5",
+            "wathgrithr_arsenal_helmet_1",
+            "wathgrithr_arsenal_helmet_2",
+            "wathgrithr_arsenal_helmet_3",
+            "wathgrithr_beefalo_1",
+            "wathgrithr_beefalo_2",
+            "wathgrithr_beefalo_3",
+            "wathgrithr_allegiance_lunar"
+          ]
         }
       ]
     }
   ],
   "notice": {
     "title": "总结",
-    "text": "在这里写角色总结"
+    "text": "薇格弗德技能树本质是制作强化装备，有骑牛需要或会玩盾牌(对战boss有优势)的可以加点对应系列技能。薇格弗德的(3)返厂表演与亲和解锁的技能都有群体增效，包括初始的几本乐谱也是团体增效。所以选择多人模式下这些技能点也要点出来。"
   }
 }
