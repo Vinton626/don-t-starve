@@ -133,7 +133,8 @@
       "group": "circuitry",
       "name": "差一错误",
       "desc": "增加 1 电荷上限，所有插槽各增加一个插口。",
-      "requires": [
+      "requires": [],
+      "requiresAny": [
         "wx78_circuitry_alphabuffs_2",
         "wx78_circuitry_betabuffs_2",
         "wx78_circuitry_gammabuffs_2"

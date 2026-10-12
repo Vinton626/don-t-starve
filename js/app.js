@@ -197,6 +197,7 @@ function canSelect(id, owned) {
   const s = state.skillMap[id];
   if (!s) return false;
   if ((s.requires || []).some(r => !owned.has(r))) return false;
+  if (Array.isArray(s.requiresAny) && s.requiresAny.length && !s.requiresAny.some(r => owned.has(r))) return false;
   for (const lockId of skillLockIds(s)) {
     const lock = state.lockMap[lockId];
     if (!lock) continue;
@@ -856,6 +857,10 @@ function bindNotice(tree) {
 
 function prereqText(skill) {
   const names = (skill.requires || []).map(id => state.skillMap[id]?.name || id);
+  if (Array.isArray(skill.requiresAny) && skill.requiresAny.length) {
+    const anyNames = skill.requiresAny.map(id => state.skillMap[id]?.name || id);
+    names.push(anyNames.join("、") + "至少其一");
+  }
   skillLockIds(skill).forEach(lockId => {
     const lock = state.lockMap[lockId];
     if (lock) names.push(lock.desc);
