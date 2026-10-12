@@ -646,6 +646,21 @@
       ]
     }
   ],
+  "health": "",
+  "hunger": "",
+  "sanity": "",
+  "trait": {
+    "text": "在这里写人物特性"
+  },
+  "exclusiveItems": {
+    "items": [
+      {
+        "name": "物品名称",
+        "desc": "在这里写物品描述",
+        "recipe": "在这里写配方"
+      }
+    ]
+  },
   "notice": {
     "title": "总结",
     "text": "在这里写角色总结"

@@ -247,9 +247,8 @@ function hasSkillTree(c) {
 }
 
 function charFromQuery(list) {
-  const playable = list.filter(hasSkillTree);
   const q = new URLSearchParams(location.search).get("char");
-  return playable.find(c => c.id === q) || playable[0] || list[0];
+  return list.find(c => c.id === q) || list.find(hasSkillTree) || list[0];
 }
 
 async function boot() {
@@ -259,7 +258,8 @@ async function boot() {
     const current = charFromQuery(chars);
     fillCharSelect(chars, current.id);
     const tree = await loadJSON(current.data);
-    initTree(tree);
+    if (!hasSkillTree(current)) showNoTree(tree);
+    else initTree(tree);
   } catch (err) {
     $("load-error").hidden = false;
     $("load-error").textContent =
@@ -302,14 +302,11 @@ function fillCharSelect(chars, currentId) {
     if (c.id === currentId) opt.classList.add("current");
     if (!hasSkillTree(c)) {
       opt.classList.add("is-locked");
+      opt.title = "该角色尚未领悟技能树";
       opt.dataset.tip = "该角色尚未领悟技能树";
     }
     opt.addEventListener("click", e => {
       e.stopPropagation();
-      if (!hasSkillTree(c)) {
-        showModeTip(opt, true);
-        return;
-      }
       location.search = selectionSearch(c.id);
     });
     opt.addEventListener("mouseenter", () => {
@@ -367,6 +364,7 @@ function initTree(tree) {
   buildDescColumns();
   fillBuildSelect();
   bindNotice(tree);
+  bindProfile(tree);
   const saved = new URLSearchParams(location.search);
   let buildId = saved.get("build") || "";
   if (buildId === "init" && (tree.builds || []).some(b => b.id === "zhuo-yue")) buildId = "zhuo-yue";
@@ -834,6 +832,164 @@ function noticePayload(tree) {
   const text = n.text || n.body || (Array.isArray(n.lines) ? n.lines.join("\n") : "");
   if (!String(text).trim()) return null;
   return { title: n.title || "总结", text };
+}
+
+function exclusiveList(tree) {
+  const block = tree && tree.exclusiveItems;
+  if (!block) return [];
+  if (Array.isArray(block)) return block;
+  return Array.isArray(block.items) ? block.items : [];
+}
+
+function renderProfileBody(host, tree) {
+  host.replaceChildren();
+  const name = document.createElement("div");
+  name.className = "profile-name";
+  name.textContent = (tree && tree.name) || "";
+  host.appendChild(name);
+
+  const stats = document.createElement("div");
+  stats.className = "stat-row";
+  [
+    ["health", "stat-health", "❤️", "生命值"],
+    ["hunger", "stat-hunger", "🍗", "饱食度"],
+    ["sanity", "stat-sanity", "🧠", "精神值"]
+  ].forEach(([key, tone, emoji, label]) => {
+    const col = document.createElement("div");
+    col.className = "stat";
+    const orb = document.createElement("div");
+    orb.className = "stat-orb " + tone;
+    orb.title = label;
+    const face = document.createElement("span");
+    face.className = "stat-emoji";
+    face.textContent = emoji;
+    orb.appendChild(face);
+    const value = document.createElement("div");
+    value.className = "stat-value";
+    value.textContent = tree && tree[key] != null ? String(tree[key]) : "";
+    col.appendChild(orb);
+    col.appendChild(value);
+    stats.appendChild(col);
+  });
+  host.appendChild(stats);
+
+  const traitTitle = document.createElement("div");
+  traitTitle.className = "profile-bar";
+  traitTitle.textContent = "人物特性";
+  const trait = document.createElement("div");
+  trait.className = "profile-text";
+  trait.textContent = (tree && tree.trait && tree.trait.text) || "";
+  host.appendChild(traitTitle);
+  host.appendChild(trait);
+
+  const gearTitle = document.createElement("div");
+  gearTitle.className = "profile-bar";
+  gearTitle.textContent = "角色专属物品";
+  host.appendChild(gearTitle);
+  const items = exclusiveList(tree);
+  if (!items.length) {
+    const empty = document.createElement("div");
+    empty.className = "gear-empty";
+    empty.textContent = "无";
+    host.appendChild(empty);
+    return;
+  }
+  items.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "gear-row";
+    const itemName = document.createElement("div");
+    itemName.className = "gear-name";
+    itemName.textContent = (item && item.name) || "";
+    const main = document.createElement("div");
+    const desc = document.createElement("div");
+    desc.className = "gear-desc";
+    desc.textContent = (item && item.desc) || "";
+    main.appendChild(desc);
+    const recipe = (item && item.recipe) || "";
+    if (String(recipe).trim()) {
+      const line = document.createElement("div");
+      line.className = "gear-recipe";
+      line.textContent = recipe;
+      main.appendChild(line);
+    }
+    row.appendChild(itemName);
+    row.appendChild(main);
+    host.appendChild(row);
+  });
+}
+
+function layoutProfileDrawer() {
+  const drawer = $("profile-drawer");
+  if (!drawer || drawer.hidden) return;
+  const narrow = window.matchMedia("(max-width: 720px)").matches;
+  drawer.classList.toggle("is-narrow", narrow);
+  if (narrow) {
+    drawer.style.width = "";
+    drawer.style.right = "";
+    return;
+  }
+  const app = document.querySelector(".app").getBoundingClientRect();
+  const edge = 12;
+  const gap = 18;
+  const room = Math.max(0, window.innerWidth - app.right - gap - edge);
+  const width = Math.min(380, Math.max(300, room || 340));
+  drawer.style.width = width + "px";
+  drawer.style.right = room >= 300 ? edge + "px" : "0px";
+}
+
+function openProfile() {
+  const drawer = $("profile-drawer");
+  const btn = $("profile-open");
+  if (!drawer) return;
+  drawer.hidden = false;
+  if (btn) btn.hidden = true;
+  layoutProfileDrawer();
+  requestAnimationFrame(() => drawer.classList.add("is-open"));
+}
+
+function closeProfile() {
+  const drawer = $("profile-drawer");
+  const btn = $("profile-open");
+  if (!drawer || drawer.hidden) return;
+  drawer.classList.remove("is-open");
+  const finish = () => {
+    if (drawer.classList.contains("is-open")) return;
+    drawer.hidden = true;
+    if (btn && !$("app").classList.contains("is-notree")) btn.hidden = false;
+  };
+  drawer.addEventListener("transitionend", finish, { once: true });
+  setTimeout(finish, 280);
+}
+
+function bindProfile(tree) {
+  const btn = $("profile-open");
+  const scroll = $("profile-scroll");
+  const app = $("app");
+  if (app) app.classList.remove("is-notree");
+  const host = $("notree-host");
+  if (host) host.hidden = true;
+  if (scroll) renderProfileBody(scroll, tree);
+  closeProfile();
+  if (btn) btn.hidden = false;
+}
+
+function showNoTree(tree) {
+  state.tree = tree;
+  document.title = (tree.name || "角色") + " · 人物详情";
+  const app = $("app");
+  if (app) app.classList.add("is-notree");
+  const btn = $("profile-open");
+  const drawer = $("profile-drawer");
+  if (btn) btn.hidden = true;
+  if (drawer) {
+    drawer.hidden = true;
+    drawer.classList.remove("is-open");
+  }
+  const host = $("notree-host");
+  const inline = $("profile-inline");
+  if (host) host.hidden = false;
+  if (inline) renderProfileBody(inline, tree);
+  bindNotice(tree);
 }
 
 function bindNotice(tree) {
@@ -1460,6 +1616,7 @@ window.addEventListener("resize", () => {
   const tip = $("note-tip");
   if (tip && !tip.hidden && tip._anchor) showNoteTip(tip._anchor);
   sizeInsightPanel();
+  layoutProfileDrawer();
 });
 
 $("btn-learn").addEventListener("click", learnSelected);
@@ -1519,6 +1676,9 @@ $("insight-drawer-handle").addEventListener("click", e => {
   paintInsightHandle(open);
   sizeInsightPanel();
 });
+
+$("profile-open").addEventListener("click", openProfile);
+$("profile-close").addEventListener("click", closeProfile);
 
 $("char-notice-btn").addEventListener("click", e => {
   e.stopPropagation();

@@ -28,7 +28,8 @@
     {
       "id": "wickerbottom",
       "name": "薇克巴顿",
-      "skillTree": false
+      "skillTree": false,
+      "data": "data/wickerbottom.json"
     },
     {
       "id": "woodie",
@@ -38,12 +39,14 @@
     {
       "id": "wes",
       "name": "韦斯",
-      "skillTree": false
+      "skillTree": false,
+      "data": "data/wes.json"
     },
     {
       "id": "maxwell",
       "name": "麦斯威尔",
-      "skillTree": false
+      "skillTree": false,
+      "data": "data/maxwell.json"
     },
     {
       "id": "wigfrid",
@@ -53,7 +56,8 @@
     {
       "id": "webber",
       "name": "韦伯",
-      "skillTree": false
+      "skillTree": false,
+      "data": "data/webber.json"
     },
     {
       "id": "winona",
@@ -63,7 +67,8 @@
     {
       "id": "warly",
       "name": "沃利",
-      "skillTree": false
+      "skillTree": false,
+      "data": "data/warly.json"
     },
     {
       "id": "wormwood",
@@ -88,7 +93,8 @@
     {
       "id": "wanda",
       "name": "旺达",
-      "skillTree": false
+      "skillTree": false,
+      "data": "data/wanda.json"
     }
   ]
 }
