@@ -878,7 +878,7 @@ function renderProfileBody(host, tree) {
   traitTitle.textContent = "人物特性";
   const trait = document.createElement("div");
   trait.className = "profile-text";
-  trait.textContent = (tree && tree.trait && tree.trait.text) || "";
+  trait.innerHTML = (tree && tree.trait && tree.trait.text) || "";
   host.appendChild(traitTitle);
   host.appendChild(trait);
 

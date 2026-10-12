@@ -435,8 +435,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "机器人在获取足够的电路板后生存能力极强，单人这里，个人认为探测器在单人主推主线的情况下用处不大，且即使点了(23)信号放大器，对单人来说的提升也非常有限。这里点了物资传送技能(19)一级运输是为了应对一些空间不足的情况，若有其他选择，可以考虑把这个点替换掉(比如可以替换为(13)三级寄居械或(21)一级遥控机械爱好者)",
+          "skills": [
+            "wx78_circuitry_bettercharge",
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_betabuffs_1",
+            "wx78_circuitry_betabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_ghostrevive_2",
+            "wx78_bodycircuits",
+            "wx78_remotebodyswap",
+            "wx78_deliverydrone_1"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -446,8 +462,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "同单人月前影前见解，这里选择把(12)二级寄居械换为月亮亲和。同样的，如果不需要(19)一级运输也可以点(18)野外勘测。有月亮亲和后不建议点(12)二级寄居械，因为月亮亲和情况下机器人死亡后其他底盘会回退到原始状态，可以再激活，也可以用来复活【待验证】有(11)一级寄居械就足够了",
+          "skills": [
+            "wx78_circuitry_bettercharge",
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_betabuffs_1",
+            "wx78_circuitry_betabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_bodycircuits",
+            "wx78_remotebodyswap",
+            "wx78_deliverydrone_1",
+            "wx78_allegiance_lunar"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -457,8 +489,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "暗影亲和提供太大方便，首先是自动抓取机，其次是噩梦燃料充电，且战斗时自动抓取机也会提供增伤,且由于有了自动抓取机，所以点了(23)信号放大器，同时也点亮了(18)野外勘测。由于可以吃噩梦燃料充电，所以此处并没有点(1)瓦特提升。额外的点数我在这里点了(19)一级运输，可根据实际情况灵活调整",
+          "skills": [
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_betabuffs_1",
+            "wx78_circuitry_betabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_remotebodyswap",
+            "wx78_scoutdrone_1",
+            "wx78_extradronerange",
+            "wx78_deliverydrone_1",
+            "wx78_allegiance_shadow"
+          ]
         },
         {
           "id": "solo-both",
@@ -468,8 +516,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "暗影亲和总的来说比月亮亲和用起来更舒适，所以完全照搬单人影后的暗影亲和加点",
+          "skills": [
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_betabuffs_1",
+            "wx78_circuitry_betabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_remotebodyswap",
+            "wx78_scoutdrone_1",
+            "wx78_extradronerange",
+            "wx78_deliverydrone_1",
+            "wx78_allegiance_shadow"
+          ]
         },
         {
           "id": "multi-none",
@@ -479,8 +543,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "在多人模式下，机器人的辅助效果非常明显，运输，光照，恒温等等。还有一个勘测，个人认为只有在影后前提下更适配，因为影后技能导致，需要点(23)信号放大器，这也同时使得勘测范围变得非常大，前期用处极大。如果对自己的生存足够自信，亦可将(4)二级阿尔法电路改装换为(18)野外勘测或(21)一级遥控机械爱好者",
+          "skills": [
+            "wx78_circuitry_bettercharge",
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_betabuffs_1",
+            "wx78_circuitry_betabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_bodycircuits",
+            "wx78_remotebodyswap",
+            "wx78_deliverydrone_1",
+            "wx78_deliverydrone_2"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -490,8 +570,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "月亮亲和主要是多个机器人复制人一起工作，点亮即可，替代加速等beta强化，需要时可通过骑牛运输。如果对自己的生存足够自信，亦可将(4)二级阿尔法电路改装换为(6)二级贝塔电路改装",
+          "skills": [
+            "wx78_circuitry_bettercharge",
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_betabuffs_1",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_bodycircuits",
+            "wx78_remotebodyswap",
+            "wx78_deliverydrone_1",
+            "wx78_deliverydrone_2",
+            "wx78_allegiance_lunar"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -501,8 +597,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "暗影亲和由于可以吃噩梦燃料充电，所以没有选择点亮(1)瓦特提升，其次因为可以做自动抓取机，所以点亮(23)信号放大器更适配使用。但与此同时也舍弃了beta电路系列内容。如果对生存足够自信，也可将alpha电路系列换位beta或是gamma系列。beta偏应用，gamma偏机制",
+          "skills": [
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_bodycircuits",
+            "wx78_remotebodyswap",
+            "wx78_deliverydrone_1",
+            "wx78_deliverydrone_2",
+            "wx78_scoutdrone_1",
+            "wx78_extradronerange",
+            "wx78_allegiance_shadow"
+          ]
         },
         {
           "id": "multi-both",
@@ -512,29 +624,135 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "暗影与月亮相比，最大亮点是可以吃噩梦燃料充电,除此之外，采集是几乎自动化的，不需要每次角色本身也同时参与。月亮亲和在战斗时由于有多个备份底盘同时攻击(50%伤害)，战斗效率更快，也同时更费武器耐久，同时采集方面可以砍树挖石头。但是针对电路这一亮点一级在采集方面的便捷性我还是更推荐使用暗影亲和",
+          "skills": [
+            "wx78_circuitry_betterunplug",
+            "wx78_circuitry_alphabuffs_1",
+            "wx78_circuitry_alphabuffs_2",
+            "wx78_circuitry_slot_1",
+            "wx78_extrabody_1",
+            "wx78_extrabody_2",
+            "wx78_extrabody_3",
+            "wx78_ghostrevive_1",
+            "wx78_bodycircuits",
+            "wx78_remotebodyswap",
+            "wx78_deliverydrone_1",
+            "wx78_deliverydrone_2",
+            "wx78_scoutdrone_1",
+            "wx78_extradronerange",
+            "wx78_allegiance_shadow"
+          ]
         }
       ]
     }
   ],
-  "health": "",
-  "hunger": "",
-  "sanity": "",
+  "health": "100",
+  "hunger": "100",
+  "sanity": "100",
   "trait": {
-    "text": "在这里写人物特性"
+    "text": "<h3>电量</h3><p>机器人有一个重要指标为电量，共<b>6格</b>，初始会自带<b>3格</b>，每<b>90秒</b>自然恢复<b>1格</b>。当拆除激活中的电路板时，电路元件有几个引脚就会损失几格电。</p><h4>电量恢复</h4><ul><li>被闪电击中时，会降低<b>33点</b><sanity>精神值</sanity>并回复<b>100点</b><health>生命值</health>，同时回复<b>1格</b>电</li><li>可以在蓄电池（女工专属物品）处充电，同时回复<b>3点</b><health>生命值</health>，并扣除<b>10点</b><sanity>精神值</sanity>，同时回复<b>1格</b>电</li><li>食用带电羊奶或伏特羊角冻可以回<b>1格</b>电</li></ul><h4>电量消耗</h4><ul><li>潮湿度高于<b>15</b>时，每<b>4秒</b>掉<b>1格</b>电并失去<b>9点</b><health>生命值</health></li><li><hunger>饱食度</hunger>为<b>0</b>时，每<b>10秒</b>掉<b>1格</b>电</li><li>被冻结时，立刻损失<b>2格</b>电</li></ul><h3>其他</h3><ul><li>机器人每吃一个齿轮可以回复<b>60点</b><health>生命值</health>，<b>75点</b><hunger>饱食度</hunger>与<b>50点</b><sanity>精神值</sanity>。当死亡或更换角色时，会掉落吃掉的<b>1/3~1/2</b>的齿轮，最多<b>40个</b></li><li>机器人可以吃任意新鲜度的食物，获取满新鲜度食物的全部效果</li><li>机器人更容易吸引闪电，但是吸引等级在避雷针之下</li><li>机器人溺水后会减少<b>10%</b><health>生命值</health>上限</li><li>机器人免疫电击伤害</li><li>机器人被发条生物感知的距离减少<b>50%</b></li><li>机器人没有灵魂，小恶魔无法获取</li><li>机器人死后不会留下尸体，除非点<green>二级寄居械</green>，但其本质是复制底盘</li><li>机器人最喜欢的实物是<lightpink>蝴蝶松饼</lightpink></li></ul>"
   },
   "exclusiveItems": {
     "items": [
       {
-        "name": "物品名称",
-        "desc": "在这里写物品描述",
-        "recipe": "在这里写配方"
+        "name": "强化电路",
+        "desc": "阿尔法电路，扫描蜘蛛获取配方，鲜红色1引脚电路，增加40点生命值上限，受到阿尔法电路改装影响",
+        "recipe": "生物数据×2 + 蜘蛛腺×1 → 1 强化电路"
+      },
+      {
+        "name": "超级强化电路",
+        "desc": "阿尔法电路，扫描护士蜘蛛获取配方，鲜红色2引脚电路，增加100点生命值上限，受到阿尔法电路改装影响",
+        "recipe": "生物数据×4 + 蜘蛛腺×2 + 强化电路×1 → 1 超级强化电路"
+      },
+      {
+        "name": "胃增益电路",
+        "desc": "阿尔法电路，扫描猎狗获取配方，暗橙色1引脚电路，增加40点饱食度上限，受到阿尔法电路改装影响",
+        "recipe": "生物数据×2 + 狗牙×1 → 1 胃增益电路"
+      },
+      {
+        "name": "超级胃增益电路",
+        "desc": "阿尔法电路，扫描熊大或啜食者获取配方，暗橙色2引脚电路，增加100点饱食度上限，受到阿尔法电路改装影响",
+        "recipe": "生物数据×3 + 啜食者皮×1 + 胃增益电路×1 → 1 超级胃增益电路"
+      },
+      {
+        "name": "处理器电路",
+        "desc": "阿尔法电路，扫描蝴蝶或月蛾获取配方，淡红色1引脚电路，增加40点精神值上限，受到阿尔法电路改装影响",
+        "recipe": "生物数据×1 + 花×1 → 1 处理器电路"
+      },
+      {
+        "name": "超级处理器电路",
+        "desc": "阿尔法电路，扫描暗隐臣民(爬行恐惧，恐怖尖喙，恐怖利爪，潜伏梦魇)获取配方，淡红色2引脚电路，增加100点精神值上限，受到阿尔法电路改装影响",
+        "recipe": "生物数据×3 + 噩梦燃料×1 + 处理器电路×1 → 1 超级处理器电路"
+      },
+      {
+        "name": "豆增压电路",
+        "desc": "阿尔法电路，扫描蜂后获取配方，土黄色3引脚电路，增加100点精神值上限，并每秒回复2点理智值与10点生命值，受到阿尔法电路改装影响",
+        "recipe": "生物数据×8 + 蜂王浆×1 + 超级处理器电路×1 → 1 豆增压电路"
+      },
+      {
+        "name": "增程电路",
+        "desc": "贝塔电路，扫描鸟类(乌鸦，红雀，雪雀，海鹦鹉，金丝雀)获取配方，亮橙色1引脚电路，摄像机高度(角色视野)上限提高5,受到贝塔电路改装影响",
+        "recipe": "生物数据×2 + 指南针×1 → 1 增程电路"
+      },
+      {
+        "name": "合唱盒电路",
+        "desc": "贝塔电路，扫描寄居蟹隐士或帝王蟹获取配方，淡紫色3引脚电路，机器人获得4.44每秒的理智光环，自动照料周围3个地皮范围的农作物，受到贝塔电路改装影响",
+        "recipe": "生物数据×4 + 低音贝壳钟 → 1 合唱盒电路"
+      },
+      {
+        "name": "加速电路",
+        "desc": "贝塔电路，扫描兔子获取配方，深绿色6引脚电路，提升25%移动速度，受到贝塔电路改装影响",
+        "recipe": "生物数据×2 + 兔子×1 → 1 加速电路"
+      },
+      {
+        "name": "超级加速电路",
+        "desc": "贝塔电路，扫描战车(发条，远古)或远古犀牛获取配方，深绿色2引脚电路，提升25%/15%/10%(随安装数量递减)移动速度，受到贝塔电路改装影响",
+        "recipe": "生物数据×6 + 齿轮×1 + 加速电路×1 → 1 超级加速电路"
+      },
+      {
+        "name": "热能电路",
+        "desc": "贝塔电路，扫描龙蝇或火焰猎犬或地热螨获取配方，火红色3引脚电路，体温上下限各提升20度，自身变为25度热源，物品栏中腐烂速度+25%，干燥速度+0.1/秒，效果可叠加，受到贝塔电路改装影响",
+        "recipe": "生物数据×4 + 红宝石×1 → 1 热能电路"
+      },
+      {
+        "name": "制冷电路",
+        "desc": "贝塔电路，扫描巨鹿或寒冰猎狗获取配方，冷蓝色3引脚电路，体温上下限各降低20度，自身变为-25度冷源，物品栏中腐烂速度-25%，干燥速度-0.1/秒，潮湿度达到95时立刻清空潮湿度并掉出两块冰，效果可叠加，受到贝塔电路改装影响",
+        "recipe": "生物数据×4 + 蓝宝石×1 → 1 制冷电路"
+      },
+      {
+        "name": "电气化电路",
+        "desc": "贝塔电路，扫描伏特羊获取配方，荧光色2引脚电路，被攻击时对攻击者造成20点带点伤害并使机器人绝缘，效果可叠加(每叠加一个增加一次反伤次数)，受到贝塔电路改装影响",
+        "recipe": "生物数据×5 + 带电羊奶×1 → 1 电气化电路"
+      },
+      {
+        "name": "照明电路",
+        "desc": "贝塔电路，扫描萤火虫获取配方，棕色3引脚电路，持续发光，机器人与周围玩家不可使用草席卷与毛皮铺盖，受到贝塔电路改装影响",
+        "recipe": "生物数据×6 + 荧光果×1 → 1 照明电路"
+      },
+      {
+        "name": "超级照明电路",
+        "desc": "贝塔电路，扫描鱿鱼或洞穴蠕虫或球状光虫获取配方，棕色1引脚电路，与照明电路效果一致，受到贝塔电路改装影响",
+        "recipe": "生物数据×6 + 荧火虫×1 + 照明电路×1 → 1 超级照明电路"
+      },
+      {
+        "name": "光电电路",
+        "desc": "贝塔电路，扫描辐鼹鼠获取配方，亮紫色4引脚电路，在黑暗中会自动开启夜视，等同于鼹鼠帽，受到贝塔电路改装影响",
+        "recipe": "生物数据×4 + 鼹鼠×1 + 照明电路×1 → 1 光电电路"
+      },
+      {
+        "name": "空间扩展电路",
+        "desc": "贝塔电路，扫描坎普斯获取配方，青色1引脚电路，每激活一个，在玩家基本物品栏最右侧覆盖原本物品栏，生成一个可无限堆叠物品的扩展存储单元",
+        "recipe": "生物数据×8 + 注能月亮碎片×1 → 1 空间扩展电路"
+      },
+      {
+        "name": "再消化电路",
+        "desc": "伽马电路，浣猫获取配方，草绿色2引脚电路，玩家可食用腐烂物、腐烂鸟蛋、变质的鱼、变质的小鱼块且不会改变三维。每吃5个腐烂物品产出一个营养砖。可叠加，每多叠加一次可减少食用1个腐烂物品，受到贝塔电路改装影响",
+        "recipe": "生物数据×2 + 猫尾×1 → 1 再消化电路"
       }
     ]
   },
   "notice": {
     "title": "总结",
-    "text": "在这里写角色总结"
+    "text": "机器人是要用多种电路强化自己的，alpha电路偏基础数值，beta电路偏应用，gamma电路偏机制，需要根据自己的需求来选择技能树强化。机器人的耕作能力极强，自动收取等行为极为方便"
   }
 }
