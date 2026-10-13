@@ -423,15 +423,6 @@
     }
     .note-tip { font-size: 14px; }
     .char-notice { right: 12px; bottom: 12px; }
-    .profile-open {
-      top: auto;
-      right: auto;
-      left: 12px;
-      bottom: 12px;
-      width: 56px;
-      height: 56px;
-      font-size: 13px;
-    }
     .insight-drawer { top: 8vh; }
     .insight-drawer-panel { max-height: 70vh; }
   }
@@ -607,6 +598,17 @@
   .profile-open:hover {
     background: rgba(42, 30, 16, .94);
     border-color: #f0d060;
+  }
+  @media (max-width: 720px) {
+    .profile-open {
+      top: auto;
+      right: auto;
+      left: 12px;
+      bottom: 12px;
+      width: 56px;
+      height: 56px;
+      font-size: 13px;
+    }
   }
   .profile-drawer {
     position: fixed;
