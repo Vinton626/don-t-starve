@@ -72,7 +72,13 @@ function learnedMatches(lock, owned, groupIds, nameNeedle) {
 }
 
 function skillByName(name) {
-  return state.tree.skills.find(s => s.name === name);
+  const skills = (state.tree && state.tree.skills) || [];
+  const exact = skills.find(s => s.name === name);
+  if (exact) return exact;
+  const fold = text => String(text || "").replace(/人/g, "");
+  const folded = fold(name);
+  const hits = skills.filter(s => s.name && fold(s.name) === folded);
+  return hits.length === 1 ? hits[0] : undefined;
 }
 
 function handSet(owned) {
