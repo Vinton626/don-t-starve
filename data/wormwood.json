@@ -94,7 +94,7 @@
       "name": "猴尾草制造",
       "desc": "习得配方：",
       "recipes": [
-        "15 生命值降低 + 1 洞穴香蕉 + 4 切制芦苇 → 1 猴尾草"
+        "15 生命值降低 + 1 洞穴香蕉 + 4 芦苇 → 1 猴尾草"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -273,7 +273,7 @@
       "n": 16,
       "group": "right",
       "name": "光合作用",
-      "desc": "最大开花阶段，位于白天的森林世界，或位于自然光源的光照范围内时，每 10 秒回复 1 text-center。",
+      "desc": "最大开花阶段，位于白天的森林世界，或位于自然光源的光照范围内时，每 10 秒回复 1 生命值。",
       "requires": [
         "wormwood_identify_plants2",
         "wormwood_blooming_speed1",
@@ -355,8 +355,7 @@
       "requires": [
         "wormwood_identify_plants2",
         "wormwood_blooming_farmrange1",
-        "wormwood_quick_selffertilizer",
-        "wormwood_blooming_max_upgrade"
+        "wormwood_quick_selffertilizer"
       ],
       "x": 112,
       "y": -133,
@@ -368,7 +367,7 @@
       "n": 22,
       "group": "left",
       "name": "月亮耕耘者 I",
-      "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。消耗 1 个胡萝卜和 5 text-center 制作一个特殊的胡萝卜鼠，自动为你拾取周围的食物并送入物品栏。具有 25 点生命值，持续 3 天，至多召唤 4 只。",
+      "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。消耗 1 个胡萝卜和 5 生命值制作一个特殊的胡萝卜鼠，自动为你拾取周围的食物并送入物品栏。具有 25 点生命值，持续 3 天，至多召唤 4 只。",
       "requires": [],
       "lock": "lock_affinity",
       "x": -210,
@@ -381,7 +380,7 @@
       "n": 23,
       "group": "left",
       "name": "月亮耕耘者 II",
-      "desc": "消耗 1 个荧光果和 10 text-center 制作一个特殊的球状光虫，跟随玩家并照明。具有 25 点生命值，持续 2.5 天，至多召唤 6 只。召唤的球状光虫数量越多，照明范围越大。",
+      "desc": "消耗 1 个荧光果和 10 生命值 制作一个特殊的球状光虫，跟随玩家并照明。具有 25 点生命值，持续 2.5 天，至多召唤 6 只。召唤的球状光虫数量越多，照明范围越大。",
       "requires": [
         "wormwood_allegiance_lunar_mutations_1"
       ],
@@ -396,7 +395,7 @@
       "n": 24,
       "group": "left",
       "name": "月亮耕耘者 III",
-      "desc": "消耗 1 个火龙果和 25 text-center 制作一个特殊的沙拉蝾螈，为你作战。具有 600 点生命值和 40 点攻击力，持续 2 天，至多召唤 2 只。召唤 2 只沙拉蝾螈时，沙拉蝾螈的生命值提高到 900。",
+      "desc": "消耗 1 个火龙果和 25 生命值 制作一个特殊的沙拉蝾螈，为你作战。具有 600 点生命值和 40 点攻击力，持续 2 天，至多召唤 2 只。召唤 2 只沙拉蝾螈时，沙拉蝾螈的生命值提高到 900。",
       "requires": [
         "wormwood_allegiance_lunar_mutations_1"
       ],
@@ -496,8 +495,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "由于单人游玩，所以主要按照战斗来点分支技能。生存类加点看多人模式。点(6)食人花工厂主要是为了做食人花工厂固定获取叶肉，所以就需要开对应活动或者找草蜥蜴来获取叶肉。一般来说植物人不愁肉吃(有荆棘外壳，一般很好处理蜘蛛，再加上植物人的种植能力一般也不会缺肉丸)如果不需要做叶肉专属料理或者考虑到叶肉来源问题，也可以将(6)食人花制造与(5)猴尾草制造与(3)浆果丛制造与(2)树苗制造换为(15)花朵力量与(16)光合作用与(14)遮荫植物与(9)可怜的树液(以上按去掉与学习优先级从前往后排序)",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_berrybushcrafting",
+            "wormwood_reedscrafting",
+            "wormwood_lureplantbulbcrafting",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_trapbramble",
+            "wormwood_armor_bramble",
+            "wormwood_blooming_speed1",
+            "wormwood_blooming_speed2"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -507,8 +522,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "单人月后走这一套纯战斗流，点(2)树苗制造与(12)成长冲刺I是为了激活左右两个分枝的亲和。所以根据实际情况而定(2)树苗制造也可以换为(9)可怜的树液(随便，便便回血量有限，但是树苗制造用处也不大),(12)成长冲刺I也可以换为(19)平易近蜂(不推荐)",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_blooming_speed1",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_trapbramble",
+            "wormwood_armor_bramble",            
+            "wormwood_allegiance_lunar_plant_gear_1",
+            "wormwood_allegiance_lunar_plant_gear_2",
+            "wormwood_allegiance_lunar_mutations_1",
+            "wormwood_allegiance_lunar_mutations_2"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -518,8 +549,24 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "沃姆伍德没有暗影亲和，加点同月前影前即可",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_berrybushcrafting",
+            "wormwood_reedscrafting",
+            "wormwood_lureplantbulbcrafting",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_trapbramble",
+            "wormwood_armor_bramble",
+            "wormwood_blooming_speed1",
+            "wormwood_blooming_speed2"
+          ]
         },
         {
           "id": "solo-both",
@@ -529,8 +576,24 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "同单人月后加点，如果是要用同一套技能树来玩全程，建议把(25)月亮守卫I与(26)月亮守卫II换为(13)成长冲刺II与(14)遮荫植物或(15)花朵力量或者直接把右分支的(12)成长冲刺I舍弃，把(12)，(25)月亮守卫I与(26)月亮守卫II换为(3)浆果丛制造，(5)猴尾草制造与(6)食人花制造,因为月亮守卫系列技能需要使用月后装备才会生效",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_blooming_speed1",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_trapbramble",
+            "wormwood_armor_bramble",            
+            "wormwood_allegiance_lunar_plant_gear_1",
+            "wormwood_allegiance_lunar_plant_gear_2",
+            "wormwood_allegiance_lunar_mutations_1",
+            "wormwood_allegiance_lunar_mutations_2"
+          ]
         },
         {
           "id": "multi-none",
@@ -540,8 +603,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "由于多人游玩，所以主要按照生存来点分支技能。战斗类加点看单人模式。这里点亮了(16)光合作用，陆地上日常回血会很舒服，同时舍弃了(20)荆棘陷阱专家与(21)荆棘外壳专家,战斗力下降",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_berrybushcrafting",
+            "wormwood_reedscrafting",
+            "wormwood_lureplantbulbcrafting",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_speed1",
+            "wormwood_blooming_speed2",
+            "wormwood_blooming_max_upgrade",
+            "wormwood_blooming_photosynthesis"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -551,8 +630,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "解锁亲和后将(15)花朵力量与(16)光合作用换为了(21)月亮耕耘者I与(22)月亮耕耘者II，方便了日常行动",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_berrybushcrafting",
+            "wormwood_reedscrafting",
+            "wormwood_lureplantbulbcrafting",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_speed1",
+            "wormwood_blooming_speed2",
+            "wormwood_allegiance_lunar_mutations_1",
+            "wormwood_allegiance_lunar_mutations_2"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -562,8 +657,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "沃姆伍德没有暗影亲和，加点同月前影前即可",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_berrybushcrafting",
+            "wormwood_reedscrafting",
+            "wormwood_lureplantbulbcrafting",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_speed1",
+            "wormwood_blooming_speed2",
+            "wormwood_blooming_max_upgrade",
+            "wormwood_blooming_photosynthesis"
+          ]
         },
         {
           "id": "multi-both",
@@ -573,29 +684,60 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "同多人月后加点",
+          "skills": [
+            "wormwood_identify_plants2",
+            "wormwood_saplingcrafting",
+            "wormwood_berrybushcrafting",
+            "wormwood_reedscrafting",
+            "wormwood_lureplantbulbcrafting",
+            "wormwood_mushroomplanter_ratebonus1",
+            "wormwood_mushroomplanter_ratebonus2",
+            "wormwood_mushroomplanter_upgrade",
+            "wormwood_moon_cap_eating",
+            "wormwood_blooming_farmrange1",
+            "wormwood_quick_selffertilizer",
+            "wormwood_blooming_speed1",
+            "wormwood_blooming_speed2",
+            "wormwood_allegiance_lunar_mutations_1",
+            "wormwood_allegiance_lunar_mutations_2"
+          ]
         }
       ]
     }
   ],
-  "health": "",
-  "hunger": "",
-  "sanity": "",
+  "health": "150",
+  "hunger": "150",
+  "sanity": "200",
   "trait": {
-    "text": "在这里写人物特性"
+    "text": "<br><p>无开局起始物品</p><br><h3>园艺才能</h3><p>沃姆伍德不使用耕地机与园艺锄也可以直接将种子种在地上，但是这样种出的农作物进入腐烂状态所需的时间是一般农作物的<b>1.5倍</b>。沃姆伍德不开origin模组也可以精确找出农作物的压力来源</p><h3>食物和肥料</h3><p>沃姆伍德食用食物时，不会受到任何食物对应的血量属性影响</p><ul><li>所以沃姆伍德可以生吃红蘑菇来回复<hunger>饱食度</hunger></li><li><lightpink>彩虹糖豆</lightpink>，<lightyellow>恐怖国王饼</lightyellow>这类特殊食物的特殊效果仍有效</li></ul><br><p>沃姆伍德可以食用肥料给自己施肥</p><ul><li><brown>粪肥</brown>会瞬间回复<health>生命值</health></li><li><grey>堆肥</grey>可以<b>+2</b><health>生命值</health>/s</li><li><lightblue>催长剂</lightblue>会触发开花，服用更多催长剂会加快开花速度，或者在绽放期使用来延长绽放时间</li></ul><details><summary>肥料回血表</summary><table><thead><tr><th>肥料</th><th>缓慢回血<br>(2点/2秒)</th><th>立刻回血</th><th>总计</th></tr></thead><tbody><tr><td>腐烂物</td><td>4</td><td>/</td><td>4</td></tr><tr><td>腐烂鸟蛋</td><td>6</td><td>/</td><td>6</td></tr><tr><td>堆肥</td><td>8</td><td>/</td><td>8</td></tr><tr><td>受潮的营养砖</td><td>32</td><td>/</td><td>32</td></tr><tr><td>粪肥</td><td>/</td><td>2</td><td>2</td></tr><tr><td>鸟粪</td><td>/</td><td>3</td><td>3</td></tr><tr><td>便便桶<br>（一次）</td><td>/</td><td>3</td><td>3</td></tr><tr><td>格罗姆的粘液<sup>*</sup></td><td>4</td><td>2</td><td>6</td></tr><tr><td>嗡嗡肥料<sup>*</sup></td><td>6</td><td>3</td><td>9</td></tr><tr><td>树果酱<sup>*</sup></td><td>32</td><td>2</td><td>34</td></tr><tr><td>肥料包<sup>*</sup></td><td>32</td><td>8</td><td>40</td></tr><tr><td colspan='4'>*一些物品由于同时含有催长剂，所以使用时也可以激活开花。</td></tr></tbody></table></details><h3>开花</h3><p>春季或使用带有催长剂的肥料施肥后，沃姆伍德会开花，移速与<hunger>饥饿值</hunger>下降速度会受到影响</p><details><summary>开花属性</summary><table><thead><tr><th>阶段</th><th>默认开花值上限</th><th>移动速度与饥饿值下降速度</th></tr></thead><tbody><tr><td>0</td><td>/</td><td>1倍</td></tr><tr><td>1</td><td>480</td><td>1.067倍(16/15)</td></tr><tr><td>2</td><td>480</td><td>1.133倍(17/15)</td></tr><tr><td>3</td><td>2400</td><td>1.2倍</td></tr></tbody></table></details><p>沃姆伍德开花的状态一共四个阶段，包含一个开花值升高或降低的速率，默认为<b>1</b>。使用催长剂可提升该速率，每<b>8点</b>催长剂提升<b>1/16</b>速率，进入下一阶段以后重置为<b>1</b>。开花的<b>3阶段</b>为绽放状态，进入此阶段后立马获取<b>1440点</b>开花值，并且速率不在受催长剂影响。且开花值会逐渐下降，其中春天不降，夏秋速率为<b>1</b>，冬天速率为<b>2</b>。此时使用催长剂会获得开花值，每<b>8点</b>催长剂增加<b>60点</b>开花值</p><ul><li>若从高阶段下降至低阶段期间使用催长剂，沃姆伍德的开花值速率会从当前阶段开始再次由降低转为升高</li><li>在绽放状态时，额外获得<b>30点</b>隔热值，此外还会自动照料<b>1个</b>地皮范围内的农作物(受<green>农场工人</green>影响)，蜜蜂会主动追随并保持中立</li></ul><h3>植物</h3><p>当植物在沃姆伍德附近被无论谁种植时，都会回复<sanity>理智值</sanity>，包括海带，蘑菇等</p><ul><li>当沃姆伍德种植任何植物时，回复<b>10点</b><sanity>精神值</sanity></li><li>当<b>5个</b>地皮范围内的其他玩家种植植物时，在<b>5秒</b>内回复<b>0-2点</b><sanity>精神值</sanity>，具体数值与距离有关，且回复效果会被沃姆伍德自己砍倒树，采花与铲起植物打断</li></ul><p>当植物在沃姆伍德附近被无论如何摧毁时，都会损失<sanity>理智值</sanity></p><ul><li>当沃姆伍德砍倒树时，损失<b>15点</b><sanity>精神值</sanity></li><li>当沃姆伍德采花与铲起植物时，损失<b>5点</b><sanity>精神值</sanity></li><li>当<b>5个</b>地皮范围内的植物(包括物品形态的)被烧毁或其他玩家采摘花、砍倒树、铲起植物时，在<b>5秒</b>内损失<b>0-2点</b><sanity>精神值</sanity>，具体数值与距离有关，且损失效果会被沃姆伍德自己种植植物打断</li></ul><h3>其他</h3><ul><li>潮湿不影响沃姆伍德的<sanity>理智值</sanity></li><li>眼球草、针刺旋花、火荨麻和春季发情的蜜蜂对沃姆伍德是中立的，海草不会因为沃姆伍德采摘他身上的藤壶就攻击沃姆伍德</li><li>沃姆伍德收到的火焰伤害比其他角色高<b>25%</b>，且被点燃后燃烧事件比其他角色多<b>1秒</b>，共<b>4.3秒</b></li><li>沃姆伍德不会留下尸体</li><li>沃姆伍德最喜欢的食物是<yellow>熟香蕉</yellow></li></ul>"
   },
   "exclusiveItems": {
     "items": [
       {
-        "name": "物品名称",
-        "desc": "在这里写物品描述",
-        "recipe": "在这里写配方"
+        "name": "活木",
+        "desc": "专属配方，非专属物品",
+        "recipe": "生命值-20 → 1 活木"
+      },
+      {
+        "name": "荆棘外壳",
+        "desc": "本身为3分钟可燃物，525点耐久与80%减伤。装备时受到攻击会释放尖刺，对周围一个地皮范围内的所有非有房生物造成22.7点伤害，且采集仙人掌、玫瑰、尖刺灌木与蔷薇时不会受到伤害，受荆棘外壳专家影响",
+        "recipe": "活木×2 + 蜂刺×1 → 1 荆棘外壳"
+      },
+      {
+        "name": "荆棘陷阱",
+        "desc": "10次耐久与40点伤害。与狗牙陷阱类似，当有生物踩到上面时便会触发，对周围0.625个地皮范围内的生物造成伤害，每次触发都会消耗耐久且需要玩家手动重置(受荆棘陷阱专家影响)",
+        "recipe": "活木×1 + 蜂刺×1 → 1 荆棘陷阱"
+      },
+      {
+        "name": "肥料包",
+        "desc": "本身为3分钟可燃物。肥料，能够提供24催长剂、32堆肥与24粪肥",
+        "recipe": "粪肥×5 + 腐烂物×2 + 硝石×1 → 1 肥料包"
       }
     ]
   },
   "notice": {
     "title": "总结",
-    "text": "在这里写角色总结"
+    "text": "沃姆伍德是自月亮而来的角色，所以没有暗影亲和，自身比较偏种田辅助，战斗能力虽不突出但是自保足够，尤其是加点(11)月亮蘑菇云后，只要在月亮蘑菇足够的情况下几乎不会被攻击到。沃姆伍德最大的缺点是不能从食物恢复血量，所以回血是他最大的难题，可以通过早一些打蜂王获取糖豆来提高生存能力"  
   }
 }
