@@ -567,8 +567,24 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "在这里写单人月前影前加点",
-          "skills": []
+          "text": "沃尔特点出(21)毛绒觅食者前期收集资源很快很舒适，而其余几乎没有什么有争议的加点。除了如果用不到(18)沃比来这，沃比去那的情况下，可以考虑把(18)沃比来这，沃比去那换为(2)市店弹药，同时如果可以处理好精神值，也可以把(13)先锋之范换为(9)高级手柄，而绝望石弹药可以在刷掉疯猪以后通过建造护符与拆解手杖来刷，可以短暂获取强化",
+          "skills": [
+            "walter_ammo_shattershots",
+            "walter_ammo_lucky",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_bands",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_foraging",
+            "walter_woby_sprint",
+            "walter_woby_dash"
+          ]
         },
         {
           "id": "solo-lunar",
@@ -578,8 +594,24 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "在这里写单人月后加点",
-          "skills": []
+          "text": "月后即点月亮亲和，但是更推荐点暗影亲和，所以如果长期档先空着不点。这里比月前影前舍弃了(3)幸运弹药与(21)毛绒觅食者，这两个到后期用处没有前期那么大了，要给亲和让位置，同样的，如果用不到(18)沃比来这，沃比去那的情况下，可以考虑把(18)沃比来这，沃比去那换为(3)幸运弹药同时如果可以处理好精神值，也可以把(13)先锋之范换为(21)毛绒觅食者",
+          "skills": [
+            "walter_ammo_shattershots",
+            "walter_slingshot_bands",
+            "walter_ammo_lunar",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_sprint",
+            "walter_woby_dash",
+            "walter_woby_lunar"
+          ]
         },
         {
           "id": "solo-shadow",
@@ -589,8 +621,22 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "在这里写单人影后加点",
-          "skills": []
+          "text": "影后即点暗影亲和，就是把月后的亲和技能换为了暗影亲和，同样的，如果用不到(18)沃比来这，沃比去那的情况下，可以考虑把(18)沃比来这，沃比去那换为(9)高级手柄同时如果可以处理好精神值，也可以把(13)先锋之范换为(3)幸运弹药或(21)毛绒觅食者",
+          "skills": ["walter_ammo_shattershots",
+            "walter_slingshot_bands",
+            "walter_ammo_shadow",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_sprint",
+            "walter_woby_dash",
+            "walter_woby_shadow"]
         },
         {
           "id": "solo-both",
@@ -600,8 +646,22 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "在这里写单人月后影后加点",
-          "skills": []
+          "text": "月后影后同影后加点",
+          "skills": ["walter_ammo_shattershots",
+            "walter_slingshot_bands",
+            "walter_ammo_shadow",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_sprint",
+            "walter_woby_dash",
+            "walter_woby_shadow"]
         },
         {
           "id": "multi-none",
@@ -611,8 +671,24 @@
             "影前"
           ],
           "name": "多人月前影前",
-          "text": "在这里写多人月前影前加点",
-          "skills": []
+          "text": "同单人月前影前加点，只是多人情况下点出(18)沃比来这，沃比去那队友更舒适。",
+          "skills": [
+            "walter_ammo_shattershots",
+            "walter_ammo_lucky",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_bands",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_foraging",
+            "walter_woby_sprint",
+            "walter_woby_dash"
+          ]
         },
         {
           "id": "multi-lunar",
@@ -622,8 +698,24 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "在这里写多人月后加点",
-          "skills": []
+          "text": "同单人月后加点，只是多人情况下点出(18)沃比来这，沃比去那队友更舒适。",
+          "skills": [
+            "walter_ammo_shattershots",
+            "walter_slingshot_bands",
+            "walter_ammo_lunar",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_sprint",
+            "walter_woby_dash",
+            "walter_woby_lunar"
+          ]
         },
         {
           "id": "multi-shadow",
@@ -633,8 +725,24 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "在这里写多人影后加点",
-          "skills": []
+          "text": "同单人影后加点，只是多人情况下点出(18)沃比来这，沃比去那队友更舒适。",
+          "skills": [
+            "walter_ammo_shattershots",
+            "walter_slingshot_bands",
+            "walter_ammo_shadow",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_sprint",
+            "walter_woby_dash",
+            "walter_woby_shadow"
+          ]
         },
         {
           "id": "multi-both",
@@ -644,8 +752,24 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "在这里写多人月后影后加点",
-          "skills": []
+          "text": "同单人月后影后加点，只是多人情况下点出(18)沃比来这，沃比去那队友更舒适。",
+          "skills": [
+            "walter_ammo_shattershots",
+            "walter_slingshot_bands",
+            "walter_ammo_shadow",
+            "walter_ammo_efficiency",
+            "walter_slingshot_modding",
+            "walter_slingshot_frames",
+            "walter_camp_walterhat",
+            "walter_camp_wobytreat",
+            "walter_camp_firstaid",
+            "walter_camp_wobycourier",
+            "walter_woby_endurance",
+            "walter_woby_itemfetcher",
+            "walter_woby_sprint",
+            "walter_woby_dash",
+            "walter_woby_shadow"
+          ]
         }
       ]
     }
