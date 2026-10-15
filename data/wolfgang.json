@@ -36,7 +36,7 @@
       "n": 1,
       "group": "chores",
       "name": "杂物锻炼 I",
-      "desc": "强壮状态下工作的秒杀概率提升至 5%。",
+      "desc": "强壮状态下工作的秒杀概率提升至 <b>5%</b>。",
       "requires": [],
       "x": -228,
       "y": -106,
@@ -48,7 +48,7 @@
       "n": 2,
       "group": "chores",
       "name": "杂物锻炼 II",
-      "desc": "强壮状态下工作的秒杀概率提升至 10%。",
+      "desc": "强壮状态下工作的秒杀概率提升至 <b>10%</b>。",
       "requires": [
         "wolfgang_critwork_1"
       ],
@@ -62,7 +62,7 @@
       "n": 3,
       "group": "chores",
       "name": "杂物锻炼 III",
-      "desc": "强壮状态下工作的秒杀概率提升至 15%。",
+      "desc": "强壮状态下工作的秒杀概率提升至 <b>15%</b>。",
       "requires": [
         "wolfgang_critwork_1",
         "wolfgang_critwork_2"
@@ -104,7 +104,7 @@
       "n": 6,
       "group": "training",
       "name": "练腿日",
-      "desc": "正常状态下的沃尔夫冈移速增加 10%。",
+      "desc": "正常状态下的沃尔夫冈移速增加 <b>10%</b>。",
       "requires": [
         "wolfgang_normal_coach"
       ],
@@ -135,7 +135,7 @@
       "n": 8,
       "group": "training",
       "name": "重击手 I",
-      "desc": "投掷哑铃的伤害增加 50%。",
+      "desc": "投掷哑铃的伤害增加 <b>50%</b>。",
       "requires": [
         "wolfgang_dumbbell_crafting"
       ],
@@ -149,7 +149,7 @@
       "n": 9,
       "group": "training",
       "name": "重击手 II",
-      "desc": "投掷哑铃的伤害增加 100%。",
+      "desc": "投掷哑铃的伤害增加 <b>100%</b>。",
       "requires": [
         "wolfgang_dumbbell_crafting",
         "wolfgang_dumbbell_throwing_1"
@@ -164,7 +164,7 @@
       "n": 10,
       "group": "overbuff",
       "name": "突破极限 I",
-      "desc": "使用强大健身房锻炼时，力量值上限可以达到 110。",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 <b>110</b>。",
       "requires": [],
       "x": -27,
       "y": -106,
@@ -176,7 +176,7 @@
       "n": 11,
       "group": "overbuff",
       "name": "突破极限 II",
-      "desc": "使用强大健身房锻炼时，力量值上限可以达到 120。",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 <b>120</b>。",
       "requires": [
         "wolfgang_overbuff_1"
       ],
@@ -190,7 +190,7 @@
       "n": 12,
       "group": "overbuff",
       "name": "突破极限 III",
-      "desc": "使用强大健身房锻炼时，力量值上限可以达到 130。",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 <b>130</b>。",
       "requires": [
         "wolfgang_overbuff_1",
         "wolfgang_overbuff_2"
@@ -205,7 +205,7 @@
       "n": 13,
       "group": "overbuff",
       "name": "突破极限 IV",
-      "desc": "使用强大健身房锻炼时，力量值上限可以达到 140。",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 <b>140</b>。",
       "requires": [
         "wolfgang_overbuff_1",
         "wolfgang_overbuff_2",
@@ -221,7 +221,7 @@
       "n": 14,
       "group": "overbuff",
       "name": "突破极限 V",
-      "desc": "使用强大健身房锻炼时，力量值上限可以达到 150。",
+      "desc": "使用强大健身房锻炼时，力量值上限可以达到 <b>150</b>。",
       "requires": [
         "wolfgang_overbuff_1",
         "wolfgang_overbuff_2",
@@ -238,7 +238,7 @@
       "n": 15,
       "group": "power",
       "name": "威力武器 I",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +5。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 <b>+5</b>。",
       "requires": [],
       "x": 74,
       "y": -106,
@@ -250,7 +250,7 @@
       "n": 16,
       "group": "power",
       "name": "威力武器 II",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +10。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 <b>+10</b>。",
       "requires": [
         "wolfgang_planardamage_1"
       ],
@@ -264,7 +264,7 @@
       "n": 17,
       "group": "power",
       "name": "威力武器 III",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +15。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 <b>+15</b>。",
       "requires": [
         "wolfgang_planardamage_1",
         "wolfgang_planardamage_2"
@@ -279,7 +279,7 @@
       "n": 18,
       "group": "power",
       "name": "威力武器 IV",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +20。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 <b>+20</b>。",
       "requires": [
         "wolfgang_planardamage_1",
         "wolfgang_planardamage_2",
@@ -295,7 +295,7 @@
       "n": 19,
       "group": "power",
       "name": "威力武器 V",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 +25。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面伤害 <b>+25</b>。",
       "requires": [
         "wolfgang_planardamage_1",
         "wolfgang_planardamage_2",
@@ -312,7 +312,7 @@
       "n": 20,
       "group": "affinity",
       "name": "暗影守卫 I",
-      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。",
+      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.1倍</b>的伤害。",
       "requires": [],
       "lock": "lock_affinity",
       "exclusiveWith": [
@@ -328,7 +328,7 @@
       "n": 21,
       "group": "affinity",
       "name": "暗影守卫 II",
-      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.2 倍的伤害。",
+      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.2倍</b>的伤害。",
       "requires": [
         "wolfgang_allegiance_shadow_1"
       ],
@@ -343,7 +343,7 @@
       "n": 22,
       "group": "affinity",
       "name": "暗影守卫 III",
-      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.3 倍的伤害。",
+      "desc": "沃尔夫冈获得暗影亲和，受到来自暗影阵营的伤害降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.3倍</b>的伤害。",
       "requires": [
         "wolfgang_allegiance_shadow_1",
         "wolfgang_allegiance_shadow_2"
@@ -359,7 +359,7 @@
       "n": 23,
       "group": "affinity",
       "name": "月亮战略家 I",
-      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。",
+      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.1倍</b>的伤害。",
       "requires": [],
       "lock": "lock_affinity",
       "exclusiveWith": [
@@ -375,7 +375,7 @@
       "n": 24,
       "group": "affinity",
       "name": "月亮战略家 II",
-      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.2 倍的伤害。",
+      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.2倍</b>的伤害。",
       "requires": [
         "wolfgang_allegiance_lunar_1"
       ],
@@ -390,7 +390,7 @@
       "n": 25,
       "group": "affinity",
       "name": "月亮战略家 III",
-      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.3 倍的伤害。",
+      "desc": "沃尔夫冈获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.3倍</b>的伤害。",
       "requires": [
         "wolfgang_allegiance_lunar_1",
         "wolfgang_allegiance_lunar_2"

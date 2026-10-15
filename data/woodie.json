@@ -34,7 +34,7 @@
       "n": 1,
       "group": "curse",
       "name": "变形计时 I",
-      "desc": "变身时长 +20%。",
+      "desc": "变身时长 <b>+20%</b>。",
       "requires": [],
       "x": -223,
       "y": -107,
@@ -46,7 +46,7 @@
       "n": 2,
       "group": "curse",
       "name": "变形计时 II",
-      "desc": "变身时长 +40%。",
+      "desc": "变身时长 <b>+40%</b>。",
       "requires": [
         "woodie_curse_weremeter_1"
       ],
@@ -60,7 +60,7 @@
       "n": 3,
       "group": "curse",
       "name": "变形计时 III",
-      "desc": "变身时长 +80%。",
+      "desc": "变身时长 <b>+80%</b>。",
       "requires": [
         "woodie_curse_weremeter_1",
         "woodie_curse_weremeter_2"
@@ -75,7 +75,7 @@
       "n": 4,
       "group": "curse",
       "name": "海狸人 I",
-      "desc": "海狸人啃咬的挖矿效率 +150%。（啃咬大部分岩石需要的次数 11 次 → 5 次）",
+      "desc": "海狸人啃咬的挖矿效率 <b>+150%</b>。（啃咬大部分岩石需要的次数 <b>11次</b> → <b>5次</b>）",
       "requires": [],
       "x": -158,
       "y": -107,
@@ -87,7 +87,7 @@
       "n": 5,
       "group": "curse",
       "name": "海狸人 II",
-      "desc": "海狸人啃咬的砍树效率 +80%。（啃咬大部分最大形态的树需要的次数 4 次 → 3 次）",
+      "desc": "海狸人啃咬的砍树效率 <b>+80%</b>。（啃咬大部分最大形态的树需要的次数 <b>4次</b> → <b>3次</b>）",
       "requires": [
         "woodie_curse_beaver_1"
       ],
@@ -116,7 +116,7 @@
       "n": 7,
       "group": "curse",
       "name": "海狸人精通",
-      "desc": "海狸人可以进行拍击，效果为：\n- 消耗 5 变身值\n- 对 8 距离单位内的可作业实体进行 7 次作业\n- 对 2.5 距离单位内的可攻击对象造成 27.2 伤害。",
+      "desc": "海狸人可以进行拍击，效果为：\n- 消耗 <b>5</b> 变身值\n- 对 <b>8距离单位</b>内的可作业实体进行 <b>7次</b>作业\n- 对 <b>2.5距离单位</b>内的可攻击对象造成 <b>27.2</b> 伤害。",
       "requires": [
         "woodie_curse_beaver_1",
         "woodie_curse_beaver_2",
@@ -133,7 +133,7 @@
       "n": 8,
       "group": "curse",
       "name": "鹿人 I",
-      "desc": "鹿人冲撞撞击建筑后受到的减速效果时长 -85%。移除鹿人的 0.9 移动速度倍率。",
+      "desc": "鹿人冲撞撞击建筑后受到的减速效果时长 <b>-85%</b>。移除鹿人的 <b>0.9</b> 移动速度倍率。",
       "requires": [],
       "x": -113.5,
       "y": -107,
@@ -145,7 +145,7 @@
       "n": 9,
       "group": "curse",
       "name": "鹿人 II",
-      "desc": "鹿人每 5 秒恢复 1.5 生命值。",
+      "desc": "鹿人每 <b>5秒</b>恢复<b>1.5</b><health>生命值</health>。",
       "requires": [
         "woodie_curse_moose_1"
       ],
@@ -174,7 +174,7 @@
       "n": 11,
       "group": "curse",
       "name": "鹿人精通",
-      "desc": "鹿人连续攻击时，每两次攻击后，第三次攻击就会变成特殊的范围攻击。鹿人获得 15 位面防御。",
+      "desc": "鹿人连续攻击时，每两次攻击后，第三次攻击就会变成特殊的范围攻击。鹿人获得 <b>15</b> 位面防御。",
       "requires": [
         "woodie_curse_moose_1",
         "woodie_curse_moose_2",
@@ -191,7 +191,7 @@
       "n": 12,
       "group": "curse",
       "name": "鹅人 I",
-      "desc": "鹅人的移动速度 +19%。（即由 8.4 提升至 10）",
+      "desc": "鹅人的移动速度 <b>+19%</b>。（即由 <b>8.4</b> 提升至 <b>10</b>）",
       "requires": [],
       "x": -70,
       "y": -107,
@@ -203,7 +203,7 @@
       "n": 13,
       "group": "curse",
       "name": "鹅人 II",
-      "desc": "鹅人获得 100% 防水。",
+      "desc": "鹅人获得 <b>100%</b> 防水。",
       "requires": [
         "woodie_curse_goose_1"
       ],
@@ -217,7 +217,7 @@
       "n": 14,
       "group": "curse",
       "name": "鹅人 III",
-      "desc": "鹅人受攻击时，可以闪避该次伤害，该效果有 5 秒冷却。（与骨头盔甲相同）",
+      "desc": "鹅人受攻击时，可以闪避该次伤害，该效果有 <b>5秒</b>冷却。（与骨头盔甲相同）",
       "requires": [
         "woodie_curse_goose_1",
         "woodie_curse_goose_2"
@@ -232,7 +232,7 @@
       "n": 15,
       "group": "curse",
       "name": "鹅人精通",
-      "desc": "鹅人可以进行腾飞。消耗 20 变身值传送到当前世界的随机位置（远古档案馆群系除外）。",
+      "desc": "鹅人可以进行腾飞。消耗 <b>20</b> 变身值传送到当前世界的随机位置（远古档案馆群系除外）。",
       "requires": [
         "woodie_curse_goose_1",
         "woodie_curse_goose_2",
@@ -249,7 +249,7 @@
       "n": 16,
       "group": "curse",
       "name": "拥抱诅咒",
-      "desc": "食用俗气雕像不再降低生命值和理智值。变身结束后保留 22.5 饥饿值。",
+      "desc": "食用俗气雕像不再降低<health>生命值</health>和<sanity>理智值</sanity>。变身结束后保留<b>22.5</b><hunger>饥饿值</hunger>。",
       "requires": [],
       "lock": "lock_curse_master",
       "x": -223,
@@ -262,7 +262,7 @@
       "n": 17,
       "group": "human",
       "name": "快速捡拾者 I",
-      "desc": "采集东西的速度 +15%。",
+      "desc": "采集东西的速度 <b>+15%</b>。",
       "requires": [],
       "x": 19,
       "y": -107,
@@ -274,7 +274,7 @@
       "n": 18,
       "group": "human",
       "name": "快速捡拾者 II",
-      "desc": "采集东西的速度 +30%。",
+      "desc": "采集东西的速度 <b>+30%</b>。",
       "requires": [
         "woodie_human_quickpicker_1"
       ],
@@ -288,7 +288,7 @@
       "n": 19,
       "group": "human",
       "name": "快速捡拾者 III",
-      "desc": "采集东西的速度 +45%。",
+      "desc": "采集东西的速度 <b>+45%</b>。",
       "requires": [
         "woodie_human_quickpicker_1",
         "woodie_human_quickpicker_2"
@@ -303,7 +303,7 @@
       "n": 20,
       "group": "human",
       "name": "树精守卫伐木者 I",
-      "desc": "对树精守卫造成的伤害增加 41.41%。",
+      "desc": "对树精守卫造成的伤害增加 <b>41.41%</b>。",
       "requires": [],
       "x": 91,
       "y": -107,
@@ -315,7 +315,7 @@
       "n": 21,
       "group": "human",
       "name": "树精守卫伐木者 II",
-      "desc": "对树精守卫造成的伤害增加 100%。",
+      "desc": "对树精守卫造成的伤害增加 <b>100%</b>。",
       "requires": [
         "woodie_human_treeguard_1"
       ],
@@ -396,7 +396,7 @@
       "n": 26,
       "group": "affinity",
       "name": "暗影牧人",
-      "desc": "伍迪获得暗影亲和，受到来自暗影阵营的伤害降低至 0.9 倍，对月亮阵营造成 1.1 倍的伤害。任意变身状态期间，暗影臣民不主动仇恨伍迪。",
+      "desc": "伍迪获得暗影亲和，受到来自暗影阵营的伤害降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.1倍</b>的伤害。任意变身状态期间，暗影臣民不主动仇恨伍迪。",
       "requires": [],
       "lock": "lock_affinity",
       "exclusiveWith": [
@@ -412,7 +412,7 @@
       "n": 27,
       "group": "affinity",
       "name": "月亮叛徒",
-      "desc": "伍迪获得月亮亲和，受到来自月亮阵营的伤害降低至 0.9 倍，对暗影阵营造成 1.1 倍的伤害。满月时，伍迪不会强制变身。",
+      "desc": "伍迪获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.1倍</b>的伤害。满月时，伍迪不会强制变身。",
       "requires": [],
       "lock": "lock_affinity",
       "exclusiveWith": [

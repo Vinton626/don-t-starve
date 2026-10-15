@@ -214,6 +214,21 @@
     font-size: 16px;
   }
   .desc-card.learned .desc-recipes { color: #f0d060; }
+  .recipe-out {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .recipe-out:hover { color: #fff; }
   .desc-prereq {
     margin-top: 10px;
     color: #a89068;
@@ -480,6 +495,11 @@
     letter-spacing: 1px;
     margin-bottom: 8px;
   }
+  .char-notice-body {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.55;
+  }
 
   .insight-drawer {
     position: fixed;
@@ -639,6 +659,72 @@
     height: auto;
     transform: none;
   }
+  .item-drawer {
+    position: fixed;
+    z-index: 27;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+    max-height: 50vh;
+    overflow: hidden;
+    background: rgba(12, 9, 6, .94);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    box-shadow: 8px -8px 28px rgba(0,0,0,.45);
+  }
+  .item-drawer[hidden] { display: none; }
+  .item-drawer.is-narrow {
+    top: 8vh;
+    right: 16px;
+    bottom: 8vh;
+    left: 16px;
+    width: auto;
+    min-height: 0;
+    max-height: none;
+  }
+  .item-head {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 8px 36px;
+    text-align: center;
+    background: rgba(18, 12, 8, .98);
+    border-bottom: 1px solid #6e5428;
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .item-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #f0d060;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .item-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 14px 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
   .profile-head {
     position: sticky;
     top: 0;
@@ -755,7 +841,7 @@
     color: #f0d060;
   }
   .profile-text p { margin: 0; }
-  .profile-text b {
+  .tag-text b {
     color: #7fd4ff;
     font-weight: 700;
   }
@@ -766,10 +852,51 @@
   .profile-text lightblue { color: #b3e5ff; }
   .profile-text brown { color: #d4925a; }
   .profile-text grey { color: #c5c5c5; }
-  .profile-text green { color: #7dce7a; }
-  .profile-text health { color: #ff6b78; }
-  .profile-text hunger { color: #c49212; }
-  .profile-text sanity { color: #c65a12; }
+  .tag-text green { color: #7dce7a; }
+  .tag-text health { color: #ff6b78; }
+  .tag-text hunger { color: #c49212; }
+  .tag-text sanity { color: #c65a12; }
+  .tag-text seablue { color: #3ec4e0; }
+  .tag-text character {
+    color: #d7a6ff;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .tag-text character:hover { color: #ead4ff; }
+  .profile-text yellowgreen { color: #c6e05a; }
+  .profile-text notice {
+    position: relative;
+    cursor: help;
+    color: #f0d060;
+    border-bottom: 1px dashed rgba(240, 208, 96, .75);
+  }
+  .profile-text notice::after {
+    content: attr(text);
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    z-index: 6;
+    width: max-content;
+    max-width: 220px;
+    padding: 6px 8px;
+    background: rgba(12, 9, 6, .96);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .7);
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+    white-space: normal;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .profile-text notice:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
   .profile-text ul {
     margin: 4px 0 0;
     padding-left: 1.15em;
@@ -924,7 +1051,7 @@
 <aside class="insight-drawer" id="insight-drawer" hidden>
   <div class="insight-drawer-panel">
     <div class="insight-drawer-title" id="insight-drawer-title">个人见解</div>
-    <div class="insight-drawer-body" id="insight-drawer-body"></div>
+    <div class="insight-drawer-body tag-text" id="insight-drawer-body"></div>
   </div>
   <button type="button" class="insight-drawer-handle" id="insight-drawer-handle" aria-expanded="false">
     <span class="insight-drawer-label">个人见解</span>
@@ -941,11 +1068,19 @@
   <div class="profile-scroll" id="profile-scroll"></div>
 </aside>
 
+<aside class="item-drawer" id="item-drawer" hidden>
+  <div class="item-head">
+    <span id="item-title"></span>
+    <button type="button" class="item-close" id="item-close" aria-label="关闭">×</button>
+  </div>
+  <div class="item-scroll tag-text" id="item-scroll"></div>
+</aside>
+
 <aside class="char-notice" id="char-notice" hidden>
   <button type="button" class="char-notice-btn" id="char-notice-btn" aria-expanded="false" aria-controls="char-notice-panel" title="角色总结">!</button>
   <div class="char-notice-panel" id="char-notice-panel" hidden>
     <div class="char-notice-title" id="char-notice-title">总结</div>
-    <div class="char-notice-body" id="char-notice-body"></div>
+    <div class="char-notice-body tag-text" id="char-notice-body"></div>
   </div>
 </aside>
 

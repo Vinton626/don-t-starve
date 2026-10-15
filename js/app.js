@@ -19,6 +19,7 @@ const state = {
   nodeEls: {},
   skillMap: {},
   lockMap: {},
+  characters: [],
   pipEls: { nice: [], naughty: [] }
 };
 
@@ -261,6 +262,7 @@ async function boot() {
   try {
     const index = await loadJSON("data/characters.json");
     const chars = index.characters || [];
+    state.characters = chars;
     const current = charFromQuery(chars);
     fillCharSelect(chars, current.id);
     const tree = await loadJSON(current.data);
@@ -840,6 +842,18 @@ function noticePayload(tree) {
   return { title: n.title || "总结", text };
 }
 
+function bindCharacterLinks(root) {
+  if (!root) return;
+  root.querySelectorAll("character").forEach(el => {
+    el.addEventListener("click", () => {
+      const name = (el.getAttribute("name") || el.textContent || "").trim();
+      const found = (state.characters || []).find(c => c.name === name);
+      if (!found) return;
+      location.search = selectionSearch(found.id);
+    });
+  });
+}
+
 function exclusiveList(tree) {
   const block = tree && tree.exclusiveItems;
   if (!block) return [];
@@ -883,8 +897,9 @@ function renderProfileBody(host, tree) {
   traitTitle.className = "profile-bar";
   traitTitle.textContent = "人物特性";
   const trait = document.createElement("div");
-  trait.className = "profile-text";
+  trait.className = "profile-text tag-text";
   trait.innerHTML = (tree && tree.trait && tree.trait.text) || "";
+  bindCharacterLinks(trait);
   host.appendChild(traitTitle);
   host.appendChild(trait);
 
@@ -908,8 +923,9 @@ function renderProfileBody(host, tree) {
     itemName.textContent = (item && item.name) || "";
     const main = document.createElement("div");
     const desc = document.createElement("div");
-    desc.className = "gear-desc";
-    desc.textContent = (item && item.desc) || "";
+    desc.className = "gear-desc tag-text";
+    desc.innerHTML = (item && item.desc) || "";
+    bindCharacterLinks(desc);
     main.appendChild(desc);
     const recipe = (item && item.recipe) || "";
     if (String(recipe).trim()) {
@@ -922,6 +938,42 @@ function renderProfileBody(host, tree) {
     row.appendChild(main);
     host.appendChild(row);
   });
+}
+
+function openCraftItem(id, fallbackName) {
+  const drawer = $("item-drawer");
+  if (!drawer) return;
+  const item = craftList(state.tree).find(entry => entry && entry.id === id);
+  const fallback = String(fallbackName || "").trim().replace(/^\d+\s+/, "");
+  $("item-title").textContent = (item && item.name) || fallback;
+  const sheet = $("item-scroll");
+  sheet.innerHTML = item ? (item.desc || "") : "";
+  bindCharacterLinks(sheet);
+  $("item-scroll").scrollTop = 0;
+  drawer.hidden = false;
+  layoutItemDrawer();
+}
+
+function closeCraftItem() {
+  const drawer = $("item-drawer");
+  if (!drawer) return;
+  drawer.hidden = true;
+  drawer.classList.remove("is-narrow");
+  drawer.style.width = "";
+}
+
+function layoutItemDrawer() {
+  const drawer = $("item-drawer");
+  if (!drawer) return;
+  const narrow = window.matchMedia("(max-width: 720px)").matches;
+  drawer.classList.toggle("is-narrow", narrow);
+  if (narrow) {
+    drawer.style.width = "";
+    return;
+  }
+  const app = document.querySelector(".app");
+  const left = app ? app.getBoundingClientRect().left : 0;
+  drawer.style.width = Math.max(0, Math.round(left)) + "px";
 }
 
 function layoutProfileDrawer() {
@@ -1014,7 +1066,9 @@ function bindNotice(tree) {
   }
   wrap.hidden = false;
   $("char-notice-title").textContent = payload.title;
-  $("char-notice-body").textContent = payload.text;
+  const body = $("char-notice-body");
+  body.innerHTML = payload.text;
+  bindCharacterLinks(body);
 }
 
 function prereqText(skill) {
@@ -1034,9 +1088,34 @@ function prereqText(skill) {
   return names.length ? names.join("；") : "无";
 }
 
+function escapeHTML(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function craftList(tree) {
+  const block = tree && tree.craftItems;
+  if (!block) return [];
+  if (Array.isArray(block)) return block;
+  return Array.isArray(block.items) ? block.items : [];
+}
+
+function recipeLineHTML(skill, recipe, index) {
+  const text = String(recipe);
+  const found = text.match(/<item>([\s\S]*?)<\/item>/);
+  if (!found || !found[1]) return `<li>${escapeHTML(text)}</li>`;
+  const id = skill.id + "_" + (index + 1);
+  const before = text.slice(0, found.index);
+  const after = text.slice(found.index + found[0].length);
+  return `<li>${escapeHTML(before)}<button type="button" class="recipe-out" data-item="${escapeHTML(id)}">${escapeHTML(found[1])}</button>${escapeHTML(after)}</li>`;
+}
+
 function cardHTML(skill, extraClass) {
   const recipes = (skill.recipes || [])
-    .map(r => `<li>${r}</li>`)
+    .map((r, i) => recipeLineHTML(skill, r, i))
     .join("");
   const num = skill.n == null ? "" : `<span class="desc-num">${skill.n}</span>`;
   const prereq = skill.plain ? "" : `<div class="desc-prereq">前置：${prereqText(skill)}</div>`;
@@ -1046,7 +1125,7 @@ function cardHTML(skill, extraClass) {
         ${num}
         <span class="desc-name">${skill.name}</span>
       </div>
-      <div class="desc-text">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
+      <div class="desc-text tag-text">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
       ${recipes ? `<ul class="desc-recipes">${recipes}</ul>` : ""}
       ${prereq}
     </div>`;
@@ -1068,6 +1147,7 @@ function updateDesc() {
     return;
   }
   body.innerHTML = cardHTML(skill, skillStatus(skill.id) || "hovered");
+  bindCharacterLinks(body);
 }
 
 function updateNodeVisual(id) {
@@ -1369,7 +1449,9 @@ function syncInsightDrawer(scheme, open) {
   const copy = insightCopy(scheme);
   drawer.hidden = false;
   $("insight-drawer-title").textContent = copy.title;
-  $("insight-drawer-body").textContent = copy.body;
+  const insightBody = $("insight-drawer-body");
+  insightBody.innerHTML = copy.body || "";
+  bindCharacterLinks(insightBody);
   drawer.classList.toggle("is-open", !!open);
   paintInsightHandle(!!open);
   sizeInsightPanel();
@@ -1623,6 +1705,7 @@ window.addEventListener("resize", () => {
   if (tip && !tip.hidden && tip._anchor) showNoteTip(tip._anchor);
   sizeInsightPanel();
   layoutProfileDrawer();
+  layoutItemDrawer();
 });
 
 $("btn-learn").addEventListener("click", learnSelected);
@@ -1685,6 +1768,13 @@ $("insight-drawer-handle").addEventListener("click", e => {
 
 $("profile-open").addEventListener("click", openProfile);
 $("profile-close").addEventListener("click", closeProfile);
+
+$("desc-panel").addEventListener("click", e => {
+  const btn = e.target.closest(".recipe-out");
+  if (!btn) return;
+  openCraftItem(btn.dataset.item || "", btn.textContent || "");
+});
+$("item-close").addEventListener("click", closeCraftItem);
 
 $("char-notice-btn").addEventListener("click", e => {
   e.stopPropagation();
