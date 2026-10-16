@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首页</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    color: #e6d7b8;
+    font-family: Palatino, "Palatino Linotype", "Songti SC", "STSong", "Noto Serif SC", serif;
+    background-color: #0c0907;
+    background-image:
+      radial-gradient(ellipse at center, rgba(12,8,6,.28) 0%, rgba(6,4,3,.72) 72%, rgba(0,0,0,.88) 100%),
+      linear-gradient(rgba(8,6,4,.5), rgba(8,6,4,.62)),
+      url("img/Pc_background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+  }
+  .selector {
+    position: relative;
+    display: block;
+    width: 25vw;
+    text-decoration: none;
+  }
+  .selector-frame {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .selector span {
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: #f0e2c0;
+    font-size: 16px;
+    letter-spacing: 0.28em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .85);
+  }
+  .selector:hover span { color: #f0d060; }
+  @media (max-width: 720px) {
+    .selector { width: 85vw; }
+    .selector span { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+  <a class="selector" href="index.html">
+    <img class="selector-frame" src="img/selection.png" alt="">
+    <span>技能树</span>
+  </a>
+</body>
+</html>
