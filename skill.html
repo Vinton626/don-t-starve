@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>技能树</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 28px 20px 40px;
+    color: #e6d7b8;
+    font-family: Palatino, "Palatino Linotype", "Songti SC", "STSong", "Noto Serif SC", serif;
+    background-color: #0c0907;
+    background-image:
+      radial-gradient(ellipse at center, rgba(12,8,6,.28) 0%, rgba(6,4,3,.72) 72%, rgba(0,0,0,.88) 100%),
+      linear-gradient(rgba(8,6,4,.5), rgba(8,6,4,.62)),
+      url("img/Pc_background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+  .app {
+    width: 600px;
+    max-width: 100%;
+    background: rgba(16, 11, 8, .84);
+    border: 1px solid #a6843f;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px #2a1c10,
+      0 22px 50px rgba(0,0,0,.72),
+      inset 0 0 80px rgba(0,0,0,.35);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  text { user-select: none; pointer-events: none; }
+  .group-title-hit { cursor: default; }
+  .group-title-hit.has-note { cursor: help; }
+  .group-title.has-note { text-decoration: underline dotted #8a7030; }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(8, 6, 4, .55);
+    border-bottom: 1px solid #6e5428;
+    font-size: 14px;
+    color: #cbb892;
+  }
+  .toolbar select,
+  .char-picker-btn {
+    background: rgba(28, 20, 12, .9);
+    color: #f0e2c0;
+    border: 1px solid #8a6a32;
+    border-radius: 2px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .char-picker { position: relative; }
+  .char-picker-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 7.5em;
+    cursor: pointer;
+  }
+  .char-picker-menu {
+    position: absolute;
+    z-index: 15;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 100%;
+    padding: 4px 0;
+    background: rgba(22, 16, 10, .98);
+    border: 1px solid #8a6a32;
+    border-radius: 2px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.45);
+  }
+  .char-option {
+    display: block;
+    width: 100%;
+    padding: 6px 10px;
+    background: transparent;
+    border: 0;
+    color: #f0e2c0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .char-option:hover,
+  .char-option.current { color: #f0d060; background: #3a3418; }
+  .char-option.is-locked { color: #8d7a58; }
+  .char-option.is-locked:hover { color: #f0d060; background: #3a3418; }
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px;
+    background: rgba(8, 6, 4, .55);
+    border-top: 1px solid #6e5428;
+    font-size: 14px;
+    color: #cbb892;
+    letter-spacing: 1px;
+  }
+  .status-bar .points { color: #f0d060; font-weight: bold; }
+
+  .desc-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    background: rgba(10, 8, 6, .35);
+    border-top: 1px solid #6e5428;
+    padding: 12px 14px 14px;
+  }
+  .desc-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 6px;
+    min-height: 32px;
+    flex-shrink: 0;
+  }
+  .parent-label {
+    flex: 0 1 auto;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #8d7a58;
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .parent-label.active {
+    color: #f0d060;
+    background: #3a3418;
+    border-color: #c9a227;
+  }
+  .parent-label.has-note {
+    cursor: help;
+    text-decoration: underline dotted #8a7020;
+    text-underline-offset: 3px;
+  }
+  .parent-label.has-note:hover {
+    color: #f0d060;
+    background: #3a3418;
+    border-color: #c9a227;
+    text-decoration-color: #f0d060;
+  }
+  .desc-body {
+    flex: 1;
+    display: flex;
+    min-height: 210px;
+  }
+  .desc-card {
+    flex: 1;
+    width: 100%;
+    padding: 14px 16px 16px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    background: rgba(28, 20, 14, .72);
+    color: #d9c7a4;
+    font-size: 16px;
+    line-height: 1.6;
+    box-shadow: inset 0 0 24px rgba(0,0,0,.28);
+  }
+  .desc-card.hovered { border-color: #8a7044; background: rgba(42, 30, 18, .8); }
+  .desc-card.picked { border-color: #f4efe4; color: #f6edd8; background: rgba(48, 36, 22, .82); }
+  .desc-card.learned {
+    background: rgba(58, 46, 18, .88);
+    color: #f0d060;
+    border-color: #c9a227;
+  }
+  .desc-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .desc-num {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    background: #2a2118;
+    color: #e6d3a4;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .desc-card.learned .desc-num { background: #c9a227; color: #1a1a1a; }
+  .desc-card.picked .desc-num {
+    background: #4a3c28;
+    color: #fff;
+    box-shadow: 0 0 0 1px #fff;
+  }
+  .desc-recipes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #e4d2ae;
+    font-size: 16px;
+  }
+  .desc-card.learned .desc-recipes { color: #f0d060; }
+  .recipe-out {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .recipe-out:hover { color: #fff; }
+  .desc-prereq {
+    margin-top: 10px;
+    color: #a89068;
+    font-size: 15px;
+  }
+  .desc-card.learned .desc-prereq { color: #b89a40; }
+
+  .lock-tip {
+    position: fixed;
+    z-index: 20;
+    max-width: 280px;
+    padding: 10px 12px;
+    background: rgba(12, 9, 6, .94);
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.55);
+    font-size: 15px;
+    line-height: 1.5;
+    pointer-events: none;
+    white-space: pre-wrap;
+  }
+  .stage-head {
+    display: grid;
+    background: rgba(8, 6, 4, .35);
+    border-bottom: 1px solid #6e5428;
+  }
+  .insight-bar,
+  .mode-stack { grid-area: 1 / 1; }
+  .insight-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  .stage-head.preset .insight-bar { min-height: 86px; }
+  .mode-stack {
+    display: none;
+    justify-self: end;
+    align-self: start;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 12px 0 0;
+    z-index: 2;
+  }
+  .mode-stack.is-open { display: flex; }
+  .mode-row { display: flex; gap: 6px; }
+  .mode-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2118;
+    border: 1.5px solid #6e5428;
+    border-radius: 2px;
+    color: #f0d060;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .mode-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .mode-btn.on {
+    border-color: #f0d060;
+    box-shadow: 0 0 0 1px #c9a227;
+  }
+  .align-btn {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2118;
+    border: 1.5px solid #6e5428;
+    border-radius: 2px;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .align-btn[hidden] { display: none; }
+  .align-btn.on {
+    border-color: #f0d060;
+    box-shadow: 0 0 0 1px #c9a227;
+  }
+  .scheme-pop {
+    position: fixed;
+    z-index: 30;
+    left: 50%;
+    top: 18%;
+    transform: translateX(-50%);
+    width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+    padding: 14px 16px 12px;
+    background: rgba(12, 9, 6, .96);
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.6);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .scheme-pop.is-toast {
+    top: 16px;
+    pointer-events: none;
+  }
+  .scheme-title { font-weight: bold; letter-spacing: 1px; }
+  .scheme-body {
+    margin-top: 8px;
+    color: #e6d3a4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .scheme-body[hidden],
+  .scheme-close[hidden] { display: none; }
+  .scheme-close {
+    display: block;
+    margin: 12px 0 0 auto;
+    padding: 4px 12px;
+    background: #2a2118;
+    color: #f0d060;
+    border: 1px solid #c9a227;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .insight-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 46px;
+    height: 46px;
+    padding: 0 8px;
+    background: #3a2c16;
+    border: 1.5px solid #c9a227;
+    border-radius: 2px;
+    color: #f0d060;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+  }
+  .insight-label {
+    color: #f0d060;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  .note-tip {
+    width: max-content;
+    max-width: min(420px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    pointer-events: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .load-error {
+    margin: 16px;
+    padding: 12px;
+    background: rgba(58, 24, 20, .9);
+    color: #f0a0a0;
+    border: 1px solid #8a4038;
+    border-radius: 2px;
+    font-size: 13px;
+    white-space: pre-wrap;
+  }
+
+  @media (max-width: 720px) {
+    body {
+      padding: 12px 10px 24px;
+      background-image:
+        linear-gradient(rgba(18, 10, 16, .62), rgba(10, 6, 8, .78)),
+        url("img/pe_background.jpg");
+      background-position: center 18%;
+    }
+    .toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .toolbar select,
+    .char-picker,
+    .char-picker-btn { width: 100%; }
+    .stage-head { display: flex; flex-direction: column; }
+    .mode-stack {
+      order: -1;
+      align-self: stretch;
+      align-items: center;
+      padding: 10px 12px 0;
+    }
+    .insight-bar { order: 1; min-height: 0; }
+    .desc-head { font-size: 18px; }
+    .desc-card { font-size: 15px; }
+    .parent-label {
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 2px 4px;
+    }
+    .note-tip { font-size: 14px; }
+    .char-notice { right: 12px; bottom: 12px; }
+    .insight-drawer { top: 8vh; }
+    .insight-drawer-panel { max-height: 70vh; }
+  }
+
+  .char-notice {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 40;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .char-notice[hidden] { display: none; }
+  .char-notice-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(28, 20, 12, .48);
+    border: 1.5px solid rgba(201, 162, 39, .45);
+    color: rgba(240, 208, 96, .78);
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .char-notice-btn:hover,
+  .char-notice.is-open .char-notice-btn {
+    background: rgba(42, 30, 16, .88);
+    border-color: #c9a227;
+    color: #f0d060;
+  }
+  .char-notice-panel {
+    width: min(320px, calc(100vw - 36px));
+    max-height: 42vh;
+    overflow: auto;
+    padding: 12px 14px;
+    background: rgba(12, 9, 6, .72);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    border-radius: 2px;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .char-notice-panel[hidden] { display: none; }
+  .char-notice-title {
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .char-notice-body {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.55;
+  }
+
+  .insight-drawer {
+    position: fixed;
+    z-index: 24;
+    left: 0;
+    top: 12vh;
+    display: flex;
+    align-items: flex-start;
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+  }
+  .insight-drawer[hidden] { display: none; }
+  .insight-drawer.is-open { transform: translateX(0); }
+  .insight-drawer-panel {
+    width: min(300px, calc(100vw - 52px));
+    min-height: 12em;
+    height: auto;
+    max-height: 76vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 14px 16px 16px;
+    background: rgba(12, 9, 6, .88);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 8px 10px 28px rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .insight-drawer-title {
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .insight-drawer-title:empty { display: none; }
+  .insight-drawer-body {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .insight-drawer-handle {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 32px;
+    padding: 12px 4px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: rgba(28, 20, 12, .82);
+    color: #f0d060;
+    border: 1.5px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+  .insight-drawer-label {
+    writing-mode: vertical-rl;
+  }
+  .insight-drawer-arrow {
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+  .insight-drawer.is-open .insight-drawer-handle {
+    background: rgba(42, 30, 16, .92);
+    border-color: #c9a227;
+  }
+
+  .app.is-notree .stage-head,
+  .app.is-notree svg,
+  .app.is-notree .status-bar,
+  .app.is-notree .desc-panel,
+  .app.is-notree #build-select { display: none; }
+  .notree-host { padding: 14px 14px 18px; }
+  .notree-host[hidden] { display: none; }
+  .notree-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(1.6em * 2 + 18px);
+    margin-bottom: 12px;
+    color: #8d7a58;
+    letter-spacing: 1px;
+  }
+
+  .profile-open {
+    position: fixed;
+    z-index: 26;
+    top: 16px;
+    right: 16px;
+    width: 72px;
+    height: 72px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(28, 20, 12, .82);
+    border: 1.5px solid rgba(201, 162, 39, .7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    color: #f0d060;
+    font-size: 16px;
+    line-height: 1.15;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .profile-open[hidden] { display: none; }
+  .profile-open:hover {
+    background: rgba(42, 30, 16, .94);
+    border-color: #f0d060;
+  }
+  @media (max-width: 720px) {
+    .profile-open {
+      top: auto;
+      right: auto;
+      left: 12px;
+      bottom: 12px;
+      width: 56px;
+      height: 56px;
+      font-size: 13px;
+    }
+  }
+  .profile-drawer {
+    position: fixed;
+    z-index: 28;
+    top: 0;
+    right: 12px;
+    height: 100%;
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: rgba(12, 9, 6, .94);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    border-radius: 2px;
+    box-shadow: -8px 0 28px rgba(0,0,0,.45);
+    transform: translateX(110%);
+    transition: transform .22s ease;
+  }
+  .profile-drawer[hidden] { display: none; }
+  .profile-drawer.is-open { transform: translateX(0); }
+  .profile-drawer.is-narrow {
+    top: 8vh;
+    right: 16px;
+    bottom: 8vh;
+    left: 16px;
+    width: auto;
+    height: auto;
+    transform: none;
+  }
+  .item-drawer {
+    position: fixed;
+    z-index: 27;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+    max-height: 50vh;
+    overflow: hidden;
+    background: rgba(12, 9, 6, .94);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    box-shadow: 8px -8px 28px rgba(0,0,0,.45);
+  }
+  .item-drawer[hidden] { display: none; }
+  .item-drawer.is-narrow {
+    top: 8vh;
+    right: 16px;
+    bottom: 8vh;
+    left: 16px;
+    width: auto;
+    min-height: 0;
+    max-height: none;
+  }
+  .item-head {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 8px 36px;
+    text-align: center;
+    background: rgba(18, 12, 8, .98);
+    border-bottom: 1px solid #6e5428;
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .item-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #f0d060;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .item-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 14px 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
+  .profile-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    background: rgba(18, 12, 8, .98);
+    border-bottom: 1px solid #6e5428;
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  .profile-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #f0d060;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .profile-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 12px 12px 16px;
+  }
+  .profile-bar {
+    margin: 12px 0 8px;
+    padding: 6px 8px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #f0d060;
+    background: #3a2c16;
+    border: 1px solid #6e5428;
+  }
+  .profile-name {
+    margin-top: 4px;
+    padding: 16px 8px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #f0d060;
+    background: rgba(28, 20, 12, .55);
+    border: 1px solid #6e5428;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .stat { display: flex; flex-direction: column; align-items: center; }
+  .stat-orb {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(0, 0, 0, .35);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .12);
+  }
+  .stat-health { background: #8f1d28; }
+  .stat-hunger { background: #c49212; }
+  .stat-sanity { background: #c65a12; }
+  .stat-emoji {
+    font-size: 34px;
+    line-height: 1;
+    filter:
+      drop-shadow(0 0 1px rgba(0, 0, 0, .9))
+      drop-shadow(0 1px 0 rgba(255, 255, 255, .4));
+  }
+  .stat-value {
+    width: 100%;
+    margin-top: 8px;
+    min-height: 30px;
+    padding: 4px 6px;
+    text-align: center;
+    color: #f0e2c0;
+    background: rgba(28, 20, 12, .9);
+    border: 1px solid #6e5428;
+  }
+  .profile-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+    color: #e6d3a4;
+  }
+  .profile-text h3 {
+    margin: 14px 0 6px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #f0d060;
+  }
+  .profile-text h3:first-child { margin-top: 2px; }
+  .profile-text h4 {
+    margin: 10px 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #f0d060;
+  }
+  .profile-text p { margin: 0; }
+  .tag-text b {
+    color: #7fd4ff;
+    font-weight: 700;
+  }
+  .profile-text lightpink { color: #ffb6c1; }
+  .profile-text lightred { color: #ff9b9b; }
+  .profile-text lightyellow { color: #ffe9a0; }
+  .profile-text yellow { color: #ffd84a; }
+  .profile-text lightblue { color: #b3e5ff; }
+  .profile-text brown { color: #d4925a; }
+  .profile-text grey { color: #c5c5c5; }
+  .tag-text green { color: #7dce7a; }
+  .tag-text health { color: #ff6b78; }
+  .tag-text hunger { color: #c49212; }
+  .tag-text sanity { color: #c65a12; }
+  .tag-text seablue { color: #3ec4e0; }
+  .tag-text character {
+    color: #d7a6ff;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .tag-text character:hover { color: #ead4ff; }
+  .profile-text yellowgreen { color: #c6e05a; }
+  .profile-text cyan { color: #4dffea; }
+  .profile-text notice {
+    position: relative;
+    cursor: help;
+    color: #f0d060;
+    border-bottom: 1px dashed rgba(240, 208, 96, .75);
+  }
+  .profile-text notice::after {
+    content: attr(text);
+    position: absolute;
+    left: 0;
+    top: calc(100% + 6px);
+    z-index: 6;
+    width: max-content;
+    max-width: 220px;
+    padding: 6px 8px;
+    background: rgba(12, 9, 6, .96);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .7);
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+    white-space: normal;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .profile-text notice:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+  .profile-text ul {
+    margin: 4px 0 0;
+    padding-left: 1.15em;
+  }
+  .profile-text li {
+    list-style: disc;
+  }
+  .profile-text details {
+    margin-top: 10px;
+    white-space: normal;
+  }
+  .profile-text summary {
+    cursor: pointer;
+    color: #f0d060;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .profile-text summary:hover { color: #ffe7a0; }
+  .profile-text table {
+    width: 100%;
+    margin-top: 8px;
+    border-collapse: collapse;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: center;
+    white-space: normal;
+  }
+  .profile-text th,
+  .profile-text td {
+    padding: 4px 5px;
+    border: 1px solid rgba(110, 84, 40, .75);
+    vertical-align: middle;
+  }
+  .profile-text th {
+    color: #f0d060;
+    font-weight: 700;
+    background: rgba(58, 44, 22, .72);
+  }
+  .profile-text td[colspan] {
+    text-align: left;
+    color: #cbb892;
+  }
+  .gear-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    color: #8d7a58;
+    letter-spacing: 2px;
+  }
+  .gear-row {
+    display: grid;
+    grid-template-columns: 2.2em 1fr;
+    gap: 10px;
+    align-items: stretch;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(110, 84, 40, .45);
+  }
+  .gear-name {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+    color: #f0d060;
+    font-weight: bold;
+  }
+  .gear-desc { line-height: 1.55; overflow-wrap: anywhere; }
+  .gear-recipe {
+    margin-top: 6px;
+    color: #cbb892;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<div class="toolbar">
+  <div>
+    <div class="char-picker" id="char-picker">
+      <button type="button" class="char-picker-btn" id="char-picker-btn">
+        <span id="char-picker-label">选择人物</span>
+        <span aria-hidden="true">▾</span>
+      </button>
+      <div class="char-picker-menu" id="char-picker-menu" hidden></div>
+    </div>
+  </div>
+  <select id="build-select">
+    <option value="">自由加点</option>
+  </select>
+</div>
+
+<div class="load-error" id="load-error" hidden></div>
+
+<div class="notree-host" id="notree-host" hidden>
+  <div class="profile-bar">技能树</div>
+  <div class="notree-msg">该角色暂未领悟技能树</div>
+  <div id="profile-inline"></div>
+</div>
+
+<div class="stage-head" id="stage-head">
+  <div class="insight-bar">
+    <button type="button" class="align-btn" id="align-nice" data-align="nice" data-tip="好孩子加点（再点取消，变为无偏好）" hidden aria-pressed="false">😇</button>
+    <span class="insight-box" id="points-text">15</span>
+    <span class="insight-label">剩余洞察</span>
+    <button type="button" class="align-btn" id="align-naughty" data-align="naughty" data-tip="淘气包加点（再点取消，变为无偏好）" hidden aria-pressed="false">😈</button>
+  </div>
+  <div class="mode-stack" id="mode-stack">
+    <div class="mode-row">
+      <button type="button" class="mode-btn" data-mode="lunar" data-tip="解锁月后加点" aria-pressed="false">
+        <img src="img/moon.png" alt="月后" draggable="false">
+      </button>
+      <button type="button" class="mode-btn" data-mode="shadow" data-tip="解锁影后加点" aria-pressed="false">
+        <img src="img/dark.png" alt="影后" draggable="false">
+      </button>
+    </div>
+    <div class="mode-row">
+      <button type="button" class="mode-btn mode-emoji" data-mode="solo" data-tip="单人模式" aria-pressed="false">👤</button>
+      <button type="button" class="mode-btn mode-emoji" data-mode="multi" data-tip="多人模式" aria-pressed="false">👥</button>
+    </div>
+  </div>
+</div>
+
+<svg viewBox="-300 -210 600 460">
+  <rect id="tree-bg" x="-300" y="-210" width="600" height="460" fill="#120e0b" fill-opacity="0.55"/>
+  <g id="group-titles"></g>
+  <g id="nodes"></g>
+  <g id="node-labels"></g>
+  <g id="buttons">
+    <rect id="learn-bg" x="-220" y="150" width="180" height="43" rx="2" fill="#2a2118" stroke="#6e5428" stroke-width="1.5"/>
+    <rect id="reset-bg" x="40"  y="150" width="180" height="43" rx="2" fill="#2a2118" stroke="#6e5428" stroke-width="1.5"/>
+    <text id="learn-text" x="-130" y="177.5" text-anchor="middle" font-size="16" fill="#fff">学习</text>
+    <text id="reset-text" x="130"  y="177.5" text-anchor="middle" font-size="16" fill="#fff">重置洞察</text>
+    <rect id="btn-learn" x="-220" y="150" width="180" height="43" fill="transparent" style="cursor:pointer"/>
+    <rect id="btn-reset" x="40"  y="150" width="180" height="43" fill="transparent" style="cursor:pointer"/>
+  </g>
+</svg>
+
+<div class="status-bar">
+  <span>已学习：<span class="points" id="learned-count">0</span> / <span id="skill-total">0</span></span>
+</div>
+
+<div class="desc-panel" id="desc-panel"></div>
+</div>
+
+<div id="lock-tip" class="lock-tip" hidden></div>
+<div id="note-tip" class="lock-tip note-tip" hidden></div>
+<div id="mode-tip" class="lock-tip" hidden></div>
+<aside class="insight-drawer" id="insight-drawer" hidden>
+  <div class="insight-drawer-panel">
+    <div class="insight-drawer-title" id="insight-drawer-title">个人见解</div>
+    <div class="insight-drawer-body tag-text" id="insight-drawer-body"></div>
+  </div>
+  <button type="button" class="insight-drawer-handle" id="insight-drawer-handle" aria-expanded="false">
+    <span class="insight-drawer-label">个人见解</span>
+    <span class="insight-drawer-arrow" id="insight-drawer-arrow">&gt;</span>
+  </button>
+</aside>
+
+<button type="button" class="profile-open" id="profile-open" hidden title="角色详情"><span>角色</span><span>详情</span></button>
+<aside class="profile-drawer" id="profile-drawer" hidden>
+  <div class="profile-head">
+    人物详情
+    <button type="button" class="profile-close" id="profile-close" aria-label="关闭">×</button>
+  </div>
+  <div class="profile-scroll" id="profile-scroll"></div>
+</aside>
+
+<aside class="item-drawer" id="item-drawer" hidden>
+  <div class="item-head">
+    <span id="item-title"></span>
+    <button type="button" class="item-close" id="item-close" aria-label="关闭">×</button>
+  </div>
+  <div class="item-scroll tag-text" id="item-scroll"></div>
+</aside>
+
+<aside class="char-notice" id="char-notice" hidden>
+  <button type="button" class="char-notice-btn" id="char-notice-btn" aria-expanded="false" aria-controls="char-notice-panel" title="角色总结">!</button>
+  <div class="char-notice-panel" id="char-notice-panel" hidden>
+    <div class="char-notice-title" id="char-notice-title">总结</div>
+    <div class="char-notice-body tag-text" id="char-notice-body"></div>
+  </div>
+</aside>
+
+<div id="scheme-pop" class="scheme-pop" hidden>
+  <div class="scheme-title" id="scheme-title"></div>
+  <div class="scheme-body" id="scheme-body"></div>
+  <button type="button" class="scheme-close" id="scheme-close">确认</button>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
