@@ -38,7 +38,7 @@
     position: absolute;
     left: 18%;
     right: 18%;
-    top: 50%;
+    top: 46.8%;
     transform: translateY(-50%);
     text-align: center;
     color: #f0e2c0;
@@ -48,6 +48,13 @@
   }
   .selector:hover span { color: #f0d060; }
   @media (max-width: 720px) {
+    body {
+      padding: 12px 10px 24px;
+      background-image:
+        linear-gradient(rgba(18, 10, 16, .62), rgba(10, 6, 8, .78)),
+        url("img/pe_background.jpg");
+      background-position: center 18%;
+    }
     .selector { width: 85vw; }
     .selector span { font-size: 18px; }
   }
