@@ -878,13 +878,15 @@
   .profile-text cyan { color: #4dffea; }
   .profile-text chili { color: #c5362b; }
   .profile-text soilyellow { color: #d7a441; }
-  .profile-text notice {
+  .profile-text notice,
+  .gear-desc notice {
     position: relative;
     cursor: help;
     color: #f0d060;
     border-bottom: 1px dashed rgba(240, 208, 96, .75);
   }
-  .profile-text notice::after {
+  .profile-text notice::after,
+  .gear-desc notice::after {
     content: attr(text);
     position: absolute;
     left: 0;
@@ -906,7 +908,8 @@
     opacity: 0;
     visibility: hidden;
   }
-  .profile-text notice:hover::after {
+  .profile-text notice:hover::after,
+  .gear-desc notice:hover::after {
     opacity: 1;
     visibility: visible;
   }
@@ -917,18 +920,22 @@
   .profile-text li {
     list-style: disc;
   }
-  .profile-text details {
+  .profile-text details,
+  .gear-desc details {
     margin-top: 10px;
     white-space: normal;
   }
-  .profile-text summary {
+  .profile-text summary,
+  .gear-desc summary {
     cursor: pointer;
     color: #f0d060;
     font-weight: 700;
     letter-spacing: 1px;
   }
-  .profile-text summary:hover { color: #ffe7a0; }
-  .profile-text table {
+  .profile-text summary:hover,
+  .gear-desc summary:hover { color: #ffe7a0; }
+  .profile-text table,
+  .gear-desc table {
     width: 100%;
     margin-top: 8px;
     border-collapse: collapse;
@@ -938,17 +945,21 @@
     white-space: normal;
   }
   .profile-text th,
-  .profile-text td {
+  .profile-text td,
+  .gear-desc th,
+  .gear-desc td {
     padding: 4px 5px;
     border: 1px solid rgba(110, 84, 40, .75);
     vertical-align: middle;
   }
-  .profile-text th {
+  .profile-text th,
+  .gear-desc th {
     color: #f0d060;
     font-weight: 700;
     background: rgba(58, 44, 22, .72);
   }
-  .profile-text td[colspan] {
+  .profile-text td[colspan],
+  .gear-desc td[colspan] {
     text-align: left;
     color: #cbb892;
   }
