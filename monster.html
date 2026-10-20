@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>怪物</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    color: #f0d060;
+    font-family: Palatino, "Palatino Linotype", "Songti SC", "STSong", "Noto Serif SC", serif;
+    background-color: #0c0907;
+    background-image:
+      radial-gradient(ellipse at center, rgba(12,8,6,.28) 0%, rgba(6,4,3,.72) 72%, rgba(0,0,0,.88) 100%),
+      linear-gradient(rgba(8,6,4,.5), rgba(8,6,4,.62)),
+      url("img/Pc_background.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+  }
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, .85);
+  }
+  @media (max-width: 720px) {
+    body {
+      padding: 12px 10px 24px;
+      background-image:
+        linear-gradient(rgba(18, 10, 16, .62), rgba(10, 6, 8, .78)),
+        url("img/pe_background.jpg");
+      background-position: center 18%;
+    }
+    h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+  <h1>功能正在开发中</h1>
+</body>
+</html>

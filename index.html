@@ -23,6 +23,12 @@
     background-position: center top;
     background-attachment: fixed;
   }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
   .selector {
     position: relative;
     display: block;
@@ -61,9 +67,15 @@
 </style>
 </head>
 <body>
-  <a class="selector" href="skill.html">
-    <img class="selector-frame" src="img/selection.png" alt="">
-    <span>技能树</span>
-  </a>
+  <div class="menu">
+    <a class="selector" href="skill.html">
+      <img class="selector-frame" src="img/selection.png" alt="">
+      <span>技能树</span>
+    </a>
+    <a class="selector" href="monster.html">
+      <img class="selector-frame" src="img/selection.png" alt="">
+      <span>怪物</span>
+    </a>
+  </div>
 </body>
 </html>
