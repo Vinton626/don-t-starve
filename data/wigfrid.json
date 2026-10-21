@@ -50,7 +50,7 @@
       "name": "战斗号子罐",
       "desc": "可以打开<green>战斗号子罐</green>、往<green>战斗号子罐</green>中存放物品。习得配方：",
       "recipes": [
-        "2 木板 + 3 金块 + 2 蔚蓝羽毛 + 2 蜂蜡 → 1 战斗号子罐"
+        "2 木板 + 3 金块 + 2 蔚蓝羽毛 + 2 蜂蜡 → 1 <item>战斗号子罐</item>"
       ],
       "requires": [],
       "lock": "lock_songs_container",
@@ -66,7 +66,7 @@
       "name": "返场表演",
       "desc": "可以使用战士重奏。习得配方：",
       "recipes": [
-        "1 纸莎草 + 1 羽毛笔 + 3 绒羽 → 1 战士重奏"
+        "1 纸莎草 + 1 羽毛笔 + 3 绒羽 → 1 <item>战士重奏</item>"
       ],
       "requires": [],
       "lock": "lock_songs_revivewarrior",
@@ -120,7 +120,7 @@
       "name": "奔雷矛",
       "desc": "习得配方：",
       "recipes": [
-        "2 树枝 + 2 伏特羊角 + 1 牛毛 → 1 奔雷矛"
+        "2 树枝 + 2 伏特羊角 + 1 牛毛 → 1 <item>奔雷矛</item>"
       ],
       "requires": [
         "wathgrithr_arsenal_spear_1",
@@ -196,7 +196,7 @@
       "name": "统帅头盔",
       "desc": "习得配方：",
       "recipes": [
-        "2 金块 + 2 牛毛 + 1 大理石 → 1 统帅头盔"
+        "2 金块 + 2 牛毛 + 1 大理石 → 1 <item>统帅头盔</item>"
       ],
       "requires": [
         "wathgrithr_arsenal_helmet_1",
@@ -246,7 +246,7 @@
       "name": "战斗圆盾",
       "desc": "习得配方：可以装备<green>战斗圆盾</green>。",
       "recipes": [
-        "4 金块 + 3 牛毛 → 1 战斗圆盾"
+        "4 金块 + 3 牛毛 → 1 <item>战斗圆盾</item>"
       ],
       "requires": [
         "wathgrithr_arsenal_helmet_1",
@@ -335,7 +335,7 @@
       "name": "战斗鞍具",
       "desc": "习得配方：",
       "recipes": [
-        "4 金块 + 3 大理石 + 6 蔚蓝羽毛 → 1 战斗鞍具"
+        "4 金块 + 3 大理石 + 6 蔚蓝羽毛 → 1 <item>战斗鞍具</item>"
       ],
       "requires": [
         "wathgrithr_beefalo_1",
@@ -354,7 +354,7 @@
       "name": "暗影歌姬",
       "desc": "薇格弗德获得暗影亲和，受到来自暗影阵营的伤害降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.1倍</b>的伤害。可以使用黑暗悲歌。习得配方：",
       "recipes": [
-        "1 纸莎草 + 1 羽毛笔 + 3 纯粹恐惧 → 1 黑暗悲歌"
+        "1 纸莎草 + 1 羽毛笔 + 3 纯粹恐惧 → 1 <item>黑暗悲歌</item>"
       ],
       "requires": [],
       "lock": "lock_affinity",
@@ -373,7 +373,7 @@
       "name": "月曲歌唱家",
       "desc": "薇格弗德获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.1倍</b>的伤害。可以使用启迪摇篮曲。习得配方：",
       "recipes": [
-        "1 纸莎草 + 1 羽毛笔 + 3 纯粹辉煌 → 1 启迪摇篮曲"
+        "1 纸莎草 + 1 羽毛笔 + 3 纯粹辉煌 → 1 <item>启迪摇篮曲</item>"
       ],
       "requires": [],
       "lock": "lock_affinity",
@@ -729,6 +729,50 @@
         "name": "物品名称",
         "desc": "在这里写物品描述",
         "recipe": "在这里写配方"
+      }
+    ]
+  },
+  "craftItems": {
+    "items": [
+      {
+        "id": "wathgrithr_songs_container_1",
+        "name": "战斗号子罐",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_songs_revivewarrior_1",
+        "name": "战士重奏",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_arsenal_spear_3_1",
+        "name": "奔雷矛",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_arsenal_helmet_3_1",
+        "name": "统帅头盔",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_arsenal_shield_1_1",
+        "name": "战斗圆盾",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_beefalo_saddle_1",
+        "name": "战斗鞍具",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_allegiance_shadow_1",
+        "name": "黑暗悲歌",
+        "desc": ""
+      },
+      {
+        "id": "wathgrithr_allegiance_lunar_1",
+        "name": "启迪摇篮曲",
+        "desc": ""
       }
     ]
   },

@@ -39,7 +39,7 @@
       "name": "树苗制造",
       "desc": "习得配方：",
       "recipes": [
-        "5 生命值降低 + 5 树枝 → 1 月亮树苗"
+        "5 生命值降低 + 5 树枝 → 1 <item>月亮树苗</item>"
       ],
       "requires": [
         "wormwood_identify_plants2"
@@ -56,8 +56,8 @@
       "name": "浆果丛制造",
       "desc": "习得配方：",
       "recipes": [
-        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 浆果丛",
-        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 浆果丛（二号）"
+        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛</item>",
+        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛（二号）</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -75,7 +75,7 @@
       "name": "多汁浆果丛制造",
       "desc": "习得配方：",
       "recipes": [
-        "10 生命值降低 + 3 腐烂物 + 8 浆果 → 1 多汁浆果丛"
+        "10 生命值降低 + 3 腐烂物 + 8 浆果 → 1 <item>多汁浆果丛</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -94,7 +94,7 @@
       "name": "猴尾草制造",
       "desc": "习得配方：",
       "recipes": [
-        "15 生命值降低 + 1 洞穴香蕉 + 4 芦苇 → 1 猴尾草"
+        "15 生命值降低 + 1 洞穴香蕉 + 4 芦苇 → 1 <item>猴尾草</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -113,7 +113,7 @@
       "name": "食人花制造",
       "desc": "习得配方：",
       "recipes": [
-        "25 生命值降低 + 2 堆肥包 + 5 叶肉 → 1 食人花种子"
+        "25 生命值降低 + 2 堆肥包 + 5 叶肉 → 1 <item>食人花种子</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -162,7 +162,7 @@
       "name": "可怜的树液",
       "desc": "习得配方：",
       "recipes": [
-        "1 红蘑菇 + 1 蜂蜜 + 1 腐烂物 → 1 吐根糖浆"
+        "1 红蘑菇 + 1 蜂蜜 + 1 腐烂物 → 1 <item>吐根糖浆</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -412,7 +412,7 @@
       "name": "月亮守卫 I",
       "desc": "沃姆伍德获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.1倍</b>的伤害。穿着亮茄盔甲时受到攻击会禁锢攻击者 <b>6秒</b>。习得配方：",
       "recipes": [
-        "1 亮茄盔甲 + 1 荆棘外壳 → 1 荆棘茄甲"
+        "1 亮茄盔甲 + 1 荆棘外壳 → 1 <item>荆棘茄甲</item>"
       ],
       "requires": [],
       "lock": "lock_affinity",
@@ -710,7 +710,7 @@
   "hunger": "150",
   "sanity": "200",
   "trait": {
-    "text": "<br><p>无开局起始物品</p><br><h3>园艺才能</h3><p>沃姆伍德不使用耕地机与园艺锄也可以直接将种子种在地上，但是这样种出的农作物进入腐烂状态所需的时间是一般农作物的<b>1.5倍</b>。沃姆伍德不开origin模组也可以精确找出农作物的压力来源</p><h3>食物和肥料</h3><p>沃姆伍德食用食物时，不会受到任何食物对应的血量属性影响</p><ul><li>所以沃姆伍德可以生吃红蘑菇来回复<hunger>饱食度</hunger></li><li><lightpink>彩虹糖豆</lightpink>，<pumpkin>恐怖国王饼</pumpkin>这类特殊食物的特殊效果仍有效</li></ul><br><p>沃姆伍德可以食用肥料给自己施肥</p><ul><li><brown>粪肥</brown>会瞬间回复<health>生命值</health></li><li><grey>堆肥</grey>可以<b>+2</b><health>生命值</health>/s</li><li><lightblue>催长剂</lightblue>会触发开花，服用更多催长剂会加快开花速度，或者在绽放期使用来延长绽放时间</li></ul><details><summary>肥料回血表</summary><table><thead><tr><th>肥料</th><th>缓慢回血<br>(<b>2点</b>/<b>2秒</b>)</th><th>立刻回血</th><th>总计</th></tr></thead><tbody><tr><td>腐烂物</td><td><b>4</b></td><td>/</td><td><b>4</b></td></tr><tr><td>腐烂鸟蛋</td><td><b>6</b></td><td>/</td><td><b>6</b></td></tr><tr><td>堆肥</td><td><b>8</b></td><td>/</td><td><b>8</b></td></tr><tr><td>受潮的营养砖</td><td><b>32</b></td><td>/</td><td><b>32</b></td></tr><tr><td>粪肥</td><td>/</td><td><b>2</b></td><td><b>2</b></td></tr><tr><td>鸟粪</td><td>/</td><td><b>3</b></td><td><b>3</b></td></tr><tr><td>便便桶<br>（一次）</td><td>/</td><td><b>3</b></td><td><b>3</b></td></tr><tr><td>格罗姆的粘液<sup>*</sup></td><td><b>4</b></td><td><b>2</b></td><td><b>6</b></td></tr><tr><td>嗡嗡肥料<sup>*</sup></td><td><b>6</b></td><td><b>3</b></td><td><b>9</b></td></tr><tr><td>树果酱<sup>*</sup></td><td><b>32</b></td><td><b>2</b></td><td><b>34</b></td></tr><tr><td>肥料包<sup>*</sup></td><td><b>32</b></td><td><b>8</b></td><td><b>40</b></td></tr><tr><td colspan='4'>*一些物品由于同时含有催长剂，所以使用时也可以激活开花。</td></tr></tbody></table></details><h3>开花</h3><p>春季或使用带有催长剂的肥料施肥后，沃姆伍德会开花，移速与<hunger>饥饿值</hunger>下降速度会受到影响</p><details><summary>开花属性</summary><table><thead><tr><th>阶段</th><th>默认开花值上限</th><th>移动速度与<hunger>饥饿值</hunger>下降速度</th></tr></thead><tbody><tr><td><b>0</b></td><td>/</td><td><b>1倍</b></td></tr><tr><td><b>1</b></td><td><b>480</b></td><td><b>1.067倍</b>(<b>16/15</b>)</td></tr><tr><td><b>2</b></td><td><b>480</b></td><td><b>1.133倍</b>(<b>17/15</b>)</td></tr><tr><td><b>3</b></td><td><b>2400</b></td><td><b>1.2倍</b></td></tr></tbody></table></details><p>沃姆伍德开花的状态一共四个阶段，包含一个开花值升高或降低的速率，默认为<b>1</b>。使用催长剂可提升该速率，每<b>8点</b>催长剂提升<b>1/16</b>速率，进入下一阶段以后重置为<b>1</b>。开花的<b>3阶段</b>为绽放状态，进入此阶段后立马获取<b>1440点</b>开花值，并且速率不在受催长剂影响。且开花值会逐渐下降，其中春天不降，夏秋速率为<b>1</b>，冬天速率为<b>2</b>。此时使用催长剂会获得开花值，每<b>8点</b>催长剂增加<b>60点</b>开花值</p><ul><li>若从高阶段下降至低阶段期间使用催长剂，沃姆伍德的开花值速率会从当前阶段开始再次由降低转为升高</li><li>在绽放状态时，额外获得<b>30点</b>隔热值，此外还会自动照料<b>1个</b>地皮范围内的农作物(受<green>农场工人</green>影响)，蜜蜂会主动追随并保持中立</li></ul><h3>植物</h3><p>当植物在沃姆伍德附近被无论谁种植时，都会回复<sanity>理智值</sanity>，包括海带，蘑菇等</p><ul><li>当沃姆伍德种植任何植物时，回复<b>10点</b><sanity>精神值</sanity></li><li>当<b>5个</b>地皮范围内的其他玩家种植植物时，在<b>5秒</b>内回复<b>0-2点</b><sanity>精神值</sanity>，具体数值与距离有关，且回复效果会被沃姆伍德自己砍倒树，采花与铲起植物打断</li></ul><p>当植物在沃姆伍德附近被无论如何摧毁时，都会损失<sanity>理智值</sanity></p><ul><li>当沃姆伍德砍倒树时，损失<b>15点</b><sanity>精神值</sanity></li><li>当沃姆伍德采花与铲起植物时，损失<b>5点</b><sanity>精神值</sanity></li><li>当<b>5个</b>地皮范围内的植物(包括物品形态的)被烧毁或其他玩家采摘花、砍倒树、铲起植物时，在<b>5秒</b>内损失<b>0-2点</b><sanity>精神值</sanity>，具体数值与距离有关，且损失效果会被沃姆伍德自己种植植物打断</li></ul><h3>其他</h3><ul><li>潮湿不影响沃姆伍德的<sanity>理智值</sanity></li><li>眼球草、针刺旋花、火荨麻和春季发情的蜜蜂对沃姆伍德是中立的，海草不会因为沃姆伍德采摘他身上的藤壶就攻击沃姆伍德</li><li>沃姆伍德收到的火焰伤害比其他角色高<b>25%</b>，且被点燃后燃烧事件比其他角色多<b>1秒</b>，共<b>4.3秒</b></li><li>沃姆伍德不会留下尸体</li><li>沃姆伍德最喜欢的食物是<yellow>熟香蕉</yellow></li></ul>"
+    "text": "<br><p>无开局起始物品</p><br><h3>园艺才能</h3><p>沃姆伍德不使用耕地机与园艺锄也可以直接将种子种在地上，但是这样种出的农作物进入腐烂状态所需的时间是一般农作物的<b>1.5倍</b>。沃姆伍德不开origin模组也可以精确找出农作物的压力来源</p><h3>食物和肥料</h3><p>沃姆伍德食用食物时，不会受到任何食物对应的血量属性影响</p><ul><li>所以沃姆伍德可以生吃红蘑菇来回复<hunger>饥饿值</hunger></li><li><lightpink>彩虹糖豆</lightpink>，<pumpkin>恐怖国王饼</pumpkin>这类特殊食物的特殊效果仍有效</li></ul><br><p>沃姆伍德可以食用肥料给自己施肥</p><ul><li><brown>粪肥</brown>会瞬间回复<health>生命值</health></li><li><grey>堆肥</grey>可以<b>+2</b><health>生命值</health>/s</li><li><lightblue>催长剂</lightblue>会触发开花，服用更多催长剂会加快开花速度，或者在绽放期使用来延长绽放时间</li></ul><details><summary>肥料回血表</summary><table><thead><tr><th>肥料</th><th>缓慢回血<br>(<b>2点</b>/<b>2秒</b>)</th><th>立刻回血</th><th>总计</th></tr></thead><tbody><tr><td>腐烂物</td><td><b>4</b></td><td>/</td><td><b>4</b></td></tr><tr><td>腐烂鸟蛋</td><td><b>6</b></td><td>/</td><td><b>6</b></td></tr><tr><td>堆肥</td><td><b>8</b></td><td>/</td><td><b>8</b></td></tr><tr><td>受潮的营养砖</td><td><b>32</b></td><td>/</td><td><b>32</b></td></tr><tr><td>粪肥</td><td>/</td><td><b>2</b></td><td><b>2</b></td></tr><tr><td>鸟粪</td><td>/</td><td><b>3</b></td><td><b>3</b></td></tr><tr><td>便便桶<br>（一次）</td><td>/</td><td><b>3</b></td><td><b>3</b></td></tr><tr><td>格罗姆的粘液<sup>*</sup></td><td><b>4</b></td><td><b>2</b></td><td><b>6</b></td></tr><tr><td>嗡嗡肥料<sup>*</sup></td><td><b>6</b></td><td><b>3</b></td><td><b>9</b></td></tr><tr><td>树果酱<sup>*</sup></td><td><b>32</b></td><td><b>2</b></td><td><b>34</b></td></tr><tr><td>肥料包<sup>*</sup></td><td><b>32</b></td><td><b>8</b></td><td><b>40</b></td></tr><tr><td colspan='4'>*一些物品由于同时含有催长剂，所以使用时也可以激活开花。</td></tr></tbody></table></details><h3>开花</h3><p>春季或使用带有催长剂的肥料施肥后，沃姆伍德会开花，移速与<hunger>饥饿值</hunger>下降速度会受到影响</p><details><summary>开花属性</summary><table><thead><tr><th>阶段</th><th>默认开花值上限</th><th>移动速度与<hunger>饥饿值</hunger>下降速度</th></tr></thead><tbody><tr><td><b>0</b></td><td>/</td><td><b>1倍</b></td></tr><tr><td><b>1</b></td><td><b>480</b></td><td><b>1.067倍</b>(<b>16/15</b>)</td></tr><tr><td><b>2</b></td><td><b>480</b></td><td><b>1.133倍</b>(<b>17/15</b>)</td></tr><tr><td><b>3</b></td><td><b>2400</b></td><td><b>1.2倍</b></td></tr></tbody></table></details><p>沃姆伍德开花的状态一共四个阶段，包含一个开花值升高或降低的速率，默认为<b>1</b>。使用催长剂可提升该速率，每<b>8点</b>催长剂提升<b>1/16</b>速率，进入下一阶段以后重置为<b>1</b>。开花的<b>3阶段</b>为绽放状态，进入此阶段后立马获取<b>1440点</b>开花值，并且速率不在受催长剂影响。且开花值会逐渐下降，其中春天不降，夏秋速率为<b>1</b>，冬天速率为<b>2</b>。此时使用催长剂会获得开花值，每<b>8点</b>催长剂增加<b>60点</b>开花值</p><ul><li>若从高阶段下降至低阶段期间使用催长剂，沃姆伍德的开花值速率会从当前阶段开始再次由降低转为升高</li><li>在绽放状态时，额外获得<b>30点</b>隔热值，此外还会自动照料<b>1个</b>地皮范围内的农作物(受<green>农场工人</green>影响)，蜜蜂会主动追随并保持中立</li></ul><h3>植物</h3><p>当植物在沃姆伍德附近被无论谁种植时，都会回复<sanity>理智值</sanity>，包括海带，蘑菇等</p><ul><li>当沃姆伍德种植任何植物时，回复<b>10点</b><sanity>理智值</sanity></li><li>当<b>5个</b>地皮范围内的其他玩家种植植物时，在<b>5秒</b>内回复<b>0-2点</b><sanity>理智值</sanity>，具体数值与距离有关，且回复效果会被沃姆伍德自己砍倒树，采花与铲起植物打断</li></ul><p>当植物在沃姆伍德附近被无论如何摧毁时，都会损失<sanity>理智值</sanity></p><ul><li>当沃姆伍德砍倒树时，损失<b>15点</b><sanity>理智值</sanity></li><li>当沃姆伍德采花与铲起植物时，损失<b>5点</b><sanity>理智值</sanity></li><li>当<b>5个</b>地皮范围内的植物(包括物品形态的)被烧毁或其他玩家采摘花、砍倒树、铲起植物时，在<b>5秒</b>内损失<b>0-2点</b><sanity>理智值</sanity>，具体数值与距离有关，且损失效果会被沃姆伍德自己种植植物打断</li></ul><h3>其他</h3><ul><li>潮湿不影响沃姆伍德的<sanity>理智值</sanity></li><li>眼球草、针刺旋花、火荨麻和春季发情的蜜蜂对沃姆伍德是中立的，海草不会因为沃姆伍德采摘他身上的藤壶就攻击沃姆伍德</li><li>沃姆伍德收到的火焰伤害比其他角色高<b>25%</b>，且被点燃后燃烧事件比其他角色多<b>1秒</b>，共<b>4.3秒</b></li><li>沃姆伍德不会留下尸体</li><li>沃姆伍德最喜欢的食物是<yellow>熟香蕉</yellow></li></ul>"
   },
   "exclusiveItems": {
     "items": [
@@ -733,6 +733,50 @@
         "name": "肥料包",
         "desc": "本身为<b>3分钟</b>可燃物。肥料，能够提供<b>24</b>催长剂、<b>32</b>堆肥与<b>24</b>粪肥",
         "recipe": "粪肥×5 + 腐烂物×2 + 硝石×1 → 1 肥料包"
+      }
+    ]
+  },
+  "craftItems": {
+    "items": [
+      {
+        "id": "wormwood_saplingcrafting_1",
+        "name": "月亮树苗",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_berrybushcrafting_1",
+        "name": "浆果丛",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_berrybushcrafting_2",
+        "name": "浆果丛（二号）",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_juicyberrybushcrafting_1",
+        "name": "多汁浆果丛",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_reedscrafting_1",
+        "name": "猴尾草",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_lureplantbulbcrafting_1",
+        "name": "食人花种子",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_syrupcrafting_1",
+        "name": "吐根糖浆",
+        "desc": ""
+      },
+      {
+        "id": "wormwood_allegiance_lunar_plant_gear_1_1",
+        "name": "荆棘茄甲",
+        "desc": ""
       }
     ]
   },

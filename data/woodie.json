@@ -331,7 +331,7 @@
       "name": "树精守卫伐木者 III",
       "desc": "习得配方：",
       "recipes": [
-        "3 切制草 + 2 活木 + 5 噩梦燃料 → 1 树精雕像"
+        "3 切制草 + 2 活木 + 5 噩梦燃料 → 1 <item>树精雕像</item>"
       ],
       "requires": [
         "woodie_human_treeguard_1",
@@ -349,7 +349,7 @@
       "name": "木工",
       "desc": "习得新的木板配方：",
       "recipes": [
-        "3 木头 → 1 木板（无需露西斧）"
+        "3 木头 → 1 <item>木板（无需露西斧）</item>"
       ],
       "requires": [],
       "x": 55,
@@ -364,7 +364,7 @@
       "name": "帽子雕刻",
       "desc": "习得配方：",
       "recipes": [
-        "6 木头 + 1 松果 → 1 硬木帽"
+        "6 木头 + 1 松果 → 1 <item>硬木帽</item>"
       ],
       "requires": [
         "woodie_human_lucy_1"
@@ -381,7 +381,7 @@
       "name": "拐杖雕刻",
       "desc": "习得配方：",
       "recipes": [
-        "3 木头 + 1 木炭 → 1 木制手杖"
+        "3 木头 + 1 木炭 → 1 <item>木制手杖</item>"
       ],
       "requires": [
         "woodie_human_lucy_1"
@@ -783,6 +783,30 @@
         "name": "物品名称",
         "desc": "在这里写物品描述",
         "recipe": "在这里写配方"
+      }
+    ]
+  },
+  "craftItems": {
+    "items": [
+      {
+        "id": "woodie_human_treeguard_max_1",
+        "name": "树精雕像",
+        "desc": ""
+      },
+      {
+        "id": "woodie_human_lucy_1_1",
+        "name": "木板（无需露西斧）",
+        "desc": ""
+      },
+      {
+        "id": "woodie_human_lucy_2_1",
+        "name": "硬木帽",
+        "desc": ""
+      },
+      {
+        "id": "woodie_human_lucy_3_1",
+        "name": "木制手杖",
+        "desc": ""
       }
     ]
   },

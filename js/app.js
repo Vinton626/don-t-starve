@@ -844,7 +844,7 @@ function noticePayload(tree) {
 
 function bindRoleSwitch(root) {
   if (!root) return;
-  root.querySelectorAll("charactor").forEach(box => {
+  root.querySelectorAll("roles").forEach(box => {
     if (box.querySelector(":scope > .role-switch")) return;
     const roles = ["role1", "role2", "role3"]
       .map(tag => box.querySelector(":scope > " + tag))
@@ -902,8 +902,8 @@ function renderProfileBody(host, tree) {
   stats.className = "stat-row";
   [
     ["health", "stat-health", "❤️", "生命值"],
-    ["hunger", "stat-hunger", "🍗", "饱食度"],
-    ["sanity", "stat-sanity", "🧠", "精神值"]
+    ["hunger", "stat-hunger", "🍗", "饥饿值"],
+    ["sanity", "stat-sanity", "🧠", "理智值"]
   ].forEach(([key, tone, emoji, label]) => {
     const col = document.createElement("div");
     col.className = "stat";
@@ -1627,9 +1627,9 @@ function alignTag() {
 }
 
 const ALIGN_HINTS = {
-  "好孩子": "吃灵魂掉10精神值回25饱食度，释放灵魂回20血回5精神值",
-  "淘气包": "吃掉灵魂不掉精神值回25饱食度，释放灵魂回15血不回精神值",
-  "无偏好": "吃掉灵魂掉5精神值回25饱食度，释放灵魂回20血回2.5精神值"
+  "好孩子": "吃灵魂掉10理智值回25饥饿值，释放灵魂回20血回5理智值",
+  "淘气包": "吃掉灵魂不掉理智值回25饥饿值，释放灵魂回15血不回理智值",
+  "无偏好": "吃掉灵魂掉5理智值回25饥饿值，释放灵魂回20血回2.5理智值"
 };
 
 function withAlignHint(body) {

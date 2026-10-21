@@ -25,7 +25,7 @@
       "n": 1,
       "group": "amphibian",
       "name": "一级精神流淌",
-      "desc": "沃特的<seablue>潮湿度</seablue>会线性地提供<sanity>理智值</sanity>增益，满<seablue>潮湿度</seablue>时会 <b>+4.4</b><sanity>精神值</sanity><b>/分钟</b>。",
+      "desc": "沃特的<seablue>潮湿度</seablue>会线性地提供<sanity>理智值</sanity>增益，满<seablue>潮湿度</seablue>时会 <b>+4.4</b><sanity>理智值</sanity><b>/分钟</b>。",
       "requires": [],
       "x": -202,
       "y": -108,
@@ -37,7 +37,7 @@
       "n": 2,
       "group": "amphibian",
       "name": "二级精神流淌",
-      "desc": "满<seablue>潮湿度</seablue>时会 <b>+6.7</b><sanity>精神值</sanity><b>/分钟</b>。",
+      "desc": "满<seablue>潮湿度</seablue>时会 <b>+6.7</b><sanity>理智值</sanity><b>/分钟</b>。",
       "requires": [
         "wurt_amphibian_sanity_1"
       ],
@@ -134,7 +134,7 @@
       "name": "匿名蚊子",
       "desc": "习得配方：",
       "recipes": [
-        "1 蚊子血袋 + 1 牛毛 → 1 小痒痒"
+        "1 蚊子血袋 + 1 牛毛 → 1 <item>小痒痒</item>"
       ],
       "requires": [],
       "x": -61,
@@ -149,9 +149,9 @@
       "name": "一级痒术",
       "desc": "习得配方：",
       "recipes": [
-        "1 蚊子血袋 + 4 蚊子 → 1 蚊子炸弹",
-        "1 蚊子血袋 + 2 硝石 + 1 便便 → 1 嗡嗡肥料",
-        "2 蚊子血袋 → 1 蚊血注射液"
+        "1 蚊子血袋 + 4 蚊子 → 1 <item>蚊子炸弹</item>",
+        "1 蚊子血袋 + 2 硝石 + 1 便便 → 1 <item>嗡嗡肥料</item>",
+        "2 蚊子血袋 → 1 <item>蚊血注射液</item>"
       ],
       "requires": [
         "wurt_mosquito_craft_1"
@@ -265,7 +265,7 @@
       "name": "一级集体喂食",
       "desc": "习得配方：",
       "recipes": [
-        "2 木板 + 2 切制芦苇 → 1 公共海带盘"
+        "2 木板 + 2 切制芦苇 → 1 <item>公共海带盘</item>"
       ],
       "requires": [],
       "x": -46,
@@ -280,7 +280,7 @@
       "name": "二级集体喂食",
       "desc": "习得配方：",
       "recipes": [
-        "3 木板 + 3 切制芦苇 + 1 触手皮 → 1 高级公共海带盘"
+        "3 木板 + 3 切制芦苇 + 1 触手皮 → 1 <item>高级公共海带盘</item>"
       ],
       "requires": [
         "wurt_civ_1"
@@ -297,7 +297,7 @@
       "name": "一级勤奋鱼人",
       "desc": "习得配方：",
       "recipes": [
-        "2 木板 + 5 树枝 + 5 石头 → 1 简陋工具棚"
+        "2 木板 + 5 树枝 + 5 石头 → 1 <item>简陋工具棚</item>"
       ],
       "requires": [],
       "x": -8,
@@ -312,7 +312,7 @@
       "name": "二级勤奋鱼人",
       "desc": "习得配方：",
       "recipes": [
-        "4 木板 + 1 触手皮 + 5 树枝 + 5 石头 → 1 稍好工具棚"
+        "4 木板 + 1 触手皮 + 5 树枝 + 5 石头 → 1 <item>稍好工具棚</item>"
       ],
       "requires": [
         "wurt_civ_2"
@@ -329,7 +329,7 @@
       "name": "一级硬脑袋",
       "desc": "习得配方：",
       "recipes": [
-        "2 木板 + 5 木头 + 5 切制草 → 1 军械库"
+        "2 木板 + 5 木头 + 5 切制草 → 1 <item>军械库</item>"
       ],
       "requires": [],
       "x": 30,
@@ -344,7 +344,7 @@
       "name": "二级硬脑袋",
       "desc": "习得配方：",
       "recipes": [
-        "4 木板 + 1 触手皮 + 5 木头 + 5 切制草 → 1 高级军械库"
+        "4 木板 + 1 触手皮 + 5 木头 + 5 切制草 → 1 <item>高级军械库</item>"
       ],
       "requires": [
         "wurt_civ_3"
@@ -401,7 +401,7 @@
       "name": "大地变异",
       "desc": "习得配方：沃特可以使用光芒投泥带创造一片短暂存在的月亮沼泽地块，使周围沃特所雇佣的鱼人/忠诚鱼人守卫转化为变异鱼人/变异鱼人守卫，并使周围沃特所雇佣的变异鱼人和变异鱼人守卫获得持续半天的增益（同上）。",
       "recipes": [
-        "1 浮木片 + 1 沼泽地皮 + 1 纯粹辉煌 → 1 光芒投泥带"
+        "1 浮木片 + 1 沼泽地皮 + 1 纯粹辉煌 → 1 <item>光芒投泥带</item>"
       ],
       "requires": [
         "wurt_lunar_allegiance_1"
@@ -435,7 +435,7 @@
       "name": "大地腐蚀",
       "desc": "习得配方：沃特可以使用绝望投泥带创造一片短暂存在的暗影沼泽地块，沃特及其所雇佣的鱼人和忠诚鱼人守卫等在暗影沼泽地块上攻击时有 <b>50%</b> 概率会尝试在攻击目标周围生成一个暗影触手辅助攻击该目标。",
       "recipes": [
-        "1 浮木片 + 1 沼泽地皮 + 1 纯粹恐惧 → 1 绝望投泥带"
+        "1 浮木片 + 1 沼泽地皮 + 1 纯粹恐惧 → 1 <item>绝望投泥带</item>"
       ],
       "requires": [
         "wurt_shadow_allegiance_1"
@@ -538,7 +538,7 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "月后即点月亮亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饱食度</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>",
+          "text": "月后即点月亮亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饥饿值</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>",
           "skills": [
             "wurt_amphibian_sanity_1",
             "wurt_amphibian_sanity_2",
@@ -565,7 +565,7 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "影后即点暗影亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饱食度</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>",
+          "text": "影后即点暗影亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饥饿值</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>",
           "skills": [
             "wurt_amphibian_sanity_1",
             "wurt_amphibian_sanity_2",
@@ -644,7 +644,7 @@
             "影前"
           ],
           "name": "多人月后",
-          "text": "多人月后加点与单人月后基本一致，月后即点月亮亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饱食度</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>，多人玩要建家的话，也可以考虑换为(<b>24</b>)<green>沼泽探路人</green>为队友提供一点加速",
+          "text": "多人月后加点与单人月后基本一致，月后即点月亮亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饥饿值</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>，多人玩要建家的话，也可以考虑换为(<b>24</b>)<green>沼泽探路人</green>为队友提供一点加速",
           "skills": [
             "wurt_amphibian_sanity_1",
             "wurt_amphibian_sanity_2",
@@ -671,7 +671,7 @@
             "影后"
           ],
           "name": "多人影后",
-          "text": "多人影后加点与单人影后基本一致，影后即点暗影亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饱食度</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>，多人玩要建家的话，也可以考虑换为(<b>24</b>)<green>沼泽探路人</green>为队友提供一点加速",
+          "text": "多人影后加点与单人影后基本一致，影后即点暗影亲和，替换了(<b>18</b>)<green>二级集体喂食</green>与(<b>20</b>)<green>二级勤奋鱼人</green>。如果不愁鱼王<hunger>饥饿值</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>，多人玩要建家的话，也可以考虑换为(<b>24</b>)<green>沼泽探路人</green>为队友提供一点加速",
           "skills": [
             "wurt_amphibian_sanity_1",
             "wurt_amphibian_sanity_2",
@@ -698,7 +698,7 @@
             "影后"
           ],
           "name": "多人月后影后",
-          "text": "多人月后影后加点与单人月后影后基本一致，月后鱼人的反伤频率较低，且整体玩起来强度不如暗影鱼人，所以推荐点暗影亲和。如果不愁鱼王<hunger>饱食度</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>，多人玩要建家的话，也可以考虑换为(<b>24</b>)<green>沼泽探路人</green>为队友提供一点加速",
+          "text": "多人月后影后加点与单人月后影后基本一致，月后鱼人的反伤频率较低，且整体玩起来强度不如暗影鱼人，所以推荐点暗影亲和。如果不愁鱼王<hunger>饥饿值</hunger>的话，也可以把(<b>16</b>)<green>三级饱君</green>换为(<b>18</b>)<green>二级集体喂食</green>，多人玩要建家的话，也可以考虑换为(<b>24</b>)<green>沼泽探路人</green>为队友提供一点加速",
           "skills": [
             "wurt_amphibian_sanity_1",
             "wurt_amphibian_sanity_2",
@@ -724,7 +724,7 @@
   "hunger": "200",
   "sanity": "150",
   "trait": {
-    "text": "<br><p>无开局起始物品</p><br><h3>宏大规划</h3><ul><li>沃特可以制作鱼人工艺屋和鱼人堡垒来分别生成鱼人和忠诚鱼人守卫，沃特可以通过喂食来雇佣他们，行为同猪哥一致，战斗，采集</li><li>沃特可以制作皇家手工套装并添加一定的材料将其建造为皇家地毯并扶持一直鱼人成为鱼人之王。鱼人之王会为裕仁祖带来新的变化并且可以与沃特交易。<ul><li>沃特受此变化为<b>+100点</b><health>生命值</health>上限，<b>+50点</b><hunger>饥饿值</hunger>上限，<b>+50点</b><sanity>精神值</sanity>上限并获得<b>外观变化</b></li></ul></li><li>沃特可以制作聪明的伪装与沼泽地皮</li><li>沃特在沼泽地快、月亮沼泽地块与暗影沼泽地块上获得移动速度<b>×1.3</b>的效果</li></ul><h3>素食主义</h3><ul><li>沃特只能吃通用食物、种子食物、素食食物与好东西食物，并且素食食物<hunger>饱食度</hunger>会额外<b>+33%</b></li><li>沃特吃海带叶、熟海带叶、海带补丁、榴莲和烤榴莲时不会降低<health>生命值</health>和<sanity>精神值</sanity></li><li>沃特最喜欢的食物是<yellowgreen>榴莲</yellowgreen>和<yellowgreen>烤榴莲</yellowgreen></li></ul><h3>鱼人族</h3><ul><li>如果沃特的物品栏中存在小鱼块、熟小鱼块、变质的小愉快、鳗鱼、熟鳗鱼、生鱼肉、鱼排、变质的鱼、死龙虾或美味的龙虾时，会<b>-4.4</b><sanity>精神值</sanity><b>/分钟</b>。而如果沃特的物品栏中没有以上物品且u才能在淡水鱼、活鳗鱼、海鱼或星空时，沃特会<b>+3.3</b><sanity>精神值</sanity><b>/分钟</b>，并且这些物品在<notice text=\"默认情况下与装备同一行的物品栏，不包括背包\">基本物品栏*</notice>或鼠标上时，腐烂速度会降低至原来的<b>25%</b></li><li>沃特佩戴花环时会<b>-1.3</b><sanity>精神值</sanity><b>/分钟</b>，佩戴海花环与牛奶帽会<b>+1.3<sanity>精神值</sanity>/分钟</b></li><li>潮湿不会影响沃特的<sanity>精神值</sanity>，其手中装备也不会因为潮湿滑落，麋鹿鹅与熊獾的缴械攻击也不会使其手中武器掉落</li><li>沃特溺水时不会掉落任何物品与装备，只会增加<b>50点</b><seablue>潮湿度</seablue></li><li>沃特可以分辨出附近<b>3.75个</b>地皮范围内隐藏的触手</li><li>青蛙和明眼青蛙不会主动仇恨沃特</li><li>猪人会主动仇恨沃特，猪王也不会和沃特交易</li><li>沃特可以理解鱼人族的语言</li></ul><h3>其他</h3><ul><li>沃特可以阅读<character>薇克巴顿</character>的书，但是不会触发原有效果，但是会根据读的书提升或降低<sanity>精神值</sanity>：<table><thead><tr><th>书</th><th>提升或降低<sanity>精神值</sanity></th></tr></thead><tbody><tr><td>世界鸟类大全、触手的召唤、垂钓者生存指南、永恒之光之复兴</td><td><b>+50点</b><sanity>精神值</sanity></td></tr><tr><td>睡前故事、克服蛛形纲恐惧症、控温学、永恒之光、实用求雨仪式、万物百科</td><td><b>+33点</b><sanity>精神值</sanity></td></tr><tr><td>末日将至、园艺学简便版、应用造林学、意念控火术详解、月之魔典、养蜂笔记、应用园艺学</td><td><b>-33点</b><sanity>精神值</sanity></td></tr><tr><td>园艺学扩展版</td><td><b>-50点</b><sanity>精神值</sanity></td></tr></tbody></table></li></ul>"
+    "text": "<br><p>无开局起始物品</p><br><h3>宏大规划</h3><ul><li>沃特可以制作鱼人工艺屋和鱼人堡垒来分别生成鱼人和忠诚鱼人守卫，沃特可以通过喂食来雇佣他们，行为同猪哥一致，战斗，采集</li><li>沃特可以制作皇家手工套装并添加一定的材料将其建造为皇家地毯并扶持一直鱼人成为鱼人之王。鱼人之王会为裕仁祖带来新的变化并且可以与沃特交易。<ul><li>沃特受此变化为<b>+100点</b><health>生命值</health>上限，<b>+50点</b><hunger>饥饿值</hunger>上限，<b>+50点</b><sanity>理智值</sanity>上限并获得<b>外观变化</b></li></ul></li><li>沃特可以制作聪明的伪装与沼泽地皮</li><li>沃特在沼泽地快、月亮沼泽地块与暗影沼泽地块上获得移动速度<b>×1.3</b>的效果</li></ul><h3>素食主义</h3><ul><li>沃特只能吃通用食物、种子食物、素食食物与好东西食物，并且素食食物<hunger>饥饿值</hunger>会额外<b>+33%</b></li><li>沃特吃海带叶、熟海带叶、海带补丁、榴莲和烤榴莲时不会降低<health>生命值</health>和<sanity>理智值</sanity></li><li>沃特最喜欢的食物是<yellowgreen>榴莲</yellowgreen>和<yellowgreen>烤榴莲</yellowgreen></li></ul><h3>鱼人族</h3><ul><li>如果沃特的物品栏中存在小鱼块、熟小鱼块、变质的小愉快、鳗鱼、熟鳗鱼、生鱼肉、鱼排、变质的鱼、死龙虾或美味的龙虾时，会<b>-4.4</b><sanity>理智值</sanity><b>/分钟</b>。而如果沃特的物品栏中没有以上物品且u才能在淡水鱼、活鳗鱼、海鱼或星空时，沃特会<b>+3.3</b><sanity>理智值</sanity><b>/分钟</b>，并且这些物品在<notice text=\"默认情况下与装备同一行的物品栏，不包括背包\">基本物品栏*</notice>或鼠标上时，腐烂速度会降低至原来的<b>25%</b></li><li>沃特佩戴花环时会<b>-1.3</b><sanity>理智值</sanity><b>/分钟</b>，佩戴海花环与牛奶帽会<b>+1.3<sanity>理智值</sanity>/分钟</b></li><li>潮湿不会影响沃特的<sanity>理智值</sanity>，其手中装备也不会因为潮湿滑落，麋鹿鹅与熊獾的缴械攻击也不会使其手中武器掉落</li><li>沃特溺水时不会掉落任何物品与装备，只会增加<b>50点</b><seablue>潮湿度</seablue></li><li>沃特可以分辨出附近<b>3.75个</b>地皮范围内隐藏的触手</li><li>青蛙和明眼青蛙不会主动仇恨沃特</li><li>猪人会主动仇恨沃特，猪王也不会和沃特交易</li><li>沃特可以理解鱼人族的语言</li></ul><h3>其他</h3><ul><li>沃特可以阅读<character>薇克巴顿</character>的书，但是不会触发原有效果，但是会根据读的书提升或降低<sanity>理智值</sanity>：<table><thead><tr><th>书</th><th>提升或降低<sanity>理智值</sanity></th></tr></thead><tbody><tr><td>世界鸟类大全、触手的召唤、垂钓者生存指南、永恒之光之复兴</td><td><b>+50点</b><sanity>理智值</sanity></td></tr><tr><td>睡前故事、克服蛛形纲恐惧症、控温学、永恒之光、实用求雨仪式、万物百科</td><td><b>+33点</b><sanity>理智值</sanity></td></tr><tr><td>末日将至、园艺学简便版、应用造林学、意念控火术详解、月之魔典、养蜂笔记、应用园艺学</td><td><b>-33点</b><sanity>理智值</sanity></td></tr><tr><td>园艺学扩展版</td><td><b>-50点</b><sanity>理智值</sanity></td></tr></tbody></table></li></ul>"
   },
   "exclusiveItems": {
     "items": [
@@ -750,8 +750,72 @@
       },
       {
         "name": "聪明的伪装",
-        "desc": "<b>15天</b>保质期，<b>-1.333</b><sanity>精神值</sanity><b>/分钟</b>。佩戴了聪明的伪装的实体的猪人族追随者会立即停止追随，会被视作鱼人族，并且不会被视作怪物。佩戴后可以与鱼人之王交易，不会被鱼人、忠诚鱼人守卫、青蛙和明眼青蛙仇恨，但不能与猪王交易且会被猪人仇恨。",
+        "desc": "<b>15天</b>保质期，<b>-1.333</b><sanity>理智值</sanity><b>/分钟</b>。佩戴了聪明的伪装的实体的猪人族追随者会立即停止追随，会被视作鱼人族，并且不会被视作怪物。佩戴后可以与鱼人之王交易，不会被鱼人、忠诚鱼人守卫、青蛙和明眼青蛙仇恨，但不能与猪王交易且会被猪人仇恨。",
         "recipe": "淡水鱼×1 + 芦苇×1 + 树枝×2 → 1 聪明的伪装"
+      }
+    ]
+  },
+  "craftItems": {
+    "items": [
+      {
+        "id": "wurt_mosquito_craft_1_1",
+        "name": "小痒痒",
+        "desc": ""
+      },
+      {
+        "id": "wurt_mosquito_craft_2_1",
+        "name": "蚊子炸弹",
+        "desc": ""
+      },
+      {
+        "id": "wurt_mosquito_craft_2_2",
+        "name": "嗡嗡肥料",
+        "desc": ""
+      },
+      {
+        "id": "wurt_mosquito_craft_2_3",
+        "name": "蚊血注射液",
+        "desc": ""
+      },
+      {
+        "id": "wurt_civ_1_1",
+        "name": "公共海带盘",
+        "desc": ""
+      },
+      {
+        "id": "wurt_civ_1_2_1",
+        "name": "高级公共海带盘",
+        "desc": ""
+      },
+      {
+        "id": "wurt_civ_2_1",
+        "name": "简陋工具棚",
+        "desc": ""
+      },
+      {
+        "id": "wurt_civ_2_2_1",
+        "name": "稍好工具棚",
+        "desc": ""
+      },
+      {
+        "id": "wurt_civ_3_1",
+        "name": "军械库",
+        "desc": ""
+      },
+      {
+        "id": "wurt_civ_3_2_1",
+        "name": "高级军械库",
+        "desc": ""
+      },
+      {
+        "id": "wurt_lunar_allegiance_2_1",
+        "name": "光芒投泥带",
+        "desc": ""
+      },
+      {
+        "id": "wurt_shadow_allegiance_2_1",
+        "name": "绝望投泥带",
+        "desc": ""
       }
     ]
   },
