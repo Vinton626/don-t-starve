@@ -842,8 +842,37 @@ function noticePayload(tree) {
   return { title: n.title || "总结", text };
 }
 
+function bindRoleSwitch(root) {
+  if (!root) return;
+  root.querySelectorAll("charactor").forEach(box => {
+    if (box.querySelector(":scope > .role-switch")) return;
+    const roles = ["role1", "role2", "role3"]
+      .map(tag => box.querySelector(":scope > " + tag))
+      .filter(Boolean);
+    if (!roles.length) return;
+    const bar = document.createElement("div");
+    bar.className = "role-switch";
+    const show = el => {
+      roles.forEach(role => role.classList.toggle("is-on", role === el));
+      bar.querySelectorAll("button").forEach(btn => btn.classList.toggle("is-on", btn.dataset.role === el.tagName.toLowerCase()));
+    };
+    roles.forEach((el, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.role = el.tagName.toLowerCase();
+      const title = el.querySelector("h3");
+      btn.textContent = (title && title.textContent.trim()) || ("形态" + (i + 1));
+      btn.addEventListener("click", () => show(el));
+      bar.appendChild(btn);
+    });
+    box.insertBefore(bar, box.firstChild);
+    show(roles[0]);
+  });
+}
+
 function bindCharacterLinks(root) {
   if (!root) return;
+  bindRoleSwitch(root);
   root.querySelectorAll("character").forEach(el => {
     el.addEventListener("click", () => {
       const name = (el.getAttribute("name") || el.textContent || "").trim();
