@@ -929,7 +929,7 @@
   }
   .profile-text lightpink { color: #ffb6c1; }
   .profile-text lightred { color: #ff9b9b; }
-  .profile-text lightyellow { color: #f6d04a; }
+  .profile-text lightyellow { color: #F8EAB5; }
   .profile-text pumpkin { color: #ff7a18; }
   .profile-text yellow { color: #ffd84a; }
   .profile-text lightblue { color: #b3e5ff; }
@@ -951,41 +951,31 @@
   .profile-text cyan { color: #4dffea; }
   .profile-text chili { color: #c5362b; }
   .profile-text soilyellow { color: #d7a441; }
-  .profile-text notice,
-  .gear-desc notice {
-    position: relative;
+  .tag-text notice {
     cursor: help;
     color: #f0d060;
     border-bottom: 1px dashed rgba(240, 208, 96, .75);
   }
-  .profile-text notice::after,
-  .gear-desc notice::after {
-    content: attr(text);
-    position: absolute;
-    left: 0;
-    top: calc(100% + 6px);
-    z-index: 6;
+  .notice-tip {
+    position: fixed;
+    z-index: 45;
     width: max-content;
-    max-width: 220px;
+    max-width: calc(100vw - 16px);
     padding: 6px 8px;
     background: rgba(12, 9, 6, .96);
     color: #e6d3a4;
     border: 1px solid rgba(201, 162, 39, .7);
     border-radius: 2px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.55);
     font-size: 12px;
     font-weight: 400;
     line-height: 1.45;
     letter-spacing: 0;
     white-space: normal;
+    overflow-wrap: anywhere;
     pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
   }
-  .profile-text notice:hover::after,
-  .gear-desc notice:hover::after {
-    opacity: 1;
-    visibility: visible;
-  }
+  .notice-tip[hidden] { display: none; }
   .profile-text ul {
     margin: 4px 0 0;
     padding-left: 1.15em;
@@ -1144,6 +1134,7 @@
 
 <div id="lock-tip" class="lock-tip" hidden></div>
 <div id="note-tip" class="lock-tip note-tip" hidden></div>
+<div id="notice-tip" class="notice-tip" hidden></div>
 <div id="mode-tip" class="lock-tip" hidden></div>
 <aside class="insight-drawer" id="insight-drawer" hidden>
   <div class="insight-drawer-panel">

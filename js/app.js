@@ -891,6 +891,7 @@ function exclusiveList(tree) {
 }
 
 function renderProfileBody(host, tree) {
+  hideNoticeTip();
   host.replaceChildren();
   const name = document.createElement("div");
   name.className = "profile-name";
@@ -984,6 +985,7 @@ function openCraftItem(id, fallbackName) {
 }
 
 function closeCraftItem() {
+  hideNoticeTip();
   const drawer = $("item-drawer");
   if (!drawer) return;
   drawer.hidden = true;
@@ -1035,6 +1037,7 @@ function openProfile() {
 }
 
 function closeProfile() {
+  hideNoticeTip();
   const drawer = $("profile-drawer");
   const btn = $("profile-open");
   if (!drawer || drawer.hidden) return;
@@ -1312,6 +1315,76 @@ function scheduleHideNoteTip() {
     const tip = $("note-tip");
     if (tip) tip.hidden = true;
   }, 120);
+}
+
+let noticePinned = false;
+
+function noticeFrame(el) {
+  const drawer = el.closest(".profile-drawer, .item-drawer, .insight-drawer, .char-notice, .notree-host, .app");
+  const scroll = el.closest(".profile-scroll, .item-scroll, .insight-drawer-panel, .char-notice-panel, .notree-host");
+  const box = (scroll || drawer || document.documentElement).getBoundingClientRect();
+  const limit = (drawer || scroll || document.documentElement).getBoundingClientRect();
+  const pad = 8;
+  return {
+    left: Math.max(limit.left + pad, pad),
+    right: Math.min(limit.right - pad, window.innerWidth - pad),
+    top: Math.max(box.top + 4, pad),
+    bottom: Math.min(box.bottom - 4, window.innerHeight - pad)
+  };
+}
+
+function hideNoticeTip() {
+  noticePinned = false;
+  const tip = $("notice-tip");
+  if (!tip) return;
+  tip.hidden = true;
+  tip._anchor = null;
+}
+
+function showNoticeTip(el) {
+  const tip = $("notice-tip");
+  if (!tip) return;
+  if (!el || !el.isConnected) {
+    tip.hidden = true;
+    return;
+  }
+  const text = el.getAttribute("text");
+  if (!text) {
+    tip.hidden = true;
+    return;
+  }
+  const frame = noticeFrame(el);
+  const maxW = frame.right - frame.left;
+  const maxH = frame.bottom - frame.top;
+  if (maxW < 8 || maxH < 8) {
+    tip.hidden = true;
+    return;
+  }
+  const anchor = el.getBoundingClientRect();
+  const visible = anchor.bottom > frame.top && anchor.top < frame.bottom && anchor.right > frame.left && anchor.left < frame.right;
+  tip._anchor = el;
+  tip.textContent = text;
+  tip.style.maxWidth = maxW + "px";
+  tip.style.maxHeight = maxH + "px";
+  if (!visible) {
+    tip.hidden = true;
+    return;
+  }
+  tip.hidden = false;
+  tip.style.left = frame.left + "px";
+  tip.style.top = frame.top + "px";
+  const box = tip.getBoundingClientRect();
+  let x = anchor.left;
+  let y = anchor.bottom + 6;
+  if (x + box.width > frame.right) x = frame.right - box.width;
+  if (x < frame.left) x = frame.left;
+  if (y + box.height > frame.bottom) {
+    const above = anchor.top - 6 - box.height;
+    y = above >= frame.top ? above : frame.top;
+  }
+  if (y < frame.top) y = frame.top;
+  tip.style.left = Math.round(x) + "px";
+  tip.style.top = Math.round(y) + "px";
 }
 
 function placeLockTip() {
@@ -1732,6 +1805,8 @@ $("nodes").addEventListener("mouseout", e => {
 window.addEventListener("resize", () => {
   const tip = $("note-tip");
   if (tip && !tip.hidden && tip._anchor) showNoteTip(tip._anchor);
+  const notice = $("notice-tip");
+  if (notice && !notice.hidden && notice._anchor) showNoticeTip(notice._anchor);
   sizeInsightPanel();
   layoutProfileDrawer();
   layoutItemDrawer();
@@ -1823,5 +1898,49 @@ document.addEventListener("click", e => {
   wrap.classList.remove("is-open");
   $("char-notice-btn").setAttribute("aria-expanded", "false");
 });
+
+document.addEventListener("pointerover", e => {
+  if (e.pointerType === "touch") return;
+  const el = e.target.closest && e.target.closest("notice");
+  if (!el || !el.getAttribute("text")) return;
+  noticePinned = false;
+  showNoticeTip(el);
+});
+
+document.addEventListener("pointerout", e => {
+  if (e.pointerType === "touch" || noticePinned) return;
+  const el = e.target.closest && e.target.closest("notice");
+  if (!el) return;
+  const to = e.relatedTarget;
+  if (to && el.contains(to)) return;
+  const tip = $("notice-tip");
+  if (tip && tip._anchor === el) tip.hidden = true;
+});
+
+document.addEventListener("click", e => {
+  if (!window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+  const el = e.target.closest && e.target.closest("notice");
+  const tip = $("notice-tip");
+  if (el && el.getAttribute("text")) {
+    if (noticePinned && tip && tip._anchor === el && !tip.hidden) {
+      hideNoticeTip();
+      return;
+    }
+    noticePinned = true;
+    showNoticeTip(el);
+    return;
+  }
+  if (noticePinned) hideNoticeTip();
+});
+
+document.addEventListener("scroll", () => {
+  const tip = $("notice-tip");
+  if (!tip || tip.hidden || !tip._anchor) return;
+  if (!tip._anchor.isConnected) {
+    hideNoticeTip();
+    return;
+  }
+  showNoticeTip(tip._anchor);
+}, true);
 
 boot();
