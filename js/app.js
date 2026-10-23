@@ -398,6 +398,13 @@ function initTree(tree) {
     if (buildId) writeSelectionQuery();
     render();
   }
+  if (saved.get("profile") === "1") {
+    openProfile();
+    const gear = document.querySelector(".gear-row");
+    if (gear) gear.scrollIntoView({ block: "start" });
+  }
+  const itemId = saved.get("item");
+  if (itemId) openCraftItem(itemId);
 }
 
 function addLabel(x, y, w, h, text, fill, forId) {
