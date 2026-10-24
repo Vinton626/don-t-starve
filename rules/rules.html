@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>标签规则</title>
+<style>
+  body { font-family: "Noto Serif SC", serif; line-height: 1.7; max-width: 820px; margin: 32px auto; color: #1c140c; }
+  code { font-family: Consolas, monospace; }
+  p { margin: 0.4em 0; }
+  h2 { margin-top: 1.6em; }
+  health { color: #ff6b78; }
+  hunger { color: #c49212; }
+  sanity { color: #c65a12; }
+  seablue { color: #3ec4e0; }
+  trans { color: #8ed34a; }
+  warn { color: #ff3d2a; }
+  green { color: #7dce7a; }
+  b { color: #7fd4ff; }
+  lightpink { color: #ffb6c1; }
+  icecream { color: #ff8fab; }
+  lightred { color: #ff9b9b; }
+  lightyellow { color: #F8EAB5; }
+  pumpkin { color: #ff7a18; }
+  caramel { color: #d88d41; }
+  yellow { color: #ffd84a; }
+  lightblue { color: #b3e5ff; }
+  brown { color: #d4925a; }
+  lightbrown { color: #e8c39a; }
+  grey { color: #c5c5c5; }
+  yellowgreen { color: #c6e05a; }
+  cyan { color: #4dffea; }
+  chili { color: #c5362b; }
+  soilyellow { color: #d7a441; }
+  character { color: #d7a6ff; text-decoration: underline; }
+  notice { color: #f0d060; border-bottom: 1px dashed rgba(240, 208, 96, .75); }
+</style>
+</head>
+<body>
+<p>这份文件只给写内容和 AI 看，不参与游戏页面。真正生效的样式在 skill.html。下面每条都是「标签长什么样，颜色是哪一个」。</p>
+
+<h2>属性</h2>
+<p><health>生命值</health> 的颜色是 #ff6b78。写生命值时用它。</p>
+<p><hunger>饥饿值</hunger> 的颜色是 #c49212。写饥饿值时用它。</p>
+<p><sanity>理智值</sanity> 的颜色是 #c65a12。写理智值时用它。不要再写精神值。</p>
+<p><seablue>潮湿度</seablue> 的颜色是 #3ec4e0。潮湿度、潮湿值都用它。</p>
+<p><trans>变身值</trans> 的颜色是 #8ed34a。伍迪变身值用它。</p>
+
+<h2>强调</h2>
+<p><b>数字</b> 的颜色是 #7fd4ff。点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。</p>
+<p><warn>警告</warn> 的颜色是 #ff3d2a。需要读者特别注意、容易理解错的句子用它。</p>
+<p><green>技能名</green> 的颜色是 #7dce7a。点名某个技能时用它。</p>
+
+<h2>食物颜色</h2>
+<p>这些标签只给食物或材料名字上色，用在人物特性里。浅粉已经是 lightpink，草莓冰淇淋不要再用它。</p>
+<p><lightpink>浅粉</lightpink> 的颜色是 #ffb6c1。</p>
+<p><icecream>冰淇凌</icecream> 的颜色是 #ff8fab，接近草莓冰淇淋。冰淇淋用这个标签，不要用 lightpink。</p>
+<p><lightred>浅红</lightred> 的颜色是 #ff9b9b。</p>
+<p><chili>辣椒</chili> 的颜色是 #c5362b。</p>
+<p><pumpkin>南瓜</pumpkin> 的颜色是 #ff7a18。</p>
+<p><caramel>焦糖</caramel> 的颜色是 #d88d41。</p>
+<p><yellow>黄色</yellow> 的颜色是 #ffd84a。</p>
+<p><lightyellow>浅黄</lightyellow> 的颜色是 #F8EAB5。</p>
+<p><soilyellow>土黄</soilyellow> 的颜色是 #d7a441。</p>
+<p><yellowgreen>黄绿</yellowgreen> 的颜色是 #c6e05a。</p>
+<p><cyan>青色</cyan> 的颜色是 #4dffea。</p>
+<p><lightblue>浅蓝</lightblue> 的颜色是 #b3e5ff。</p>
+<p><seablue>海蓝</seablue> 见上面的潮湿度，同一个标签。</p>
+<p><brown>棕色</brown> 的颜色是 #d4925a。</p>
+<p><lightbrown>浅棕</lightbrown> 的颜色是 #e8c39a。</p>
+<p><grey>灰色</grey> 的颜色是 #c5c5c5。</p>
+
+<h2>结构和跳转</h2>
+<p><character>人物</character> 的颜色是 #d7a6ff，带下划线。点了会跳到同名角色。写法是 &lt;character&gt;沃特&lt;/character&gt;。显示名和角色名不同时，写成 &lt;character name="薇诺娜"&gt;女工&lt;/character&gt;。</p>
+<p>roles 不是 character。阿比盖尔这类多形态写 &lt;roles&gt;&lt;role1&gt;…&lt;/role1&gt;&lt;role2&gt;…&lt;/role2&gt;&lt;role3&gt;…&lt;/role3&gt;&lt;/roles&gt;，每个形态里用 h3 当切换按钮的名字。</p>
+<p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n，例如 &lt;notice text="第一行\n第二行"&gt;作用范围&lt;/notice&gt;。</p>
+<p>段落用 p，小节标题用 h3，更小的标题用 h4，列表用 ul 和 li，可折叠内容用 details 和 summary，对照表用 table。</p>
+<p>专属物品分段用 &lt;br&gt;，不要靠源码里的换行。</p>
+
+<h2>配方</h2>
+<p>专属物品的 recipe 写成：材料×数量 + 材料×数量 → 数量 产物。例如 可靠的胶布×1 + 金子×2 + 萤火虫×1 → 1 薇诺娜的聚光灯。</p>
+<p>技能树 recipes 里的产物要用 item 包起来，才会出现下划线并打开对应物品：1 纯粹辉煌 + 3 哀悼荣耀 → 1 &lt;item&gt;亮泽之怒&lt;/item&gt;。物品对象的 id 是「技能 id_序号」，放在 craftItems 里。</p>
+</body>
+</html>
