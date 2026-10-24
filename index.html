@@ -29,6 +29,30 @@
     align-items: center;
     gap: 16px;
   }
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 6px;
+    line-height: .82;
+    font-weight: 700;
+    color: #f4e3b4;
+    -webkit-text-stroke: 1px #2a180c;
+    text-shadow:
+      0 1px 0 #6e4c24,
+      0 3px 0 #2a180c,
+      2px 4px 0 #120c08,
+      0 0 18px rgba(0, 0, 0, .55);
+  }
+  .brand-dont {
+    font-size: clamp(26px, 3.6vw, 44px);
+    letter-spacing: .28em;
+    padding-left: .28em;
+  }
+  .brand-starve {
+    font-size: clamp(40px, 6vw, 76px);
+    letter-spacing: .08em;
+  }
   .selector {
     position: relative;
     display: block;
@@ -63,11 +87,17 @@
     }
     .selector { width: 85vw; }
     .selector span { font-size: 18px; }
+    .brand-dont { font-size: 28px; }
+    .brand-starve { font-size: 46px; }
   }
 </style>
 </head>
 <body>
   <div class="menu">
+    <h1 class="brand">
+      <span class="brand-dont">DON'T</span>
+      <span class="brand-starve">STARVE</span>
+    </h1>
     <a class="selector" href="skill.html">
       <img class="selector-frame" src="img/selection.png" alt="">
       <span>技能树</span>
@@ -75,6 +105,14 @@
     <a class="selector" href="monster.html">
       <img class="selector-frame" src="img/selection.png" alt="">
       <span>怪物</span>
+    </a>
+    <a class="selector" href="storyline.html">
+      <img class="selector-frame" src="img/selection.png" alt="">
+      <span>主线</span>
+    </a>
+    <a class="selector" href="foodfarm.html">
+      <img class="selector-frame" src="img/selection.png" alt="">
+      <span>料理与种植</span>
     </a>
   </div>
 </body>
