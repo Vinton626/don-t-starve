@@ -1290,7 +1290,8 @@ function showNoteTip(label) {
   if (!tip || !label || !label.dataset.tip) return;
   tip._anchor = label;
   tip.hidden = false;
-  tip.textContent = label.dataset.tip;
+  tip.innerHTML = String(label.dataset.tip).replace(/\\n|\r?\n/g, "<br>");
+  bindCharacterLinks(tip);
   const pad = 12;
   const app = document.querySelector(".app").getBoundingClientRect();
   const minX = Math.max(pad, app.left + 8);
@@ -1318,6 +1319,23 @@ function scheduleHideNoteTip() {
 }
 
 let noticePinned = false;
+let noticeHideTimer = 0;
+
+function cancelNoticeHide() {
+  clearTimeout(noticeHideTimer);
+}
+
+function scheduleNoticeHide() {
+  if (noticePinned) return;
+  cancelNoticeHide();
+  noticeHideTimer = setTimeout(() => {
+    if (noticePinned) return;
+    const tip = $("notice-tip");
+    if (!tip) return;
+    tip.hidden = true;
+    tip._anchor = null;
+  }, 220);
+}
 
 function noticeFrame(el) {
   const drawer = el.closest(".profile-drawer, .item-drawer, .insight-drawer, .char-notice, .notree-host, .app");
@@ -1335,6 +1353,7 @@ function noticeFrame(el) {
 
 function hideNoticeTip() {
   noticePinned = false;
+  cancelNoticeHide();
   const tip = $("notice-tip");
   if (!tip) return;
   tip.hidden = true;
@@ -1342,6 +1361,7 @@ function hideNoticeTip() {
 }
 
 function showNoticeTip(el) {
+  cancelNoticeHide();
   const tip = $("notice-tip");
   if (!tip) return;
   if (!el || !el.isConnected) {
@@ -1363,7 +1383,8 @@ function showNoticeTip(el) {
   const anchor = el.getBoundingClientRect();
   const visible = anchor.bottom > frame.top && anchor.top < frame.bottom && anchor.right > frame.left && anchor.left < frame.right;
   tip._anchor = el;
-  tip.textContent = text;
+  tip.innerHTML = String(text).replace(/\\n|\r?\n/g, "<br>");
+  bindCharacterLinks(tip);
   tip.style.maxWidth = maxW + "px";
   tip.style.maxHeight = maxH + "px";
   if (!visible) {
@@ -1901,20 +1922,29 @@ document.addEventListener("click", e => {
 
 document.addEventListener("pointerover", e => {
   if (e.pointerType === "touch") return;
+  const tip = $("notice-tip");
+  if (tip && (e.target === tip || tip.contains(e.target))) {
+    cancelNoticeHide();
+    return;
+  }
   const el = e.target.closest && e.target.closest("notice");
   if (!el || !el.getAttribute("text")) return;
   noticePinned = false;
+  cancelNoticeHide();
   showNoticeTip(el);
 });
 
 document.addEventListener("pointerout", e => {
   if (e.pointerType === "touch" || noticePinned) return;
-  const el = e.target.closest && e.target.closest("notice");
-  if (!el) return;
-  const to = e.relatedTarget;
-  if (to && el.contains(to)) return;
   const tip = $("notice-tip");
-  if (tip && tip._anchor === el) tip.hidden = true;
+  const notice = e.target.closest && e.target.closest("notice");
+  const inTip = tip && (e.target === tip || tip.contains(e.target));
+  if (!notice && !inTip) return;
+  const to = e.relatedTarget;
+  if (notice && to && notice.contains(to)) return;
+  if (tip && to && (to === tip || tip.contains(to))) return;
+  if (inTip && tip._anchor && to && (to === tip._anchor || tip._anchor.contains(to))) return;
+  scheduleNoticeHide();
 });
 
 document.addEventListener("click", e => {

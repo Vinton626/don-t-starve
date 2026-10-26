@@ -136,7 +136,7 @@
       "n": 8,
       "group": "arsenal",
       "name": "一级奔雷矛加强",
-      "desc": "装备<green>奔雷矛</green>或充能<green>奔雷矛</green>时可以进行闪电突袭，对突袭路径上的所有生物造成 <b>85点</b>伤害。如果用的是充能<green>奔雷矛</green>，闪电突袭每命中一个生物恢复 <b>2%</b> 的耐久，最多恢复 <b>4%</b> 耐久。",
+      "desc": "装备<green>奔雷矛</green>或充能<green>奔雷矛</green>时可以进行闪电突袭，对突袭路径上的所有生物造成 <b>85点</b><damage>伤害</damage>。如果用的是充能<green>奔雷矛</green>，闪电突袭每命中一个生物恢复 <b>2%</b> 的耐久，最多恢复 <b>4%</b> 耐久。",
       "requires": [
         "wathgrithr_arsenal_spear_1",
         "wathgrithr_arsenal_spear_2",
@@ -152,7 +152,7 @@
       "n": 9,
       "group": "arsenal",
       "name": "二级奔雷矛加强",
-      "desc": "可以使用约束静电将<green>奔雷矛</green>升级为充能<green>奔雷矛</green>，最大耐久提升 <b>50次</b>，移动速度 <b>×1.2</b>，攻击额外附加 <b>20点</b>位面伤害。可以装备充能<green>奔雷矛</green>。",
+      "desc": "可以使用约束静电将<green>奔雷矛</green>升级为充能<green>奔雷矛</green>，最大耐久提升 <b>50次</b>，移动速度 <b>×1.2</b>，攻击额外附加 <b>20点</b>位面<damage>伤害</damage>。可以装备充能<green>奔雷矛</green>。",
       "requires": [
         "wathgrithr_arsenal_spear_1",
         "wathgrithr_arsenal_spear_2",
@@ -352,7 +352,7 @@
       "n": 22,
       "group": "affinity",
       "name": "暗影歌姬",
-      "desc": "薇格弗德获得暗影亲和，受到来自暗影阵营的伤害降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.1倍</b>的伤害。可以使用黑暗悲歌。习得配方：",
+      "desc": "薇格弗德获得暗影亲和，受到来自暗影阵营的<damage>伤害</damage>降低至 <b>0.9倍</b>，对月亮阵营造成 <b>1.1倍</b>的<damage>伤害</damage>。可以使用黑暗悲歌。习得配方：",
       "recipes": [
         "1 纸莎草 + 1 羽毛笔 + 3 纯粹恐惧 → 1 <item>黑暗悲歌</item>"
       ],
@@ -371,7 +371,7 @@
       "n": 23,
       "group": "affinity",
       "name": "月曲歌唱家",
-      "desc": "薇格弗德获得月亮亲和，受到来自月亮阵营的伤害降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.1倍</b>的伤害。可以使用启迪摇篮曲。习得配方：",
+      "desc": "薇格弗德获得月亮亲和，受到来自月亮阵营的<damage>伤害</damage>降低至 <b>0.9倍</b>，对暗影阵营造成 <b>1.1倍</b>的<damage>伤害</damage>。可以使用启迪摇篮曲。习得配方：",
       "recipes": [
         "1 纸莎草 + 1 羽毛笔 + 3 纯粹辉煌 → 1 <item>启迪摇篮曲</item>"
       ],

@@ -13,6 +13,7 @@
   sanity { color: #c65a12; }
   seablue { color: #3ec4e0; }
   trans { color: #8ed34a; }
+  damage { color: #5d7084; }
   warn { color: #ff3d2a; }
   green { color: #7dce7a; }
   b { color: #7fd4ff; }
@@ -23,6 +24,7 @@
   pumpkin { color: #ff7a18; }
   caramel { color: #d88d41; }
   yellow { color: #ffd84a; }
+  crepe { color: #f0b02e; }
   lightblue { color: #b3e5ff; }
   brown { color: #d4925a; }
   lightbrown { color: #e8c39a; }
@@ -44,6 +46,7 @@
 <p><sanity>理智值</sanity> 的颜色是 #c65a12。写理智值时用它。不要再写精神值。</p>
 <p><seablue>潮湿度</seablue> 的颜色是 #3ec4e0。潮湿度、潮湿值都用它。</p>
 <p><trans>变身值</trans> 的颜色是 #8ed34a。伍迪变身值用它。</p>
+<p><damage>伤害</damage> 的颜色是 #5d7084，与阿比盖尔攻击力圆圈相同。写伤害、威力时用它，数字仍放在 b 里，例如 <b>5点</b><damage>伤害</damage>。范围伤害、爆炸伤害、位面伤害里的「伤害」也包进去。技能名「威力武器」里的威力同样包进去。</p>
 
 <h2>强调</h2>
 <p><b>数字</b> 的颜色是 #7fd4ff。点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。</p>
@@ -59,6 +62,7 @@
 <p><pumpkin>南瓜</pumpkin> 的颜色是 #ff7a18。</p>
 <p><caramel>焦糖</caramel> 的颜色是 #d88d41。</p>
 <p><yellow>黄色</yellow> 的颜色是 #ffd84a。</p>
+<p><crepe>可丽饼</crepe> 的颜色是 #f0b02e，橙黄，接近煎饼果子的蛋饼。鲜果可丽饼用这个标签。</p>
 <p><lightyellow>浅黄</lightyellow> 的颜色是 #F8EAB5。</p>
 <p><soilyellow>土黄</soilyellow> 的颜色是 #d7a441。</p>
 <p><yellowgreen>黄绿</yellowgreen> 的颜色是 #c6e05a。</p>
@@ -72,9 +76,10 @@
 <h2>结构和跳转</h2>
 <p><character>人物</character> 的颜色是 #d7a6ff，带下划线。点了会跳到同名角色。写法是 &lt;character&gt;沃特&lt;/character&gt;。显示名和角色名不同时，写成 &lt;character name="薇诺娜"&gt;女工&lt;/character&gt;。</p>
 <p>roles 不是 character。阿比盖尔这类多形态写 &lt;roles&gt;&lt;role1&gt;…&lt;/role1&gt;&lt;role2&gt;…&lt;/role2&gt;&lt;role3&gt;…&lt;/role3&gt;&lt;/roles&gt;，每个形态里用 h3 当切换按钮的名字。</p>
-<p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n，例如 &lt;notice text="第一行\n第二行"&gt;作用范围&lt;/notice&gt;。</p>
+<p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n。弹出的框和正文用同一套标签，所以可以写 &lt;character&gt;沃利&lt;/character&gt;，点名字会跳到该角色。例如 &lt;notice text="只能由&lt;character&gt;沃利&lt;/character&gt;制作"&gt;鲜果可丽饼&lt;/notice&gt;。</p>
 <p>段落用 p，小节标题用 h3，更小的标题用 h4，列表用 ul 和 li，可折叠内容用 details 和 summary，对照表用 table。</p>
 <p>专属物品分段用 &lt;br&gt;，不要靠源码里的换行。</p>
+<p>技能组的 note、tip，以及角色页底部的总结，和正文用同一套标签。锁节点上的 tip 保持纯文字，那些句子要拿来判断能不能解锁。</p>
 
 <h2>配方</h2>
 <p>专属物品的 recipe 写成：材料×数量 + 材料×数量 → 数量 产物。例如 可靠的胶布×1 + 金子×2 + 萤火虫×1 → 1 薇诺娜的聚光灯。</p>

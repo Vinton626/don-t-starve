@@ -937,12 +937,14 @@
   .profile-text pumpkin { color: #ff7a18; }
   .profile-text caramel { color: #d88d41; }
   .profile-text yellow { color: #ffd84a; }
+  .profile-text crepe { color: #f0b02e; }
   .profile-text lightblue { color: #b3e5ff; }
   .profile-text brown { color: #d4925a; }
   .profile-text lightbrown { color: #e8c39a; }
   .profile-text grey { color: #c5c5c5; }
   .tag-text green { color: #7dce7a; }
   .tag-text health { color: #ff6b78; }
+  .tag-text damage { color: #5d7084; }
   .tag-text warn { color: #ff3d2a; }
   .tag-text hunger { color: #c49212; }
   .tag-text sanity { color: #c65a12; }
@@ -981,7 +983,7 @@
     letter-spacing: 0;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    pointer-events: none;
+    pointer-events: auto;
   }
   .notice-tip[hidden] { display: none; }
   .profile-text ul {
@@ -1141,8 +1143,8 @@
 </div>
 
 <div id="lock-tip" class="lock-tip" hidden></div>
-<div id="note-tip" class="lock-tip note-tip" hidden></div>
-<div id="notice-tip" class="notice-tip" hidden></div>
+<div id="note-tip" class="lock-tip note-tip tag-text" hidden></div>
+<div id="notice-tip" class="notice-tip tag-text" hidden></div>
 <div id="mode-tip" class="lock-tip" hidden></div>
 <aside class="insight-drawer" id="insight-drawer" hidden>
   <div class="insight-drawer-panel">
