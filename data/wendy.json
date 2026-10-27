@@ -241,7 +241,7 @@
       "name": "三级哀悼荣耀",
       "desc": "习得配方：",
       "recipes": [
-        "10 哀悼荣耀 + 1 切制石砖 + 40 生命值降低 → 1 <item>常年祭坛</item>"
+        "10 哀悼荣耀 + 1 切制石砖 + -40<health>生命值</health> → 1 <item>常年祭坛</item>"
       ],
       "requires": [
         "wendy_ghostflower_butterfly",

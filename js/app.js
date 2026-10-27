@@ -949,8 +949,9 @@ function renderProfileBody(host, tree) {
     const row = document.createElement("div");
     row.className = "gear-row";
     const itemName = document.createElement("div");
-    itemName.className = "gear-name";
-    itemName.textContent = (item && item.name) || "";
+    itemName.className = "gear-name tag-text";
+    itemName.innerHTML = (item && item.name) || "";
+    bindCharacterLinks(itemName);
     const main = document.createElement("div");
     const desc = document.createElement("div");
     desc.className = "gear-desc tag-text";
@@ -960,8 +961,9 @@ function renderProfileBody(host, tree) {
     const recipe = (item && item.recipe) || "";
     if (String(recipe).trim()) {
       const line = document.createElement("div");
-      line.className = "gear-recipe";
-      line.textContent = recipe;
+      line.className = "gear-recipe tag-text";
+      line.innerHTML = String(recipe).replace(/\\n|\r?\n/g, "<br>");
+      bindCharacterLinks(line);
       main.appendChild(line);
     }
     row.appendChild(itemName);
@@ -975,7 +977,9 @@ function openCraftItem(id, fallbackName) {
   if (!drawer) return;
   const item = craftList(state.tree).find(entry => entry && entry.id === id);
   const fallback = String(fallbackName || "").trim().replace(/^\d+\s+/, "");
-  $("item-title").textContent = (item && item.name) || fallback;
+  const title = $("item-title");
+  title.innerHTML = (item && item.name) || fallback;
+  bindCharacterLinks(title);
   const sheet = $("item-scroll");
   sheet.innerHTML = item ? (item.desc || "") : "";
   bindCharacterLinks(sheet);
@@ -1135,14 +1139,29 @@ function craftList(tree) {
   return Array.isArray(block.items) ? block.items : [];
 }
 
+function recipeTextHTML(text) {
+  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage)>/g;
+  const s = String(text);
+  let html = "";
+  let last = 0;
+  let m;
+  while ((m = re.exec(s))) {
+    html += escapeHTML(s.slice(last, m.index));
+    html += m[0];
+    last = m.index + m[0].length;
+  }
+  html += escapeHTML(s.slice(last));
+  return html;
+}
+
 function recipeLineHTML(skill, recipe, index) {
   const text = String(recipe);
   const found = text.match(/<item>([\s\S]*?)<\/item>/);
-  if (!found || !found[1]) return `<li>${escapeHTML(text)}</li>`;
+  if (!found || !found[1]) return `<li>${recipeTextHTML(text)}</li>`;
   const id = skill.id + "_" + (index + 1);
   const before = text.slice(0, found.index);
   const after = text.slice(found.index + found[0].length);
-  return `<li>${escapeHTML(before)}<button type="button" class="recipe-out" data-item="${escapeHTML(id)}">${escapeHTML(found[1])}</button>${escapeHTML(after)}</li>`;
+  return `<li>${recipeTextHTML(before)}<button type="button" class="recipe-out" data-item="${escapeHTML(id)}">${escapeHTML(found[1])}</button>${recipeTextHTML(after)}</li>`;
 }
 
 function cardHTML(skill, extraClass) {
@@ -1158,7 +1177,7 @@ function cardHTML(skill, extraClass) {
         <span class="desc-name">${skill.name}</span>
       </div>
       <div class="desc-text tag-text">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
-      ${recipes ? `<ul class="desc-recipes">${recipes}</ul>` : ""}
+      ${recipes ? `<ul class="desc-recipes tag-text">${recipes}</ul>` : ""}
       ${prereq}
     </div>`;
 }

@@ -29,9 +29,11 @@
   brown { color: #d4925a; }
   lightbrown { color: #e8c39a; }
   grey { color: #c5c5c5; }
+  keyboard { color: #b7c4d0; }
   yellowgreen { color: #c6e05a; }
   cyan { color: #4dffea; }
   chili { color: #c5362b; }
+  redorange { color: #e4572e; }
   soilyellow { color: #d7a441; }
   character { color: #d7a6ff; text-decoration: underline; }
   notice { color: #f0d060; border-bottom: 1px dashed rgba(240, 208, 96, .75); }
@@ -52,6 +54,7 @@
 <p><b>数字</b> 的颜色是 #7fd4ff。点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。</p>
 <p><warn>警告</warn> 的颜色是 #ff3d2a。需要读者特别注意、容易理解错的句子用它。</p>
 <p><green>技能名</green> 的颜色是 #7dce7a。点名某个技能时用它。</p>
+<p><keyboard>按键</keyboard> 的颜色是 #b7c4d0，灰里带一点蓝。用来写键盘和鼠标按键，例如 &lt;keyboard&gt;Alt&lt;/keyboard&gt;。</p>
 
 <h2>食物颜色</h2>
 <p>这些标签只给食物或材料名字上色，用在人物特性里。浅粉已经是 lightpink，草莓冰淇淋不要再用它。</p>
@@ -59,6 +62,7 @@
 <p><icecream>冰淇凌</icecream> 的颜色是 #ff8fab，接近草莓冰淇淋。冰淇淋用这个标签，不要用 lightpink。</p>
 <p><lightred>浅红</lightred> 的颜色是 #ff9b9b。</p>
 <p><chili>辣椒</chili> 的颜色是 #c5362b。</p>
+<p><redorange>龙虾</redorange> 的颜色是 #e4572e，红橙，接近煮熟的龙虾壳。</p>
 <p><pumpkin>南瓜</pumpkin> 的颜色是 #ff7a18。</p>
 <p><caramel>焦糖</caramel> 的颜色是 #d88d41。</p>
 <p><yellow>黄色</yellow> 的颜色是 #ffd84a。</p>
@@ -82,7 +86,8 @@
 <p>技能组的 note、tip，以及角色页底部的总结，和正文用同一套标签。锁节点上的 tip 保持纯文字，那些句子要拿来判断能不能解锁。</p>
 
 <h2>配方</h2>
-<p>专属物品的 recipe 写成：材料×数量 + 材料×数量 → 数量 产物。例如 可靠的胶布×1 + 金子×2 + 萤火虫×1 → 1 薇诺娜的聚光灯。</p>
+<p>专属物品的 recipe 写成：材料×数量 + 材料×数量 → 数量 产物。例如 可靠的胶布×1 + 金子×2 + 萤火虫×1 → 1 薇诺娜的聚光灯。配方里的生命值、饥饿值、饱食度、理智值、潮湿度、潮湿值、变身值、伤害、威力用对应标签。配方里的数字保持原样，不要套 b。例如 -50&lt;health&gt;生命值&lt;/health&gt;。技能树配方同样可以写这些标签。</p>
+<p>专属物品和制作物品的 name 可以写 notice。例如 &lt;notice text="右键打开储物空间"&gt;魔术师高礼帽&lt;/notice&gt;。</p>
 <p>技能树 recipes 里的产物要用 item 包起来，才会出现下划线并打开对应物品：1 纯粹辉煌 + 3 哀悼荣耀 → 1 &lt;item&gt;亮泽之怒&lt;/item&gt;。物品对象的 id 是「技能 id_序号」，放在 craftItems 里。</p>
 </body>
 </html>

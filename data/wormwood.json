@@ -39,7 +39,7 @@
       "name": "树苗制造",
       "desc": "习得配方：",
       "recipes": [
-        "5 生命值降低 + 5 树枝 → 1 <item>月亮树苗</item>"
+        "5<health>生命值</health>降低 + 5 树枝 → 1 <item>月亮树苗</item>"
       ],
       "requires": [
         "wormwood_identify_plants2"
@@ -56,8 +56,8 @@
       "name": "浆果丛制造",
       "desc": "习得配方：",
       "recipes": [
-        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛</item>",
-        "10 生命值降低 + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛（二号）</item>"
+        "10<health>生命值</health>降低 + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛</item>",
+        "10<health>生命值</health>降低 + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛（二号）</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -75,7 +75,7 @@
       "name": "多汁浆果丛制造",
       "desc": "习得配方：",
       "recipes": [
-        "10 生命值降低 + 3 腐烂物 + 8 浆果 → 1 <item>多汁浆果丛</item>"
+        "10<health>生命值</health>降低 + 3 腐烂物 + 8 浆果 → 1 <item>多汁浆果丛</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -94,7 +94,7 @@
       "name": "猴尾草制造",
       "desc": "习得配方：",
       "recipes": [
-        "15 生命值降低 + 1 洞穴香蕉 + 4 芦苇 → 1 <item>猴尾草</item>"
+        "15<health>生命值</health>降低 + 1 洞穴香蕉 + 4 芦苇 → 1 <item>猴尾草</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -113,7 +113,7 @@
       "name": "食人花制造",
       "desc": "习得配方：",
       "recipes": [
-        "25 生命值降低 + 2 堆肥包 + 5 叶肉 → 1 <item>食人花种子</item>"
+        "25<health>生命值</health>降低 + 2 堆肥包 + 5 叶肉 → 1 <item>食人花种子</item>"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -717,7 +717,7 @@
       {
         "name": "活木",
         "desc": "专属配方，非专属物品",
-        "recipe": "生命值×20 → 1 活木"
+        "recipe": "<health>生命值</health>×20 → 1 活木"
       },
       {
         "name": "荆棘外壳",
