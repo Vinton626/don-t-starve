@@ -942,6 +942,7 @@
   .profile-text brown { color: #d4925a; }
   .profile-text lightbrown { color: #e8c39a; }
   .profile-text grey { color: #c5c5c5; }
+  .profile-text darkgrey { color: #7a7a7a; }
   .tag-text green { color: #7dce7a; }
   .tag-text health { color: #ff6b78; }
   .tag-text damage { color: #5d7084; }
@@ -952,6 +953,7 @@
   .tag-text trans { color: #8ed34a; }
   .tag-text keyboard { color: #b7c4d0; }
   .tag-text redorange { color: #e4572e; }
+  .tag-text darkgrey { color: #7a7a7a; }
   .tag-text character {
     color: #d7a6ff;
     cursor: pointer;
@@ -1011,8 +1013,13 @@
   .profile-text summary:hover,
   .gear-desc summary:hover { color: #ffe7a0; }
   .profile-text table,
-  .gear-desc table {
-    width: 100%;
+  .gear-desc table,
+  .desc-text table,
+  .item-scroll table,
+  .char-notice-body table,
+  .insight-drawer-body table {
+    width: max-content;
+    min-width: 100%;
     margin-top: 8px;
     border-collapse: collapse;
     font-size: 12px;
@@ -1020,6 +1027,19 @@
     text-align: center;
     white-space: normal;
   }
+  .table-scroll {
+    max-width: 100%;
+    margin-top: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    scrollbar-width: thin;
+    scrollbar-color: #6e5428 rgba(12, 9, 6, .65);
+  }
+  .table-scroll table { margin-top: 0; }
+  .table-scroll th,
+  .table-scroll td { white-space: nowrap; }
   .profile-text th,
   .profile-text td,
   .gear-desc th,

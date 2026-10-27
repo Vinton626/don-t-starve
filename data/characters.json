@@ -71,15 +71,16 @@
       "data": "data/warly.json"
     },
     {
-      "id": "wormwood",
-      "name": "沃姆伍德",
-      "data": "data/wormwood.json"
-    },
-    {
       "id": "wortox",
       "name": "沃拓克斯",
       "data": "data/wortox.json"
     },
+    {
+      "id": "wormwood",
+      "name": "沃姆伍德",
+      "data": "data/wormwood.json"
+    },
+    
     {
       "id": "wurt",
       "name": "沃特",
