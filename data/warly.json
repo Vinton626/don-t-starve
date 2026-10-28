@@ -1,25 +1,59 @@
 {
-    "id": "warly",
-    "name": "沃利",
-    "skillTree": false,
-    "health": "",
-    "hunger": "",
-    "sanity": "",
-    "trait": {
-      "text": "在这里写人物特性"
-    },
-    "exclusiveItems": {
-      "items": [
-        {
-          "name": "物品名称",
-          "desc": "在这里写物品描述",
-          "recipe": "在这里写配方"
-        }
-      ]
-    },
-    "notice": {
-      "title": "总结",
-      "text": "在这里写角色总结"
-    }
+  "id": "warly",
+  "name": "沃利",
+  "skillTree": false,
+  "health": "150",
+  "hunger": "250",
+  "sanity": "200",
+  "trait": {
+    "text": "<details><summary>大厨特色菜</summary><table><tr><th rowspan=\"2\">食物名称</th><th rowspan=\"2\"><health>生命值</health></th><th rowspan=\"2\"><hunger>饥饿值</hunger></th><th rowspan=\"2\"><sanity>理智值</sanity></th><th rowspan=\"2\">腐烂速度</th><th rowspan=\"2\">烹饪时间</th><th rowspan=\"2\">优先级</th><th colspan=\"2\">食谱</th><th rowspan=\"2\">效果</th></tr><tr><th>属性要求</th><th>指定食材</th></tr><tr><td><crepe>鲜果可丽饼</crepe></td><td><b>+60</b></td><td><b>+150</b></td><td><b>+15</b></td><td><b>10天</b></td><td><b>40秒</b></td><td><b>30</b></td><td>水果度<b>≥1.5</b></td><td><yellow>黄油</yellow><b>≥1</b>，<yellow>蜂蜜</yellow><b>≥1</b></td><td>无特殊效果</td></tr><tr><td><yellowgreen>芦笋冷汤</yellowgreen></td><td><b>+3</b></td><td><b>+25</b></td><td><b>+10</b></td><td><b>15天</b></td><td><b>10秒</b></td><td><b>30</b></td><td>冰度<b>≥2</b></td><td><yellowgreen>芦笋</yellowgreen><b>≥2</b></td><td><notice text=\"玩家体温&gt;<b>12</b>时候生效，逐渐降低<b>40</b>体感温度\">冷食</notice>，持续<b>5分钟</b></td></tr><tr><td><lightyellow>骨头汤</lightyellow></td><td><b>+32</b></td><td><b>+150</b></td><td><b>+5</b></td><td><b>10天</b></td><td><b>40秒</b></td><td><b>30</b></td><td><b>3&gt;</b>不可食用度<b>&gt;0</b></td><td><lightyellow>骨头</lightyellow><b>≥2</b>，<lightpink>洋葱</lightpink><b>≥1</b></td><td>无特殊效果</td></tr><tr><td><brown>蓝带鱼排</brown></td><td><b>+20</b></td><td><b>+37.5</b></td><td><b>-10</b></td><td><b>8天</b></td><td><b>40秒</b></td><td><b>30</b></td><td>鱼度<b>≥1</b>，不可食用度<b>=0</b></td><td><lightbrown>蛙腿</lightbrown><b>≥2</b></td><td>立即清空<seablue>潮湿度</seablue>，维持干燥持续<b>5分钟</b></td></tr><tr><td><lightred>怪物鞑靼</lightred></td><td><b>-20</b></td><td><b>+62.5</b></td><td><b>-20</b></td><td><b>10天</b></td><td><b>10秒</b></td><td><b>30</b></td><td>怪物度<b>≥2</b>，不可食用度<b>=0</b></td><td>无指定材料</td><td>无特殊效果</td></tr><tr><td><cyan>发光浆果慕斯</cyan></td><td><b>+3</b></td><td><b>+37.5</b></td><td><b>+10</b></td><td><b>8天</b></td><td><b>20秒</b></td><td><b>30</b></td><td>水果度<b>≥2</b>，肉度<b>=0</b>，不可食用度<b>=0</b></td><td><notice text=\"击败洞穴蠕虫掉落\"><cyan>发光浆果</cyan></notice><b>≥1</b>或<notice text=\"采集洞穴神秘植物获取\"><cyan>小发光浆果</cyan></notice><b>≥2</b></td><td>角色成为光源提供照明，持续<b>2天</b>，照明范围会逐渐缩小</td></tr><tr><td><darkgrey>恐怖国王饼</darkgrey></td><td><b>+1</b></td><td><b>+25</b></td><td><b>+5</b></td><td><b>10天</b></td><td><b>40秒</b></td><td><b>30</b></td><td><b>4</b>指定食物，无属性要求</td><td>噩梦燃料<b>×2</b>，(烤)<soilyellow>土豆</soilyellow><b>×1</b>，(烤)<lightpink>洋葱</lightpink><b>×1</b></td><td>对调<health>生命值</health>和<sanity>理智值</sanity></td></tr><tr><td><chili>辣龙椒沙拉</chili></td><td><b>-3</b></td><td><b>+25</b></td><td><b>+10</b></td><td><b>15天</b></td><td><b>15秒</b></td><td><b>30</b></td><td>肉度<b>=0</b>，蛋度<b>=0</b>，不可食用度<b>=0</b></td><td><chili>辣椒</chili><b>×1</b>，<lightpink>火龙果</lightpink><b>×1</b></td><td><notice text=\"玩家体温&lt;<b>62</b>时候生效，逐渐提升<b>40</b>体感温度\">热食</notice>，持续<b>5分钟</b></td></tr><tr><td><lightbrown>海鲜杂烩</lightbrown></td><td><b>+60</b></td><td><b>+112.5</b></td><td><b>+33</b></td><td><b>8天</b></td><td><b>40秒</b></td><td><b>30</b></td><td>鱼度<b>≥1</b></td><td><lightpink>洋葱</lightpink><b>≥1</b>，<lightred>番茄</lightred><b>≥1</b></td><td>无特殊效果</td></tr><tr><td><yellow>伏特羊角冻</yellow></td><td><b>+3</b></td><td><b>+37.5</b></td><td><b>+10</b></td><td><b>10天</b></td><td><b>40秒</b></td><td><b>30</b></td><td>甜味剂度<b>≥2</b>，肉度<b>=0</b></td><td><yellow>福特羊角</yellow><b>≥1</b></td><td>武器攻击带电，持续<b>5分钟</b></td></tr><tr><td><soilyellow>蓬松土豆蛋奶酥</soilyellow></td><td><b>+20</b></td><td><b>+37.5</b></td><td><b>+15</b></td><td><b>10天</b></td><td><b>40秒</b></td><td><b>30</b></td><td>蛋度<b>&gt;0</b>，肉度<b>=0</b>，不可食用度<b>=0</b></td><td><soilyellow>土豆</soilyellow><b>≥2</b></td><td>无特殊效果</td></tr></table></details>"
+  },
+  "exclusiveItems": {
+    "items": [
+      {
+        "name": "便携烹饪锅",
+        "desc": "<b>×1</b>开局自带物品，沃利能够将其放置为建筑形态，也能将建筑形态的便携烹饪锅收起为物品形态(摧毁建筑形态的烹饪锅也只会使其回到物品形态)<br>建筑形态的便携烹饪锅功能类似于普通烹饪锅，但是有以下特殊点:<br>·只能由沃利使用，且只有便携烹饪锅才能做出大厨特 色菜<br>·烹饪速度加快<b>25%</b><br>烧毁后直接化为灰烬",
+        "recipe": "金子×2 + 木炭×6 + 树枝×6 → 1 便携烹饪锅"
+      },
+      {
+        "name": "便携香料站",
+        "desc": "仅沃利能够使用，放置，回收。建筑形态的便携香料站可以放入一个<notice text=\"<caramel>琥珀美食</caramel>，<lightyellow>牛奶帽</lightyellow>、<brown>潮湿黏糊</brown>除外\">烹饪料理</notice>和一个调味料，消耗<b>2.4秒</b>为料理调味",
+        "recipe": "金子×2 + 石砖×3 + 树枝×6 → 1 便携香料站"
+      },
+      {
+        "name": "便携研磨器",
+        "desc": "仅沃利能够使用，放置，回收。建筑形态的便携研磨器是一个制作站，靠近时解锁调味分类，可以制作<lightyellow>蒜粉</lightyellow>、<yellow>蜂蜜水晶</yellow>、<chili>辣椒碎</chili>、<lightyellow>调味盐</lightyellow>",
+        "recipe": "金子×2 + 电子元件×2 + 树枝×6 → 1 便携研磨器"
+      },
+      {
+        "name": "厨师袋",
+        "desc": "身体装备，能且仅能装备在装备栏，不可放入物品栏<br>提供<b>6格</b>物品栏，并且能使放在里面的物品减缓<b>25%</b>的腐烂速度，装备时，厨师袋的物品会显示在屏幕右侧，成为玩家物品栏的一部分",
+        "recipe": "草×4 + 树枝×4 + 硝石×2 → 1 厨师袋"
+      },
+      {
+        "name": "蒜粉",
+        "desc": "调味后的料理会带有“蒜香”前缀。玩家食用带有“蒜香”前缀的料理后，会获得额外的<b>-1/3</b>的<notice text=\"多种<health>生命值</health>端<damage>伤害</damage>倍率叠加后按叠加后的和等比减少<health>生命值</health>扣除量，也就是相当于护盾\"><health>生命值</health>端<damage>伤害</damage>倍率</notice>，同时作用于物理<damage>伤害</damage>与位面<damage>伤害</damage>，持续<b>4分钟</b>",
+        "recipe": "大蒜×3 →  2 蒜粉"
+      },
+      {
+        "name": "蜂蜜水晶",
+        "desc": "调味后的料理会带有“甜”前缀。玩家食用带有“甜”前缀的料理后，会获得在<notice text=\"砍伐、开采、锤击\">工作</notice>时<notice text=\"指次数减少不是速度加快\">工作效率</notice>翻倍的效果，持续<b>4分钟</b>",
+        "recipe": "蜂蜜×3 →  2 蜂蜜水晶"
+      },
+      {
+        "name": "辣椒碎",
+        "desc": "调味后的料理会带有“辣”前缀。带有“辣”前缀的非冷食料理会变为热食，热食效果持续时间为<b>15秒</b>，且不会被环境冷却。玩家食用带有“辣”前缀的料理后，会获得<notice text=\"可与其他增<damage>伤害</damage>效果相乘。不会作用于位面<damage>伤害</damage>\">物理<damage>伤害</damage>增加</notice><b>20%</b>的效果，持续<b>4分钟</b>",
+        "recipe": "辣椒×3 →  2 辣椒碎"
+      },
+      {
+        "name": "调味盐",
+        "desc": "调味后的料理会带有“咸的”前缀。玩家食用带有“咸的”前缀的料理时，料理所带来的<health>生命值</health>增加与减少都会额外增加<b>25%</b>(若料理变质，基础恢复<health>生命值</health>大于<b>0</b>，且食用者不是<character name=\"机器人\">WX-78</character>，则为<b>0</b>)此倍率不能作用于<lightpink>彩虹糖豆</lightpink>的持续恢复<health>生命值</health>上",
+        "recipe": "盐晶×3 →  2 调味盐"
+      }
+    ]
+  },
+  "notice": {
+    "title": "总结",
+    "text": "沃利本身是个纯辅助角色，由于他只吃料理，且短期吃同一个食物收益会下降，所以生存难度较大，倒是更适合喜欢做饭的玩家。由于没有技能树，整个游戏过程中也只能做辅助。但是其辅助能力极强，辣味<yellow>福特羊角冻</yellow>是叠高伤的必备菜，攻击满潮湿目标<damage>伤害</damage>甚至能额外增加<b>200%</b>"
   }
-  
+}
