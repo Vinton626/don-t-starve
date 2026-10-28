@@ -1619,7 +1619,8 @@ function announceEnter(scheme) {
 }
 
 function announceModeSwitch(kind) {
-  showDataPop("切换到" + clickedModeLabel(kind) + "模式", "", false);
+  const label = clickedModeLabel(kind);
+  showDataPop("切换到" + label + "模式", ALIGN_HINTS[label] || "", false);
 }
 
 function syncPresetChrome() {
@@ -1678,6 +1679,12 @@ function alignTag() {
   return "无偏好";
 }
 
+function alignButtonTip(kind, on) {
+  const label = clickedModeLabel(kind);
+  if (on) return label + "模式（再点取消，变为无偏好）";
+  return "切换到" + label + "模式";
+}
+
 const ALIGN_HINTS = {
   "好孩子": "吃灵魂掉10理智值回25饥饿值，释放灵魂回20血回5理智值",
   "淘气包": "吃掉灵魂不掉理智值回25饥饿值，释放灵魂回15血不回理智值",
@@ -1723,6 +1730,7 @@ function paintModes() {
     const on = showAlign && state.align === btn.dataset.align;
     btn.classList.toggle("on", on);
     btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.dataset.tip = alignButtonTip(btn.dataset.align, on);
   });
 }
 

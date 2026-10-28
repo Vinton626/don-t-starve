@@ -5,157 +5,36 @@
 <title>Page</title>
 </head>
 <body>
-    <details>
-        <summary>大厨特色菜</summary>
-        <table>
-            <tr>
-                <th rowspan="2">食物名称</th>
-                <th rowspan="2">生命值</th>
-                <th rowspan="2">饥饿值</th>
-                <th rowspan="2">理智值</th>
-                <th rowspan="2">腐烂速度</th>
-                <th rowspan="2">烹饪时间</th>
-                <th rowspan="2">优先级</th>
-                <th colspan="2">食谱</th>
-                <th rowspan="2">效果</th>
-            </tr>
-            <tr>
-                <th>属性要求</th>
-                <th>指定食材</th>
-            </tr>
-            <tr>
-                <td>鲜果可丽饼</td>
-                <td>+60</td>
-                <td>+150</td>
-                <td>+15</td>
-                <td>10天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>水果度≥1.5</td>
-                <td>黄油≥1，蜂蜜≥1</td>
-                <td>无特殊效果</td>
-            </tr>
-            <tr>
-                <td>芦笋冷汤</td>
-                <td>+3</td>
-                <td>+25</td>
-                <td>+10</td>
-                <td>15天</td>
-                <td>10秒</td>
-                <td>30</td>
-                <td>冰度≥2</td>
-                <td>芦笋≥2</td>
-                <td><notice text="玩家体温&gt;12时候生效，逐渐降低40体感温度">冷食</notice>，持续5分钟</td>
-            </tr>
-            <tr>
-                <td>骨头汤</td>
-                <td>+32</td>
-                <td>+150</td>
-                <td>+5</td>
-                <td>10天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>3&gt;不可食用度&gt;0</td>
-                <td>骨头≥2，洋葱≥1</td>
-                <td>无特殊效果</td>
-            </tr>
-            <tr>
-                <td>蓝带鱼排</td>
-                <td>+20</td>
-                <td>+37.5</td>
-                <td>-10</td>
-                <td>8天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>鱼度≥1，不可食用度=0</td>
-                <td>蛙腿≥2</td>
-                <td>立即清空潮湿度，维持干燥持续5分钟</td>
-            </tr>
-            <tr>
-                <td>怪物鞑靼</td>
-                <td>-20</td>
-                <td>+62.5</td>
-                <td>-20</td>
-                <td>10天</td>
-                <td>10秒</td>
-                <td>30</td>
-                <td>怪物度≥2，不可食用度=0</td>
-                <td>无指定材料</td>
-                <td>无特殊效果</td>
-            </tr>
-            <tr>
-                <td>发光浆果慕斯</td>
-                <td>+3</td>
-                <td>+37.5</td>
-                <td>+10</td>
-                <td>8天</td>
-                <td>20秒</td>
-                <td>30</td>
-                <td>水果度≥2，肉度=0，不可食用度=0</td>
-                <td><notice text="击败洞穴蠕虫掉落">发光浆果</notice>≥1或<notice text="采集洞穴神秘植物获取">小发光浆果</notice>≥2</td>
-                <td>角色成为光源提供照明，持续2天，照明范围会逐渐缩小</td>
-            </tr>
-            <tr>
-                <td>恐怖国王饼</td>
-                <td>+1</td>
-                <td>+25</td>
-                <td>+5</td>
-                <td>10天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>4指定食物，无属性要求</td>
-                <td>噩梦燃料×2，(烤)土豆×1，(烤)洋葱×1</td>
-                <td>对调生命值和理智值</td>
-            </tr>
-            <tr>
-                <td>辣龙椒沙拉</td>
-                <td>-3</td>
-                <td>+25</td>
-                <td>+10</td>
-                <td>15天</td>
-                <td>15秒</td>
-                <td>30</td>
-                <td>肉度=0，蛋度=0，不可食用度=0</td>
-                <td>辣椒×1，火龙果×1</td>
-                <td><notice text="玩家体温&lt;62时候生效，逐渐提升40体感温度">热食</notice>，持续5分钟</td>
-            </tr>
-            <tr>
-                <td>海鲜杂烩</td>
-                <td>+60</td>
-                <td>+112.5</td>
-                <td>+33</td>
-                <td>8天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>鱼度≥1</td>
-                <td>洋葱≥1，番茄≥1</td>
-                <td>无特殊效果</td>
-            </tr>
-            <tr>
-                <td>伏特羊角冻</td>
-                <td>+3</td>
-                <td>+37.5</td>
-                <td>+10</td>
-                <td>10天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>甜味剂度≥2，肉度=0</td>
-                <td>福特羊角≥1</td>
-                <td>武器攻击带电，持续5分钟</td>
-            </tr>
-            <tr>
-                <td>蓬松土豆蛋奶酥</td>
-                <td>+20</td>
-                <td>+37.5</td>
-                <td>+15</td>
-                <td>10天</td>
-                <td>40秒</td>
-                <td>30</td>
-                <td>蛋度&gt;0，肉度=0，不可食用度=0</td>
-                <td>土豆≥2</td>
-                <td>无特殊效果</td>
-            </tr>
-        </table>
-    </details>
+    <h3>特殊能力</h3>
+    <p>沃托克斯可以使用灵魂来进行灵魂跳跃，可以释放或吃下来接受灵魂的滋养，恢复一定的饥饿值、生命值与理智值<br>具体效果见下方沃托克斯专属物品:灵魂</p>
+    <h3>其他</h3>
+    <ul>
+        <li>沃托克斯食用食物时，仅能从食物中获得0.5倍的生命值、饥饿值与理智值，不论增减</li>
+        <li>沃托克斯受降理智值光环的影响减半</li>
+        <li>沃托克斯被视作怪物，因此猪人、兔人与浣猫等生物会主动仇恨他</li>
+        <li>沃托克斯最喜欢的食物是<notice text=\"仍会受到食物减效的影响\"><pomegranate>石榴</pomegranate>与<pomegranate>切片熟石榴</pomegranate></notice></li>
+    </ul>
+    <table>
+        <tr>
+            <th>可装物品的格子数量</th>
+            <th>攻击伤害</th>
+            <th>消耗耐久</th>
+        </tr>
+        <tr>
+            <td>0-5个</td>
+            <td>0</td>
+            <td>13.6</td>
+        </tr>
+        <tr>
+            <td>6-10个</td>
+            <td>0.5</td>
+            <td>23.8</td>
+        </tr>
+        <tr>
+            <td>11-15个</td>
+            <td>1</td>
+            <td>34</td>
+        </tr>
+    </table>
 </body>
 </html>
