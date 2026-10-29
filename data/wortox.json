@@ -114,7 +114,7 @@
             "id": "wortox_soulprotector_4",
             "n": 7,
             "name": "二级灵魂堡垒",
-            "desc": "释放灵魂在第一次治疗和第二次治疗之间的时间间隔降低至 <b>2秒</b>。所释放的灵魂的最大移动速度增加至 <b>8</b>。范围内每多一个<health>生命值</health>不满的玩家所恢复的<health>生命值</health>减少量降为 <b>1</b> text-center（原为 <b>2</b> text-center）。",
+            "desc": "释放灵魂在第一次治疗和第二次治疗之间的时间间隔降低至 <b>2秒</b>。所释放的灵魂的最大移动速度增加至 <b>8</b>。范围内每多一个<health>生命值</health>不满的玩家所恢复的<health>生命值</health>减少量降为 <b>1</b> <health>生命值</health>（原为 <b>2</b> <health>生命值</health>）。",
           "requires": [
             "wortox_soulprotector_1",
             "wortox_soulprotector_2",
@@ -348,7 +348,7 @@
             "id": "wortox_panflute_playing",
             "n": 23,
             "name": "即兴排箫手",
-            "desc": "每隔 <b>0.9~1.1天</b>，沃拓克斯就会获得演奏灵感。有演奏灵感时，吹奏排箫不消耗耐久，且恢复 <b>5</b> text-center。吹奏过后或死亡，演奏灵感就会消失。",
+            "desc": "每隔 <b>0.9~1.1天</b>，沃拓克斯就会获得演奏灵感。有演奏灵感时，吹奏排箫不消耗耐久，且恢复 <b>5</b> <sanity>理智值</sanity>。吹奏过后或死亡，演奏灵感就会消失。",
             "requires": [],
           "x": -16,
           "y": 64,

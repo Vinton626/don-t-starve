@@ -799,6 +799,15 @@
     gap: 10px;
     margin-top: 12px;
   }
+  .stat-row.is-four {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .stat-row.is-four .stat-orb {
+    width: 56px;
+    height: 56px;
+  }
+  .stat-row.is-four .stat-emoji { font-size: 26px; }
   .stat { display: flex; flex-direction: column; align-items: center; }
   .stat-orb {
     width: 72px;
@@ -815,6 +824,8 @@
   .stat-trans { background: #2f7a32; }
   .stat-hunger { background: #c49212; }
   .stat-sanity { background: #c65a12; }
+  .stat-might { background: #4dffea; }
+  .stat-inspiration { background: #c084fc; }
   .stat-emoji {
     font-size: 34px;
     line-height: 1;
@@ -952,6 +963,8 @@
   .tag-text brown { color: #d4925a; }
   .profile-text lightbrown,
   .tag-text lightbrown { color: #e8c39a; }
+  .profile-text darkbrown,
+  .tag-text darkbrown { color: #b56a32; }
   .profile-text grey,
   .tag-text grey { color: #c5c5c5; }
   .profile-text darkgrey,
@@ -976,6 +989,8 @@
   .tag-text yellowgreen { color: #c6e05a; }
   .profile-text cyan,
   .tag-text cyan { color: #4dffea; }
+  .profile-text lightpurple,
+  .tag-text lightpurple { color: #c084fc; }
   .profile-text chili,
   .tag-text chili { color: #c5362b; }
   .profile-text pomegranate,

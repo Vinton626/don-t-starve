@@ -912,11 +912,19 @@ function renderProfileBody(host, tree) {
 
   const stats = document.createElement("div");
   stats.className = "stat-row";
-  [
+  const statCols = [
     ["health", "stat-health", "❤️", "生命值"],
     ["hunger", "stat-hunger", "🍗", "饥饿值"],
     ["sanity", "stat-sanity", "🧠", "理智值"]
-  ].forEach(([key, tone, emoji, label]) => {
+  ];
+  if (tree && Object.prototype.hasOwnProperty.call(tree, "might")) {
+    statCols.push(["might", "stat-might", "💪", "力量值"]);
+  }
+  if (tree && Object.prototype.hasOwnProperty.call(tree, "inspiration")) {
+    statCols.push(["inspiration", "stat-inspiration", "𝄞", "激励值"]);
+  }
+  if (statCols.length >= 4) stats.classList.add("is-four");
+  statCols.forEach(([key, tone, emoji, label]) => {
     const col = document.createElement("div");
     col.className = "stat";
     const orb = document.createElement("div");
@@ -927,8 +935,9 @@ function renderProfileBody(host, tree) {
     face.textContent = emoji;
     orb.appendChild(face);
     const value = document.createElement("div");
-    value.className = "stat-value";
-    value.textContent = tree && tree[key] != null ? String(tree[key]) : "";
+    value.className = "stat-value tag-text";
+    value.innerHTML = tree && tree[key] != null ? String(tree[key]) : "";
+    bindCharacterLinks(value);
     col.appendChild(orb);
     col.appendChild(value);
     stats.appendChild(col);
@@ -1152,7 +1161,7 @@ function craftList(tree) {
 }
 
 function recipeTextHTML(text) {
-  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage)>/g;
+  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|cyan|lightpurple)>/g;
   const s = String(text);
   let html = "";
   let last = 0;

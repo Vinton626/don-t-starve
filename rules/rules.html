@@ -28,11 +28,13 @@
   lightblue { color: #b3e5ff; }
   brown { color: #d4925a; }
   lightbrown { color: #e8c39a; }
+  darkbrown { color: #b56a32; }
   grey { color: #c5c5c5; }
   darkgrey { color: #7a7a7a; }
   keyboard { color: #b7c4d0; }
   yellowgreen { color: #c6e05a; }
   cyan { color: #4dffea; }
+  lightpurple { color: #c084fc; }
   chili { color: #c5362b; }
   pomegranate { color: #e0243a; }
   redorange { color: #e4572e; }
@@ -51,6 +53,8 @@
 <p><seablue>潮湿度</seablue> 的颜色是 #3ec4e0。潮湿度、潮湿值都用它。</p>
 <p><trans>变身值</trans> 的颜色是 #8ed34a。伍迪变身值用它。</p>
 <p><damage>伤害</damage> 的颜色是 #5d7084，与阿比盖尔攻击力圆圈相同。写伤害、威力时用它，数字仍放在 b 里，例如 <b>5点</b><damage>伤害</damage>。范围伤害、爆炸伤害、位面伤害里的「伤害」也包进去。技能名「威力武器」里的威力同样包进去。</p>
+<p><cyan>力量值</cyan> 用已有的青色标签，颜色是 #4dffea。属性栏圆圈底色与这个标签相同，沃尔夫冈的圆圈里是肌肉。</p>
+<p><lightpurple>激励值</lightpurple> 的颜色是 #c084fc，浅紫。属性栏圆圈底色与这个标签相同，薇格弗德的圆圈里是高音谱号。</p>
 
 <h2>强调</h2>
 <p><b>数字</b> 的颜色是 #7fd4ff。点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。</p>
@@ -79,13 +83,14 @@
 <p><seablue>海蓝</seablue> 见上面的潮湿度，同一个标签。</p>
 <p><brown>棕色</brown> 的颜色是 #d4925a。</p>
 <p><lightbrown>浅棕</lightbrown> 的颜色是 #e8c39a。</p>
+<p><darkbrown>深棕</darkbrown> 的颜色是 #b56a32，比棕色更深。火鸡正餐用这个标签。</p>
 <p><grey>灰色</grey> 的颜色是 #c5c5c5。</p>
 <p><darkgrey>深灰</darkgrey> 的颜色是 #7a7a7a。恐怖国王饼用这个标签，不要用 grey。</p>
 
 <h2>结构和跳转</h2>
 <p><character>人物</character> 的颜色是 #d7a6ff，带下划线。点了会跳到同名角色。写法是 &lt;character&gt;沃特&lt;/character&gt;。显示名和角色名不同时，写成 &lt;character name="薇诺娜"&gt;女工&lt;/character&gt;。</p>
 <p>roles 不是 character。阿比盖尔这类多形态写 &lt;roles&gt;&lt;role1&gt;…&lt;/role1&gt;&lt;role2&gt;…&lt;/role2&gt;&lt;role3&gt;…&lt;/role3&gt;&lt;/roles&gt;，每个形态里用 h3 当切换按钮的名字。</p>
-<p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n。弹出的框和正文用同一套标签，所以可以写 &lt;character&gt;沃利&lt;/character&gt;，点名字会跳到该角色。例如 &lt;notice text="只能由&lt;character&gt;沃利&lt;/character&gt;制作"&gt;鲜果可丽饼&lt;/notice&gt;。</p>
+<p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n。弹出的框和正文用同一套标签，所以可以写 &lt;character&gt;沃利&lt;/character&gt;，点名字会跳到该角色。例如 &lt;notice text="只能由&lt;character&gt;沃利&lt;/character&gt;制作"&gt;鲜果可丽饼&lt;/notice&gt;。属性栏里的生命值、饥饿值、理智值、力量值、激励值也可以这样写，例如 &lt;notice text="技能可提升上限"&gt;100&lt;/notice&gt;。</p>
 <p>段落用 p，小节标题用 h3，更小的标题用 h4，列表用 ul 和 li，可折叠内容用 details 和 summary，对照表用 table。表比画面宽时可以左右滑动，手机上用手指横着拉，不用改格子。</p>
 <p>专属物品分段用 &lt;br&gt;，不要靠源码里的换行。</p>
 <p>技能组的 note、tip，以及角色页底部的总结，和正文用同一套标签。锁节点上的 tip 保持纯文字，那些句子要拿来判断能不能解锁。</p>
