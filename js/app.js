@@ -912,11 +912,16 @@ function renderProfileBody(host, tree) {
 
   const stats = document.createElement("div");
   stats.className = "stat-row";
-  const statCols = [
-    ["health", "stat-health", "❤️", "生命值"],
+  const statCols = [];
+  if (tree && Object.prototype.hasOwnProperty.call(tree, "time")) {
+    statCols.push(["time", "stat-time", "⌚", "年龄值"]);
+  } else {
+    statCols.push(["health", "stat-health", "❤️", "生命值"]);
+  }
+  statCols.push(
     ["hunger", "stat-hunger", "🍗", "饥饿值"],
     ["sanity", "stat-sanity", "🧠", "理智值"]
-  ];
+  );
   if (tree && Object.prototype.hasOwnProperty.call(tree, "might")) {
     statCols.push(["might", "stat-might", "💪", "力量值"]);
   }
@@ -1161,7 +1166,7 @@ function craftList(tree) {
 }
 
 function recipeTextHTML(text) {
-  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|cyan|lightpurple)>/g;
+  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|cyan|lightpurple|age)>/g;
   const s = String(text);
   let html = "";
   let last = 0;
