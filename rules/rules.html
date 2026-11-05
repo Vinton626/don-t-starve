@@ -14,6 +14,8 @@
   seablue { color: #3ec4e0; }
   trans { color: #8ed34a; }
   damage { color: #5d7084; }
+  physical { color: #ffd0f8; }
+  planar { color: #bbf0fc; }
   warn { color: #ff3d2a; }
   green { color: #7dce7a; }
   b { color: #7fd4ff; }
@@ -50,18 +52,20 @@
 <p>这份文件只给写内容和 AI 看，不参与游戏页面。真正生效的样式在 skill.html。下面每条都是「标签长什么样，颜色是哪一个」。</p>
 
 <h2>属性</h2>
-<p><health>生命值</health> 的颜色是 #ff6b78。写生命值时用它。</p>
+<p><health>生命值</health> 的颜色是 #ff6b78。写生命值时用它。如果出现为<health>生命值上限</health>，则需要将上限两个字包进去。</p>
 <p><hunger>饥饿值</hunger> 的颜色是 #c49212。写饥饿值时用它。</p>
 <p><sanity>理智值</sanity> 的颜色是 #c65a12。写理智值时用它。不要再写精神值。</p>
 <p><seablue>潮湿度</seablue> 的颜色是 #3ec4e0。潮湿度、潮湿值都用它。</p>
 <p><trans>变身值</trans> 的颜色是 #8ed34a。伍迪变身值用它。</p>
-<p><damage>伤害</damage> 的颜色是 #5d7084，与阿比盖尔攻击力圆圈相同。写伤害、威力时用它，数字仍放在 b 里，例如 <b>5点</b><damage>伤害</damage>。范围伤害、爆炸伤害、位面伤害里的「伤害」也包进去。技能名「威力武器」里的威力同样包进去。</p>
+<p><damage>伤害</damage> 的颜色是 #5d7084，与阿比盖尔攻击力圆圈相同。写伤害、威力时用它，数字仍放在 b 里，例如 <b>5点</b><damage>伤害</damage>。范围伤害、爆炸伤害里的「伤害」也包进去。技能名「威力武器」里的威力同样包进去。</p>
+<p><physical>物理伤害</physical> 的颜色是 #ffd0f8，浅粉，偏白。四个字整段放进这个标签，不要再写成 物理&lt;damage&gt;伤害&lt;/damage&gt;。</p>
+<p><planar>位面伤害</planar> <planar>位面防御</planar>的颜色是 #bbf0fc，浅蓝，偏白。四个字整段放进这个标签，不要再写成 位面&lt;damage&gt;伤害&lt;/damage&gt;。</p>
 <p><cyan>力量值</cyan> 用已有的青色标签，颜色是 #4dffea。属性栏圆圈底色与这个标签相同，沃尔夫冈的圆圈里是肌肉。</p>
 <p><lightpurple>激励值</lightpurple> 的颜色是 #c084fc，浅紫。属性栏圆圈底色与这个标签相同，薇格弗德的圆圈里是高音谱号。</p>
 <p><age>年龄值</age>/<age>年龄</age>/<age>岁</age>的颜色是 #8e3aad，深紫。浅紫已经用于激励值，人物链接也是浅紫，所以年龄值用深紫。写法是 &lt;age&gt;年龄值&lt;/age&gt;。旺达属性栏原来的生命值位置用这个底色，圆圈里是表盘。</p>
 
 <h2>强调</h2>
-<p><b>数字</b> 的颜色是 #7fd4ff。点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。</p>
+<p><b>数字</b> 的颜色是 #7fd4ff。特殊：(数字)<green>技能</green>的这种特殊情况，不要套 b，点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。</p>
 <p>公式整段放进 b，里面有中文也一起放进去。括号里是一整条公式时，去掉括号，改用 b。括号只是公式里面的运算优先级时，括号留着，整段公式再套 b。例如 <b>22-2×周围人数</b>，以及 <b>20×(总数/阈值)</b>。</p>
 <p><warn>警告</warn> 的颜色是 #ff3d2a。需要读者特别注意、容易理解错的句子用它。</p>
 <p><green>技能名</green> 的颜色是 #7dce7a。点名某个技能时用它。</p>
@@ -94,8 +98,9 @@
 <p><darkgrey>深灰</darkgrey> 的颜色是 #7a7a7a。恐怖国王饼用这个标签，不要用 grey。</p>
 
 <h2>结构和跳转</h2>
-<p><character>人物</character> 的颜色是 #d7a6ff，带下划线。点了会跳到同名角色。写法是 &lt;character&gt;沃特&lt;/character&gt;。显示名和角色名不同时，写成 &lt;character name="薇诺娜"&gt;女工&lt;/character&gt;。</p>
-<p>roles 不是 character。阿比盖尔这类多形态写 &lt;roles&gt;&lt;role1&gt;…&lt;/role1&gt;&lt;role2&gt;…&lt;/role2&gt;&lt;role3&gt;…&lt;/role3&gt;&lt;/roles&gt;，每个形态里用 h3 当切换按钮的名字。</p>
+<p><character>人物</character> 的颜色是 #d7a6ff，带下划线。点了会跳到同名角色。写法是 &lt;character&gt;沃特&lt;/character&gt;。显示名和角色名不同时，写成 &lt;character name="薇诺娜"&gt;女工&lt;/character&gt;。植物人写成 &lt;character name="沃姆伍德"&gt;植物人&lt;/character&gt;，大力士写成 &lt;character name="沃尔夫冈"&gt;大力士&lt;/character&gt;。角色在自己的页面上不要给自己加链接。</p>
+<p>roles 不是 character。阿比盖尔这类多形态写 &lt;roles&gt;&lt;role1&gt;…&lt;/role1&gt;&lt;role2&gt;…&lt;/role2&gt; 一直到 &lt;role7&gt;…&lt;/role7&gt;&lt;/roles&gt;。每个形态里用 h3 当切换按钮的名字。现在最多到 role7。</p>
+<p>同一段内容要在几个形态里各出现一次时，正文只写一遍。共享内容放进 &lt;repeat class="移动"&gt;…&lt;/repeat&gt;，这段本身不显示。每个要显示的位置写 &lt;a class="移动"&gt;&lt;/a&gt;，两边的 class 名字要一样。repeat 放在同一段正文里即可，放在 roles 外面，避免抢到形态标题。这个 class 只是共享块的名字，用一个新名字，不要写成页面上已经有的样式类。人物特性仍是一整行，共享内容里的换行也会显示出来。</p>
 <p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n。弹出的框和正文用同一套标签，所以可以写 &lt;character&gt;沃利&lt;/character&gt;，点名字会跳到该角色。例如 &lt;notice text="只能由&lt;character&gt;沃利&lt;/character&gt;制作"&gt;鲜果可丽饼&lt;/notice&gt;。属性栏里的生命值、饥饿值、理智值、力量值、激励值也可以这样写，例如 &lt;notice text="技能可提升上限"&gt;100&lt;/notice&gt;。</p>
 <p>段落用 p，小节标题用 h3，更小的标题用 h4，列表用 ul 和 li，可折叠内容用 details 和 summary，对照表用 table。表比画面宽时可以左右滑动，手机上用手指横着拉，不用改格子。</p>
 <p>专属物品分段用 &lt;br&gt;，不要靠源码里的换行。</p>

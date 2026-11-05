@@ -22,7 +22,7 @@
       "id": "power",
       "name": "威力",
       "x": 74,
-      "tip": "远程武器（如亮茄魔杖、嚎弹炮）以及不带有位面<damage>伤害</damage>的武器（如暗夜剑）不受到<damage>威力</damage>武器的加成。"
+      "tip": "远程武器（如亮茄魔杖、嚎弹炮）以及不带有<planar>位面伤害</planar>的武器（如暗夜剑）不受到<damage>威力</damage>武器的加成。"
     },
     {
       "id": "affinity",
@@ -238,7 +238,7 @@
       "n": 15,
       "group": "power",
       "name": "威力武器 I",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面<damage>伤害</damage> <b>+5</b>。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的<planar>位面伤害</planar> <b>+5</b>。",
       "requires": [],
       "x": 74,
       "y": -106,
@@ -250,7 +250,7 @@
       "n": 16,
       "group": "power",
       "name": "威力武器 II",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面<damage>伤害</damage> <b>+10</b>。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的<planar>位面伤害</planar> <b>+10</b>。",
       "requires": [
         "wolfgang_planardamage_1"
       ],
@@ -264,7 +264,7 @@
       "n": 17,
       "group": "power",
       "name": "威力武器 III",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面<damage>伤害</damage> <b>+15</b>。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的<planar>位面伤害</planar> <b>+15</b>。",
       "requires": [
         "wolfgang_planardamage_1",
         "wolfgang_planardamage_2"
@@ -279,7 +279,7 @@
       "n": 18,
       "group": "power",
       "name": "威力武器 IV",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面<damage>伤害</damage> <b>+20</b>。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的<planar>位面伤害</planar> <b>+20</b>。",
       "requires": [
         "wolfgang_planardamage_1",
         "wolfgang_planardamage_2",
@@ -295,7 +295,7 @@
       "n": 19,
       "group": "power",
       "name": "威力武器 V",
-      "desc": "在强壮形态下，使用近战位面武器攻击，造成的位面<damage>伤害</damage> <b>+25</b>。",
+      "desc": "在强壮形态下，使用近战位面武器攻击，造成的<planar>位面伤害</planar> <b>+25</b>。",
       "requires": [
         "wolfgang_planardamage_1",
         "wolfgang_planardamage_2",
@@ -463,7 +463,7 @@
             "影前"
           ],
           "name": "单人月前影前",
-          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法，这样会导致(<b>4</b>)<green>健身房精通</green>与(<b>10</b>)<green>突破极限I</green>浪费，偶尔用一下健身房可能用到。如果节奏比较慢，从建家开始，建议建造健身房，这样就可以把(<b>8</b>)<green>重击手I</green>与(<b>9</b>)<green>重击手II</green>换为(<b>11</b>)<green>突破极限II</green>与(<b>12</b>)<green>突破极限III</green>，如果觉得自动完成锻炼没用，那也建议把(<b>4</b>)<green>健身房精通</green>换为(<b>13</b>)<green>突破极限IV</green>",
+          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法，这样会导致(4)<green>健身房精通</green>与(10)<green>突破极限I</green>浪费，偶尔用一下健身房可能用到。如果节奏比较慢，从建家开始，建议建造健身房，这样就可以把(8)<green>重击手I</green>与(9)<green>重击手II</green>换为(11)<green>突破极限II</green>与(12)<green>突破极限III</green>，如果觉得自动完成锻炼没用，那也建议把(4)<green>健身房精通</green>换为(13)<green>突破极限IV</green>",
           "skills": [
             "wolfgang_critwork_1",
             "wolfgang_critwork_2",
@@ -490,7 +490,7 @@
             "影前"
           ],
           "name": "单人月后",
-          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(<b>8</b>)<green>重击手I</green>换为(<b>4</b>)<green>健身房精通</green>或者(<b>10</b>)<green>突破极限I</green>",
+          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(8)<green>重击手I</green>换为(4)<green>健身房精通</green>或者(10)<green>突破极限I</green>",
           "skills": [
             "wolfgang_critwork_1",
             "wolfgang_critwork_2",
@@ -517,7 +517,7 @@
             "影后"
           ],
           "name": "单人影后",
-          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(<b>8</b>)<green>重击手I</green>换为(<b>4</b>)<green>健身房精通</green>或者(<b>10</b>)<green>突破极限I</green>",
+          "text": "此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(8)<green>重击手I</green>换为(4)<green>健身房精通</green>或者(10)<green>突破极限I</green>",
           "skills": [
             "wolfgang_critwork_1",
             "wolfgang_critwork_2",
@@ -544,7 +544,7 @@
             "影后"
           ],
           "name": "单人月后影后",
-          "text": "一般来说，月后影后更适合此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(<b>8</b>)<green>重击手I</green>换为(<b>4</b>)<green>健身房精通</green>或者(<b>10</b>)<green>突破极限I</green>。此外，虽然<damage>威力</damage>武器前期毫无作用，但是比起健身房，我更建议点满<damage>威力</damage>武器省得月后影后再切换",
+          "text": "一般来说，月后影后更适合此加点适合速通，就是说不建造健身房，只靠哑铃锻炼的玩法。如果想建家慢玩，可以把(8)<green>重击手I</green>换为(4)<green>健身房精通</green>或者(10)<green>突破极限I</green>。此外，虽然<damage>威力</damage>武器前期毫无作用，但是比起健身房，我更建议点满<damage>威力</damage>武器省得月后影后再切换",
           "skills": [
             "wolfgang_critwork_1",
             "wolfgang_critwork_2",

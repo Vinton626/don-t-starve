@@ -865,10 +865,24 @@
   }
   .profile-text roles role1,
   .profile-text roles role2,
-  .profile-text roles role3 { display: none; }
+  .profile-text roles role3,
+  .profile-text roles role4,
+  .profile-text roles role5,
+  .profile-text roles role6,
+  .profile-text roles role7 { display: none; }
   .profile-text roles role1.is-on,
   .profile-text roles role2.is-on,
-  .profile-text roles role3.is-on { display: block; }
+  .profile-text roles role3.is-on,
+  .profile-text roles role4.is-on,
+  .profile-text roles role5.is-on,
+  .profile-text roles role6.is-on,
+  .profile-text roles role7.is-on { display: block; }
+  .tag-text repeat { display: none; }
+  .tag-text a[class] {
+    display: contents;
+    color: inherit;
+    text-decoration: none;
+  }
   .profile-text roles .role-switch {
     display: flex;
     justify-content: center;
@@ -973,6 +987,10 @@
   .tag-text green { color: #7dce7a; }
   .tag-text health { color: #ff6b78; }
   .tag-text damage { color: #5d7084; }
+  .profile-text physical,
+  .tag-text physical { color: #ffd0f8; }
+  .profile-text planar,
+  .tag-text planar { color: #bbf0fc; }
   .tag-text warn { color: #ff3d2a; }
   .tag-text hunger { color: #c49212; }
   .tag-text sanity { color: #c65a12; }

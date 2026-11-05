@@ -260,7 +260,7 @@ function charFromQuery(list) {
 
 async function boot() {
   try {
-    const index = await loadJSON("data/characters.json");
+    const index = await loadJSON("data/characters/characters.json");
     const chars = index.characters || [];
     state.characters = chars;
     const current = charFromQuery(chars);
@@ -846,7 +846,7 @@ function bindRoleSwitch(root) {
   if (!root) return;
   root.querySelectorAll("roles").forEach(box => {
     if (box.querySelector(":scope > .role-switch")) return;
-    const roles = ["role1", "role2", "role3"]
+    const roles = ["role1", "role2", "role3", "role4", "role5", "role6", "role7"]
       .map(tag => box.querySelector(":scope > " + tag))
       .filter(Boolean);
     if (!roles.length) return;
@@ -881,8 +881,29 @@ function wrapWideTables(root) {
   });
 }
 
+function bindSharedCopies(root) {
+  const sources = new Map();
+  root.querySelectorAll("repeat").forEach(el => {
+    const key = (el.getAttribute("class") || "").trim();
+    if (key && !sources.has(key)) sources.set(key, el);
+  });
+  const fill = (anchor, stack) => {
+    if (!anchor || anchor.dataset.copy || anchor.hasAttribute("href")) return;
+    if (anchor.closest("repeat")) return;
+    const key = (anchor.getAttribute("class") || "").trim();
+    const source = sources.get(key);
+    if (!source || stack.includes(key)) return;
+    anchor.dataset.copy = "1";
+    anchor.replaceChildren();
+    [...source.childNodes].forEach(node => anchor.appendChild(node.cloneNode(true)));
+    anchor.querySelectorAll("a[class]").forEach(inner => fill(inner, stack.concat(key)));
+  };
+  root.querySelectorAll("a[class]").forEach(anchor => fill(anchor, []));
+}
+
 function bindCharacterLinks(root) {
   if (!root) return;
+  bindSharedCopies(root);
   wrapWideTables(root);
   bindRoleSwitch(root);
   root.querySelectorAll("character").forEach(el => {
@@ -1166,7 +1187,7 @@ function craftList(tree) {
 }
 
 function recipeTextHTML(text) {
-  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|cyan|lightpurple|age)>/g;
+  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|physical|planar|cyan|lightpurple|age)>/g;
   const s = String(text);
   let html = "";
   let last = 0;

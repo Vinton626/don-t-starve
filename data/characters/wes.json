@@ -32,12 +32,12 @@
         },
         {
           "name": "充气背心",
-          "desc": "<b>1天</b>耐久，<b>1点</b><health>生命值</health>，<b>5点</b><damage>伤害</damage>，攻击间隔<b>4</b>，攻击距离<b>0.75</b>地皮<br>如果在溺水时装备了充气背心，玩家只会受到增加<seablue>潮湿度</seablue>和随机掉落物品的惩罚，然后充气背心会消失<br><warn>消失或受到物理<damage>伤害</damage>时会爆炸对穿戴者造成<b>1次</b>爆炸<damage>伤害</damage></warn>",
+          "desc": "<b>1天</b>耐久，<b>1点</b><health>生命值</health>，<b>5点</b><damage>伤害</damage>，攻击间隔<b>4</b>，攻击距离<b>0.75</b>地皮<br>如果在溺水时装备了充气背心，玩家只会受到增加<seablue>潮湿度</seablue>和随机掉落物品的惩罚，然后充气背心会消失<br><warn>消失或受到<physical>物理伤害</physical>时会爆炸对穿戴者造成<b>1次</b>爆炸<damage>伤害</damage></warn>",
           "recipe": "0×一堆气球 + -5<sanity>理智值</sanity> → 1 充气背心"
         },
         {
           "name": "气球帽",
-          "desc": "<b>+1.333</b><sanity>理智值</sanity><b>/分钟</b>，<b>1天</b>耐久，<b>1点</b><health>生命值</health>，<b>5点</b><damage>伤害</damage>，攻击间隔<b>4</b>，攻击距离<b>0.75</b>地皮<br>装备时提供绝缘效果<br><warn>耐久为<b>0</b>或者受到物理<damage>伤害</damage>时会爆炸对穿戴者造成<b>1次</b>爆炸<damage>伤害</damage></warn>",
+          "desc": "<b>+1.333</b><sanity>理智值</sanity><b>/分钟</b>，<b>1天</b>耐久，<b>1点</b><health>生命值</health>，<b>5点</b><damage>伤害</damage>，攻击间隔<b>4</b>，攻击距离<b>0.75</b>地皮<br>装备时提供绝缘效果<br><warn>耐久为<b>0</b>或者受到<physical>物理伤害</physical>时会爆炸对穿戴者造成<b>1次</b>爆炸<damage>伤害</damage></warn>",
           "recipe": "0×一堆气球 + -5<sanity>理智值</sanity> → 1 气球帽"
         }
       ]
