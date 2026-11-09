@@ -39,7 +39,7 @@
       "name": "树苗制造",
       "desc": "习得配方：",
       "recipes": [
-        "-5<health>生命值</health> + 5 树枝 → 1 <item>月亮树苗</item>"
+        "-5<health>生命值</health> + 5 树枝 → 1 月亮树苗"
       ],
       "requires": [
         "wormwood_identify_plants2"
@@ -56,8 +56,8 @@
       "name": "浆果丛制造",
       "desc": "习得配方：",
       "recipes": [
-        "-10<health>生命值</health> + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛</item>",
-        "-10<health>生命值</health> + 3 腐烂物 + 8 多汁浆果 → 1 <item>浆果丛（二号）</item>"
+        "-10<health>生命值</health> + 3 腐烂物 + 8 多汁浆果 → 1 浆果丛",
+        "-10<health>生命值</health> + 3 腐烂物 + 8 多汁浆果 → 1 浆果丛（二号）"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -75,7 +75,7 @@
       "name": "多汁浆果丛制造",
       "desc": "习得配方：",
       "recipes": [
-        "-10<health>生命值</health> + 3 腐烂物 + 8 浆果 → 1 <item>多汁浆果丛</item>"
+        "-10<health>生命值</health> + 3 腐烂物 + 8 浆果 → 1 多汁浆果丛"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -94,7 +94,7 @@
       "name": "猴尾草制造",
       "desc": "习得配方：",
       "recipes": [
-        "-15<health>生命值</health> + 1 洞穴香蕉 + 4 芦苇 → 1 <item>猴尾草</item>"
+        "-15<health>生命值</health> + 1 洞穴香蕉 + 4 芦苇 → 1 猴尾草"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -113,7 +113,7 @@
       "name": "食人花制造",
       "desc": "习得配方：",
       "recipes": [
-        "-25<health>生命值</health> + 2 堆肥包 + 5 叶肉 → 1 <item>食人花种子</item>"
+        "-25<health>生命值</health> + 2 堆肥包 + 5 叶肉 → 1 食人花种子"
       ],
       "requires": [
         "wormwood_identify_plants2",
@@ -739,44 +739,14 @@
   "craftItems": {
     "items": [
       {
-        "id": "wormwood_saplingcrafting_1",
-        "name": "月亮树苗",
-        "desc": ""
-      },
-      {
-        "id": "wormwood_berrybushcrafting_1",
-        "name": "浆果丛",
-        "desc": ""
-      },
-      {
-        "id": "wormwood_berrybushcrafting_2",
-        "name": "浆果丛（二号）",
-        "desc": ""
-      },
-      {
-        "id": "wormwood_juicyberrybushcrafting_1",
-        "name": "多汁浆果丛",
-        "desc": ""
-      },
-      {
-        "id": "wormwood_reedscrafting_1",
-        "name": "猴尾草",
-        "desc": ""
-      },
-      {
-        "id": "wormwood_lureplantbulbcrafting_1",
-        "name": "食人花种子",
-        "desc": ""
-      },
-      {
         "id": "wormwood_syrupcrafting_1",
         "name": "吐根糖浆",
-        "desc": ""
+        "desc": "素食食物，+9.375饥饿值，-20生命值<br>当喂给<notice text=\"目前只有猪人、猪人守卫、狂暴猪人与皮弗娄牛\">能产生粪肥的生物</notice>时，将会赋予该生物“吐根中毒”负面效果，持续45秒<br>吐根中毒会使生物每3秒减少5点生命值、产生1粪肥，并使其持续恐慌。一共会产生15个粪肥，并对生物造成75点伤害(加上食物属性一共是95点)<br>如果喂给其他生物或玩家，仅会生效食物效果"
       },
       {
         "id": "wormwood_allegiance_lunar_plant_gear_1_1",
         "name": "荆棘茄甲",
-        "desc": ""
+        "desc": "80%防御与10点位面防御，共830点耐久。耐久耗尽后不会消失但无法装备，需要使用亮茄修补套件维修<br>荆棘茄甲无法被沃姆伍德以外的角色装备，在装备时会提供以下特殊效果:<ul><li>如果受到的伤害来自月亮阵营，装备者受到的伤害和装备扣除的耐久都会再减少10%<ul><li>同时装备亮茄头盔时，效果提升至13.4%，使得整套装备提供的阵营减伤达到25%</li></ul></li><li>受到攻击时，对攻击者造成10点位面伤害，如果是暗影阵营则提升至20点</li><li>受到攻击时会释放尖刺，对周围1个地皮内所有非友方生物造成22.6点物理伤害与5点位面伤害<ul><li>如果装备着不是沃姆伍德(比如拳击袋)则不会有本效果</li></ul></li><li>采集仙人掌、玫瑰、尖刺灌木与蔷薇不会受到伤害</li><li>不会被虚影和大虚影攻击(天体英雄生成的除外)</li></ul>"
       }
     ]
   },
