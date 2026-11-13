@@ -573,6 +573,44 @@
     background: rgba(42, 30, 16, .92);
     border-color: #c9a227;
   }
+  .home-fab {
+    position: fixed;
+    z-index: 29;
+    left: 0;
+    top: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    height: 32px;
+    padding: 0 12px;
+    background: rgba(28, 20, 12, .88);
+    color: #f0d060;
+    border: 1.5px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .85);
+  }
+  .home-fab:hover {
+    color: #ffe7a0;
+    background: rgba(42, 30, 16, .94);
+    border-color: #c9a227;
+  }
+  @media (max-width: 720px) {
+    .home-fab {
+      top: 8px;
+      min-width: 40px;
+      height: 26px;
+      padding: 0 8px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      opacity: .72;
+      background: rgba(28, 20, 12, .62);
+    }
+  }
 
   .app.is-notree .stage-head,
   .app.is-notree svg,
@@ -1248,6 +1286,7 @@
 <div id="note-tip" class="lock-tip note-tip tag-text" hidden></div>
 <div id="notice-tip" class="notice-tip tag-text" hidden></div>
 <div id="mode-tip" class="lock-tip" hidden></div>
+<a class="home-fab" href="index.html">首页</a>
 <aside class="insight-drawer" id="insight-drawer" hidden>
   <div class="insight-drawer-panel">
     <div class="insight-drawer-title" id="insight-drawer-title">个人见解</div>

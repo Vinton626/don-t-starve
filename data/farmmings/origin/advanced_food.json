@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "id": "freshfruitcrepes",
+      "name": "鲜果可丽饼",
+      "origin": "",
+      "health": 60,
+      "hunger": 150,
+      "sanity": 15,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "fruit",
+          "op": ">=",
+          "value": 1.5
+        }
+      ],
+      "must": [
+        {
+          "name": "黄油",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "蜂蜜",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    }
+  ]
+}

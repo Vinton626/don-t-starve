@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "",
+      "name": "",
+      "origin": "cherry_forest",
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "spoilDays": null,
+      "cookSeconds": null,
+      "priority": null,
+      "requires": [],
+      "must": [],
+      "limit": [],
+      "effect": ""
+    }
+  ]
+}

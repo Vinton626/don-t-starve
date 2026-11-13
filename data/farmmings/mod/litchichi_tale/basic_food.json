@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": "litchi",
+      "name": "荔枝",
+      "origin": "litchichi_tale",
+      "source": "",
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "degrees": {}
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "id": "potato",
+      "name": "土豆",
+      "origin": "",
+      "source": "potato_seeds",
+      "health": 8,
+      "hunger": 12.5,
+      "sanity": 0,
+      "degrees": {
+        "veg": 1
+      },
+      "seed": {
+        "id": "potato_seeds",
+        "name": "土豆种子",
+        "health": 0,
+        "hunger": 9.375,
+        "sanity": 0,
+        "fertilizer": {
+          "consume": {
+            "formula": 4,
+            "compost": 0,
+            "manure": 0
+          },
+          "produce": {
+            "formula": 0,
+            "compost": 2,
+            "manure": 2
+          }
+        }
+      }
+    }
+  ]
+}

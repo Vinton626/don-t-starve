@@ -1,0 +1,22 @@
+{
+  "mods": [
+    {
+      "name": "原版",
+      "tag": "",
+      "basic": "data/farmmings/origin/basic_food.json",
+      "advanced": "data/farmmings/origin/advanced_food.json"
+    },
+    {
+      "name": "荔只只无语",
+      "tag": "litchichi_tale",
+      "basic": "data/farmmings/mod/litchichi_tale/basic_food.json",
+      "advanced": "data/farmmings/mod/litchichi_tale/advanced_food.json"
+    },
+    {
+      "name": "樱花林",
+      "tag": "cherry_forest",
+      "basic": "data/farmmings/mod/cherry_forest/basic_food.json",
+      "advanced": "data/farmmings/mod/cherry_forest/advanced_food.json"
+    }
+  ]
+}

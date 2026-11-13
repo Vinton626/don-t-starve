@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": "cherry",
+      "name": "樱桃",
+      "origin": "cherry_forest",
+      "source": "",
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "degrees": {}
+    }
+  ]
+}

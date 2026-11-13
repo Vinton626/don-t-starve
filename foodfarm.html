@@ -8,11 +8,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-    color: #f0d060;
+    padding: 56px 18px 28px;
+    color: #e6d3a4;
     font-family: Palatino, "Palatino Linotype", "Songti SC", "STSong", "Noto Serif SC", serif;
     background-color: #0c0907;
     background-image:
@@ -23,26 +20,262 @@
     background-position: center top;
     background-attachment: fixed;
   }
-  h1 {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 4px;
+  .page {
+    width: min(1080px, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .title {
     text-align: center;
+    color: #f0d060;
+    font-size: clamp(22px, 3.2vw, 30px);
+    font-weight: 700;
+    letter-spacing: .28em;
+    text-indent: .28em;
     text-shadow: 0 2px 2px rgba(0, 0, 0, .85);
   }
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  .tab {
+    min-width: 7.5em;
+    padding: 8px 14px;
+    border: 1px solid rgba(201, 162, 39, .55);
+    background: rgba(18, 12, 8, .88);
+    color: #cbb892;
+    font: inherit;
+    font-size: 15px;
+    letter-spacing: .18em;
+    cursor: pointer;
+  }
+  .tab:hover { color: #f0d060; }
+  .tab.is-active {
+    color: #f0d060;
+    background: rgba(58, 44, 22, .72);
+    border-color: rgba(240, 208, 96, .75);
+  }
+  .panel-host {
+    min-height: 58vh;
+    border: 1px solid rgba(201, 162, 39, .55);
+    background: rgba(12, 9, 6, .88);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+  }
+  .panel {
+    display: none;
+    padding: 18px 16px 22px;
+  }
+  .panel.is-active { display: block; }
+  .panel-head {
+    margin-bottom: 12px;
+    color: #f0d060;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .16em;
+  }
+  .panel-note {
+    color: #a89068;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  .panel-note b { color: #7fd4ff; }
+  .panel-body {
+    margin-top: 14px;
+    min-height: 42vh;
+  }
+
+  .mod-drawer {
+    position: fixed;
+    z-index: 30;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+  }
+  .mod-drawer.is-open { transform: translateX(0); }
+  .mod-drawer-panel {
+    width: min(420px, calc(100vw - 52px));
+    min-height: 2.8em;
+    max-height: 70vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 12px 14px 14px;
+    background: rgba(12, 9, 6, .92);
+    color: #e6d3a4;
+    border: 1px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 8px 10px 28px rgba(0,0,0,.45);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .mod-drawer-title {
+    color: #f0d060;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .mod-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    align-items: center;
+  }
+  .mod-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    color: #e6d3a4;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+  }
+  .mod-check input {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    accent-color: #c9a227;
+    flex: 0 0 auto;
+  }
+  .mod-drawer-handle {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    height: 36px;
+    padding: 0 12px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background: rgba(28, 20, 12, .88);
+    color: #f0d060;
+    border: 1.5px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .mod-drawer-arrow {
+    font-size: 15px;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+  .mod-drawer.is-open .mod-drawer-handle {
+    background: rgba(42, 30, 16, .94);
+    border-color: #c9a227;
+  }
+
+  .home-fab {
+    position: fixed;
+    z-index: 29;
+    left: 0;
+    top: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    height: 32px;
+    padding: 0 12px;
+    background: rgba(28, 20, 12, .88);
+    color: #f0d060;
+    border: 1.5px solid rgba(201, 162, 39, .55);
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .85);
+  }
+  .home-fab:hover {
+    color: #ffe7a0;
+    background: rgba(42, 30, 16, .94);
+    border-color: #c9a227;
+  }
+
   @media (max-width: 720px) {
     body {
-      padding: 12px 10px 24px;
+      padding: 52px 10px 24px;
       background-image:
         linear-gradient(rgba(18, 10, 16, .62), rgba(10, 6, 8, .78)),
         url("img/pe_background.jpg");
       background-position: center 18%;
     }
-    h1 { font-size: 24px; }
+    .title {
+      letter-spacing: .18em;
+      text-indent: .18em;
+    }
+    .tab { flex: 1 1 30%; min-width: 0; letter-spacing: .1em; }
+    .panel { padding: 14px 12px 18px; }
+    .home-fab {
+      top: 40px;
+      min-width: 40px;
+      height: 26px;
+      padding: 0 8px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      opacity: .72;
+      background: rgba(28, 20, 12, .62);
+    }
+    .mod-drawer-handle {
+      height: 32px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
   }
 </style>
 </head>
 <body>
-  <h1>功能正在开发中</h1>
+  <aside class="mod-drawer" id="mod-drawer">
+    <div class="mod-drawer-panel">
+      <div class="mod-drawer-title">模组选择</div>
+      <div class="mod-checks" id="mod-list"></div>
+    </div>
+    <button type="button" class="mod-drawer-handle" id="mod-drawer-handle" aria-expanded="false">
+      <span>模组选择</span>
+      <span class="mod-drawer-arrow" id="mod-drawer-arrow">&gt;</span>
+    </button>
+  </aside>
+  <a class="home-fab" href="index.html">首页</a>
+
+  <div class="page">
+    <h1 class="title">料理与种植</h1>
+
+    <nav class="tabs" role="tablist" aria-label="篇章切换">
+      <button type="button" class="tab is-active" role="tab" aria-selected="true" data-panel="plant">种植篇</button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-panel="cook">烹饪篇</button>
+      <button type="button" class="tab" role="tab" aria-selected="false" data-panel="food">食物图鉴</button>
+    </nav>
+
+    <main class="panel-host">
+      <section class="panel is-active" id="panel-plant" role="tabpanel" data-panel="plant">
+        <h2 class="panel-head">种植篇</h2>
+        <p class="panel-note">种子与肥料写在基础食物的 seed 字段；本篇侧重肥料配比计算。</p>
+        <div class="panel-body" id="plant-body"></div>
+      </section>
+
+      <section class="panel" id="panel-cook" role="tabpanel" data-panel="cook" hidden>
+        <h2 class="panel-head">烹饪篇</h2>
+        <p class="panel-note">数据来自 advanced_food；后续接烹饪查询与食材补齐。</p>
+        <div class="panel-body" id="cook-body"></div>
+      </section>
+
+      <section class="panel" id="panel-food" role="tabpanel" data-panel="food" hidden>
+        <h2 class="panel-head">食物图鉴</h2>
+        <p class="panel-note">数据来自 basic_food / advanced_food；来源、三维与「度」在此展示。</p>
+        <div class="panel-body" id="food-body"></div>
+      </section>
+    </main>
+  </div>
+  <script src="js/foodfarm.js"></script>
 </body>
 </html>

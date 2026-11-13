@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "",
+      "name": "",
+      "origin": "litchichi_tale",
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "spoilDays": null,
+      "cookSeconds": null,
+      "priority": null,
+      "requires": [],
+      "must": [],
+      "limit": [],
+      "effect": ""
+    }
+  ]
+}
