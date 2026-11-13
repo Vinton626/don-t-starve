@@ -1097,23 +1097,44 @@
   }
   .table-scroll table { margin-top: 0; }
   .table-scroll th,
-  .table-scroll td { white-space: nowrap; }
+  .table-scroll td {
+    white-space: normal;
+    max-width: 12em;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
   .profile-text th,
   .profile-text td,
   .gear-desc th,
-  .gear-desc td {
+  .gear-desc td,
+  .desc-text th,
+  .desc-text td,
+  .item-scroll th,
+  .item-scroll td,
+  .char-notice-body th,
+  .char-notice-body td,
+  .insight-drawer-body th,
+  .insight-drawer-body td {
     padding: 4px 5px;
     border: 1px solid rgba(110, 84, 40, .75);
     vertical-align: middle;
   }
   .profile-text th,
-  .gear-desc th {
+  .gear-desc th,
+  .desc-text th,
+  .item-scroll th,
+  .char-notice-body th,
+  .insight-drawer-body th {
     color: #f0d060;
     font-weight: 700;
     background: rgba(58, 44, 22, .72);
   }
   .profile-text td[colspan],
-  .gear-desc td[colspan] {
+  .gear-desc td[colspan],
+  .desc-text td[colspan],
+  .item-scroll td[colspan],
+  .char-notice-body td[colspan],
+  .insight-drawer-body td[colspan] {
     text-align: left;
     color: #cbb892;
   }
