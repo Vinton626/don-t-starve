@@ -1019,20 +1019,37 @@ function renderProfileBody(host, tree) {
   });
 }
 
-function openCraftItem(id, fallbackName) {
+function openSideSheet(entry, fallbackName) {
   const drawer = $("item-drawer");
   if (!drawer) return;
-  const item = craftList(state.tree).find(entry => entry && entry.id === id);
   const fallback = String(fallbackName || "").trim().replace(/^\d+\s+/, "");
   const title = $("item-title");
-  title.innerHTML = (item && item.name) || fallback;
+  title.innerHTML = (entry && entry.name) || fallback;
   bindCharacterLinks(title);
   const sheet = $("item-scroll");
-  sheet.innerHTML = item ? (item.desc || "") : "";
+  sheet.innerHTML = sheetBodyHTML(entry ? entry.desc || "" : "");
   bindCharacterLinks(sheet);
-  $("item-scroll").scrollTop = 0;
+  sheet.scrollTop = 0;
   drawer.hidden = false;
   layoutItemDrawer();
+}
+
+function openCraftItem(id, fallbackName) {
+  openSideSheet(findSheetEntry(craftList(state.tree), id, fallbackName), fallbackName);
+}
+
+function openExtraItem(id, fallbackName) {
+  openSideSheet(findSheetEntry(extraList(state.tree), id, fallbackName), fallbackName);
+}
+
+function onSheetLinkClick(e) {
+  const btn = e.target.closest(".recipe-out");
+  if (!btn) return;
+  if (btn.hasAttribute("data-extra")) {
+    openExtraItem(btn.dataset.extra || "", btn.textContent || "");
+    return;
+  }
+  openCraftItem(btn.dataset.item || "", btn.textContent || "");
 }
 
 function closeCraftItem() {
@@ -1186,6 +1203,70 @@ function craftList(tree) {
   return Array.isArray(block.items) ? block.items : [];
 }
 
+function extraList(tree) {
+  const block = tree && tree.extraItems;
+  if (!block) return [];
+  if (Array.isArray(block)) return block;
+  return Array.isArray(block.items) ? block.items : [];
+}
+
+function plainLabel(text) {
+  return String(text || "").replace(/<[^>]+>/g, "").trim();
+}
+
+function tagAttr(attrs, name) {
+  if (!attrs) return "";
+  const re = new RegExp("\\b" + name + "\\s*=\\s*\"([^\"]*)\"", "i");
+  const m = re.exec(attrs);
+  return m ? m[1] : "";
+}
+
+function findSheetEntry(list, id, name) {
+  const sid = String(id || "").trim();
+  if (sid) {
+    const byId = list.find(entry => entry && entry.id === sid);
+    if (byId) return byId;
+  }
+  const label = plainLabel(name).replace(/^\d+\s+/, "");
+  if (!label) return null;
+  return list.find(entry => entry && plainLabel(entry.name) === label) || null;
+}
+
+function craftIdByName(name) {
+  const label = plainLabel(name).replace(/^\d+\s+/, "");
+  if (!label) return "";
+  const hit = craftList(state.tree).find(entry => entry && plainLabel(entry.name) === label);
+  return hit ? hit.id : "";
+}
+
+function sheetLinkButton(kind, id, label) {
+  const attr = kind === "extra" ? "data-extra" : "data-item";
+  return `<button type="button" class="recipe-out" ${attr}="${escapeHTML(id)}">${escapeHTML(plainLabel(label))}</button>`;
+}
+
+function sheetBodyHTML(text) {
+  return String(text || "")
+    .replace(/<extra(\s[^>]*)?>([\s\S]*?)<\/extra>/gi, (_, attrs, label) => {
+      const id = tagAttr(attrs, "id") || plainLabel(label);
+      return sheetLinkButton("extra", id, label);
+    })
+    .replace(/<item(\s[^>]*)?>([\s\S]*?)<\/item>/gi, (_, attrs, label) => {
+      const id = tagAttr(attrs, "id") || craftIdByName(label);
+      return sheetLinkButton("item", id, label);
+    });
+}
+
+function skillDescHTML(skill) {
+  let extraIndex = 0;
+  return String(skill.desc || "")
+    .replace(/\n/g, "<br>")
+    .replace(/<extra(\s[^>]*)?>([\s\S]*?)<\/extra>/gi, (_, attrs, label) => {
+      extraIndex += 1;
+      const id = tagAttr(attrs, "id") || (skill.id + "_e" + extraIndex);
+      return sheetLinkButton("extra", id, label);
+    });
+}
+
 function recipeTextHTML(text) {
   const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|physical|planar|cyan|lightpurple|age)>/g;
   const s = String(text);
@@ -1208,7 +1289,7 @@ function recipeLineHTML(skill, recipe, index) {
   const id = skill.id + "_" + (index + 1);
   const before = text.slice(0, found.index);
   const after = text.slice(found.index + found[0].length);
-  return `<li>${recipeTextHTML(before)}<button type="button" class="recipe-out" data-item="${escapeHTML(id)}">${escapeHTML(found[1])}</button>${recipeTextHTML(after)}</li>`;
+  return `<li>${recipeTextHTML(before)}${sheetLinkButton("item", id, found[1])}${recipeTextHTML(after)}</li>`;
 }
 
 function cardHTML(skill, extraClass) {
@@ -1223,7 +1304,7 @@ function cardHTML(skill, extraClass) {
         ${num}
         <span class="desc-name">${skill.name}</span>
       </div>
-      <div class="desc-text tag-text">${(skill.desc || "").replace(/\n/g, "<br>")}</div>
+      <div class="desc-text tag-text">${skillDescHTML(skill)}</div>
       ${recipes ? `<ul class="desc-recipes tag-text">${recipes}</ul>` : ""}
       ${prereq}
     </div>`;
@@ -1968,11 +2049,8 @@ $("insight-drawer-handle").addEventListener("click", e => {
 $("profile-open").addEventListener("click", openProfile);
 $("profile-close").addEventListener("click", closeProfile);
 
-$("desc-panel").addEventListener("click", e => {
-  const btn = e.target.closest(".recipe-out");
-  if (!btn) return;
-  openCraftItem(btn.dataset.item || "", btn.textContent || "");
-});
+$("desc-panel").addEventListener("click", onSheetLinkClick);
+$("item-drawer").addEventListener("click", onSheetLinkClick);
 $("item-close").addEventListener("click", closeCraftItem);
 
 $("char-notice-btn").addEventListener("click", e => {
