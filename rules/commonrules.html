@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>全局标签规则</title>
+<style>
+  body { font-family: "Noto Serif SC", serif; line-height: 1.7; max-width: 820px; margin: 32px auto; color: #1c140c; }
+  code { font-family: Consolas, monospace; }
+  p { margin: 0.4em 0; }
+  h2 { margin-top: 1.6em; }
+  health { color: #ff6b78; }
+  hunger { color: #c49212; }
+  sanity { color: #c65a12; }
+  seablue { color: #3ec4e0; }
+  damage { color: #5d7084; }
+  physical { color: #ffd0f8; }
+  planar { color: #bbf0fc; }
+  warn { color: #ff3d2a; }
+  keyboard { color: #b7c4d0; }
+  b { color: #7fd4ff; }
+  notice { color: #f0d060; border-bottom: 1px dashed rgba(240, 208, 96, .75); }
+  .stat-orb {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    border: 1px solid rgba(0, 0, 0, .35);
+  }
+  .stat-health { background: #8f1d28; }
+  .stat-hunger { background: #c49212; }
+  .stat-sanity { background: #c65a12; }
+  .stat-attack { background: #5d7084; }
+  .stat-emoji { font-size: 18px; line-height: 1; }
+</style>
+</head>
+<body>
+<p>这份文件是全局规则，技能树、料理与种植等模块共用。只给写内容和 AI 看，不参与游戏页面。</p>
+<p>烹饪度与肥料专属颜色见 <a href="foodfarmrules.html">foodfarmrules.html</a>。</p>
+<p>对应运行时逻辑在 <code>js/common/tags.js</code>（挂到 <code>window.CommonTags</code>，也支持 CommonJS / AMD）。样式在 <code>css/common-tags.css</code>。</p>
+<p>页面引用示例：先加载 <code>../js/common/tags.js</code>，再 <code>CommonTags.bind(root)</code>；需要 notice 气泡时再 <code>CommonTags.installNoticeTips({ tipId: "notice-tip" })</code>。生成三维圆圈可用 <code>CommonTags.stateOrbHTML("health", "&lt;b&gt;150&lt;/b&gt;")</code> / <code>CommonTags.statesHTML([...])</code>。配方等需保留标签的转义用 <code>CommonTags.escapeKeepingTags(text)</code>。</p>
+
+<h2>三维颜色</h2>
+<p>角色、基础食物、料理共用同一套三维标签。数字仍放在 <b>b</b> 里，文字用下面的标签。</p>
+<p><health>生命值</health> 的颜色是 #ff6b78。写生命值时用它。如果出现为<health>生命值上限</health>，则需要将上限两个字包进去。</p>
+<p><hunger>饥饿值</hunger> 的颜色是 #c49212。写饥饿值时用它。</p>
+<p><sanity>理智值</sanity> 的颜色是 #c65a12。写理智值时用它。不要再写精神值。</p>
+<p>例如 <b>+60</b><health>生命值</health>、<b>+150</b><hunger>饥饿值</hunger>、<b>+15</b><sanity>理智值</sanity>。</p>
+
+<h2>潮湿度与伤害</h2>
+<p><seablue>潮湿度</seablue> 的颜色是 #3ec4e0。潮湿度、潮湿值都用它。</p>
+<p><damage>伤害</damage> 的颜色是 #5d7084，与攻击力圆圈相同。写伤害、威力时用它，数字仍放在 b 里，例如 <b>5点</b><damage>伤害</damage>。范围伤害、爆炸伤害里的「伤害」也包进去。技能名「威力武器」里的威力同样包进去。</p>
+<p><physical>物理伤害</physical> 的颜色是 #ffd0f8，浅粉，偏白。四个字整段放进这个标签，不要再写成 物理&lt;damage&gt;伤害&lt;/damage&gt;。</p>
+<p><planar>位面伤害</planar> <planar>位面防御</planar> 的颜色是 #bbf0fc，浅蓝，偏白。四个字整段放进这个标签，不要再写成 位面&lt;damage&gt;伤害&lt;/damage&gt;。</p>
+
+<h2>强调：b / warn / keyboard</h2>
+<p><b>数字</b> 的颜色是 #7fd4ff。特殊：(数字)技能名的这种特殊情况，不要套 b。点数、百分比、倍数、时间、距离、个数都放进 b，例如 <b>8点</b>、<b>25%</b>、<b>3.75个</b>地皮、<b>3天</b>、<b>×1</b>。地皮相关：距离时「个」是单位、「地皮」是名词，写成 <b>3.75个</b>地皮（地皮不进 b）；速率时「个地皮/秒」才是单位，写成 <b>7.5个地皮/秒</b>（整段进 b）。不要写成每秒<b>2个</b>地皮，应改成 <b>2个地皮/秒</b>。</p>
+<p>公式整段放进 b，里面有中文也一起放进去。括号里是一整条公式时，去掉括号，改用 b。括号只是公式里面的运算优先级时，括号留着，整段公式再套 b。例如 <b>22-2×周围人数</b>，以及 <b>20×(总数/阈值)</b>。</p>
+<p><warn>警告</warn> 的颜色是 #ff3d2a。需要读者特别注意、容易理解错的句子用它。</p>
+<p><keyboard>按键</keyboard> 的颜色是 #b7c4d0，灰里带一点蓝。用来写键盘和鼠标按键，例如 &lt;keyboard&gt;Alt&lt;/keyboard&gt;。</p>
+
+<h2>notice 补充说明</h2>
+<p><notice>补充说明</notice> 是金色虚线下划线。悬停或点按后弹出 text。text 里要换行就写 \n。弹出的框和正文用同一套标签，所以可以写 &lt;character&gt;沃利&lt;/character&gt;，点名字会跳到该角色。例如 &lt;notice text="只能由&lt;character&gt;沃利&lt;/character&gt;制作"&gt;鲜果可丽饼&lt;/notice&gt;。属性栏里的生命值、饥饿值、理智值、力量值、激励值也可以这样写，例如 &lt;notice text="技能可提升上限"&gt;100&lt;/notice&gt;。</p>
+<p>专属物品和制作物品的 name 也可以写 notice。例如 &lt;notice text="右键打开储物空间"&gt;魔术师高礼帽&lt;/notice&gt;。</p>
+<p>运行时：页面放一个 <code>&lt;div id="notice-tip" class="notice-tip tag-text" hidden&gt;&lt;/div&gt;</code>，并调用 <code>CommonTags.installNoticeTips({ tipId: "notice-tip" })</code>。</p>
+
+<h2>角色三维表示（states / state）</h2>
+<p>人物、食物图鉴、怪物图鉴等凡是用圆圈展示三维的地方，一律用同一套 <code>states</code> / <code>state</code> 与 emoji，不要另写一套图标。</p>
+<p>在人物特性、随从介绍等正文里，要用圆圈+数值展示三维（或攻击力等）时，用 <code>states</code> / <code>state</code>，不要只写纯文字「生命值 xxx」。</p>
+<p>食物 / 怪物卡片与弹窗：名称 + 生命 / 饥饿 / 理智三个圆圈（❤️ / 🍗 / 🧠），数值放在 <b>b</b> 里。生成可用 <code>CommonTags.statesHTML([{ kind: "health", valueHTML: "&lt;b&gt;8&lt;/b&gt;" }, …])</code>。</p>
+<p>多个圆圈并排：外包一层 <code>&lt;states&gt;…&lt;/states&gt;</code>，里面每个属性一个 <code>&lt;state&gt;…&lt;/state&gt;</code>。</p>
+<p>只有一个圆圈时，可以单独写 <code>&lt;state&gt;…&lt;/state&gt;</code>，不必再套 <code>states</code>。</p>
+<p>每个 <code>state</code> 内部固定两段：</p>
+<p>1. 圆圈：<code>&lt;span class="stat-orb stat-health"&gt;&lt;span class="stat-emoji"&gt;❤️&lt;/span&gt;&lt;/span&gt;</code></p>
+<p>2. 数值：<code>&lt;span class="stat-value"&gt;…&lt;/span&gt;</code>，数字用 <b>b</b>；需要补充说明时可用 <notice>notice</notice>。</p>
+<p>圆圈底色 class 与含义：</p>
+<p><code>stat-health</code> 生命（❤️，底色 #8f1d28）</p>
+<p><code>stat-hunger</code> 饥饿（🍗，底色 #c49212）</p>
+<p><code>stat-sanity</code> 理智（🧠，底色 #c65a12）</p>
+<p><code>stat-attack</code> 攻击 / 伤害圆圈（⚔️，底色 #5d7084，与 <code>damage</code> 同色系）</p>
+<p>种植用的三肥圆圈（<code>stat-formula</code> / <code>stat-compost</code> / <code>stat-manure</code>）见 <a href="foodfarmrules.html">foodfarmrules.html</a>。</p>
+<p>完整示例（阿比盖尔一类多数值）：</p>
+<p><code>&lt;states&gt;&lt;state&gt;&lt;span class="stat-orb stat-health"&gt;&lt;span class="stat-emoji"&gt;❤️&lt;/span&gt;&lt;/span&gt;&lt;span class="stat-value"&gt;&lt;b&gt;150&lt;/b&gt;&lt;/span&gt;&lt;/state&gt;&lt;state&gt;&lt;span class="stat-orb stat-attack"&gt;&lt;span class="stat-emoji"&gt;⚔️&lt;/span&gt;&lt;/span&gt;&lt;span class="stat-value"&gt;&lt;b&gt;40&lt;/b&gt;&lt;/span&gt;&lt;/state&gt;&lt;/states&gt;</code></p>
+<p>单个示例（暗影仆人一类）：</p>
+<p><code>&lt;state&gt;&lt;span class="stat-orb stat-health"&gt;&lt;span class="stat-emoji"&gt;❤️&lt;/span&gt;&lt;/span&gt;&lt;span class="stat-value"&gt;&lt;b&gt;1&lt;/b&gt;&lt;/span&gt;&lt;/state&gt;</code></p>
+<p>预览：
+  <span class="stat-orb stat-health"><span class="stat-emoji">❤️</span></span>
+  <span class="stat-orb stat-hunger"><span class="stat-emoji">🍗</span></span>
+  <span class="stat-orb stat-sanity"><span class="stat-emoji">🧠</span></span>
+  <span class="stat-orb stat-attack"><span class="stat-emoji">⚔️</span></span>
+</p>
+</body>
+</html>

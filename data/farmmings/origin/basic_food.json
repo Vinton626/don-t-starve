@@ -5,6 +5,7 @@
       "name": "土豆",
       "origin": "",
       "source": "potato_seeds",
+      "hide": false,
       "health": 8,
       "hunger": 12.5,
       "sanity": 0,
@@ -17,6 +18,8 @@
         "health": 0,
         "hunger": 9.375,
         "sanity": 0,
+        "hate_season": ["summer"],
+        "desc": "",
         "fertilizer": {
           "consume": {
             "formula": 4,
@@ -29,6 +32,18 @@
             "manure": 2
           }
         }
+      }
+    },
+    {
+      "id": "nightmarefuel",
+      "name": "噩梦燃料",
+      "origin": "",
+      "hide": true,
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "degrees": {
+        "inedible": 1
       }
     }
   ]

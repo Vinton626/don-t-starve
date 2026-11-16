@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>料理 / 种植标签规则</title>
+<style>
+  body { font-family: "Noto Serif SC", serif; line-height: 1.7; max-width: 820px; margin: 32px auto; color: #1c140c; }
+  code { font-family: Consolas, monospace; }
+  p { margin: 0.4em 0; }
+  h2 { margin-top: 1.6em; }
+  b { color: #7fd4ff; }
+  meat { color: #c2185b; }
+  veg { color: #7dce7a; }
+  fruit { color: #ff9b9b; }
+  fish { color: #6d93ad; }
+  egg { color: #e8c4a8; }
+  sweetener { color: #ffb6c1; }
+  monster { color: #c084fc; }
+  dairy { color: #cfc8b4; }
+  ice { color: #8ec8f0; }
+  inedible { color: #9a9a9a; }
+  manure { color: #d4925a; }
+  compost { color: #c5c5c5; }
+  formula { color: #b3e5ff; }
+  brown { color: #d4925a; }
+  grey { color: #c5c5c5; }
+  lightblue { color: #b3e5ff; }
+</style>
+</head>
+<body>
+<p>这份文件只给写内容和 AI 看，不参与游戏页面。真正生效的样式在 <code>css/common-tags.css</code>；度名清单在 <code>js/foodfarm/common.js</code> 的 <code>FOOD_DEGREES</code>。</p>
+<p><b>与 skillrules 独立</b>：紫色、绿色、粉色等可以和技能树标签同色，不要求区分。只需避开全局规则 <a href="commonrules.html">commonrules.html</a> 里的色（三维、潮湿、伤害、b、warn、keyboard、notice 等）。本文件内部：各「度」之间、以及度与肥料之间，仍要可区分。</p>
+
+<h2>烹饪度颜色</h2>
+<p>基础食物的 <code>degrees</code> 键与标签同名。数字仍放在 <b>b</b> 里，文字用对应度标签。</p>
+<p><meat>肉度</meat> 的颜色是 #c2185b，洋红色。标签 <code>&lt;meat&gt;</code>，键 <code>meat</code>。</p>
+<p><veg>菜度</veg> 的颜色是 #7dce7a，绿色。标签 <code>&lt;veg&gt;</code>，键 <code>veg</code>。</p>
+<p><fruit>水果度</fruit> 的颜色是 #ff9b9b，浅红色。标签 <code>&lt;fruit&gt;</code>，键 <code>fruit</code>。</p>
+<p><fish>鱼度</fish> 的颜色是 #6d93ad，灰蓝色。标签 <code>&lt;fish&gt;</code>，键 <code>fish</code>。与全局 <code>damage</code> 灰不同，偏蓝。</p>
+<p><egg>蛋度</egg> 的颜色是 #e8c4a8，肉色。标签 <code>&lt;egg&gt;</code>，键 <code>egg</code>。比本文件里的粪肥棕更浅、更粉。</p>
+<p><sweetener>甜味剂度</sweetener> 的颜色是 #ffb6c1，粉色。标签 <code>&lt;sweetener&gt;</code>，键 <code>sweetener</code>。与全局物理伤害粉（#ffd0f8）不同，更深一点。</p>
+<p><monster>怪物度</monster> 的颜色是 #c084fc，紫色。标签 <code>&lt;monster&gt;</code>，键 <code>monster</code>。</p>
+<p><dairy>乳制品度</dairy> 的颜色是 #cfc8b4，米白偏灰。标签 <code>&lt;dairy&gt;</code>，键 <code>dairy</code>。纯白在深色背景上看不清，略压暗。</p>
+<p><ice>冰度</ice> 的颜色是 #8ec8f0，浅蓝色。标签 <code>&lt;ice&gt;</code>，键 <code>ice</code>。比本文件催长剂 / lightblue（#b3e5ff）更深，也避开全局位面浅蓝与潮湿度海蓝。</p>
+<p><inedible>不可食用度</inedible> 的颜色是 #9a9a9a，灰色。标签 <code>&lt;inedible&gt;</code>，键 <code>inedible</code>。比本文件堆肥灰（#c5c5c5）更深一档。</p>
+<p>例如 <b>1</b><veg>菜度</veg>、<b>1.5</b><fruit>水果度</fruit>。</p>
+
+<h2>肥料颜色（种植）</h2>
+<p>与沃姆伍德正文里粪肥 / 堆肥 / 催长剂同色。人物页继续可用原标签；种植 / farm 正文优先用语义标签。</p>
+<p><manure>粪肥</manure> 的颜色是 #d4925a，与 brown 相同。标签 <code>&lt;manure&gt;</code>，数据键 <code>manure</code>。沃姆伍德写法：&lt;brown&gt;粪肥&lt;/brown&gt;。</p>
+<p><compost>堆肥</compost> 的颜色是 #c5c5c5，与 grey 相同。标签 <code>&lt;compost&gt;</code>，数据键 <code>compost</code>。沃姆伍德写法：&lt;grey&gt;堆肥&lt;/grey&gt;。</p>
+<p><formula>催长剂</formula> 的颜色是 #b3e5ff，与 lightblue 相同。标签 <code>&lt;formula&gt;</code>，数据键 <code>formula</code>。沃姆伍德写法：&lt;lightblue&gt;催长剂&lt;/lightblue&gt;。</p>
+<p>种子 <code>fertilizer.consume</code> / <code>produce</code> 里的三个键就是 manure / compost / formula。</p>
+
+<h2>三肥圆圈</h2>
+<p>种植篇卡片与弹窗用三肥圆圈展示每株净值（产出 − 消耗），写法同 commonrules 的 <code>state</code>：</p>
+<p><code>stat-formula</code> 催长剂（🧪，底色 #3d7fa6）、<code>stat-compost</code> 堆肥（🍂，底色 #6e6e6e）、<code>stat-manure</code> 粪肥（💩，底色 #8a5a2e）。数值放在 b 里，正数带 +，例如 <b>+2</b>、<b>-4</b>。</p>
+<p>生成：<code>CommonTags.stateOrbHTML("formula", "&lt;b&gt;-4&lt;/b&gt;")</code>。</p>
+
+<h2>基础食物字段</h2>
+<p><code>hide</code>：布尔。为 <code>true</code> 时不出现在食物图鉴卡片里，但仍可作为烹饪锅原料（噩梦燃料、树枝这类非食用原料用它）。默认 / 省略视为 <code>false</code>。</p>
+
+<h2>种子字段</h2>
+<p><code>seed.hate_season</code>：不喜欢的季节数组，取值 <code>spring</code> / <code>summer</code> / <code>autumn</code> / <code>winter</code>。不在数组里的季节都算合适。没有就写 <code>[]</code>。</p>
+<p><code>seed.desc</code>：简短描述，可用正文标签；没有就写空字符串。</p>
+<p>种子自身的 <code>health</code> / <code>hunger</code> / <code>sanity</code> 是吃种子的三维，弹窗第三行显示。</p>
+
+<h2>料理详情里的配方举例</h2>
+<p>不枚举全部可行组合（组合数会爆炸）。详情底部「可实现举例」只用：必用原料 + 每种所需度的<strong>第一个纯单度食材</strong>（degrees 里只有一种度）+ 纯单度填充凑满 4 格。双度食材（如榴莲：水果+怪物）不拿来当度的代表例。</p>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>料理与种植</title>
+<link rel="stylesheet" href="../css/common-tags.css">
+<link rel="stylesheet" href="../css/foodfarm.css">
+</head>
+<body>
+  <aside class="mod-drawer" id="mod-drawer">
+    <div class="mod-drawer-panel">
+      <div class="mod-drawer-title">模组选择</div>
+      <div class="mod-checks" id="mod-list"></div>
+    </div>
+    <button type="button" class="mod-drawer-handle" id="mod-drawer-handle" aria-expanded="false">
+      <span>模组选择</span>
+      <span class="mod-drawer-arrow" id="mod-drawer-arrow">&gt;</span>
+    </button>
+  </aside>
+  <a class="home-fab" href="../index.html">首页</a>
+
+  <div class="page">
+    <h1 class="title">料理与种植</h1>
+    <div class="hub-grid">
+      <a class="hub-card hub-card-food" href="foodfarm/foods.html">食物图鉴</a>
+      <a class="hub-card" href="foodfarm/farm.html">种植篇</a>
+      <a class="hub-card" href="foodfarm/cook.html">烹饪篇</a>
+    </div>
+  </div>
+
+  <div id="notice-tip" class="notice-tip tag-text" hidden></div>
+  <script>window.APP_ROOT = "../";</script>
+  <script src="../js/common/tags.js"></script>
+  <script src="../js/foodfarm/common.js"></script>
+  <script>
+    Foodfarm.bootFoodfarm({ loadData: false });
+  </script>
+</body>
+</html>

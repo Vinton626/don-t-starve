@@ -13,6 +13,7 @@
       "requires": [],
       "must": [],
       "limit": [],
+      "random": false,
       "effect": ""
     }
   ]

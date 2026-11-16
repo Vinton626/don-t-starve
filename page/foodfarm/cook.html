@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>烹饪篇</title>
+<link rel="stylesheet" href="../../css/common-tags.css">
+<link rel="stylesheet" href="../../css/foodfarm.css">
+</head>
+<body class="cook-page">
+  <aside class="mod-drawer" id="mod-drawer">
+    <div class="mod-drawer-panel">
+      <div class="mod-drawer-title">模组选择</div>
+      <div class="mod-checks" id="mod-list"></div>
+    </div>
+    <button type="button" class="mod-drawer-handle" id="mod-drawer-handle" aria-expanded="false">
+      <span>模组选择</span>
+      <span class="mod-drawer-arrow" id="mod-drawer-arrow">&gt;</span>
+    </button>
+  </aside>
+  <a class="home-fab" href="../../index.html">首页</a>
+
+  <aside class="side-drawer calc-drawer" id="cook-calc-drawer">
+    <div class="side-drawer-panel cook-calc-panel">
+      <div class="side-drawer-title">烹饪锅</div>
+
+      <div class="cook-calc-desktop" id="cook-calc-desktop">
+        <div class="cook-calc-left">
+          <input type="search" class="side-search" id="cook-ing-search" placeholder="搜索基础食物" autocomplete="off">
+          <div class="cook-ing-list" id="cook-ing-list"></div>
+        </div>
+        <div class="cook-calc-right">
+          <button type="button" class="cook-possible-btn" id="cook-possible-btn">可能产生的食物</button>
+          <div class="cook-want">
+            <div class="filter-label">我想做：</div>
+            <div class="filter-checks" id="cook-want-checks"></div>
+            <div class="cook-want-custom">
+              <label>回血 &gt; <input type="number" id="cook-heal-min" value="10" min="0" step="1"></label>
+              <label>回理智 &gt; <input type="number" id="cook-sanity-min" value="10" min="0" step="1"></label>
+            </div>
+          </div>
+          <div class="cook-degrees tag-text" id="cook-degrees"></div>
+          <div class="cook-pot-row">
+            <div class="cook-slots" id="cook-slots"></div>
+            <div class="cook-arrow">→</div>
+            <div class="cook-result tag-text" id="cook-result">
+              <div class="cook-result-empty">放入 4 格食材</div>
+            </div>
+          </div>
+          <button type="button" class="filter-reset" id="cook-clear-slots">清空锅</button>
+        </div>
+      </div>
+
+      <div class="cook-calc-mobile" id="cook-calc-mobile" hidden>
+        <div class="cook-degrees tag-text" id="cook-degrees-m"></div>
+        <div class="cook-pot-mobile">
+          <div class="cook-slots is-mobile" id="cook-slots-m"></div>
+          <div class="cook-arrow">→</div>
+          <div class="cook-result tag-text" id="cook-result-m">
+            <div class="cook-result-empty">放入 4 格食材</div>
+          </div>
+        </div>
+        <div class="cook-mobile-actions">
+          <button type="button" class="cook-possible-btn" id="cook-possible-btn-m">可能产生的食物</button>
+          <button type="button" class="filter-reset" id="cook-clear-slots-m">清空锅</button>
+        </div>
+        <div class="cook-want">
+          <div class="filter-label">我想做：</div>
+          <div class="filter-checks" id="cook-want-checks-m"></div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="side-drawer-handle" id="cook-calc-handle" aria-expanded="false">烹饪锅</button>
+  </aside>
+
+  <aside class="side-drawer filter-drawer" id="cook-filter-drawer">
+    <button type="button" class="side-drawer-handle" id="cook-filter-handle" aria-expanded="false">筛选</button>
+    <div class="side-drawer-panel">
+      <div class="side-drawer-title">筛选</div>
+      <div class="filter-group">
+        <div class="filter-label">我想做</div>
+        <div class="filter-checks" id="grid-want-checks"></div>
+        <div class="cook-want-custom">
+          <label>回血 &gt; <input type="number" id="grid-heal-min" value="10" min="0" step="1"></label>
+          <label>回理智 &gt; <input type="number" id="grid-sanity-min" value="10" min="0" step="1"></label>
+        </div>
+      </div>
+      <button type="button" class="filter-reset" id="cook-filter-reset">清空筛选</button>
+    </div>
+  </aside>
+
+  <div class="page">
+    <h1 class="title">烹饪篇</h1>
+    <main class="content-host">
+      <div class="panel-body" id="cook-body"></div>
+    </main>
+  </div>
+
+  <div class="food-modal" id="dish-modal" hidden>
+    <div class="food-modal-backdrop" data-close="dish-modal"></div>
+    <div class="food-modal-panel" role="dialog" aria-modal="true" aria-labelledby="dish-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="dish-modal-title">料理</h2>
+        <button type="button" class="food-modal-close" data-close="dish-modal" aria-label="关闭">×</button>
+      </div>
+      <div class="food-modal-stats tag-text" id="dish-modal-stats"></div>
+      <div class="seed-modal-desc tag-text" id="dish-modal-desc"></div>
+    </div>
+  </div>
+
+  <div class="food-modal" id="possible-modal" hidden>
+    <div class="food-modal-backdrop" data-close="possible-modal"></div>
+    <div class="food-modal-panel cook-possible-panel" role="dialog" aria-modal="true" aria-labelledby="possible-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="possible-modal-title">可能产生的食物</h2>
+        <button type="button" class="food-modal-close" data-close="possible-modal" aria-label="关闭">×</button>
+      </div>
+      <input type="search" class="side-search" id="possible-search" placeholder="搜索料理名" autocomplete="off">
+      <div class="cook-possible-list" id="possible-list"></div>
+    </div>
+  </div>
+
+  <div class="food-modal" id="pick-modal" hidden>
+    <div class="food-modal-backdrop" data-close="pick-modal"></div>
+    <div class="food-modal-panel cook-possible-panel" role="dialog" aria-modal="true" aria-labelledby="pick-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="pick-modal-title">选择食材</h2>
+        <button type="button" class="food-modal-close" data-close="pick-modal" aria-label="关闭">×</button>
+      </div>
+      <input type="search" class="side-search" id="pick-search" placeholder="搜索基础食物" autocomplete="off">
+      <div class="cook-possible-list" id="pick-list"></div>
+    </div>
+  </div>
+
+  <div id="notice-tip" class="notice-tip tag-text" hidden></div>
+  <script>window.APP_ROOT = "../../";</script>
+  <script src="../../js/common/tags.js"></script>
+  <script src="../../js/foodfarm/common.js"></script>
+  <script src="../../js/foodfarm/cook-calc.js"></script>
+  <script src="../../js/foodfarm/cook.js"></script>
+</body>
+</html>

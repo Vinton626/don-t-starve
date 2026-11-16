@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>食物图鉴</title>
+<link rel="stylesheet" href="../../css/common-tags.css">
+<link rel="stylesheet" href="../../css/foodfarm.css">
+</head>
+<body>
+  <aside class="mod-drawer" id="mod-drawer">
+    <div class="mod-drawer-panel">
+      <div class="mod-drawer-title">模组选择</div>
+      <div class="mod-checks" id="mod-list"></div>
+    </div>
+    <button type="button" class="mod-drawer-handle" id="mod-drawer-handle" aria-expanded="false">
+      <span>模组选择</span>
+      <span class="mod-drawer-arrow" id="mod-drawer-arrow">&gt;</span>
+    </button>
+  </aside>
+  <a class="home-fab" href="../../index.html">首页</a>
+
+  <div class="page">
+    <h1 class="title">食物图鉴</h1>
+    <main class="content-host">
+      <div class="food-toolbar panel-note">点卡片查看详情与可做料理。</div>
+      <div class="panel-body" id="food-body"></div>
+    </main>
+  </div>
+
+  <div class="food-modal" id="food-modal" hidden>
+    <div class="food-modal-backdrop" id="food-modal-backdrop"></div>
+    <div class="food-modal-panel" role="dialog" aria-modal="true" aria-labelledby="food-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="food-modal-title">食物</h2>
+        <button type="button" class="food-modal-close" id="food-modal-close" aria-label="关闭">×</button>
+      </div>
+      <div class="food-modal-stats tag-text" id="food-modal-stats"></div>
+      <div class="food-modal-meta" id="food-modal-meta"></div>
+      <div class="food-modal-block">
+        <div class="food-modal-label">烹饪度</div>
+        <div class="food-modal-degrees tag-text" id="food-modal-degrees"></div>
+      </div>
+      <div id="food-modal-seed"></div>
+      <div class="food-cook">
+        <button type="button" class="food-cook-toggle" id="food-cook-toggle" aria-expanded="false" aria-controls="food-cook-panel">
+          <span>可做料理</span>
+          <span class="food-cook-arrow" id="food-cook-arrow">▸</span>
+        </button>
+        <div class="food-cook-panel" id="food-cook-panel" hidden>
+          <input type="search" class="food-cook-search" id="food-cook-search" placeholder="搜索料理名" autocomplete="off">
+          <div class="food-cook-list" id="food-cook-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="notice-tip" class="notice-tip tag-text" hidden></div>
+  <script>window.APP_ROOT = "../../";</script>
+  <script src="../../js/common/tags.js"></script>
+  <script src="../../js/foodfarm/common.js"></script>
+  <script src="../../js/foodfarm/foods.js"></script>
+</body>
+</html>

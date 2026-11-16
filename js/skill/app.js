@@ -243,8 +243,16 @@ function displaySkill() {
   return id ? state.skillMap[id] : null;
 }
 
+const APP_ROOT = window.APP_ROOT || "";
+
+function asset(path) {
+  if (!path) return path;
+  if (/^(?:https?:|data:|\/)/i.test(path)) return path;
+  return APP_ROOT + String(path).replace(/^\.\//, "");
+}
+
 async function loadJSON(path) {
-  const res = await fetch(path);
+  const res = await fetch(asset(path));
   if (!res.ok) throw new Error("无法加载 " + path);
   return res.json();
 }
@@ -842,78 +850,19 @@ function noticePayload(tree) {
   return { title: n.title || "总结", text };
 }
 
-function bindRoleSwitch(root) {
-  if (!root) return;
-  root.querySelectorAll("roles").forEach(box => {
-    if (box.querySelector(":scope > .role-switch")) return;
-    const roles = ["role1", "role2", "role3", "role4", "role5", "role6", "role7"]
-      .map(tag => box.querySelector(":scope > " + tag))
-      .filter(Boolean);
-    if (!roles.length) return;
-    const bar = document.createElement("div");
-    bar.className = "role-switch";
-    const show = el => {
-      roles.forEach(role => role.classList.toggle("is-on", role === el));
-      bar.querySelectorAll("button").forEach(btn => btn.classList.toggle("is-on", btn.dataset.role === el.tagName.toLowerCase()));
-    };
-    roles.forEach((el, i) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.dataset.role = el.tagName.toLowerCase();
-      const title = el.querySelector("h3");
-      btn.textContent = (title && title.textContent.trim()) || ("形态" + (i + 1));
-      btn.addEventListener("click", () => show(el));
-      bar.appendChild(btn);
-    });
-    box.insertBefore(bar, box.firstChild);
-    show(roles[0]);
-  });
-}
-
-function wrapWideTables(root) {
-  if (!root || !root.querySelectorAll) return;
-  root.querySelectorAll("table").forEach(table => {
-    if (table.parentElement && table.parentElement.classList.contains("table-scroll")) return;
-    const wrap = document.createElement("div");
-    wrap.className = "table-scroll";
-    table.parentNode.insertBefore(wrap, table);
-    wrap.appendChild(table);
-  });
-}
-
-function bindSharedCopies(root) {
-  const sources = new Map();
-  root.querySelectorAll("repeat").forEach(el => {
-    const key = (el.getAttribute("class") || "").trim();
-    if (key && !sources.has(key)) sources.set(key, el);
-  });
-  const fill = (anchor, stack) => {
-    if (!anchor || anchor.dataset.copy || anchor.hasAttribute("href")) return;
-    if (anchor.closest("repeat")) return;
-    const key = (anchor.getAttribute("class") || "").trim();
-    const source = sources.get(key);
-    if (!source || stack.includes(key)) return;
-    anchor.dataset.copy = "1";
-    anchor.replaceChildren();
-    [...source.childNodes].forEach(node => anchor.appendChild(node.cloneNode(true)));
-    anchor.querySelectorAll("a[class]").forEach(inner => fill(inner, stack.concat(key)));
-  };
-  root.querySelectorAll("a[class]").forEach(anchor => fill(anchor, []));
-}
-
-function bindCharacterLinks(root) {
-  if (!root) return;
-  bindSharedCopies(root);
-  wrapWideTables(root);
-  bindRoleSwitch(root);
-  root.querySelectorAll("character").forEach(el => {
-    el.addEventListener("click", () => {
-      const name = (el.getAttribute("name") || el.textContent || "").trim();
+function tagBindOptions() {
+  return {
+    onCharacterClick(name) {
       const found = (state.characters || []).find(c => c.name === name);
       if (!found) return;
       location.search = selectionSearch(found.id);
-    });
-  });
+    }
+  };
+}
+
+function bindCharacterLinks(root) {
+  if (!window.CommonTags) return;
+  CommonTags.bind(root, tagBindOptions());
 }
 
 function exclusiveList(tree) {
@@ -1268,18 +1217,10 @@ function skillDescHTML(skill) {
 }
 
 function recipeTextHTML(text) {
-  const re = /<(\/?)(b|health|hunger|sanity|seablue|trans|damage|physical|planar|cyan|lightpurple|age)>/g;
-  const s = String(text);
-  let html = "";
-  let last = 0;
-  let m;
-  while ((m = re.exec(s))) {
-    html += escapeHTML(s.slice(last, m.index));
-    html += m[0];
-    last = m.index + m[0].length;
+  if (window.CommonTags && CommonTags.escapeKeepingTags) {
+    return CommonTags.escapeKeepingTags(text);
   }
-  html += escapeHTML(s.slice(last));
-  return html;
+  return escapeHTML(String(text == null ? "" : text));
 }
 
 function recipeLineHTML(skill, recipe, index) {
@@ -1465,94 +1406,12 @@ function scheduleHideNoteTip() {
   }, 120);
 }
 
-let noticePinned = false;
-let noticeHideTimer = 0;
-
-function cancelNoticeHide() {
-  clearTimeout(noticeHideTimer);
-}
-
-function scheduleNoticeHide() {
-  if (noticePinned) return;
-  cancelNoticeHide();
-  noticeHideTimer = setTimeout(() => {
-    if (noticePinned) return;
-    const tip = $("notice-tip");
-    if (!tip) return;
-    tip.hidden = true;
-    tip._anchor = null;
-  }, 220);
-}
-
-function noticeFrame(el) {
-  const drawer = el.closest(".profile-drawer, .item-drawer, .insight-drawer, .char-notice, .notree-host, .app");
-  const scroll = el.closest(".profile-scroll, .item-scroll, .insight-drawer-panel, .char-notice-panel, .notree-host");
-  const box = (scroll || drawer || document.documentElement).getBoundingClientRect();
-  const limit = (drawer || scroll || document.documentElement).getBoundingClientRect();
-  const pad = 8;
-  return {
-    left: Math.max(limit.left + pad, pad),
-    right: Math.min(limit.right - pad, window.innerWidth - pad),
-    top: Math.max(box.top + 4, pad),
-    bottom: Math.min(box.bottom - 4, window.innerHeight - pad)
-  };
-}
-
 function hideNoticeTip() {
-  noticePinned = false;
-  cancelNoticeHide();
-  const tip = $("notice-tip");
-  if (!tip) return;
-  tip.hidden = true;
-  tip._anchor = null;
+  if (window.CommonTags) CommonTags.hideNoticeTip();
 }
 
 function showNoticeTip(el) {
-  cancelNoticeHide();
-  const tip = $("notice-tip");
-  if (!tip) return;
-  if (!el || !el.isConnected) {
-    tip.hidden = true;
-    return;
-  }
-  const text = el.getAttribute("text");
-  if (!text) {
-    tip.hidden = true;
-    return;
-  }
-  const frame = noticeFrame(el);
-  const maxW = frame.right - frame.left;
-  const maxH = frame.bottom - frame.top;
-  if (maxW < 8 || maxH < 8) {
-    tip.hidden = true;
-    return;
-  }
-  const anchor = el.getBoundingClientRect();
-  const visible = anchor.bottom > frame.top && anchor.top < frame.bottom && anchor.right > frame.left && anchor.left < frame.right;
-  tip._anchor = el;
-  tip.innerHTML = String(text).replace(/\\n|\r?\n/g, "<br>");
-  bindCharacterLinks(tip);
-  tip.style.maxWidth = maxW + "px";
-  tip.style.maxHeight = maxH + "px";
-  if (!visible) {
-    tip.hidden = true;
-    return;
-  }
-  tip.hidden = false;
-  tip.style.left = frame.left + "px";
-  tip.style.top = frame.top + "px";
-  const box = tip.getBoundingClientRect();
-  let x = anchor.left;
-  let y = anchor.bottom + 6;
-  if (x + box.width > frame.right) x = frame.right - box.width;
-  if (x < frame.left) x = frame.left;
-  if (y + box.height > frame.bottom) {
-    const above = anchor.top - 6 - box.height;
-    y = above >= frame.top ? above : frame.top;
-  }
-  if (y < frame.top) y = frame.top;
-  tip.style.left = Math.round(x) + "px";
-  tip.style.top = Math.round(y) + "px";
+  if (window.CommonTags) CommonTags.showNoticeTip(el);
 }
 
 function placeLockTip() {
@@ -2072,57 +1931,11 @@ document.addEventListener("click", e => {
   $("char-notice-btn").setAttribute("aria-expanded", "false");
 });
 
-document.addEventListener("pointerover", e => {
-  if (e.pointerType === "touch") return;
-  const tip = $("notice-tip");
-  if (tip && (e.target === tip || tip.contains(e.target))) {
-    cancelNoticeHide();
-    return;
-  }
-  const el = e.target.closest && e.target.closest("notice");
-  if (!el || !el.getAttribute("text")) return;
-  noticePinned = false;
-  cancelNoticeHide();
-  showNoticeTip(el);
-});
-
-document.addEventListener("pointerout", e => {
-  if (e.pointerType === "touch" || noticePinned) return;
-  const tip = $("notice-tip");
-  const notice = e.target.closest && e.target.closest("notice");
-  const inTip = tip && (e.target === tip || tip.contains(e.target));
-  if (!notice && !inTip) return;
-  const to = e.relatedTarget;
-  if (notice && to && notice.contains(to)) return;
-  if (tip && to && (to === tip || tip.contains(to))) return;
-  if (inTip && tip._anchor && to && (to === tip._anchor || tip._anchor.contains(to))) return;
-  scheduleNoticeHide();
-});
-
-document.addEventListener("click", e => {
-  if (!window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
-  const el = e.target.closest && e.target.closest("notice");
-  const tip = $("notice-tip");
-  if (el && el.getAttribute("text")) {
-    if (noticePinned && tip && tip._anchor === el && !tip.hidden) {
-      hideNoticeTip();
-      return;
-    }
-    noticePinned = true;
-    showNoticeTip(el);
-    return;
-  }
-  if (noticePinned) hideNoticeTip();
-});
-
-document.addEventListener("scroll", () => {
-  const tip = $("notice-tip");
-  if (!tip || tip.hidden || !tip._anchor) return;
-  if (!tip._anchor.isConnected) {
-    hideNoticeTip();
-    return;
-  }
-  showNoticeTip(tip._anchor);
-}, true);
+if (window.CommonTags) {
+  CommonTags.installNoticeTips({
+    tipId: "notice-tip",
+    bindOptions: tagBindOptions()
+  });
+}
 
 boot();

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>种植篇</title>
+<link rel="stylesheet" href="../../css/common-tags.css">
+<link rel="stylesheet" href="../../css/foodfarm.css">
+</head>
+<body class="farm-page">
+  <aside class="mod-drawer" id="mod-drawer">
+    <div class="mod-drawer-panel">
+      <div class="mod-drawer-title">模组选择</div>
+      <div class="mod-checks" id="mod-list"></div>
+    </div>
+    <button type="button" class="mod-drawer-handle" id="mod-drawer-handle" aria-expanded="false">
+      <span>模组选择</span>
+      <span class="mod-drawer-arrow" id="mod-drawer-arrow">&gt;</span>
+    </button>
+  </aside>
+  <a class="home-fab" href="../../index.html">首页</a>
+
+  <aside class="side-drawer calc-drawer" id="calc-drawer">
+    <div class="side-drawer-panel" id="calc-picker-home">
+      <div class="calc-picker" id="calc-picker">
+        <div class="side-drawer-title">配比计算器</div>
+        <input type="search" class="side-search" id="calc-search" placeholder="搜索种子 / 作物" autocomplete="off">
+        <div class="calc-selected" id="calc-selected"></div>
+        <div class="calc-seeds" id="calc-seeds"></div>
+      </div>
+    </div>
+    <button type="button" class="side-drawer-handle" id="calc-drawer-handle" aria-expanded="false">配比计算器</button>
+  </aside>
+
+  <aside class="side-drawer filter-drawer" id="filter-drawer">
+    <button type="button" class="side-drawer-handle" id="filter-drawer-handle" aria-expanded="false">筛选</button>
+    <div class="side-drawer-panel">
+      <div class="side-drawer-title">筛选</div>
+      <div class="filter-group">
+        <div class="filter-label">适合季节</div>
+        <div class="filter-checks" data-filter="fit"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">排除季节</div>
+        <div class="filter-checks" data-filter="exclude"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">消耗肥料</div>
+        <div class="filter-checks tag-text" data-filter="consume"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">产生肥料</div>
+        <div class="filter-checks tag-text" data-filter="produce"></div>
+      </div>
+      <button type="button" class="filter-reset" id="filter-reset">清空筛选</button>
+    </div>
+  </aside>
+
+  <div class="page">
+    <h1 class="title">种植篇</h1>
+    <main class="content-host">
+      <div class="panel-body" id="plant-body"></div>
+    </main>
+  </div>
+
+  <section class="calc-panel" id="calc-panel" hidden>
+    <div class="calc-panel-head">
+      <button type="button" class="calc-config-btn" id="calc-config-btn" aria-expanded="false">选择种子</button>
+      <div class="calc-panel-title">配比计算</div>
+      <button type="button" class="food-modal-close" id="calc-panel-close" aria-label="关闭">×</button>
+    </div>
+    <div class="calc-net tag-text" id="calc-net"></div>
+    <div class="calc-body tag-text" id="calc-body"></div>
+    <div class="calc-config" id="calc-config" hidden>
+      <div class="calc-config-body" id="calc-config-body"></div>
+    </div>
+  </section>
+
+  <div class="food-modal" id="seed-modal" hidden>
+    <div class="food-modal-backdrop" data-close="seed-modal"></div>
+    <div class="food-modal-panel" role="dialog" aria-modal="true" aria-labelledby="seed-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="seed-modal-title">种子</h2>
+        <button type="button" class="food-modal-close" data-close="seed-modal" aria-label="关闭">×</button>
+      </div>
+      <div class="food-modal-stats tag-text" id="seed-modal-fert"></div>
+      <div class="food-modal-stats tag-text" id="seed-modal-stats"></div>
+      <div class="seed-modal-desc tag-text" id="seed-modal-desc"></div>
+    </div>
+  </div>
+
+  <div class="food-modal plan-modal" id="plan-modal" hidden>
+    <div class="food-modal-backdrop" data-close="plan-modal"></div>
+    <div class="food-modal-panel" role="dialog" aria-modal="true" aria-labelledby="plan-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="plan-modal-title">配比详情</h2>
+        <button type="button" class="food-modal-close" data-close="plan-modal" aria-label="关闭">×</button>
+      </div>
+      <div class="food-modal-stats tag-text" id="plan-modal-net"></div>
+      <div class="plan-rows tag-text" id="plan-modal-rows"></div>
+    </div>
+  </div>
+
+  <div id="notice-tip" class="notice-tip tag-text" hidden></div>
+  <script>window.APP_ROOT = "../../";</script>
+  <script src="../../js/common/tags.js"></script>
+  <script src="../../js/foodfarm/common.js"></script>
+  <script src="../../js/foodfarm/farm-calc.js"></script>
+  <script src="../../js/foodfarm/farm.js"></script>
+</body>
+</html>
