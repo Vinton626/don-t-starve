@@ -167,6 +167,69 @@ body {
   background: rgba(42, 30, 16, .94);
   border-color: #c9a227;
 }
+.back-fab {
+  top: 80px;
+}
+
+/* 右下角概述：同角色页 char-notice，按钮文案为「概述」 */
+.page-overview {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 8px;
+}
+.page-overview[hidden] { display: none; }
+.page-overview-btn {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(28, 20, 12, .48);
+  border: 1.5px solid rgba(201, 162, 39, .45);
+  color: rgba(240, 208, 96, .78);
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 1.15;
+  cursor: pointer;
+  font-family: inherit;
+}
+.page-overview-btn:hover,
+.page-overview.is-open .page-overview-btn {
+  background: rgba(42, 30, 16, .88);
+  border-color: #c9a227;
+  color: #f0d060;
+}
+.page-overview-panel {
+  width: min(320px, calc(100vw - 36px));
+  max-height: 42vh;
+  overflow: auto;
+  padding: 12px 14px;
+  background: rgba(12, 9, 6, .72);
+  color: #e6d3a4;
+  border: 1px solid rgba(201, 162, 39, .55);
+  border-radius: 2px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.45);
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.page-overview-panel[hidden] { display: none; }
+.page-overview-title {
+  color: #f0d060;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.page-overview-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
 
 .hub-grid {
   display: grid;
@@ -198,6 +261,8 @@ body {
 }
 .hub-card-food {
   grid-column: 1 / -1;
+  letter-spacing: .18em;
+  text-indent: .18em;
 }
 
 .food-toolbar { margin-bottom: 4px; }
@@ -207,6 +272,7 @@ body {
   gap: 14px;
 }
 .food-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -223,10 +289,68 @@ body {
   transition: border-color .15s ease, background .15s ease;
 }
 .food-card:hover,
-.food-card:focus-visible {
+.food-card:focus-visible,
+.food-card:focus-within {
   outline: none;
   border-color: rgba(240, 208, 96, .85);
   background: rgba(42, 30, 16, .94);
+}
+.food-card-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: inherit;
+}
+.food-card-main:focus-visible {
+  outline: 1px solid rgba(240, 208, 96, .7);
+  outline-offset: -3px;
+}
+.food-roast-btn {
+  position: absolute;
+  z-index: 2;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 162, 39, .55);
+  background: rgba(28, 20, 12, .88);
+  color: #f0d060;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+.food-roast-btn:hover {
+  border-color: #c9a227;
+  background: rgba(42, 30, 16, .96);
+  color: #ffe7a0;
+}
+.food-roast-btn.is-none {
+  width: 18px;
+  height: 18px;
+  top: 8px;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(240, 208, 96, .45);
+  border-color: rgba(201, 162, 39, .28);
+  background: rgba(28, 20, 12, .55);
+  cursor: default;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .food-card-name {
   color: #f0d060;
@@ -234,6 +358,14 @@ body {
   font-weight: 700;
   letter-spacing: .08em;
   text-align: center;
+}
+.food-card-type {
+  display: flex;
+  justify-content: center;
+}
+.food-card-type .food-type-chip {
+  font-size: 12px;
+  padding: 1px 6px;
 }
 .food-card-stats {
   display: flex;
@@ -342,6 +474,14 @@ body {
   font-size: 13px;
 }
 .degree-chip b { color: #7fd4ff; }
+.food-type-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid rgba(201, 162, 39, .45);
+  background: rgba(42, 30, 16, .85);
+  color: #f0d060;
+  font-size: 13px;
+}
 .food-modal-seed states { margin-top: 6px; }
 .muted { color: #8a7860; font-size: 13px; }
 
@@ -963,6 +1103,13 @@ body.food-modal-open { overflow: hidden; }
     letter-spacing: 1px;
     opacity: .72;
     background: rgba(28, 20, 12, .62);
+  }
+  .back-fab { top: 70px; }
+  .page-overview { right: 12px; bottom: 12px; }
+  .page-overview-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 12px;
   }
   .mod-drawer-handle {
     height: 32px;

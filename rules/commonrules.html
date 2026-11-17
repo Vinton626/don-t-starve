@@ -33,6 +33,7 @@
   .stat-hunger { background: #c49212; }
   .stat-sanity { background: #c65a12; }
   .stat-attack { background: #5d7084; }
+  .stat-water { background: #2a6f9e; }
   .stat-emoji { font-size: 18px; line-height: 1; }
 </style>
 </head>
@@ -67,7 +68,7 @@
 <p>运行时：页面放一个 <code>&lt;div id="notice-tip" class="notice-tip tag-text" hidden&gt;&lt;/div&gt;</code>，并调用 <code>CommonTags.installNoticeTips({ tipId: "notice-tip" })</code>。</p>
 
 <h2>角色三维表示（states / state）</h2>
-<p>人物、食物图鉴、怪物图鉴等凡是用圆圈展示三维的地方，一律用同一套 <code>states</code> / <code>state</code> 与 emoji，不要另写一套图标。</p>
+<p>人物、普通食物图鉴、料理篇、怪物图鉴等凡是用圆圈展示三维的地方，一律用同一套 <code>states</code> / <code>state</code> 与 emoji，不要另写一套图标。</p>
 <p>在人物特性、随从介绍等正文里，要用圆圈+数值展示三维（或攻击力等）时，用 <code>states</code> / <code>state</code>，不要只写纯文字「生命值 xxx」。</p>
 <p>食物 / 怪物卡片与弹窗：名称 + 生命 / 饥饿 / 理智三个圆圈（❤️ / 🍗 / 🧠），数值放在 <b>b</b> 里。生成可用 <code>CommonTags.statesHTML([{ kind: "health", valueHTML: "&lt;b&gt;8&lt;/b&gt;" }, …])</code>。</p>
 <p>多个圆圈并排：外包一层 <code>&lt;states&gt;…&lt;/states&gt;</code>，里面每个属性一个 <code>&lt;state&gt;…&lt;/state&gt;</code>。</p>
@@ -80,7 +81,7 @@
 <p><code>stat-hunger</code> 饥饿（🍗，底色 #c49212）</p>
 <p><code>stat-sanity</code> 理智（🧠，底色 #c65a12）</p>
 <p><code>stat-attack</code> 攻击 / 伤害圆圈（⚔️，底色 #5d7084，与 <code>damage</code> 同色系）</p>
-<p>种植用的三肥圆圈（<code>stat-formula</code> / <code>stat-compost</code> / <code>stat-manure</code>）见 <a href="foodfarmrules.html">foodfarmrules.html</a>。</p>
+<p>种植用的三肥圆圈（<code>stat-formula</code> / <code>stat-compost</code> / <code>stat-manure</code>）与第四维耗水/阶段（<code>stat-water</code>，💧）见 <a href="foodfarmrules.html">foodfarmrules.html</a>。页面文案写「耗水/阶段」，不要写「潮湿值」。</p>
 <p>完整示例（阿比盖尔一类多数值）：</p>
 <p><code>&lt;states&gt;&lt;state&gt;&lt;span class="stat-orb stat-health"&gt;&lt;span class="stat-emoji"&gt;❤️&lt;/span&gt;&lt;/span&gt;&lt;span class="stat-value"&gt;&lt;b&gt;150&lt;/b&gt;&lt;/span&gt;&lt;/state&gt;&lt;state&gt;&lt;span class="stat-orb stat-attack"&gt;&lt;span class="stat-emoji"&gt;⚔️&lt;/span&gt;&lt;/span&gt;&lt;span class="stat-value"&gt;&lt;b&gt;40&lt;/b&gt;&lt;/span&gt;&lt;/state&gt;&lt;/states&gt;</code></p>
 <p>单个示例（暗影仆人一类）：</p>
@@ -90,6 +91,7 @@
   <span class="stat-orb stat-hunger"><span class="stat-emoji">🍗</span></span>
   <span class="stat-orb stat-sanity"><span class="stat-emoji">🧠</span></span>
   <span class="stat-orb stat-attack"><span class="stat-emoji">⚔️</span></span>
+  <span class="stat-orb stat-water"><span class="stat-emoji">💧</span></span>
 </p>
 </body>
 </html>

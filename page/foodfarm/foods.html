@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>食物图鉴</title>
+<title>普通食物图鉴</title>
 <link rel="stylesheet" href="../../css/common-tags.css">
 <link rel="stylesheet" href="../../css/foodfarm.css">
 </head>
@@ -19,11 +19,12 @@
     </button>
   </aside>
   <a class="home-fab" href="../../index.html">首页</a>
+  <a class="home-fab back-fab" href="../foodfarm.html">上一页</a>
 
   <div class="page">
-    <h1 class="title">食物图鉴</h1>
+    <h1 class="title">普通食物图鉴</h1>
     <main class="content-host">
-      <div class="food-toolbar panel-note">点卡片查看详情与可做料理。</div>
+      <div class="food-toolbar panel-note">只展示普通食物。点卡片看详情；有烤/晾字段时右上角按钮在「烤 / 晾 / 生」间切换。</div>
       <div class="panel-body" id="food-body"></div>
     </main>
   </div>
@@ -54,6 +55,14 @@
       </div>
     </div>
   </div>
+
+  <aside class="page-overview" id="page-overview">
+    <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
+    <div class="page-overview-panel" id="page-overview-panel" hidden>
+      <div class="page-overview-title" id="page-overview-title">概述</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">只展示普通食物：三维、食用类型与烹饪度。有 <code>cooked</code> / <code>dried</code> 时右上角按钮循环烤、晾、生；都没有则显示 *，悬停「不可烤不可晾」。点卡片看详情。料理图鉴在料理篇。</div>
+    </div>
+  </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>

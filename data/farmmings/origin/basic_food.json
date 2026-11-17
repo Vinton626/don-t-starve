@@ -6,11 +6,25 @@
       "origin": "",
       "source": "potato_seeds",
       "hide": false,
+      "foodtype": "veggie",
+      "secondaryfoodtype": "",
       "health": 8,
       "hunger": 12.5,
       "sanity": 0,
       "degrees": {
         "veg": 1
+      },
+      "cooked": {
+        "id": "potato_cooked",
+        "name": "烤土豆",
+        "foodtype": "veggie",
+        "secondaryfoodtype": "",
+        "health": 20,
+        "hunger": 25,
+        "sanity": 0,
+        "degrees": {
+          "veg": 1
+        }
       },
       "seed": {
         "id": "potato_seeds",
@@ -19,18 +33,88 @@
         "hunger": 9.375,
         "sanity": 0,
         "hate_season": ["summer"],
+        "water": 2,
         "desc": "",
         "fertilizer": {
-          "consume": {
-            "formula": 4,
-            "compost": 0,
-            "manure": 0
-          },
-          "produce": {
-            "formula": 0,
-            "compost": 2,
-            "manure": 2
-          }
+          "formula": -4,
+          "compost": 2,
+          "manure": 2
+        }
+      }
+    },
+    {
+      "id": "meat",
+      "name": "肉",
+      "origin": "",
+      "hide": false,
+      "foodtype": "meat",
+      "secondaryfoodtype": "",
+      "health": -10,
+      "hunger": 25,
+      "sanity": -15,
+      "degrees": {
+        "meat": 1
+      },
+      "cooked": {
+        "id": "cookedmeat",
+        "name": "熟肉",
+        "foodtype": "meat",
+        "secondaryfoodtype": "",
+        "health": 3,
+        "hunger": 25,
+        "sanity": 0,
+        "degrees": {
+          "meat": 1
+        }
+      },
+      "dried": {
+        "id": "meat_dried",
+        "name": "肉干",
+        "foodtype": "meat",
+        "secondaryfoodtype": "",
+        "health": 20,
+        "hunger": 25,
+        "sanity": 0,
+        "degrees": {
+          "meat": 1
+        }
+      }
+    },
+    {
+      "id": "kelp",
+      "name": "海带叶",
+      "origin": "",
+      "hide": false,
+      "foodtype": "veggie",
+      "secondaryfoodtype": "",
+      "health": -1,
+      "hunger": 9.375,
+      "sanity": -1,
+      "degrees": {
+        "veg": 0.5
+      },
+      "cooked": {
+        "id": "kelp_cooked",
+        "name": "熟海带叶",
+        "foodtype": "veggie",
+        "secondaryfoodtype": "",
+        "health": 0,
+        "hunger": 9.375,
+        "sanity": 1,
+        "degrees": {
+          "veg": 0.5
+        }
+      },
+      "dried": {
+        "id": "kelp_dried",
+        "name": "干海带叶",
+        "foodtype": "veggie",
+        "secondaryfoodtype": "",
+        "health": 0,
+        "hunger": 9.375,
+        "sanity": 0,
+        "degrees": {
+          "veg": 0.5
         }
       }
     },
@@ -39,6 +123,8 @@
       "name": "噩梦燃料",
       "origin": "",
       "hide": true,
+      "foodtype": "",
+      "secondaryfoodtype": "",
       "health": null,
       "hunger": null,
       "sanity": null,
@@ -48,3 +134,4 @@
     }
   ]
 }
+

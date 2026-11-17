@@ -19,15 +19,24 @@
     </button>
   </aside>
   <a class="home-fab" href="../index.html">首页</a>
+  <a class="home-fab back-fab" href="../index.html">上一页</a>
 
   <div class="page">
     <h1 class="title">料理与种植</h1>
     <div class="hub-grid">
-      <a class="hub-card hub-card-food" href="foodfarm/foods.html">食物图鉴</a>
+      <a class="hub-card hub-card-food" href="foodfarm/foods.html">普通食物图鉴</a>
       <a class="hub-card" href="foodfarm/farm.html">种植篇</a>
-      <a class="hub-card" href="foodfarm/cook.html">烹饪篇</a>
+      <a class="hub-card" href="foodfarm/cook.html">料理篇</a>
     </div>
   </div>
+
+  <aside class="page-overview" id="page-overview">
+    <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
+    <div class="page-overview-panel" id="page-overview-panel" hidden>
+      <div class="page-overview-title" id="page-overview-title">概述</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">料理与种植分三块：普通食物图鉴只看普通食物；种植篇算三肥配比；料理篇展示料理图鉴，左抽屉用四格锅试算。左上可选模组数据。</div>
+    </div>
+  </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../";</script>

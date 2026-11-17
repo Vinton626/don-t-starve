@@ -36,6 +36,22 @@ function fertStatesHTML(values) {
   })));
 }
 
+/** 种植卡片/种子详情：三肥净值 + 耗水/阶段（第四维，不进配比） */
+function plantStatesHTML(crop) {
+  if (!window.CommonTags || !crop) return "";
+  const items = FarmCalc.NUTRIENTS.map(key => ({
+    kind: key,
+    valueHTML: "<b>" + esc(signed(crop.delta && crop.delta[key])) + "</b>"
+  }));
+  if (crop.water != null) {
+    items.push({
+      kind: "water",
+      valueHTML: `<notice text="耗水/阶段"><b>${esc(crop.water)}</b></notice>`
+    });
+  }
+  return CommonTags.statesHTML(items);
+}
+
 function fertTag(key) {
   return `<${key}>${esc(FarmCalc.nutrientName(key))}</${key}>`;
 }
@@ -81,7 +97,7 @@ function seedCardHTML(crop) {
   return (
     `<button type="button" class="food-card" data-crop-id="${esc(crop.id)}">` +
     `<div class="food-card-name">${esc(crop.name)}</div>` +
-    `<div class="food-card-stats tag-text">${fertStatesHTML(crop.delta)}</div>` +
+    `<div class="food-card-stats tag-text">${plantStatesHTML(crop)}</div>` +
     `</button>`
   );
 }
@@ -149,7 +165,9 @@ function openSeedModal(id) {
   if (!crop || !entry) return;
   const seed = entry.seed || {};
   Foodfarm.$("seed-modal-title").textContent = crop.name;
-  Foodfarm.$("seed-modal-fert").innerHTML = fertStatesHTML(crop.delta);
+  const fertHost = Foodfarm.$("seed-modal-fert");
+  fertHost.innerHTML = plantStatesHTML(crop);
+  Foodfarm.bindContentTags(fertHost);
   Foodfarm.$("seed-modal-stats").innerHTML = Foodfarm.foodStatesHTML(seed);
 
   const hate = hateSeasons(entry);
@@ -163,6 +181,7 @@ function openSeedModal(id) {
     seed.name ? `<p>种子：${esc(seed.name)}</p>` : "",
     `<p>来源：${esc(Foodfarm.originLabel(entry.food))}</p>`,
     usage ? `<p>${usage}</p>` : "",
+    crop.water != null ? `<p>耗水/阶段：<b>${esc(crop.water)}</b></p>` : "",
     `<p>不喜季节：${hate.size ? esc(seasonText(hate)) : "无"}</p>`,
     seed.desc ? `<p>${seed.desc}</p>` : ""
   ];

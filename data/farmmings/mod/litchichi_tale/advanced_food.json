@@ -4,6 +4,8 @@
       "id": "",
       "name": "",
       "origin": "litchichi_tale",
+      "foodtype": "",
+      "secondaryfoodtype": "",
       "health": null,
       "hunger": null,
       "sanity": null,

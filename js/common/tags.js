@@ -194,7 +194,8 @@
       attack: { className: "stat-attack", emoji: "⚔️" },
       formula: { className: "stat-formula", emoji: "🧪" },
       compost: { className: "stat-compost", emoji: "🍂" },
-      manure: { className: "stat-manure", emoji: "💩" }
+      manure: { className: "stat-manure", emoji: "💩" },
+      water: { className: "stat-water", emoji: "💧" }
     };
     const conf = map[kind] || map.health;
     const face = emoji || conf.emoji;

@@ -1,6 +1,6 @@
 /**
  * 种植肥料配比计算：一块地皮 slots 格（默认 9），在勾选的作物里找三种肥料净值都 >= 0 的配比。
- * 每株作物一个周期的净变化 = produce - consume（数据取自 basic_food 的 seed.fertilizer）。
+ * 每株作物一个周期的净变化取自 basic_food 的 seed.fertilizer（负=消耗，正=产出）。
  * 用法：
  *   const crops = Foodfarm.plantEntries().map(FarmCalc.cropFromEntry).filter(Boolean);
  *   FarmCalc.solve(crops.slice(0, 3), { kinds: 2 });
@@ -45,16 +45,33 @@
     const seed = entry && entry.seed;
     const fert = seed && seed.fertilizer;
     if (!food || !fert) return null;
-    const consume = vec(fert.consume);
-    const produce = vec(fert.produce);
-    const delta = {};
-    NUTRIENTS.forEach(key => { delta[key] = produce[key] - consume[key]; });
+    // 新格式：{ formula, compost, manure }，负=消耗、正=产出
+    // 旧格式兼容：{ consume, produce }
+    let delta;
+    if (fert.consume != null || fert.produce != null) {
+      const consume = vec(fert.consume);
+      const produce = vec(fert.produce);
+      delta = {};
+      NUTRIENTS.forEach(key => { delta[key] = produce[key] - consume[key]; });
+    } else {
+      delta = vec(fert);
+    }
+    const consume = {};
+    const produce = {};
+    NUTRIENTS.forEach(key => {
+      consume[key] = delta[key] < 0 ? -delta[key] : 0;
+      produce[key] = delta[key] > 0 ? delta[key] : 0;
+    });
+    const waterRaw = seed.water;
+    const water = waterRaw == null || waterRaw === "" ? null : num(waterRaw);
     return {
       id: String(food.id || seed.id || food.name || ""),
       name: String(food.name || food.id || ""),
       consume,
       produce,
-      delta
+      delta,
+      /** 耗水/阶段；仅展示，不参与配比 */
+      water: water == null || !Number.isFinite(water) ? null : water
     };
   }
 

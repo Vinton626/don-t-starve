@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>烹饪篇</title>
+<title>料理篇</title>
 <link rel="stylesheet" href="../../css/common-tags.css">
 <link rel="stylesheet" href="../../css/foodfarm.css">
 </head>
@@ -19,6 +19,7 @@
     </button>
   </aside>
   <a class="home-fab" href="../../index.html">首页</a>
+  <a class="home-fab back-fab" href="../foodfarm.html">上一页</a>
 
   <aside class="side-drawer calc-drawer" id="cook-calc-drawer">
     <div class="side-drawer-panel cook-calc-panel">
@@ -90,7 +91,7 @@
   </aside>
 
   <div class="page">
-    <h1 class="title">烹饪篇</h1>
+    <h1 class="title">料理篇</h1>
     <main class="content-host">
       <div class="panel-body" id="cook-body"></div>
     </main>
@@ -131,6 +132,14 @@
       <div class="cook-possible-list" id="pick-list"></div>
     </div>
   </div>
+
+  <aside class="page-overview" id="page-overview">
+    <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
+    <div class="page-overview-panel" id="page-overview-panel" hidden>
+      <div class="page-overview-title" id="page-overview-title">概述</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">主区是料理图鉴，可用「我想做」筛选。左抽屉四格锅按度与必用原料匹配料理；点卡片看配方举例，或一键往锅里填入样例组合。</div>
+    </div>
+  </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>

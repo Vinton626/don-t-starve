@@ -19,6 +19,28 @@ const FERTILIZER_TAGS = {
   formula: { key: "formula", name: "催长剂", color: "#b3e5ff", alias: "lightblue" }
 };
 
+/**
+ * 食用类型（DST FOODTYPE）。基础食物 / 料理共用字段 foodtype，可选 secondaryfoodtype。
+ * 与烹饪「度」无关：度管锅，foodtype 管谁能吃。
+ */
+const FOOD_TYPES = {
+  veggie: { key: "veggie", name: "素食" },
+  meat: { key: "meat", name: "肉食" },
+  goodies: { key: "goodies", name: "好东西" },
+  generic: { key: "generic", name: "通用" },
+  seeds: { key: "seeds", name: "种子" },
+  berry: { key: "berry", name: "浆果" },
+  monster: { key: "monster", name: "怪物" },
+  horrible: { key: "horrible", name: "可怕" },
+  roughage: { key: "roughage", name: "饲料" },
+  elemental: { key: "elemental", name: "元素" },
+  gears: { key: "gears", name: "齿轮" },
+  wood: { key: "wood", name: "木头" },
+  raw: { key: "raw", name: "生食" },
+  burnt: { key: "burnt", name: "烧焦" },
+  insect: { key: "insect", name: "昆虫" }
+};
+
 const MOD_CACHE_KEY = "foodfarm.mods";
 const APP_ROOT = window.APP_ROOT || "../";
 
@@ -208,6 +230,27 @@ function degreeLabel(key) {
   return (conf && conf.name) || key;
 }
 
+function foodTypeLabel(key) {
+  if (key == null || key === "") return "";
+  const conf = FOOD_TYPES[String(key)];
+  return (conf && conf.name) || String(key);
+}
+
+/** 展示 foodtype / secondaryfoodtype，例如「素食」或「肉食 / 怪物」 */
+function foodTypeText(entry) {
+  if (!entry) return "";
+  const main = foodTypeLabel(entry.foodtype);
+  const second = foodTypeLabel(entry.secondaryfoodtype);
+  if (main && second) return main + " / " + second;
+  return main || second || "";
+}
+
+function foodTypeHTML(entry) {
+  const text = foodTypeText(entry);
+  if (!text) return `<span class="muted">未标注食用类型</span>`;
+  return `<span class="food-type-chip">${escapeHTML(text)}</span>`;
+}
+
 function foodDegreesHTML(food) {
   const degrees = foodDegreeMap(food);
   const keys = Object.keys(degrees).filter(k => degrees[k] !== 0);
@@ -325,10 +368,42 @@ function bindContentTags(root) {
   CommonTags.bind(root, {});
 }
 
+function setOverviewOpen(open) {
+  const wrap = $("page-overview");
+  const panel = $("page-overview-panel");
+  const btn = $("page-overview-btn");
+  if (!wrap || !panel || !btn || wrap.hidden) return;
+  panel.hidden = !open;
+  wrap.classList.toggle("is-open", !!open);
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+/** 右下角「概述」圆圈：与角色页 char-notice 同交互，文案写在页面 HTML 里 */
+function bindPageOverview() {
+  const wrap = $("page-overview");
+  const panel = $("page-overview-panel");
+  const btn = $("page-overview-btn");
+  const body = $("page-overview-body");
+  if (!wrap || !panel || !btn) return;
+  if (body) bindContentTags(body);
+  setOverviewOpen(false);
+  if (btn.dataset.bound === "1") return;
+  btn.dataset.bound = "1";
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    setOverviewOpen(panel.hidden);
+  });
+  document.addEventListener("click", e => {
+    if (!wrap || wrap.hidden || wrap.contains(e.target)) return;
+    setOverviewOpen(false);
+  });
+}
+
 async function bootFoodfarm(options) {
   const opts = options || {};
   bindModDrawer();
   paintModHandle(false);
+  bindPageOverview();
   if (window.CommonTags) {
     CommonTags.installNoticeTips({
       tipId: "notice-tip",
@@ -352,6 +427,7 @@ async function bootFoodfarm(options) {
 window.Foodfarm = {
   FOOD_DEGREES,
   FERTILIZER_TAGS,
+  FOOD_TYPES,
   DATA,
   $,
   asset,
@@ -368,6 +444,9 @@ window.Foodfarm = {
   foodStatesHTML,
   foodDegreesHTML,
   degreeLabel,
+  foodTypeLabel,
+  foodTypeText,
+  foodTypeHTML,
   bindContentTags,
   bootFoodfarm,
   reloadEnabledData

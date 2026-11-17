@@ -1,9 +1,38 @@
 {
   "items": [
     {
+      "id": "vegetablemedley",
+      "name": "蔬菜杂烩",
+      "origin": "",
+      "foodtype": "veggie",
+      "secondaryfoodtype": "",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 0,
+      "requires": [
+        {
+          "degree": "veggie",
+          "op": ">=",
+          "value": 0.5
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "meat" },
+        { "degree": "inedible" }
+      ],
+      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
       "id": "freshfruitcrepes",
       "name": "鲜果可丽饼",
       "origin": "",
+      "foodtype": "veggie",
+      "secondaryfoodtype": "",
       "health": 60,
       "hunger": 150,
       "sanity": 15,

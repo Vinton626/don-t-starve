@@ -1,16 +1,113 @@
 let activeFood = null;
+let activeForm = "raw";
 let cookListCache = null;
 let cookSearchQuery = "";
 
-function foodCardHTML(food) {
-  const name = Foodfarm.escapeHTML(food.name || food.id || "未命名");
-  const id = Foodfarm.escapeHTML(food.id || "");
+const FORM_LABEL = { raw: "生", cooked: "烤", dried: "晾" };
+const FORM_PREFIX = { cooked: "烤", dried: "晾" };
+
+function formVariant(food, key) {
+  const c = food && food[key];
+  if (!c || typeof c !== "object") return null;
+  if (c.id || c.name || c.health != null || c.hunger != null || c.sanity != null) return c;
+  return null;
+}
+
+function hasCooked(food) {
+  return !!formVariant(food, "cooked");
+}
+
+function hasDried(food) {
+  return !!formVariant(food, "dried");
+}
+
+/** 可切换形态：生 + 有字段的烤/晾。无烤无晾则只有生，不显示按钮 */
+function availableForms(food) {
+  const forms = ["raw"];
+  if (hasCooked(food)) forms.push("cooked");
+  if (hasDried(food)) forms.push("dried");
+  return forms;
+}
+
+function nextForm(food, current) {
+  const forms = availableForms(food);
+  const i = Math.max(0, forms.indexOf(current));
+  return forms[(i + 1) % forms.length];
+}
+
+function formLabel(form) {
+  return FORM_LABEL[form] || "生";
+}
+
+/** 卡片/弹窗当前展示：烤/晾叠在生上面，不带 seed */
+function displayFood(raw, form) {
+  if (!raw) return null;
+  const mode = form === "cooked" || form === "dried" ? form : "raw";
+  if (mode === "raw") return raw;
+  const c = formVariant(raw, mode);
+  if (!c) return raw;
+  const prefix = FORM_PREFIX[mode] || "";
+  return Object.assign({}, raw, c, {
+    id: c.id != null && String(c.id).trim() ? String(c.id) : String(raw.id || "") + "_" + mode,
+    name: c.name != null && String(c.name).trim() ? c.name : (prefix + (raw.name || raw.id || "")),
+    origin: c.origin != null ? c.origin : raw.origin,
+    seed: undefined,
+    cooked: undefined,
+    dried: undefined,
+    _raw: raw,
+    _form: mode
+  });
+}
+
+function cardBodyHTML(view) {
+  const name = Foodfarm.escapeHTML(view.name || view.id || "未命名");
   return (
-    `<button type="button" class="food-card" data-food-id="${id}">` +
     `<div class="food-card-name">${name}</div>` +
-    `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(food)}</div>` +
+    (Foodfarm.foodTypeText(view)
+      ? `<div class="food-card-type">${Foodfarm.foodTypeHTML(view)}</div>`
+      : "") +
+    `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(view)}</div>`
+  );
+}
+
+function formBtnHTML(food) {
+  const forms = availableForms(food);
+  if (forms.length < 2) {
+    return `<span class="food-roast-btn is-none" title="不可烤不可晾" aria-label="不可烤不可晾">*</span>`;
+  }
+  const next = nextForm(food, "raw");
+  return (
+    `<button type="button" class="food-roast-btn" data-form-toggle aria-label="切换形态">` +
+    Foodfarm.escapeHTML(formLabel(next)) +
     `</button>`
   );
+}
+
+function foodCardHTML(food) {
+  const id = Foodfarm.escapeHTML(food.id || "");
+  return (
+    `<div class="food-card" data-food-id="${id}" data-form="raw">` +
+    formBtnHTML(food) +
+    `<button type="button" class="food-card-main">${cardBodyHTML(food)}</button>` +
+    `</div>`
+  );
+}
+
+function paintCardView(card, food, form) {
+  const mode = availableForms(food).includes(form) ? form : "raw";
+  const view = displayFood(food, mode);
+  const main = card.querySelector(".food-card-main");
+  const btn = card.querySelector("[data-form-toggle]");
+  card.dataset.form = mode;
+  if (main) {
+    main.innerHTML = cardBodyHTML(view);
+    Foodfarm.bindContentTags(main);
+  }
+  if (btn) {
+    const next = nextForm(food, mode);
+    btn.textContent = formLabel(next);
+    btn.setAttribute("aria-label", "切换到" + formLabel(next));
+  }
 }
 
 function renderFoods() {
@@ -24,12 +121,25 @@ function renderFoods() {
   }
   host.innerHTML = `<div class="food-grid">${items.map(foodCardHTML).join("")}</div>`;
   Foodfarm.bindContentTags(host);
-  host.querySelectorAll(".food-card").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-food-id");
-      const food = items.find(item => String(item.id) === id) || null;
-      openFoodModal(food);
-    });
+
+  host.querySelectorAll(".food-card").forEach(card => {
+    const id = card.getAttribute("data-food-id");
+    const food = items.find(item => String(item.id) === id) || null;
+    const main = card.querySelector(".food-card-main");
+    const toggle = card.querySelector("[data-form-toggle]");
+    if (main) {
+      main.addEventListener("click", () => {
+        openFoodModal(food, card.dataset.form || "raw");
+      });
+    }
+    if (toggle && food) {
+      toggle.addEventListener("click", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const cur = card.dataset.form || "raw";
+        paintCardView(card, food, nextForm(food, cur));
+      });
+    }
   });
 }
 
@@ -63,7 +173,8 @@ function paintCookPanel(expanded) {
   requestAnimationFrame(() => {
     queueMicrotask(() => {
       if (!activeFood) return;
-      cookListCache = Foodfarm.dishesForFood(activeFood);
+      const raw = activeFood._raw || activeFood;
+      cookListCache = Foodfarm.dishesForFood(activeForm === "raw" ? raw : activeFood);
       renderCookList();
     });
   });
@@ -91,10 +202,13 @@ function renderCookList() {
   }).join("")}</ul>`;
 }
 
-function openFoodModal(food) {
+function openFoodModal(food, form) {
   const modal = Foodfarm.$("food-modal");
   if (!modal || !food) return;
-  activeFood = food;
+  const mode = availableForms(food).includes(form) ? form : "raw";
+  const view = displayFood(food, mode);
+  activeFood = view;
+  activeForm = mode;
   cookListCache = null;
   cookSearchQuery = "";
 
@@ -104,15 +218,17 @@ function openFoodModal(food) {
   const degrees = Foodfarm.$("food-modal-degrees");
   const seed = Foodfarm.$("food-modal-seed");
 
-  if (title) title.textContent = food.name || food.id || "食物";
-  if (stats) stats.innerHTML = Foodfarm.foodStatesHTML(food);
+  if (title) title.textContent = view.name || view.id || "食物";
+  if (stats) stats.innerHTML = Foodfarm.foodStatesHTML(view);
   if (meta) {
     meta.innerHTML =
-      `<span>来源：${Foodfarm.escapeHTML(Foodfarm.originLabel(food))}</span>` +
-      (food.id ? `<span>id：${Foodfarm.escapeHTML(food.id)}</span>` : "");
+      `<span>来源：${Foodfarm.escapeHTML(Foodfarm.originLabel(view))}</span>` +
+      `<span>类型：${Foodfarm.foodTypeHTML(view)}</span>` +
+      `<span>形态：${Foodfarm.escapeHTML(formLabel(mode))}</span>` +
+      (view.id ? `<span>id：${Foodfarm.escapeHTML(view.id)}</span>` : "");
   }
-  if (degrees) degrees.innerHTML = Foodfarm.foodDegreesHTML(food);
-  if (seed) seed.innerHTML = seedBriefHTML(food);
+  if (degrees) degrees.innerHTML = Foodfarm.foodDegreesHTML(view);
+  if (seed) seed.innerHTML = mode === "raw" ? seedBriefHTML(food) : "";
 
   Foodfarm.bindContentTags(modal);
   paintCookPanel(false);
@@ -125,6 +241,7 @@ function closeFoodModal() {
   if (modal) modal.hidden = true;
   document.body.classList.remove("food-modal-open");
   activeFood = null;
+  activeForm = "raw";
   cookListCache = null;
   cookSearchQuery = "";
 }

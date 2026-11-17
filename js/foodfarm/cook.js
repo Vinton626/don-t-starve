@@ -51,6 +51,9 @@ function dishCardHTML(dish) {
   return (
     `<button type="button" class="food-card" data-dish-id="${esc(dishKey(dish))}">` +
     `<div class="food-card-name">${esc(dish.name || dish.id)}</div>` +
+    (Foodfarm.foodTypeText(dish)
+      ? `<div class="food-card-type">${Foodfarm.foodTypeHTML(dish)}</div>`
+      : "") +
     `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(dish)}</div>` +
     `</button>`
   );
@@ -100,6 +103,7 @@ function openDishModal(dish) {
   }).join("");
   const lines = [
     `<p>来源：${esc(Foodfarm.originLabel(dish))}</p>`,
+    `<p>类型：${Foodfarm.foodTypeHTML(dish)}</p>`,
     dish.priority != null ? `<p>优先级：<b>${esc(dish.priority)}</b></p>` : "",
     dish.cookSeconds != null ? `<p>烹饪：<b>${esc(dish.cookSeconds)}</b> 秒</p>` : "",
     dish.spoilDays != null ? `<p>保鲜：<b>${esc(dish.spoilDays)}</b> 天</p>` : "",
@@ -306,6 +310,9 @@ function resultHTML(state) {
     return (
       `<button type="button" class="cook-result-dish" data-result-id="${esc(dishKey(d))}">` +
       `<div class="cook-result-name">${esc(d.name || d.id)}</div>` +
+      (Foodfarm.foodTypeText(d)
+        ? `<div class="food-card-type">${Foodfarm.foodTypeHTML(d)}</div>`
+        : "") +
       `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(d)}</div>` +
       `</button>`
     );
