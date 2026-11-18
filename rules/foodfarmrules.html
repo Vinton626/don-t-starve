@@ -62,10 +62,10 @@
 <p><manure>粪肥</manure> 的颜色是 #d4925a，与 brown 相同。标签 <code>&lt;manure&gt;</code>，数据键 <code>manure</code>。沃姆伍德写法：&lt;brown&gt;粪肥&lt;/brown&gt;。</p>
 <p><compost>堆肥</compost> 的颜色是 #c5c5c5，与 grey 相同。标签 <code>&lt;compost&gt;</code>，数据键 <code>compost</code>。沃姆伍德写法：&lt;grey&gt;堆肥&lt;/grey&gt;。</p>
 <p><formula>催长剂</formula> 的颜色是 #b3e5ff，与 lightblue 相同。标签 <code>&lt;formula&gt;</code>，数据键 <code>formula</code>。沃姆伍德写法：&lt;lightblue&gt;催长剂&lt;/lightblue&gt;。</p>
-<p>种子 <code>fertilizer</code> 直接写三肥净值，键是 manure / compost / formula：负数=消耗，正数=产出，0 可省略或写 0。例如土豆：<code>{"formula":-4,"compost":2,"manure":2}</code>。</p>
+<p>种子 <code>fertilizer</code> 直接写每阶段三肥净值，键是 manure / compost / formula：负数=消耗，正数=产出，0 可省略或写 0。例如土豆：<code>{"formula":-4,"compost":2,"manure":2}</code>。</p>
 
 <h2>三肥圆圈 + 耗水/阶段</h2>
-<p>种植篇卡片与种子弹窗用四维圆圈：前三个是三肥净值（产出 − 消耗），第四个是耗水/阶段。写法同 commonrules 的 <code>state</code>。</p>
+<p>种植篇卡片与种子弹窗用四维圆圈：前三个是每阶段三肥净值（产出 − 消耗），第四个是耗水/阶段。悬停写「催长剂/阶段」「堆肥/阶段」「粪肥/阶段」。写法同 commonrules 的 <code>state</code>。</p>
 <p><code>stat-formula</code> 催长剂（🧪，底色 #3d7fa6）、<code>stat-compost</code> 堆肥（🍂，底色 #6e6e6e）、<code>stat-manure</code> 粪肥（💩，底色 #8a5a2e）。肥料数值放在 b 里，正数带 +，例如 <b>+2</b>、<b>-4</b>。</p>
 <p><code>stat-water</code> 耗水/阶段（💧，底色 #2a6f9e）。文案写「耗水/阶段」，不要写「潮湿值」。数据里写百分比数值（如 <code>0.75</code> 表示 0.75%），页面展示时加 <code>%</code>。例如 <code>&lt;notice text="耗水/阶段"&gt;&lt;b&gt;0.75%&lt;/b&gt;&lt;/notice&gt;</code>。</p>
 <p>耗水/阶段<strong>不参与</strong>三肥配比运算，只在页面展示。</p>
@@ -82,13 +82,13 @@
 <p>清单在 <code>js/foodfarm/common.js</code> 的 <code>FOOD_TYPES</code>。展示用 <code>Foodfarm.foodTypeText(entry)</code>。</p>
 
 <h2>保质期</h2>
-<p>普通食物、烤/晾、种子、料理都可写 <code>spoilDays</code>（天）。详情显示为「保质期」。没有就省略。</p>
+<p>普通食物、烤/晾、种子、料理都可写 <code>spoilDays</code>。数字是天数，详情显示为「保质期：N 天」。不会腐烂写 <code>"spoilDays": "永久"</code>，页面只显示「永久」，不加「天」。没有、或写 <code>null</code>，就省略这一行。</p>
 
 <h2>基础食物字段</h2>
 <p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。默认 / 省略视为 <code>false</code>。</p>
 <p><code>cooked</code>：烤熟形态子对象，可选。只有写了才参与切换。</p>
 <p><code>dried</code>：晾干形态子对象，可选（肉、海带等才有）。只有写了才参与切换；多数食物不必写这个字段。</p>
-<p>图鉴卡片右上角一个按钮，在<strong>已有形态</strong>之间循环，按钮文案是<strong>下一个</strong>形态：<code>生</code> / <code>烤</code> / <code>晾</code>。例如肉有烤+晾：生时显示「烤」→烤时「晾」→晾时「生」。只有烤：烤 ↔ 生。两个字段都没有则缩小显示 <code>*</code>，悬停提示「不可烤不可晾」。</p>
+<p>图鉴卡片右上角按已有字段各放一个按钮，<strong>晾在烤左边</strong>。点「晾」或「烤」切到该形态，再点同一个按钮回到生。只有其中一个字段就只显示对应按钮。两个字段都没有则缩小显示 <code>*</code>，悬停提示「不可烤不可晾」。</p>
 <p>烤/晾子对象常用字段：<code>id</code> / <code>name</code> / <code>health</code> / <code>hunger</code> / <code>sanity</code> / <code>spoilDays</code> / <code>foodtype</code>（及 <code>foodtype2</code>…）/ <code>degrees</code>。</p>
 
 <h2>种子字段</h2>
@@ -97,7 +97,8 @@
 <p><code>seed.hate_season</code>：不喜欢的季节数组，取值 <code>spring</code> / <code>summer</code> / <code>autumn</code> / <code>winter</code>。不在数组里的季节都算合适。没有就写 <code>[]</code>。</p>
 <p><code>seed.water</code>：耗水/阶段，百分比数值（如 <code>0.75</code> = 0.75%）。种植卡片第四维展示时带 <code>%</code>；不参与配比。没有可省略。</p>
 <p><code>seed.desc</code>：简短描述，可用正文标签；没有就写空字符串。</p>
-<p>种子自身的 <code>health</code> / <code>hunger</code> / <code>sanity</code> 是吃种子的三维，弹窗显示。</p>
+<p><code>seed</code> 可以写成完整对象，也可以写成另一条食物的 id，多种植株共用同一颗种子时用 id。例如必忘我和后面的杂草都写 <code>"seed": "seeds"</code>，种子本体只写一次，并带上它自己的 <code>cooked</code>、<code>degrees</code>。每株不一样的肥、水、季节不要写进种子，写在植株的 <code>grow</code> 里，种植篇会叠到这颗种子上。</p>
+<p>嵌在植株里的种子也会出现在普通食物图鉴，按名字或 id 搜索。同一种子只出现一张卡片。</p>
 
 <h2>料理详情里的配方举例</h2>
 <p>不枚举全部可行组合（组合数会爆炸）。详情底部「可实现举例」只用：必用原料 + 每种所需度的<strong>第一个纯单度食材</strong>（degrees 里只有一种度）+ 纯单度填充凑满 4 格。双度食材（如榴莲：水果+怪物）不拿来当度的代表例。</p>

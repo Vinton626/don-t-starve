@@ -337,12 +337,13 @@
   }
 
   /** 每种度取清单里第一个「纯单度」食材 */
-  function firstPureByDegree(pool) {
+  function puresByDegree(pool) {
     const map = {};
     pool.forEach(ing => {
       const key = pureDegreeKey(ing);
-      if (!key || map[key]) return;
-      map[key] = ing;
+      if (!key) return;
+      if (!map[key]) map[key] = [];
+      map[key].push(ing);
     });
     return map;
   }
@@ -364,14 +365,16 @@
    * 为料理生成示例填锅。优先用「只有一种度」的食材；must 仍按名字找。
    * foods 可含 hide:true 的原料。
    */
-  function sampleFill(dish, foods, allDishes) {
+  function sampleFill(dish, foods, allDishes, variant) {
     if (!dish) return { ok: false, slots: [], message: "未选择料理" };
+    const reqIndex = variant && typeof variant === "object" ? (Number(variant.reqIndex) || 0) : (Number(variant) || 0);
+    const fillerIndex = variant && typeof variant === "object" ? (Number(variant.fillerIndex) || 0) : (Number(variant) || 0);
     const pool = (Array.isArray(foods) ? foods : [])
       .map(ingredientFromFood)
       .filter(Boolean);
     if (!pool.length) return { ok: false, slots: [], message: "没有基础食物数据" };
 
-    const pureMap = firstPureByDegree(pool);
+    const pureGroups = puresByDegree(pool);
     const slots = [];
 
     const push = ing => {
@@ -409,12 +412,11 @@
       const key = String(req.degree);
       const need = num(req.value);
       let have = slots.reduce((sum, ing) => sum + num(ing.degrees[key]), 0);
-      // 优先纯单度
+      const group = (pureGroups[key] || []).filter(ing => !blocked(ing));
+      const pure = group.length ? group[Math.min(reqIndex, group.length - 1)] : null;
       while (have < need && slots.length < SLOTS) {
-        const pure = pureMap[key];
-        const pick = pure && !blocked(pure)
-          ? pure
-          : pool.find(ing => !blocked(ing) && num(ing.degrees[key]) > 0);
+        const pick = pure
+          || pool.find(ing => !blocked(ing) && num(ing.degrees[key]) > 0);
         if (!pick) break;
         push(pick);
         have += num(pick.degrees[key]);
@@ -425,18 +427,19 @@
       "inedible", "ice", "veg", "fruit", "meat", "egg", "sweetener", "dairy",
       "fish", "monster", "magic", "fat", "seed", "decoration", "dried", "precook"
     ];
+    const fillerCands = [];
+    const pushCand = ing => {
+      if (!ing || blocked(ing) || fillerCands.indexOf(ing) >= 0) return;
+      fillerCands.push(ing);
+    };
+    fillerOrder.forEach(key => (pureGroups[key] || []).forEach(pushCand));
+    pool.forEach(pushCand);
+    const filler = fillerCands.length
+      ? fillerCands[Math.min(fillerIndex, fillerCands.length - 1)]
+      : null;
     while (slots.length < SLOTS) {
-      let pick = null;
-      for (let i = 0; i < fillerOrder.length; i++) {
-        const cand = pureMap[fillerOrder[i]];
-        if (cand && !blocked(cand)) {
-          pick = cand;
-          break;
-        }
-      }
-      if (!pick) pick = pool.find(ing => !blocked(ing));
-      if (!pick) break;
-      push(pick);
+      if (!filler) break;
+      push(filler);
     }
 
     if (slots.length < SLOTS) {
@@ -458,22 +461,42 @@
 
   /**
    * 料理详情底部用的「可实现举例」，不做全量枚举。
-   * 默认给 1 条：must + 各度第一个纯单度食材 + 纯单度填充。
+   * 给两条不同配方：先换满足度要求的食材，再换填充食材。
    */
   function exampleRecipes(dish, foods, allDishes) {
-    const one = sampleFill(dish, foods, allDishes);
-    if (!one.slots || !one.slots.length) {
-      return { recipes: [], note: one.message || "暂无示例配方" };
-    }
-    return {
-      recipes: [{
+    const note = "以下为单度食材举例，不是全部可行配方。";
+    const found = [];
+    const seen = {};
+    const plans = [
+      { reqIndex: 0, fillerIndex: 0 },
+      { reqIndex: 1, fillerIndex: 0 },
+      { reqIndex: 2, fillerIndex: 0 },
+      { reqIndex: 0, fillerIndex: 1 },
+      { reqIndex: 0, fillerIndex: 2 },
+      { reqIndex: 1, fillerIndex: 1 },
+      { reqIndex: 3, fillerIndex: 0 },
+      { reqIndex: 0, fillerIndex: 3 }
+    ];
+    plans.forEach(plan => {
+      const one = sampleFill(dish, foods, allDishes, plan);
+      if (!one.slots || one.slots.length < SLOTS) return;
+      const key = one.slots.map(s => s.id || s.name).join("\0");
+      if (seen[key]) return;
+      seen[key] = true;
+      found.push({
         slots: one.slots,
         names: one.slots.map(s => s.name || s.id),
         ok: one.ok,
         message: one.message
-      }],
-      note: "以下为单度食材举例，不是全部可行配方。"
-    };
+      });
+    });
+    const okOnes = found.filter(rec => rec.ok);
+    const recipes = (okOnes.length ? okOnes : found).slice(0, 2);
+    if (!recipes.length) {
+      const one = sampleFill(dish, foods, allDishes);
+      return { recipes: [], note: (one && one.message) || "暂无示例配方" };
+    }
+    return { recipes, note };
   }
 
   return {

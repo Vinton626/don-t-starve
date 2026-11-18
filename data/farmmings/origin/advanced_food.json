@@ -27,6 +27,87 @@
       "effect": "无特殊效果"
     },
     {
+      "id":"meatball",
+      "name": "肉丸",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 3,
+      "hunger": 62.5,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 15,
+      "priority": -1,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "inedible" }
+      ],
+      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "monstermeatpie",
+      "name": "怪物千层饼",
+      "origin": "",
+      "foodtype": "meat",
+      "health": -20,
+      "hunger": 37.5,
+      "sanity": -20,
+      "spoilDays": 6,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "monster",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "inedible" }
+      ],
+      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
+      "id":"dragonfruitpie",
+      "name": "火龙果派",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": 40,
+      "hunger": 75,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "fruit",
+          "op": ">=",
+          "value": 1.5
+        }
+      ],
+      "must": [
+        {
+          "name": "(烤)火龙果",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        { "degree": "meat" }
+      ],
+      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
       "id": "freshfruitcrepes",
       "name": "鲜果可丽饼",
       "origin": "",

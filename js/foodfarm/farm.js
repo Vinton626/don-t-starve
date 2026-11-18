@@ -17,8 +17,15 @@ const farm = {
   filter: { fit: new Set(), exclude: new Set(), consume: new Set(), produce: new Set() },
   result: null,
   panelOpen: false,
-  calcTimer: 0
+  calcTimer: 0,
+  ratioMode: "9"
 };
+
+const RATIO_MODES = [
+  { id: "1-1", label: "1:1配比", note: "这里需要添加" },
+  { id: "3-3-3", label: "3+3+3配比", note: "这里需要添加" },
+  { id: "9", label: "9格配比", note: "" }
+];
 
 const esc = text => Foodfarm.escapeHTML(text == null ? "" : String(text));
 
@@ -41,12 +48,14 @@ function plantStatesHTML(crop) {
   if (!window.CommonTags || !crop) return "";
   const items = FarmCalc.NUTRIENTS.map(key => ({
     kind: key,
+    label: FarmCalc.nutrientName(key) + "/阶段",
     valueHTML: "<b>" + esc(signed(crop.delta && crop.delta[key])) + "</b>"
   }));
   if (crop.water != null) {
     items.push({
       kind: "water",
-      valueHTML: `<notice text="耗水/阶段"><b>${esc(crop.water)}%</b></notice>`
+      label: "耗水/阶段",
+      valueHTML: `<b>${esc(crop.water)}%</b>`
     });
   }
   return CommonTags.statesHTML(items);
@@ -173,16 +182,16 @@ function openSeedModal(id) {
   const hate = hateSeasons(entry);
   const usage = FarmCalc.NUTRIENTS.map(k => {
     const parts = [];
-    if (crop.consume[k]) parts.push("消耗 <b>" + esc(crop.consume[k]) + "</b>");
-    if (crop.produce[k]) parts.push("产出 <b>" + esc(crop.produce[k]) + "</b>");
+    if (crop.consume[k]) parts.push("每阶段消耗 <b>" + esc(crop.consume[k]) + "</b>");
+    if (crop.produce[k]) parts.push("每阶段产出 <b>" + esc(crop.produce[k]) + "</b>");
     return parts.length ? fertTag(k) + " " + parts.join("，") : "";
   }).filter(Boolean).join("；");
   const lines = [
     seed.name ? `<p>种子：${esc(seed.name)}</p>` : "",
     `<p>来源：${esc(Foodfarm.originLabel(entry.food))}</p>`,
     Foodfarm.foodTypeText(seed) ? `<p>类型：${Foodfarm.foodTypeHTML(seed)}</p>` : "",
-    seed.spoilDays != null && seed.spoilDays !== ""
-      ? `<p>保质期：<b>${esc(seed.spoilDays)}</b> 天</p>`
+    Foodfarm.spoilLabel(seed.spoilDays)
+      ? `<p>保质期：<b>${esc(Foodfarm.spoilLabel(seed.spoilDays))}</b></p>`
       : "",
     usage ? `<p>${usage}</p>` : "",
     crop.water != null ? `<p>耗水/阶段：<b>${esc(crop.water)}%</b></p>` : "",
@@ -228,6 +237,11 @@ function bindModals() {
     const config = Foodfarm.$("calc-config");
     if (config && !config.hidden) {
       setConfigOpen(false);
+      return;
+    }
+    const modeList = Foodfarm.$("calc-mode-list");
+    if (modeList && !modeList.hidden) {
+      setRatioMenu(false);
       return;
     }
     if (farm.panelOpen) closePanel();
@@ -285,6 +299,7 @@ function setPickCount(id, count) {
   if (i < 0) return;
   const n = Math.max(1, Math.min(FarmCalc.DEFAULT_SLOTS, Math.floor(Number(count) || 1)));
   farm.picks[i].count = n;
+  if (farm.ratioMode === "3-3-3") return;
   afterPicksChange();
 }
 
@@ -322,18 +337,24 @@ function renderPicker() {
   if (!selected || !seeds) return;
 
   const used = usedSlots();
+  const fixedThree = farm.ratioMode === "3-3-3";
   if (farm.picks.length) {
+    const usedText = fixedThree
+      ? `已选 <b>${farm.picks.length}</b> / 3 种，每种 3 株`
+      : `已选 <b>${used}</b> / ${FarmCalc.DEFAULT_SLOTS} 格`;
     selected.innerHTML =
-      `<div class="calc-used">已选 <b>${used}</b> / ${FarmCalc.DEFAULT_SLOTS} 格</div>` +
+      `<div class="calc-used">${usedText}</div>` +
       farm.picks.map(p => {
         const crop = farm.cropById.get(p.id);
+        const count = fixedThree ? 3 : p.count;
+        const lock = fixedThree ? " disabled" : "";
         return (
           `<div class="calc-pick" data-id="${esc(p.id)}">` +
           `<span class="calc-pick-name">${esc(crop.name)}</span>` +
-          `<button type="button" class="calc-step" data-step="-1" aria-label="减少">−</button>` +
-          `<input type="number" class="calc-count" min="1" max="${FarmCalc.DEFAULT_SLOTS}" value="${p.count}">` +
-          `<button type="button" class="calc-step" data-step="1" aria-label="增加">+</button>` +
-          `<button type="button" class="calc-remove" aria-label="移除">×</button>` +
+          `<button type="button" class="calc-step" data-step="-1" aria-label="减少"${lock}>−</button>` +
+          `<input type="number" class="calc-count" min="1" max="${FarmCalc.DEFAULT_SLOTS}" value="${count}"${lock}>` +
+          `<button type="button" class="calc-step" data-step="1" aria-label="增加"${lock}>+</button>` +
+          `<button type="button" class="calc-remove" data-remove aria-label="移除">×</button>` +
           `</div>`
         );
       }).join("");
@@ -403,8 +424,67 @@ function openPanel() {
 function closePanel() {
   farm.panelOpen = false;
   setConfigOpen(false);
+  setRatioMenu(false);
   if (!NARROW.matches) setDrawer("calc-drawer", false);
   syncPanel();
+}
+
+function setRatioMenu(open) {
+  const menu = Foodfarm.$("calc-mode");
+  const list = Foodfarm.$("calc-mode-list");
+  const btn = Foodfarm.$("calc-mode-btn");
+  if (!menu || !list || !btn) return;
+  menu.classList.toggle("is-open", !!open);
+  list.hidden = !open;
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function ratioModeById(id) {
+  return RATIO_MODES.find(item => item.id === id) || RATIO_MODES[2];
+}
+
+function applyRatioMode(id) {
+  const mode = ratioModeById(id);
+  farm.ratioMode = mode.id;
+  const label = Foodfarm.$("calc-mode-label");
+  if (label) label.textContent = mode.label;
+  document.querySelectorAll(".calc-mode-opt").forEach(opt => {
+    const on = opt.dataset.mode === mode.id;
+    opt.classList.toggle("is-on", on);
+    opt.setAttribute("aria-selected", on ? "true" : "false");
+    const tip = opt.querySelector(".calc-mode-tip");
+    const item = ratioModeById(opt.dataset.mode);
+    if (tip && item) tip.textContent = item.note || "这里需要添加";
+  });
+  if (mode.id === "3-3-3") {
+    if (farm.picks.length > 3) {
+      farm.picks = farm.picks.slice(0, 3);
+      flashPickerNote("3+3+3 配比最多 3 种作物");
+    }
+    farm.picks.forEach(pick => { pick.count = 3; });
+  }
+  renderPicker();
+  scheduleCalc();
+}
+
+function bindRatioMode() {
+  applyRatioMode(farm.ratioMode);
+  document.addEventListener("click", e => {
+    const opt = e.target.closest(".calc-mode-opt");
+    if (opt) {
+      e.preventDefault();
+      applyRatioMode(opt.dataset.mode);
+      setRatioMenu(false);
+      return;
+    }
+    if (e.target.closest("#calc-mode-btn")) {
+      e.preventDefault();
+      const list = Foodfarm.$("calc-mode-list");
+      setRatioMenu(!!(list && list.hidden));
+      return;
+    }
+    if (!e.target.closest("#calc-mode")) setRatioMenu(false);
+  });
 }
 
 function panelVisible() {
@@ -441,6 +521,7 @@ function placePicker() {
 }
 
 function bindPanel() {
+  bindRatioMode();
   const close = Foodfarm.$("calc-panel-close");
   if (close) close.addEventListener("click", closePanel);
   const btn = Foodfarm.$("calc-config-btn");
@@ -466,28 +547,71 @@ function bindPanel() {
 function scheduleCalc() {
   cancelAnimationFrame(farm.calcTimer);
   farm.calcTimer = requestAnimationFrame(() => {
-    farm.result = farm.picks.length
-      ? FarmCalc.solveFill(
-        farm.picks.map(p => ({ crop: farm.cropById.get(p.id), count: p.count })),
-        farm.crops,
-        { limit: PLAN_ROWS_LIMIT }
-      )
-      : null;
+    farm.result = computeResult();
     if (panelVisible()) renderResult();
   });
 }
 
+function computeResult() {
+  if (!farm.picks.length) return null;
+  const focus = farm.cropById.get(farm.picks[0].id);
+  if (farm.ratioMode === "1-1") return FarmCalc.solvePair(focus, farm.crops);
+  if (farm.ratioMode === "3-3-3") {
+    return FarmCalc.solveTriple(
+      farm.picks.map(p => ({ crop: farm.cropById.get(p.id), count: 3 })),
+      farm.crops,
+      { limit: PLAN_ROWS_LIMIT }
+    );
+  }
+  return FarmCalc.solveFill(
+    farm.picks.map(p => ({ crop: farm.cropById.get(p.id), count: p.count })),
+    farm.crops,
+    { limit: PLAN_ROWS_LIMIT }
+  );
+}
+
 function groupLabel(group) {
-  const names = group.members.map(m => m.name);
+  const names = (group.members || []).map(crop => crop.name);
   if (names.length <= 2) return names.join(" / ");
   return names.slice(0, 2).join(" / ") + " 等 " + names.length + " 种";
 }
 
-function planCardHTML(plan, index, result) {
-  const left = result.slots - result.used;
-  const chips = plan.parts.length
-    ? plan.parts.map(part => `<span class="plan-chip">${esc(groupLabel(part.group))} ×<b>${part.count}</b></span>`).join("")
-    : `<span class="plan-chip">${left ? "没有其他种子可补种" : "已满 " + result.slots + " 格"}</span>`;
+function modeNoteHTML() {
+  const mode = ratioModeById(farm.ratioMode);
+  if (!mode.note) return "";
+  return `<p class="calc-mode-note">${esc(mode.note)}</p>`;
+}
+
+function pairCardHTML(mate) {
+  const net = FarmCalc.NUTRIENTS.map(k => `${fertTag(k)} <b>${esc(signed(mate.net[k]))}</b>`).join(" ");
+  return (
+    `<div class="plan-card pair-card">` +
+    `<div class="plan-chips"><span class="plan-chip">${esc(mate.crop.name)} ×<b>1</b></span></div>` +
+    `<div class="plan-net">与所选各种 1 株，合计 ${net}</div>` +
+    `</div>`
+  );
+}
+
+function tripleCardHTML(plan, index, result) {
+  const locked = (result.locked || []).map(item =>
+    `<span class="plan-chip">${esc(item.crop.name)} ×<b>3</b></span>`
+  ).join("");
+  const fills = (plan.parts || []).map(part =>
+    `<span class="plan-chip">${esc(groupLabel(part.group))} ×<b>3</b></span>`
+  ).join("");
+  const net = FarmCalc.NUTRIENTS.map(k => `${fertTag(k)} <b>${esc(signed(plan.net[k]))}</b>`).join(" ");
+  return (
+    `<button type="button" class="plan-card" data-index="${index}">` +
+    `<div class="plan-chips">${locked}${fills}</div>` +
+    `<div class="plan-net">${net}</div>` +
+    `</button>`
+  );
+}
+
+function planCardHTML(plan, index) {
+  const chips = (plan.parts || []).map(part =>
+    `<span class="plan-chip">${esc(groupLabel(part.group))} ×<b>${part.count}</b></span>`
+  ).join("");
   const net = FarmCalc.NUTRIENTS.map(k => `${fertTag(k)} <b>${esc(signed(plan.net[k]))}</b>`).join(" ");
   return (
     `<button type="button" class="plan-card" data-index="${index}">` +
@@ -505,6 +629,41 @@ function renderResult() {
   if (!r) {
     netHost.innerHTML = "";
     body.innerHTML = `<p class="muted">计算中…</p>`;
+    return;
+  }
+
+  if (r.mode === "1-1") {
+    netHost.innerHTML =
+      fertStatesHTML(r.focus && r.focus.delta) +
+      `<div class="calc-net-note">${esc(r.focus ? r.focus.name : "")} 的 1:1 互补种子</div>`;
+    const cards = (r.mates || []).map(pairCardHTML).join("");
+    body.innerHTML =
+      modeNoteHTML() +
+      (cards
+        ? `<div class="plan-head">共 <b>${r.mates.length}</b> 种</div><div class="plan-list${r.mates.length > 4 ? " is-two" : ""}">${cards}</div>`
+        : `<p class="muted">${esc(r.message || "没有 1:1 互补种子")}</p>`);
+    Foodfarm.bindContentTags(netHost);
+    Foodfarm.bindContentTags(body);
+    return;
+  }
+
+  if (r.mode === "3-3-3") {
+    netHost.innerHTML =
+      fertStatesHTML(r.base || {}) +
+      `<div class="calc-net-note">每种固定 <b>3</b> 株，一共 <b>3</b> 种、<b>9</b> 格</div>`;
+    const note = modeNoteHTML();
+    if (!r.ok) {
+      body.innerHTML = note + `<p class="calc-warn"><warn>${esc(r.message || "没有配比")}</warn></p>`;
+    } else {
+      const shown = r.plans.length;
+      const more = r.total > shown ? `，显示前 <b>${shown}</b> 种` : "";
+      body.innerHTML =
+        note +
+        `<div class="plan-head">共 <b>${r.total}</b> 种配比${more}</div>` +
+        `<div class="plan-list${shown > 4 ? " is-two" : ""}">${r.plans.map((p, i) => tripleCardHTML(p, i, r)).join("")}</div>`;
+    }
+    Foodfarm.bindContentTags(netHost);
+    Foodfarm.bindContentTags(body);
     return;
   }
 

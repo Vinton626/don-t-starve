@@ -88,6 +88,15 @@ function escapeHTML(text) {
     .replace(/"/g, "&quot;");
 }
 
+/** spoilDays：数字是天数；字符串「永久」表示不会腐烂。空值不展示。 */
+function spoilLabel(value) {
+  if (value == null || value === "") return "";
+  const text = String(value).trim();
+  if (!text) return "";
+  if (text === "永久") return "永久";
+  return text + " 天";
+}
+
 async function loadJson(path) {
   const res = await fetch(asset(path));
   if (!res.ok) throw new Error(path + " " + res.status);
@@ -125,12 +134,35 @@ function originLabel(entry) {
   return (hit && hit.name) || tag;
 }
 
+function findFoodById(id) {
+  const key = String(id || "");
+  if (!key) return null;
+  return foodItems().find(item => item && String(item.id) === key) || null;
+}
+
+/** seed 可以是内嵌对象，或另一条食物的 id（多种植株共用同一颗种子） */
+function resolveSeed(item) {
+  if (!item || item.seed == null || item.seed === "") return null;
+  if (typeof item.seed === "string") return findFoodById(item.seed);
+  if (typeof item.seed === "object") return item.seed;
+  return null;
+}
+
+/** 种植用：共用种子的肥、水、季节写在植株自己的 grow 上 */
+function plantSeed(item) {
+  const seed = resolveSeed(item);
+  if (!seed) return null;
+  const grow = item && item.grow;
+  if (!grow || typeof grow !== "object") return seed;
+  return Object.assign({}, seed, grow);
+}
+
 function plantEntries() {
   return foodItems()
-    .filter(item => item && item.seed)
+    .filter(item => plantSeed(item))
     .map(item => ({
       food: item,
-      seed: item.seed
+      seed: plantSeed(item)
     }));
 }
 
@@ -484,10 +516,14 @@ window.Foodfarm = {
   $,
   asset,
   escapeHTML,
+  spoilLabel,
   foodItems,
   cookItems,
   modList,
   plantEntries,
+  findFoodById,
+  resolveSeed,
+  plantSeed,
   isVanilla,
   originLabel,
   foodDegreeMap,

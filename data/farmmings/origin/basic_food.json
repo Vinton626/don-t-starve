@@ -265,14 +265,527 @@
       }
     },
     {
+      "id": "pumpkin",
+      "name": "南瓜",
+      "origin": "",
+      "source": "pumpkin_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "pumpkin_cooked",
+        "name": "烤南瓜",
+        "foodtype": "veggie",
+        "health": 8,
+        "hunger": 37.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "pumpkin_seeds",
+        "name": "尖种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["spring","summer"],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": -4,
+          "compost": 2,
+          "manure": 2
+        }
+      }
+    },
+    {
+      "id": "watermelon",
+      "name": "西瓜",
+      "origin": "",
+      "source": "watermelon_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": 5,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "watermelon_cooked",
+        "name": "烤西瓜",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 7.5,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 1
+        }
+      },
+      "seed": {
+        "id": "watermelon_seeds",
+        "name": "方形种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["autumn","winter"],
+        "water": 3.5,
+        "desc": "",
+        "fertilizer": {
+          "formula": 4,
+          "compost": -2,
+          "manure": -2
+        }
+      }
+    },
+    {
+      "id": "dragonfruit",
+      "name": "火龙果",
+      "origin": "",
+      "source": "dragonfruit_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "dragonfruit_cooked",
+        "name": "烤火龙果",
+        "foodtype": "veggie",
+        "health": 20,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 1
+        }
+      },
+      "seed": {
+        "id": "dragonfruit_seeds",
+        "name": "球茎状种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["spring","summer"],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": 4,
+          "compost": 4,
+          "manure": -8
+        }
+      }
+    },
+    {
+      "id": "durian",
+      "name": "榴莲",
+      "origin": "",
+      "source": "durian_seeds",
+      "hide": false,
+      "foodtype1": "veggie",
+      "foodtype2": "monster",
+      "health": -3,
+      "hunger": 25,
+      "sanity": -5,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 1,
+        "monster": 1
+      },
+      "cooked": {
+        "id": "durian_cooked",
+        "name": "超臭榴莲",
+        "foodtype1": "veggie",
+        "foodtype2": "monster",
+        "health": 0,
+        "hunger": 25,
+        "sanity": -5,
+        "spoilDays": 6,
+        "degrees": {
+          "fruit": 1,
+          "monster": 1
+        }
+      },
+      "seed": {
+        "id": "durian_seeds",
+        "name": "脆籽荚",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["summer","autumn","winter"],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": 4,
+          "compost": -8,
+          "manure": 4
+        }
+      }
+    },
+    {
+      "id": "garlic",
+      "name": "大蒜",
+      "origin": "",
+      "source": "garlic_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 9.375,
+      "sanity": -10,
+      "spoilDays": 15,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "garlic_cooked",
+        "name": "烤大蒜",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 9.375,
+        "sanity": -5,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "garlic_seeds",
+        "name": "种子荚",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": [],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": 4,
+          "compost": -8,
+          "manure": 4
+        }
+      }
+    },
+    {
+      "id": "onion",
+      "name": "洋葱",
+      "origin": "",
+      "source": "onion_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 9.375,
+      "sanity": -10,
+      "spoilDays": 15,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "onion_cooked",
+        "name": "烤洋葱",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 9.375,
+        "sanity": -5,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "onion_seeds",
+        "name": "尖形种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["winter"],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": -8,
+          "compost": 4,
+          "manure": 4
+        }
+      }
+    },
+    {
+      "id": "chili",
+      "name": "辣椒",
+      "origin": "",
+      "source": "chili_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": -20,
+      "hunger": 9.375,
+      "sanity": -15,
+      "spoilDays": 15,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "chili_cooked",
+        "name": "烤辣椒",
+        "foodtype": "veggie",
+        "health": -3,
+        "hunger": 9.375,
+        "sanity": -10,
+        "spoilDays": 15,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "chili_seeds",
+        "name": "块状种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["spring","winter"],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": 4,
+          "compost": 4,
+          "manure": -8
+        }
+      }
+    },
+    {
+      "id": "pomegranate",
+      "name": "石榴",
+      "origin": "",
+      "source": "pomegranate_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "pomegranate_cooked",
+        "name": "切片熟石榴",
+        "foodtype": "veggie",
+        "health": 20,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 1
+        }
+      },
+      "seed": {
+        "id": "pomegranate_seeds",
+        "name": "风刮来的种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["autumn","winter"],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": 8,
+          "compost": -4,
+          "manure": -4
+        }
+      }
+    },
+    {
+      "id": "seeds",
+      "name": "种子",
+      "origin": "",
+      "hide": false,
+      "foodtype": "seeds",
+      "health": 0,
+      "hunger": 4.6875,
+      "sanity": 0,
+      "spoilDays": 40,
+      "degrees": {
+        "seed": 1
+      },
+      "cooked": {
+        "id": "seeds_cooked",
+        "name": "烤种子",
+        "foodtype": "seeds",
+        "health": 1,
+        "hunger": 4.6875,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {}
+      }
+    },
+    {
+      "id": "forgetmenot",
+      "name": "必忘我",
+      "origin": "",
+      "source": "",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 0,
+      "sanity": 1,
+      "spoilDays": 3,
+      "degrees": {
+        "decoration": 1
+      },
+      "dried": {
+        "id": "forgetmenot_dried",
+        "name": "干必忘我",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 0,
+        "sanity": 5,
+        "spoilDays": "永久",
+        "degrees": {
+          "decoration": 1
+        }
+      },
+      "seed": "seeds",
+      "grow": {
+        "hate_season": [],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": -2,
+          "compost": -2,
+          "manure": -2
+        }
+      }
+    },
+    {
+      "id": "firenettle",
+      "name": "火荨麻",
+      "origin": "",
+      "source": "seeds",
+      "hide": false,
+      "foodtype": "",
+      "health": -3,
+      "hunger": 0,
+      "sanity": -5,
+      "spoilDays": 3,
+      "degrees": {
+        "decoration": 1
+      },
+      "dried": {
+        "id": "firenettle_dried",
+        "name": "干火荨麻",
+        "foodtype": "",
+        "health": -3,
+        "hunger": 0,
+        "sanity": -5,
+        "spoilDays": "永久",
+        "degrees": {
+          "decoration": 1
+        }
+      },
+      "seed": "seeds",
+      "grow": {
+        "hate_season": [],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": -2,
+          "compost": -2,
+          "manure": -2
+        }
+      }
+    },
+    {
+      "id": "tillweed",
+      "name": "犁地草",
+      "origin": "",
+      "source": "seeds",
+      "hide": false,
+      "foodtype": "",
+      "health": 1,
+      "hunger": 0,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "decoration": 1
+      },
+      "dried": {
+        "id": "tillweed_dried",
+        "name": "干犁地草",
+        "foodtype": "",
+        "health": 8,
+        "hunger": 0,
+        "sanity": 0,
+        "spoilDays": "永久",
+        "degrees": {
+          "decoration": 1
+        }
+      },
+      "seed": "seeds",
+      "grow": {
+        "hate_season": [],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": -2,
+          "compost": -2,
+          "manure": -2
+        }
+      }
+    },
+    {
+      "id": "ivy",
+      "name": "针刺旋花",
+      "origin": "",
+      "source": "seeds",
+      "hide": false,
+      "foodtype": "",
+      "seed": "seeds",
+      "grow": {
+        "hate_season": [],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": -2,
+          "compost": -2,
+          "manure": -2
+        }
+      }
+    },
+    {
       "id": "meat",
-      "name": "肉",
+      "name": "大肉",
       "origin": "",
       "hide": false,
       "foodtype": "meat",
-      "health": -10,
+      "health": 1,
       "hunger": 25,
-      "sanity": -15,
+      "sanity": -10,
       "spoilDays": 6,
       "degrees": {
         "meat": 1
@@ -295,7 +808,7 @@
         "foodtype": "meat",
         "health": 20,
         "hunger": 25,
-        "sanity": 0,
+        "sanity": 15,
         "spoilDays": 20,
         "degrees": {
           "meat": 1
@@ -303,11 +816,66 @@
       }
     },
     {
+      "id": "monster",
+      "name": "怪物肉",
+      "origin": "",
+      "hide": false,
+      "foodtype": "meat",
+      "health": -20,
+      "hunger": 18.75,
+      "sanity": -15,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 1,
+        "monster": 1
+      },
+      "cooked": {
+        "id": "monster_cooked",
+        "name": "熟怪物肉",
+        "foodtype": "meat",
+        "health": -3,
+        "hunger": 18.75,
+        "sanity": -10,
+        "spoilDays": 15,
+        "degrees": {
+          "meat": 1,
+          "monster": 1
+        }
+      },
+      "dried": {
+        "id": "monster_dried",
+        "name": "怪物肉干",
+        "foodtype": "meat",
+        "health": -3,
+        "hunger": 18.75,
+        "sanity": -5,
+        "spoilDays": 20,
+        "degrees": {
+          "meat": 1,
+          "monster": 1
+        }
+      }
+    },
+    {
+      "id": "ice",
+      "name": "冰",
+      "origin": "",
+      "hide": false,
+      "foodtype": "generic",
+      "health": 0.5,
+      "hunger": 2.34375,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "ice": 1
+      }
+    },
+    {
       "id": "kelp",
       "name": "海带叶",
       "origin": "",
       "hide": false,
-      "foodtype": "veggie",
+      "foodtype": "gener",
       "health": -1,
       "hunger": 9.375,
       "sanity": -1,
@@ -338,6 +906,20 @@
         "degrees": {
           "veg": 0.5
         }
+      }
+    },
+    {
+      "id": "branch",
+      "name": "树枝",
+      "origin": "",
+      "hide": true,
+      "foodtype": "",
+      "health": null ,
+      "hunger": null,
+      "sanity": null,
+      "spoilDays": 3,
+      "degrees": {
+        "inedible": 1
       }
     },
     {

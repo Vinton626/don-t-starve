@@ -375,6 +375,72 @@
     return Object.assign(head, { ok: false, reason: "deficit", checked, groups, closest, deficits, message });
   }
 
+  function pairNet(a, b) {
+    return {
+      formula: a.formula + b.formula,
+      compost: a.compost + b.compost,
+      manure: a.manure + b.manure
+    };
+  }
+
+  /** 与 crop 各 1 株时，三种肥料都不为负的其他种子 */
+  function solvePair(crop, pool) {
+    if (!crop) return { ok: false, mode: "1-1", reason: "empty", message: "请先选择一种作物" };
+    const mates = (Array.isArray(pool) ? pool : []).filter(other => {
+      if (!other || other.id === crop.id) return false;
+      const net = pairNet(crop.delta, other.delta);
+      return NUTRIENTS.every(key => net[key] >= 0);
+    }).map(other => ({ crop: other, net: pairNet(crop.delta, other.delta) }));
+    return {
+      ok: true,
+      mode: "1-1",
+      focus: crop,
+      mates,
+      message: mates.length ? "" : crop.name + " 没有 1:1 互补种子"
+    };
+  }
+
+  /**
+   * 已选作物每种固定 3 株，再从其余种子里补到正好 3 种，每种也是 3 株。
+   */
+  function solveTriple(locked, pool, options) {
+    const opts = options || {};
+    const limit = Math.max(1, Math.floor(num(opts.limit) || 300));
+    const picks = (Array.isArray(locked) ? locked : [])
+      .filter(item => item && item.crop)
+      .map(item => ({ crop: item.crop, count: 3 }));
+    if (!picks.length) return { ok: false, mode: "3-3-3", reason: "empty", message: "请先选择一种作物" };
+    if (picks.length > 3) {
+      return { ok: false, mode: "3-3-3", reason: "kinds", message: "3+3+3 配比最多 3 种作物" };
+    }
+
+    let base = { formula: 0, compost: 0, manure: 0 };
+    picks.forEach(item => { base = addNet(base, item.crop.delta, 3); });
+    const need = 3 - picks.length;
+    const lockedIds = new Set(picks.map(item => item.crop.id));
+    const groups = groupByDelta((Array.isArray(pool) ? pool : []).filter(crop => crop && !lockedIds.has(crop.id)));
+    const plans = [];
+    const consider = extra => {
+      let net = base;
+      extra.forEach(group => { net = addNet(net, group.delta, 3); });
+      if (NUTRIENTS.some(key => net[key] < 0)) return;
+      plans.push({
+        parts: extra.map(group => ({ group, count: 3 })),
+        net,
+        surplus: surplusOf(net)
+      });
+    };
+    if (!need) consider([]);
+    else if (groups.length >= need) combinations(groups, need).forEach(consider);
+
+    const head = { mode: "3-3-3", slots: 9, used: picks.length * 3, base, locked: picks };
+    if (!plans.length) {
+      return Object.assign(head, { ok: false, reason: "deficit", message: "没有每种 3 株、合计 9 株的配比" });
+    }
+    plans.sort((a, b) => a.surplus - b.surplus || a.parts.length - b.parts.length);
+    return Object.assign(head, { ok: true, total: plans.length, plans: plans.slice(0, limit) });
+  }
+
   return {
     NUTRIENTS,
     MAX_CROPS,

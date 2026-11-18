@@ -24,7 +24,7 @@
   <div class="page">
     <h1 class="title">普通食物图鉴</h1>
     <main class="content-host">
-      <div class="food-toolbar panel-note">只展示普通食物。点卡片看详情；有烤/晾字段时右上角按钮在「烤 / 晾 / 生」间切换。</div>
+      <input type="search" class="food-search" id="food-search" placeholder="搜索食物" autocomplete="off">
       <div class="panel-body" id="food-body"></div>
     </main>
   </div>
@@ -60,14 +60,14 @@
     <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
     <div class="page-overview-panel" id="page-overview-panel" hidden>
       <div class="page-overview-title" id="page-overview-title">概述</div>
-      <div class="page-overview-body tag-text" id="page-overview-body">只展示普通食物：三维、食用类型与烹饪度。有 <code>cooked</code> / <code>dried</code> 时右上角按钮循环烤、晾、生；都没有则显示 *，悬停「不可烤不可晾」。点卡片看详情。料理图鉴在料理篇。</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">只展示普通食物：三维、食用类型与烹饪度。有 <code>cooked</code> / <code>dried</code> 时右上角分开两个按钮，晾在烤左边，点一下切到该形态，再点回到生。都没有则显示 *，悬停「不可烤不可晾」。点卡片看详情。料理图鉴在料理篇。</div>
     </div>
   </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>
-  <script src="../../js/common/tags.js"></script>
-  <script src="../../js/foodfarm/common.js"></script>
-  <script src="../../js/foodfarm/foods.js"></script>
+  <script src="../../js/common/tags.js?v=13"></script>
+  <script src="../../js/foodfarm/common.js?v=3"></script>
+  <script src="../../js/foodfarm/foods.js?v=4"></script>
 </body>
 </html>

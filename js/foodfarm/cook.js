@@ -78,10 +78,12 @@ function renderGrid() {
   Foodfarm.bindContentTags(host);
 }
 
-function openDishModal(dish) {
-  if (!dish) return;
-  Foodfarm.$("dish-modal-title").textContent = dish.name || dish.id || "料理";
-  Foodfarm.$("dish-modal-stats").innerHTML = Foodfarm.foodStatesHTML(dish);
+function originDishLabel(dish) {
+  const name = Foodfarm.originLabel(dish);
+  return name === "原版" ? "原版料理" : `${name}料理`;
+}
+
+function dishInfoHTML(dish) {
   const req = (dish.requires || []).map(r => {
     const key = Foodfarm.normalizeDegreeKey ? Foodfarm.normalizeDegreeKey(r.degree) : r.degree;
     const name = Foodfarm.degreeLabel ? Foodfarm.degreeLabel(key) : key;
@@ -101,29 +103,56 @@ function openDishModal(dish) {
     }
     return esc(l.name || l.id || "");
   }).join("；");
+  return [
+    `<p>${esc(originDishLabel(dish))}</p>`,
+    `<p>类型：${Foodfarm.foodTypeHTML(dish)}</p>`,
+    dish.priority != null ? `<p>优先级：<b>${esc(dish.priority)}</b></p>` : "",
+    dish.cookSeconds != null ? `<p>烹饪：<b>${esc(dish.cookSeconds)}</b> 秒</p>` : "",
+    Foodfarm.spoilLabel(dish.spoilDays) ? `<p>保鲜：<b>${esc(Foodfarm.spoilLabel(dish.spoilDays))}</b></p>` : "",
+    req ? `<p>度要求：${req}</p>` : "",
+    must ? `<p>必用：${must}</p>` : "",
+    limit ? `<p>限制：${limit}</p>` : "",
+    dish.effect ? `<p>效果：${dish.effect}</p>` : ""
+  ].join("");
+}
+
+function dishExamplesInner(dish, withNote) {
   const examples = CookCalc.exampleRecipes(dish, cook.foods, cook.dishes);
   const recipeLines = (examples.recipes || []).map(rec => {
     const names = (rec.names || []).map(n => esc(n)).join(" + ");
     const mark = rec.ok ? "" : ` <span class="muted">（${esc(rec.message || "未校验通过")}）</span>`;
     return `<li>${names}${mark}</li>`;
   }).join("");
-  const lines = [
-    `<p>来源：${esc(Foodfarm.originLabel(dish))}</p>`,
-    `<p>类型：${Foodfarm.foodTypeHTML(dish)}</p>`,
-    dish.priority != null ? `<p>优先级：<b>${esc(dish.priority)}</b></p>` : "",
-    dish.cookSeconds != null ? `<p>烹饪：<b>${esc(dish.cookSeconds)}</b> 秒</p>` : "",
-    dish.spoilDays != null ? `<p>保鲜：<b>${esc(dish.spoilDays)}</b> 天</p>` : "",
-    req ? `<p>度要求：${req}</p>` : "",
-    must ? `<p>必用：${must}</p>` : "",
-    limit ? `<p>限制：${limit}</p>` : "",
-    dish.effect ? `<p>效果：${dish.effect}</p>` : "",
-    `<div class="dish-recipes"><div class="food-modal-label">可实现举例</div>` +
-      `<p class="muted">${esc(examples.note || "")}</p>` +
-      (recipeLines ? `<ul class="dish-recipe-list">${recipeLines}</ul>` : `<p class="muted">暂无示例</p>`) +
-      `</div>`
-  ];
+  return (
+    `<div class="food-modal-label">可实现举例</div>` +
+    (withNote ? `<p class="muted">${esc(examples.note || "")}</p>` : "") +
+    (recipeLines ? `<ul class="dish-recipe-list">${recipeLines}</ul>` : `<p class="muted">暂无示例</p>`)
+  );
+}
+
+function dishDescHTML(dish) {
+  return dishInfoHTML(dish) + `<div class="dish-recipes">${dishExamplesInner(dish, true)}</div>`;
+}
+
+function dishFullHTML(dish) {
+  return (
+    `<article class="cook-dish">` +
+    `<div class="cook-dish-head">` +
+    `<div class="cook-dish-name">${esc(dish.name || dish.id)}</div>` +
+    `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(dish)}</div>` +
+    `</div>` +
+    `<div class="cook-dish-scroll tag-text">${dishInfoHTML(dish)}</div>` +
+    `<div class="cook-dish-examples tag-text">${dishExamplesInner(dish, false)}</div>` +
+    `</article>`
+  );
+}
+
+function openDishModal(dish) {
+  if (!dish) return;
+  Foodfarm.$("dish-modal-title").textContent = dish.name || dish.id || "料理";
+  Foodfarm.$("dish-modal-stats").innerHTML = Foodfarm.foodStatesHTML(dish);
   const desc = Foodfarm.$("dish-modal-desc");
-  desc.innerHTML = lines.join("");
+  desc.innerHTML = dishDescHTML(dish);
   Foodfarm.bindContentTags(desc);
   openModal("dish-modal");
 }
@@ -136,6 +165,13 @@ function setDrawer(id, open) {
   drawer.classList.toggle("is-open", !!open);
   const handle = drawer.querySelector(".side-drawer-handle");
   if (handle) handle.setAttribute("aria-expanded", open ? "true" : "false");
+  if (id === "cook-calc-drawer") syncPotPanel();
+}
+
+function syncPotPanel() {
+  const panel = Foodfarm.$("cook-pot-panel");
+  if (!panel) return;
+  panel.hidden = NARROW.matches || !drawerOpen("cook-calc-drawer");
 }
 
 function drawerOpen(id) {
@@ -148,6 +184,7 @@ function syncLayout() {
   const mob = Foodfarm.$("cook-calc-mobile");
   if (desk) desk.hidden = NARROW.matches;
   if (mob) mob.hidden = !NARROW.matches;
+  syncPotPanel();
   renderSlots();
   renderIngList();
   renderWantChecks();
@@ -165,7 +202,6 @@ function wantChecksHTML(prefix) {
 function renderWantChecks() {
   [
     ["cook-want-checks", "calc"],
-    ["cook-want-checks-m", "calc"],
     ["grid-want-checks", "grid"]
   ].forEach(([id, scope]) => {
     const host = Foodfarm.$(id);
@@ -189,7 +225,7 @@ function bindWantChecks() {
     if (input.checked) set.add(input.dataset.want);
     else set.delete(input.dataset.want);
     if (input.dataset.scope === "grid") renderGrid();
-    else renderCookState();
+    else renderPossibleList();
   });
 
   const bindNum = (id, key, scope) => {
@@ -199,7 +235,7 @@ function bindWantChecks() {
       const n = Number(el.value);
       cook[key] = Number.isFinite(n) ? n : 10;
       if (scope === "grid") renderGrid();
-      else renderCookState();
+      else renderPossibleList();
     });
   };
   bindNum("cook-heal-min", "healMin", "calc");
@@ -228,12 +264,23 @@ function bindWantChecks() {
 function slotHTML(i, item, mobile) {
   const filled = !!item;
   const name = filled ? esc(item.name || item.id) : (mobile ? `格 ${i + 1}` : `${i + 1}`);
+  const extra = filled && !mobile ? slotExtraHTML(item) : "";
   return (
     `<button type="button" class="cook-slot${filled ? " is-filled" : ""}" data-slot="${i}">` +
     `<span class="cook-slot-name">${name}</span>` +
+    extra +
     (filled ? `<span class="cook-slot-clear" data-clear="${i}" title="清空">×</span>` : "") +
     `</button>`
   );
+}
+
+function slotExtraHTML(item) {
+  const degrees = Foodfarm.foodDegreesHTML(item);
+  const spoilText = Foodfarm.spoilLabel(item.spoilDays);
+  const spoil = spoilText
+    ? `<span class="cook-slot-meta cook-slot-spoil">保鲜 <b>${esc(spoilText)}</b></span>`
+    : "";
+  return `<span class="cook-slot-meta cook-slot-degrees">${degrees}</span>${spoil}`;
 }
 
 function renderSlots() {
@@ -241,7 +288,10 @@ function renderSlots() {
   const htmlM = cook.slots.map((item, i) => slotHTML(i, item, true)).join("");
   const a = Foodfarm.$("cook-slots");
   const b = Foodfarm.$("cook-slots-m");
-  if (a) a.innerHTML = html;
+  if (a) {
+    a.innerHTML = html;
+    Foodfarm.bindContentTags(a);
+  }
   if (b) b.innerHTML = htmlM;
 }
 
@@ -303,7 +353,7 @@ function degreesHTML(agg) {
   }).join("");
 }
 
-function resultHTML(state) {
+function resultHTML(state, full) {
   if (!state) return `<div class="cook-result-empty">放入 4 格食材</div>`;
   if (!state.aggregate.filled) {
     return `<div class="cook-result-empty">已放 ${state.aggregate.count} / 4</div>`;
@@ -312,6 +362,7 @@ function resultHTML(state) {
     return `<div class="cook-result-dish"><div class="cook-result-name">潮湿黏糊</div><div class="muted">当前配方没有对应料理</div></div>`;
   }
   if (state.result) {
+    if (full) return dishFullHTML(state.result);
     const d = state.result;
     return (
       `<button type="button" class="cook-result-dish" data-result-id="${esc(dishKey(d))}">` +
@@ -321,6 +372,12 @@ function resultHTML(state) {
         : "") +
       `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(d)}</div>` +
       `</button>`
+    );
+  }
+  if (full) {
+    return (
+      `<div class="cook-result-name">并列 ${state.candidates.length} 道</div>` +
+      state.candidates.map(dishFullHTML).join("")
     );
   }
   return (
@@ -349,13 +406,19 @@ function renderCookState() {
     Foodfarm.bindContentTags(el);
   });
 
-  const html = resultHTML(state && filled.length >= 4 ? state : (state ? { aggregate: state.aggregate, wetGoop: false, result: null, candidates: [], ok: false } : null));
-  ["cook-result", "cook-result-m"].forEach(id => {
-    const el = Foodfarm.$(id);
-    if (!el) return;
-    el.innerHTML = html;
-    Foodfarm.bindContentTags(el);
-  });
+  const ready = state && filled.length >= 4
+    ? state
+    : (state ? { aggregate: state.aggregate, wetGoop: false, result: null, candidates: [], ok: false } : null);
+  const desktop = Foodfarm.$("cook-result");
+  const mobile = Foodfarm.$("cook-result-m");
+  if (desktop) {
+    desktop.innerHTML = resultHTML(ready, true);
+    Foodfarm.bindContentTags(desktop);
+  }
+  if (mobile) {
+    mobile.innerHTML = resultHTML(ready, false);
+    Foodfarm.bindContentTags(mobile);
+  }
 }
 
 /* ---------- 可能产生 ---------- */

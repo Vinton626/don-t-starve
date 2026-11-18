@@ -1,6 +1,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
+  height: 100vh;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   padding: 56px 18px 28px;
   color: #e6d3a4;
   font-family: Palatino, "Palatino Linotype", "Songti SC", "STSong", "Noto Serif SC", serif;
@@ -15,10 +19,13 @@ body {
 }
 .page {
   width: min(1080px, 100%);
+  flex: 1 1 auto;
+  min-height: 0;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  overflow: auto;
 }
 .title {
   text-align: center;
@@ -43,15 +50,91 @@ body {
   letter-spacing: .16em;
 }
 .panel-body {
-  margin-top: 14px;
-  min-height: 42vh;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .content-host {
-  min-height: 58vh;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   border: 1px solid rgba(201, 162, 39, .55);
   background: rgba(12, 9, 6, .88);
   box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
-  padding: 18px 16px 22px;
+  padding: 18px 16px;
+}
+
+.panel-body,
+.mod-drawer-panel,
+.page-overview-panel,
+.food-modal-panel,
+.food-cook-names,
+.side-drawer-panel,
+.calc-body,
+.calc-config,
+.cook-dish-scroll,
+.cook-ing-list,
+.cook-possible-list {
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: #6e5428 rgba(12, 9, 6, .65);
+}
+.panel-body::-webkit-scrollbar,
+.mod-drawer-panel::-webkit-scrollbar,
+.page-overview-panel::-webkit-scrollbar,
+.food-modal-panel::-webkit-scrollbar,
+.food-cook-names::-webkit-scrollbar,
+.side-drawer-panel::-webkit-scrollbar,
+.calc-body::-webkit-scrollbar,
+.calc-config::-webkit-scrollbar,
+.cook-dish-scroll::-webkit-scrollbar,
+.cook-ing-list::-webkit-scrollbar,
+.cook-possible-list::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.panel-body::-webkit-scrollbar-track,
+.mod-drawer-panel::-webkit-scrollbar-track,
+.page-overview-panel::-webkit-scrollbar-track,
+.food-modal-panel::-webkit-scrollbar-track,
+.food-cook-names::-webkit-scrollbar-track,
+.side-drawer-panel::-webkit-scrollbar-track,
+.calc-body::-webkit-scrollbar-track,
+.calc-config::-webkit-scrollbar-track,
+.cook-dish-scroll::-webkit-scrollbar-track,
+.cook-ing-list::-webkit-scrollbar-track,
+.cook-possible-list::-webkit-scrollbar-track {
+  background: rgba(12, 9, 6, .65);
+}
+.panel-body::-webkit-scrollbar-thumb,
+.mod-drawer-panel::-webkit-scrollbar-thumb,
+.page-overview-panel::-webkit-scrollbar-thumb,
+.food-modal-panel::-webkit-scrollbar-thumb,
+.food-cook-names::-webkit-scrollbar-thumb,
+.side-drawer-panel::-webkit-scrollbar-thumb,
+.calc-body::-webkit-scrollbar-thumb,
+.calc-config::-webkit-scrollbar-thumb,
+.cook-dish-scroll::-webkit-scrollbar-thumb,
+.cook-ing-list::-webkit-scrollbar-thumb,
+.cook-possible-list::-webkit-scrollbar-thumb {
+  background: #6e5428;
+  border-radius: 4px;
+}
+.panel-body::-webkit-scrollbar-thumb:hover,
+.mod-drawer-panel::-webkit-scrollbar-thumb:hover,
+.page-overview-panel::-webkit-scrollbar-thumb:hover,
+.food-modal-panel::-webkit-scrollbar-thumb:hover,
+.food-cook-names::-webkit-scrollbar-thumb:hover,
+.side-drawer-panel::-webkit-scrollbar-thumb:hover,
+.calc-body::-webkit-scrollbar-thumb:hover,
+.calc-config::-webkit-scrollbar-thumb:hover,
+.cook-dish-scroll::-webkit-scrollbar-thumb:hover,
+.cook-ing-list::-webkit-scrollbar-thumb:hover,
+.cook-possible-list::-webkit-scrollbar-thumb:hover {
+  background: #a6843f;
 }
 
 .mod-drawer {
@@ -87,28 +170,80 @@ body {
   letter-spacing: 1px;
   margin-bottom: 10px;
 }
-.mod-checks {
+.mod-checks,
+.filter-checks {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 18px;
+  gap: 8px;
   align-items: center;
 }
 .mod-check {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  white-space: nowrap;
+  min-height: 28px;
+  padding: 3px 10px 3px 28px;
+  border: 1px solid rgba(201, 162, 39, .45);
+  background: rgba(42, 30, 16, .85);
   color: #e6d3a4;
   cursor: pointer;
   font: inherit;
   font-size: 14px;
+  line-height: 1.35;
+  white-space: nowrap;
+  user-select: none;
+}
+.mod-check:hover {
+  border-color: #c9a227;
+  color: #ffe7a0;
 }
 .mod-check input {
-  width: 14px;
-  height: 14px;
-  margin: 0;
-  accent-color: #c9a227;
-  flex: 0 0 auto;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.mod-check::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(201, 162, 39, .75);
+  background: rgba(12, 9, 6, .96);
+}
+.mod-check:has(input:checked) {
+  border-color: #c9a227;
+  background: rgba(62, 44, 18, .92);
+  color: #f0d060;
+  box-shadow: inset 0 0 0 1px rgba(201, 162, 39, .28);
+}
+.mod-check:has(input:checked)::before {
+  border-color: #f0d060;
+  background: #c9a227;
+}
+.mod-check:has(input:checked)::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 3px;
+  height: 7px;
+  margin-top: -5px;
+  border: solid #1a120c;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.mod-check:focus-within {
+  outline: 1px solid rgba(240, 208, 96, .85);
+  outline-offset: 1px;
 }
 .mod-drawer-handle {
   position: absolute;
@@ -143,7 +278,7 @@ body {
 
 .home-fab {
   position: fixed;
-  z-index: 29;
+  z-index: 22;
   left: 0;
   top: 44px;
   display: inline-flex;
@@ -265,19 +400,22 @@ body {
   text-indent: .18em;
 }
 
-.food-toolbar { margin-bottom: 4px; }
+.food-toolbar { flex: 0 0 auto; margin-bottom: 12px; }
 .food-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 14px;
 }
 .food-card {
+  container-type: inline-size;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  min-width: 0;
   padding: 14px 12px 12px;
+  overflow: hidden;
   text-align: left;
   color: inherit;
   font: inherit;
@@ -314,11 +452,15 @@ body {
   outline: 1px solid rgba(240, 208, 96, .7);
   outline-offset: -3px;
 }
-.food-roast-btn {
+.food-form-btns {
   position: absolute;
   z-index: 2;
   top: 6px;
   right: 6px;
+  display: flex;
+  gap: 4px;
+}
+.food-roast-btn {
   width: 26px;
   height: 26px;
   padding: 0;
@@ -337,7 +479,20 @@ body {
   background: rgba(42, 30, 16, .96);
   color: #ffe7a0;
 }
+.food-roast-btn.is-on {
+  border-color: #f0d060;
+  background: #c9a227;
+  color: #1a1208;
+}
+.food-card:has(.food-form-btns) .food-card-name {
+  padding-inline: 22px;
+}
+.food-card:has([data-form-set="dried"]):has([data-form-set="cooked"]) .food-card-name {
+  padding-inline: 36px;
+}
 .food-roast-btn.is-none {
+  position: absolute;
+  z-index: 2;
   width: 18px;
   height: 18px;
   top: 8px;
@@ -370,21 +525,47 @@ body {
 .food-card-stats {
   display: flex;
   justify-content: center;
+  width: 100%;
+  min-width: 0;
 }
-.food-card-stats states {
+.food-card .food-card-stats states {
+  width: 100%;
+  min-width: 0;
   margin-top: 0;
-  gap: 8px;
+  gap: 6px;
+  justify-content: center;
 }
-.food-card-stats .stat-orb {
-  width: 40px;
-  height: 40px;
+.food-card .food-card-stats state {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 64px;
+  margin-top: 0;
 }
-.food-card-stats .stat-emoji { font-size: 18px; }
-.food-card-stats .stat-value {
-  min-width: 44px;
-  min-height: 20px;
-  padding: 1px 3px;
-  font-size: 12px;
+.food-card .food-card-stats notice {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  color: inherit;
+  border-bottom: 0;
+  cursor: help;
+}
+.food-card .food-card-stats .stat-orb {
+  width: min(40px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+}
+.food-card .food-card-stats .stat-emoji {
+  font-size: clamp(12px, 8cqi, 18px);
+}
+.food-card .food-card-stats .stat-value {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 4px;
+  min-height: 18px;
+  padding: 1px 0;
+  font-size: clamp(9px, 2.8cqi, 12px);
+  white-space: nowrap;
 }
 
 .food-modal[hidden] { display: none; }
@@ -512,6 +693,7 @@ body {
   line-height: 1;
 }
 .food-cook-panel { margin-top: 8px; }
+.food-search,
 .food-cook-search {
   width: 100%;
   margin-bottom: 10px;
@@ -522,6 +704,8 @@ body {
   font: inherit;
   font-size: 14px;
 }
+.food-search { flex: 0 0 auto; margin-bottom: 12px; }
+.food-search::placeholder,
 .food-cook-search::placeholder { color: #8a7860; }
 .food-cook-names {
   list-style: none;
@@ -575,7 +759,7 @@ body.food-modal-open { overflow: hidden; }
   box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
   font-size: 14px;
 }
-.calc-drawer .side-drawer-panel { padding-top: 118px; border-left: 0; }
+.calc-drawer .side-drawer-panel { border-left: 0; }
 .filter-drawer .side-drawer-panel { border-right: 0; }
 .side-drawer-handle {
   position: absolute;
@@ -602,6 +786,9 @@ body.food-modal-open { overflow: hidden; }
   font-weight: bold;
   letter-spacing: 1px;
 }
+.calc-drawer .side-drawer-title {
+  text-align: right;
+}
 .side-search {
   width: 100%;
   margin-bottom: 10px;
@@ -620,11 +807,6 @@ body.food-modal-open { overflow: hidden; }
   color: #f0d060;
   font-size: 13px;
   letter-spacing: .08em;
-}
-.filter-checks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
 }
 .filter-reset {
   padding: 6px 12px;
@@ -722,6 +904,8 @@ body.food-modal-open { overflow: hidden; }
   box-shadow: 0 16px 40px rgba(0, 0, 0, .55);
 }
 .calc-panel-head {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -730,11 +914,102 @@ body.food-modal-open { overflow: hidden; }
 }
 .calc-panel-title {
   flex: 1 1 auto;
+  min-width: 0;
   color: #f0d060;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: .12em;
 }
+.calc-mode {
+  position: relative;
+  z-index: 6;
+  margin-left: auto;
+  margin-right: -4px;
+}
+.calc-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(201, 162, 39, .55);
+  background: rgba(28, 20, 12, .9);
+  color: #f0d060;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.calc-mode-btn:hover,
+.calc-mode.is-open .calc-mode-btn {
+  border-color: #c9a227;
+  color: #ffe7a0;
+}
+.calc-mode-caret { font-size: 12px; line-height: 1; }
+.calc-mode-list {
+  position: absolute;
+  z-index: 4;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+  background: rgba(20, 14, 8, .98);
+  border: 1px solid rgba(201, 162, 39, .7);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .45);
+}
+.calc-mode-list[hidden] { display: none; }
+.calc-mode-opt {
+  position: relative;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #e6d3a4;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.calc-mode-opt:hover,
+.calc-mode-opt.is-on {
+  border-color: rgba(201, 162, 39, .55);
+  background: rgba(42, 30, 16, .94);
+  color: #f0d060;
+}
+.calc-mode-tip {
+  display: none;
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 8px;
+  border: 1px solid rgba(201, 162, 39, .55);
+  background: rgba(20, 14, 8, .98);
+  color: #e6d3a4;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.calc-mode-opt:hover .calc-mode-tip { display: block; }
+.calc-mode-note {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border: 1px dashed rgba(201, 162, 39, .45);
+  color: #a89068;
+  line-height: 1.6;
+}
+.pair-card { cursor: default; }
+.pair-card:hover {
+  border-color: rgba(201, 162, 39, .4);
+  background: rgba(20, 14, 8, .92);
+}
+.calc-step:disabled,
+.calc-count:disabled { opacity: .45; cursor: default; }
 .calc-config-btn {
   display: none;
   padding: 5px 10px;
@@ -847,23 +1122,165 @@ body.food-modal-open { overflow: hidden; }
 .plan-row th { color: #f0d060; background: rgba(42, 30, 16, .8); }
 
 /* ---------- 烹饪锅 ---------- */
-.cook-page .calc-drawer .side-drawer-panel.cook-calc-panel {
-  width: min(720px, 92vw);
-  padding-top: 88px;
+.cook-page .side-drawer-panel.cook-calc-panel:has(.cook-calc-desktop:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
 }
 .cook-calc-desktop {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  flex: 1 1 auto;
   min-height: 0;
-  height: calc(100% - 28px);
 }
-.cook-calc-left {
-  flex: 0 0 42%;
+.cook-picker-title {
+  flex: 0 0 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 14px;
+  color: #f0d060;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgba(201, 162, 39, .35);
+}
+.cook-calc-desktop .side-search {
+  width: calc(100% - 28px);
+  margin: 0 14px 10px;
+}
+.cook-calc-desktop .cook-ing-list {
+  padding: 0 14px 14px;
+}
+.cook-pot-panel[hidden] { display: none; }
+.cook-pot-panel {
+  position: fixed;
+  z-index: 26;
+  top: 16px;
+  bottom: 16px;
+  left: 344px;
+  right: 48px;
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  border-right: 1px solid rgba(201, 162, 39, .3);
-  padding-right: 10px;
+  background: rgba(12, 9, 6, .96);
+  border: 1px solid rgba(201, 162, 39, .7);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .55);
+}
+.cook-pot-panel-head {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(201, 162, 39, .35);
+}
+.cook-pot-panel-title {
+  color: #f0d060;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.cook-pot-panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px 16px;
+}
+.cook-pot-panel .cook-pot-row {
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+}
+.cook-pot-panel .cook-slots {
+  width: 188px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: stretch;
+}
+.cook-pot-panel .cook-slot {
+  flex: 1 1 0;
+  min-height: 52px;
+  container-type: size;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  overflow: hidden;
+  font-size: 15px;
+  padding: 8px 26px 8px 10px;
+}
+.cook-pot-panel .cook-slot-meta {
+  display: none;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #e6d3a4;
+}
+@container (min-height: 76px) {
+  .cook-slot-meta.cook-slot-degrees { display: block; }
+}
+@container (min-height: 108px) {
+  .cook-slot-meta.cook-slot-spoil { display: block; }
+}
+.cook-pot-panel .cook-result {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-height: 0;
+  padding: 14px 16px;
+}
+.cook-pot-panel .cook-result-empty {
+  margin: auto;
+}
+.cook-pot-panel .cook-result > .cook-dish {
+  flex: 1 1 0;
+  min-height: 0;
+}
+.cook-dish {
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.cook-dish + .cook-dish {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(201, 162, 39, .35);
+}
+.cook-dish-head { flex: 0 0 auto; }
+.cook-dish-name {
+  color: #f0d060;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+.cook-dish-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  margin-top: 8px;
+}
+.cook-dish-scroll p,
+.cook-dish-desc p {
+  margin: 6px 0;
+  line-height: 1.6;
+}
+.cook-dish-examples {
+  flex: 0 0 auto;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(201, 162, 39, .35);
+}
+.cook-dish-examples .dish-recipe-list {
+  margin-top: 4px;
+  line-height: 1.45;
+}
+.cook-dish .food-card-stats {
+  margin-bottom: 0;
 }
 .cook-ing-list {
   flex: 1 1 auto;
@@ -872,13 +1289,6 @@ body.food-modal-open { overflow: hidden; }
   flex-wrap: wrap;
   gap: 6px;
   align-content: flex-start;
-}
-.cook-calc-right {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
 }
 .cook-possible-btn {
   align-self: flex-start;
@@ -1060,7 +1470,7 @@ body.food-modal-open { overflow: hidden; }
     letter-spacing: .18em;
     text-indent: .18em;
   }
-  .content-host { padding: 14px 12px 18px; }
+  .content-host { padding: 14px 12px; }
   .hub-grid {
     grid-template-columns: 1fr;
     grid-template-rows: none;
@@ -1073,7 +1483,7 @@ body.food-modal-open { overflow: hidden; }
   }
   .hub-card-food { grid-column: auto; }
   .food-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
     gap: 8px;
   }
   .food-card {
@@ -1084,18 +1494,6 @@ body.food-modal-open { overflow: hidden; }
     font-size: 13px;
     letter-spacing: .04em;
   }
-  .food-card-stats states { gap: 4px; }
-  .food-card-stats .stat-orb {
-    width: 28px;
-    height: 28px;
-  }
-  .food-card-stats .stat-emoji { font-size: 13px; }
-  .food-card-stats .stat-value {
-    min-width: 32px;
-    min-height: 16px;
-    padding: 0 2px;
-    font-size: 10px;
-  }
   .food-card-type .food-type-chip {
     font-size: 11px;
     padding: 1px 5px;
@@ -1104,7 +1502,6 @@ body.food-modal-open { overflow: hidden; }
   .food-modal-panel { width: min(100%, 440px); }
   .side-drawer-panel { width: min(86vw, 300px); }
   .side-drawer-handle { top: 112px; padding: 10px 5px; font-size: 12px; }
-  .calc-drawer .side-drawer-panel { padding-top: 108px; }
   .calc-panel {
     top: 0;
     bottom: 0;

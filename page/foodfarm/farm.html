@@ -68,6 +68,17 @@
     <div class="calc-panel-head">
       <button type="button" class="calc-config-btn" id="calc-config-btn" aria-expanded="false">选择种子</button>
       <div class="calc-panel-title">配比计算</div>
+      <div class="calc-mode" id="calc-mode">
+        <button type="button" class="calc-mode-btn" id="calc-mode-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="calc-mode-list">
+          <span id="calc-mode-label">9格配比</span>
+          <span class="calc-mode-caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="calc-mode-list" id="calc-mode-list" role="listbox" hidden>
+          <button type="button" class="calc-mode-opt" role="option" data-mode="1-1" aria-selected="false">1:1配比<span class="calc-mode-tip" role="tooltip">这里需要添加</span></button>
+          <button type="button" class="calc-mode-opt" role="option" data-mode="3-3-3" aria-selected="false">3+3+3配比<span class="calc-mode-tip" role="tooltip">这里需要添加</span></button>
+          <button type="button" class="calc-mode-opt is-on" role="option" data-mode="9" aria-selected="true">9格配比<span class="calc-mode-tip" role="tooltip">这里需要添加</span></button>
+        </div>
+      </div>
       <button type="button" class="food-modal-close" id="calc-panel-close" aria-label="关闭">×</button>
     </div>
     <div class="calc-net tag-text" id="calc-net"></div>
@@ -106,15 +117,15 @@
     <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
     <div class="page-overview-panel" id="page-overview-panel" hidden>
       <div class="page-overview-title" id="page-overview-title">概述</div>
-      <div class="page-overview-body tag-text" id="page-overview-body">看作物三肥净值、耗水/阶段与适宜季节。左侧配比计算器只按三肥凑中性（耗水不参与）；右侧按季节与肥料筛选。</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">看作物每阶段三肥净值、耗水/阶段与适宜季节。左侧配比计算器只按三肥凑中性（耗水不参与）；右侧按季节与肥料筛选。</div>
     </div>
   </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>
-  <script src="../../js/common/tags.js"></script>
-  <script src="../../js/foodfarm/common.js"></script>
-  <script src="../../js/foodfarm/farm-calc.js"></script>
-  <script src="../../js/foodfarm/farm.js"></script>
+  <script src="../../js/common/tags.js?v=13"></script>
+  <script src="../../js/foodfarm/common.js?v=3"></script>
+  <script src="../../js/foodfarm/farm-calc.js?v=11"></script>
+  <script src="../../js/foodfarm/farm.js?v=16"></script>
 </body>
 </html>

@@ -197,8 +197,8 @@
     }
   }
 
-  /** 生成三维 / 攻击力圆圈 HTML */
-  function stateOrbHTML(kind, valueHTML, emoji) {
+  /** 生成三维 / 攻击力圆圈 HTML。label 有值时，悬停圆圈显示这段说明 */
+  function stateOrbHTML(kind, valueHTML, emoji, label) {
     const map = {
       health: { className: "stat-health", emoji: "❤️" },
       hunger: { className: "stat-hunger", emoji: "🍗" },
@@ -211,9 +211,14 @@
     };
     const conf = map[kind] || map.health;
     const face = emoji || conf.emoji;
+    let orb = '<span class="stat-orb ' + conf.className + '"><span class="stat-emoji">' + face + "</span></span>";
+    if (label) {
+      const text = String(label).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+      orb = '<notice text="' + text + '">' + orb + "</notice>";
+    }
     return (
       "<state>" +
-      '<span class="stat-orb ' + conf.className + '"><span class="stat-emoji">' + face + "</span></span>" +
+      orb +
       '<span class="stat-value">' + (valueHTML == null ? "" : String(valueHTML)) + "</span>" +
       "</state>"
     );
@@ -221,7 +226,7 @@
 
   function statesHTML(items) {
     const list = Array.isArray(items) ? items : [];
-    return "<states>" + list.map(item => stateOrbHTML(item.kind, item.valueHTML, item.emoji)).join("") + "</states>";
+    return "<states>" + list.map(item => stateOrbHTML(item.kind, item.valueHTML, item.emoji, item.label)).join("") + "</states>";
   }
 
   let noticePinned = false;

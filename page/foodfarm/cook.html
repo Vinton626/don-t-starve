@@ -23,33 +23,10 @@
 
   <aside class="side-drawer calc-drawer" id="cook-calc-drawer">
     <div class="side-drawer-panel cook-calc-panel">
-      <div class="side-drawer-title">烹饪锅</div>
-
       <div class="cook-calc-desktop" id="cook-calc-desktop">
-        <div class="cook-calc-left">
-          <input type="search" class="side-search" id="cook-ing-search" placeholder="搜索基础食物" autocomplete="off">
-          <div class="cook-ing-list" id="cook-ing-list"></div>
-        </div>
-        <div class="cook-calc-right">
-          <button type="button" class="cook-possible-btn" id="cook-possible-btn">可能产生的食物</button>
-          <div class="cook-want">
-            <div class="filter-label">我想做：</div>
-            <div class="filter-checks" id="cook-want-checks"></div>
-            <div class="cook-want-custom">
-              <label>回血 &gt; <input type="number" id="cook-heal-min" value="10" min="0" step="1"></label>
-              <label>回理智 &gt; <input type="number" id="cook-sanity-min" value="10" min="0" step="1"></label>
-            </div>
-          </div>
-          <div class="cook-degrees tag-text" id="cook-degrees"></div>
-          <div class="cook-pot-row">
-            <div class="cook-slots" id="cook-slots"></div>
-            <div class="cook-arrow">→</div>
-            <div class="cook-result tag-text" id="cook-result">
-              <div class="cook-result-empty">放入 4 格食材</div>
-            </div>
-          </div>
-          <button type="button" class="filter-reset" id="cook-clear-slots">清空锅</button>
-        </div>
+        <div class="cook-picker-title">烹饪锅选择栏</div>
+        <input type="search" class="side-search" id="cook-ing-search" placeholder="搜索基础食物" autocomplete="off">
+        <div class="cook-ing-list" id="cook-ing-list"></div>
       </div>
 
       <div class="cook-calc-mobile" id="cook-calc-mobile" hidden>
@@ -65,14 +42,28 @@
           <button type="button" class="cook-possible-btn" id="cook-possible-btn-m">可能产生的食物</button>
           <button type="button" class="filter-reset" id="cook-clear-slots-m">清空锅</button>
         </div>
-        <div class="cook-want">
-          <div class="filter-label">我想做：</div>
-          <div class="filter-checks" id="cook-want-checks-m"></div>
-        </div>
       </div>
     </div>
     <button type="button" class="side-drawer-handle" id="cook-calc-handle" aria-expanded="false">烹饪锅</button>
   </aside>
+
+  <section class="cook-pot-panel" id="cook-pot-panel" hidden>
+    <div class="cook-pot-panel-head">
+      <div class="cook-pot-panel-title">烹饪锅</div>
+    </div>
+    <div class="cook-pot-panel-body">
+      <button type="button" class="cook-possible-btn" id="cook-possible-btn">可能产生的食物</button>
+      <div class="cook-degrees tag-text" id="cook-degrees"></div>
+      <div class="cook-pot-row">
+        <div class="cook-slots" id="cook-slots"></div>
+        <div class="cook-arrow">→</div>
+        <div class="cook-result tag-text" id="cook-result">
+          <div class="cook-result-empty">放入 4 格食材</div>
+        </div>
+      </div>
+      <button type="button" class="filter-reset" id="cook-clear-slots">清空锅</button>
+    </div>
+  </section>
 
   <aside class="side-drawer filter-drawer" id="cook-filter-drawer">
     <button type="button" class="side-drawer-handle" id="cook-filter-handle" aria-expanded="false">筛选</button>
@@ -82,8 +73,8 @@
         <div class="filter-label">我想做</div>
         <div class="filter-checks" id="grid-want-checks"></div>
         <div class="cook-want-custom">
-          <label>回血 &gt; <input type="number" id="grid-heal-min" value="10" min="0" step="1"></label>
-          <label>回理智 &gt; <input type="number" id="grid-sanity-min" value="10" min="0" step="1"></label>
+          <label>回生命值 &gt; <input type="number" id="grid-heal-min" value="10" min="0" step="1"></label>
+          <label>回理智值 &gt; <input type="number" id="grid-sanity-min" value="10" min="0" step="1"></label>
         </div>
       </div>
       <button type="button" class="filter-reset" id="cook-filter-reset">清空筛选</button>
@@ -116,6 +107,14 @@
         <h2 class="food-modal-title" id="possible-modal-title">可能产生的食物</h2>
         <button type="button" class="food-modal-close" data-close="possible-modal" aria-label="关闭">×</button>
       </div>
+      <div class="cook-want">
+        <div class="filter-label">我想做</div>
+        <div class="filter-checks" id="cook-want-checks"></div>
+        <div class="cook-want-custom">
+          <label>回生命值 &gt; <input type="number" id="cook-heal-min" value="10" min="0" step="1"></label>
+          <label>回理智值 &gt; <input type="number" id="cook-sanity-min" value="10" min="0" step="1"></label>
+        </div>
+      </div>
       <input type="search" class="side-search" id="possible-search" placeholder="搜索料理名" autocomplete="off">
       <div class="cook-possible-list" id="possible-list"></div>
     </div>
@@ -143,9 +142,9 @@
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>
-  <script src="../../js/common/tags.js"></script>
-  <script src="../../js/foodfarm/common.js"></script>
+  <script src="../../js/common/tags.js?v=13"></script>
+  <script src="../../js/foodfarm/common.js?v=3"></script>
   <script src="../../js/foodfarm/cook-calc.js"></script>
-  <script src="../../js/foodfarm/cook.js"></script>
+  <script src="../../js/foodfarm/cook.js?v=2"></script>
 </body>
 </html>
