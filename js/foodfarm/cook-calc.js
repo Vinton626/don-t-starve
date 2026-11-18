@@ -17,7 +17,8 @@
   const SLOTS = 4;
   const DEGREE_KEYS = [
     "meat", "veg", "fruit", "fish", "egg",
-    "sweetener", "monster", "dairy", "ice", "inedible"
+    "sweetener", "monster", "dairy", "ice", "inedible",
+    "magic", "fat", "seed", "decoration", "dried", "precook"
   ];
 
   /** 「我想做」筛选项；原版无稳定「扣饥饿」料理，故不收录 hungerDown */
@@ -67,11 +68,13 @@
   function foodDegrees(food) {
     const raw = food && food.degrees && typeof food.degrees === "object" ? food.degrees : {};
     const out = {};
-    DEGREE_KEYS.forEach(key => {
-      if (Object.prototype.hasOwnProperty.call(raw, key)) out[key] = num(raw[key]);
-    });
     Object.keys(raw).forEach(key => {
-      if (out[key] == null) out[key] = num(raw[key]);
+      const deg = normalizeDegreeKey(key);
+      if (!deg) return;
+      out[deg] = (out[deg] || 0) + num(raw[key]);
+    });
+    DEGREE_KEYS.forEach(key => {
+      if (out[key] == null) out[key] = 0;
     });
     return out;
   }
@@ -107,7 +110,9 @@
       const ing = item.degrees != null ? item : ingredientFromFood(item);
       if (!ing) return;
       Object.keys(ing.degrees || {}).forEach(key => {
-        tags[key] = (tags[key] || 0) + num(ing.degrees[key]);
+        const deg = normalizeDegreeKey(key);
+        if (!deg) return;
+        tags[deg] = (tags[deg] || 0) + num(ing.degrees[key]);
       });
       const id = String(ing.id || "").trim();
       const name = String(ing.name || "").trim();
@@ -134,7 +139,7 @@
     const name = entry.name != null ? String(entry.name).trim() : "";
     if (id && (names[id] || 0) > 0) return true;
     if (name && (names[name] || 0) > 0) return true;
-    const degree = entry.degree != null ? String(entry.degree).trim() : "";
+    const degree = normalizeDegreeKey(entry.degree);
     if (degree && (tags[degree] || 0) > 0) return true;
     return false;
   }
@@ -156,9 +161,16 @@
     return compareOp(have, op, need);
   }
 
+  function normalizeDegreeKey(key) {
+    if (typeof window !== "undefined" && window.Foodfarm && typeof window.Foodfarm.normalizeDegreeKey === "function") {
+      return window.Foodfarm.normalizeDegreeKey(key);
+    }
+    return key == null ? "" : String(key).trim();
+  }
+
   function requireSatisfied(req, tags) {
     if (!req || req.degree == null) return false;
-    const key = String(req.degree);
+    const key = normalizeDegreeKey(req.degree);
     return compareOp(tags[key] || 0, req.op, req.value);
   }
 
@@ -226,7 +238,7 @@
       return {
         ok: false,
         reason: "wetgoop",
-        message: "没有匹配料理（湿腻焦糊）",
+        message: "潮湿黏糊：当前配方没有对应料理",
         aggregate: agg,
         matching: [],
         candidates: [],
@@ -409,7 +421,10 @@
       }
     });
 
-    const fillerOrder = ["inedible", "ice", "veg", "fruit", "meat", "egg", "sweetener", "dairy", "fish", "monster"];
+    const fillerOrder = [
+      "inedible", "ice", "veg", "fruit", "meat", "egg", "sweetener", "dairy",
+      "fish", "monster", "magic", "fat", "seed", "decoration", "dried", "precook"
+    ];
     while (slots.length < SLOTS) {
       let pick = null;
       for (let i = 0; i < fillerOrder.length; i++) {

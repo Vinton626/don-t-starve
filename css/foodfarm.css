@@ -575,11 +575,11 @@ body.food-modal-open { overflow: hidden; }
   box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
   font-size: 14px;
 }
-.calc-drawer .side-drawer-panel { padding-top: 88px; border-left: 0; }
+.calc-drawer .side-drawer-panel { padding-top: 118px; border-left: 0; }
 .filter-drawer .side-drawer-panel { border-right: 0; }
 .side-drawer-handle {
   position: absolute;
-  top: 96px;
+  top: 124px;
   padding: 12px 6px;
   writing-mode: vertical-rl;
   letter-spacing: 4px;
@@ -1073,13 +1073,38 @@ body.food-modal-open { overflow: hidden; }
   }
   .hub-card-food { grid-column: auto; }
   .food-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .food-card {
+    gap: 6px;
+    padding: 10px 8px 8px;
+  }
+  .food-card-name {
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+  .food-card-stats states { gap: 4px; }
+  .food-card-stats .stat-orb {
+    width: 28px;
+    height: 28px;
+  }
+  .food-card-stats .stat-emoji { font-size: 13px; }
+  .food-card-stats .stat-value {
+    min-width: 32px;
+    min-height: 16px;
+    padding: 0 2px;
+    font-size: 10px;
+  }
+  .food-card-type .food-type-chip {
+    font-size: 11px;
+    padding: 1px 5px;
   }
   .food-modal { padding: 10px; }
   .food-modal-panel { width: min(100%, 440px); }
   .side-drawer-panel { width: min(86vw, 300px); }
-  .side-drawer-handle { top: 84px; padding: 10px 5px; font-size: 12px; }
+  .side-drawer-handle { top: 112px; padding: 10px 5px; font-size: 12px; }
+  .calc-drawer .side-drawer-panel { padding-top: 108px; }
   .calc-panel {
     top: 0;
     bottom: 0;

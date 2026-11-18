@@ -1,39 +1,41 @@
 {
   "items": [
     {
-      "id": "potato",
-      "name": "土豆",
+      "id": "carrot",
+      "name": "胡萝卜",
       "origin": "",
-      "source": "potato_seeds",
+      "source": "carrot_seeds",
       "hide": false,
       "foodtype": "veggie",
-      "secondaryfoodtype": "",
       "health": 8,
       "hunger": 12.5,
       "sanity": 0,
+      "spoilDays": 10,
       "degrees": {
         "veg": 1
       },
       "cooked": {
-        "id": "potato_cooked",
-        "name": "烤土豆",
+        "id": "carrot_cooked",
+        "name": "烤胡萝卜",
         "foodtype": "veggie",
-        "secondaryfoodtype": "",
-        "health": 20,
-        "hunger": 25,
+        "health": 3,
+        "hunger": 12.5,
         "sanity": 0,
+        "spoilDays": 6,
         "degrees": {
           "veg": 1
         }
       },
       "seed": {
-        "id": "potato_seeds",
-        "name": "土豆种子",
-        "health": 0,
+        "id": "carrot_seeds",
+        "name": "胡萝卜种子",
+        "foodtype": "seeds",
+        "health": 0.5,
         "hunger": 9.375,
         "sanity": 0,
+        "spoilDays": 40,
         "hate_season": ["summer"],
-        "water": 2,
+        "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": -4,
@@ -43,15 +45,235 @@
       }
     },
     {
+      "id": "corn",
+      "name": "玉米",
+      "origin": "",
+      "source": "corn_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "corn_cooked",
+        "name": "爆米花",
+        "foodtype": "veggie",
+        "health": 3,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 15,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "corn_seeds",
+        "name": "簇状种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["winter"],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": 2,
+          "compost": -4,
+          "manure": 2
+        }
+      }
+    },
+    {
+      "id": "potato",
+      "name": "土豆",
+      "origin": "",
+      "source": "potato_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": -3,
+      "hunger": 12.5,
+      "sanity": -5,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "potato_cooked",
+        "name": "烤土豆",
+        "foodtype": "veggie",
+        "health": 20,
+        "hunger": 25,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "potato_seeds",
+        "name": "毛茸茸的种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["summer"],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": 2,
+          "compost": 2,
+          "manure": -4
+        }
+      }
+    },
+    {
+      "id": "tomato",
+      "name": "番茄",
+      "origin": "",
+      "source": "tomato_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "tomato_cooked",
+        "name": "烤番茄",
+        "foodtype": "veggie",
+        "health": 20,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "tomato_seeds",
+        "name": "带刺的种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["winter"],
+        "water": 3.5,
+        "desc": "",
+        "fertilizer": {
+          "formula": -2,
+          "compost": -2,
+          "manure": 4
+        }
+      }
+    },
+    {
+      "id": "asparagus",
+      "name": "芦笋",
+      "origin": "",
+      "source": "asparagus_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "asparagus_cooked",
+        "name": "烤芦笋",
+        "foodtype": "veggie",
+        "health": 3,
+        "hunger": 25,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "asparagus_seeds",
+        "name": "筒状种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["summer","autumn"],
+        "water": 0.75,
+        "desc": "",
+        "fertilizer": {
+          "formula": 2,
+          "compost": -4,
+          "manure": 2
+        }
+      }
+    },
+    {
+      "id": "eggplant",
+      "name": "茄子",
+      "origin": "",
+      "source": "eggplant_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 8,
+      "hunger": 25,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "eggplant_cooked",
+        "name": "烤茄子",
+        "foodtype": "veggie",
+        "health": 20,
+        "hunger": 25,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "eggplant_seeds",
+        "name": "漩涡种子",
+        "foodtype": "seeds",
+        "health": 0.5,
+        "hunger": 9.375,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": ["summer","winter"],
+        "water": 2,
+        "desc": "",
+        "fertilizer": {
+          "formula": 2,
+          "compost": 2,
+          "manure": -4
+        }
+      }
+    },
+    {
       "id": "meat",
       "name": "肉",
       "origin": "",
       "hide": false,
       "foodtype": "meat",
-      "secondaryfoodtype": "",
       "health": -10,
       "hunger": 25,
       "sanity": -15,
+      "spoilDays": 6,
       "degrees": {
         "meat": 1
       },
@@ -59,10 +281,10 @@
         "id": "cookedmeat",
         "name": "熟肉",
         "foodtype": "meat",
-        "secondaryfoodtype": "",
         "health": 3,
         "hunger": 25,
         "sanity": 0,
+        "spoilDays": 10,
         "degrees": {
           "meat": 1
         }
@@ -71,10 +293,10 @@
         "id": "meat_dried",
         "name": "肉干",
         "foodtype": "meat",
-        "secondaryfoodtype": "",
         "health": 20,
         "hunger": 25,
         "sanity": 0,
+        "spoilDays": 20,
         "degrees": {
           "meat": 1
         }
@@ -86,10 +308,10 @@
       "origin": "",
       "hide": false,
       "foodtype": "veggie",
-      "secondaryfoodtype": "",
       "health": -1,
       "hunger": 9.375,
       "sanity": -1,
+      "spoilDays": 10,
       "degrees": {
         "veg": 0.5
       },
@@ -97,10 +319,10 @@
         "id": "kelp_cooked",
         "name": "熟海带叶",
         "foodtype": "veggie",
-        "secondaryfoodtype": "",
         "health": 0,
         "hunger": 9.375,
         "sanity": 1,
+        "spoilDays": 10,
         "degrees": {
           "veg": 0.5
         }
@@ -109,10 +331,10 @@
         "id": "kelp_dried",
         "name": "干海带叶",
         "foodtype": "veggie",
-        "secondaryfoodtype": "",
         "health": 0,
         "hunger": 9.375,
         "sanity": 0,
+        "spoilDays": 20,
         "degrees": {
           "veg": 0.5
         }
@@ -124,7 +346,6 @@
       "origin": "",
       "hide": true,
       "foodtype": "",
-      "secondaryfoodtype": "",
       "health": null,
       "hunger": null,
       "sanity": null,
@@ -134,4 +355,3 @@
     }
   ]
 }
-

@@ -147,10 +147,16 @@ function seedBriefHTML(food) {
   if (!food || !food.seed) return "";
   const seed = food.seed;
   const name = Foodfarm.escapeHTML(seed.name || seed.id || "种子");
+  const type = Foodfarm.foodTypeText(seed)
+    ? ` ${Foodfarm.foodTypeHTML(seed)}`
+    : "";
+  const spoil = seed.spoilDays != null && seed.spoilDays !== ""
+    ? ` <span>保质期：<b>${Foodfarm.escapeHTML(String(seed.spoilDays))}</b> 天</span>`
+    : "";
   return (
     `<div class="food-modal-block">` +
     `<div class="food-modal-label">种子</div>` +
-    `<div class="food-modal-seed tag-text">${name} ${Foodfarm.foodStatesHTML(seed)}</div>` +
+    `<div class="food-modal-seed tag-text">${name}${type}${spoil} ${Foodfarm.foodStatesHTML(seed)}</div>` +
     `</div>`
   );
 }
@@ -225,6 +231,9 @@ function openFoodModal(food, form) {
       `<span>来源：${Foodfarm.escapeHTML(Foodfarm.originLabel(view))}</span>` +
       `<span>类型：${Foodfarm.foodTypeHTML(view)}</span>` +
       `<span>形态：${Foodfarm.escapeHTML(formLabel(mode))}</span>` +
+      (view.spoilDays != null && view.spoilDays !== ""
+        ? `<span>保质期：<b>${Foodfarm.escapeHTML(String(view.spoilDays))}</b> 天</span>`
+        : "") +
       (view.id ? `<span>id：${Foodfarm.escapeHTML(view.id)}</span>` : "");
   }
   if (degrees) degrees.innerHTML = Foodfarm.foodDegreesHTML(view);

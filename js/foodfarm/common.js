@@ -1,7 +1,10 @@
-/** 食材「度」定义；颜色见 css/common-tags.css、rules/foodfarmrules.html */
+/**
+ * 烹饪「度」（锅匹配）。颜色见 css/common-tags.css、rules/foodfarmrules.html。
+ * 与 FOOD_TYPES 无关：度管锅，foodtype 管谁能吃。
+ */
 const FOOD_DEGREES = {
   meat: { key: "meat", name: "肉度", color: "#c2185b" },
-  veg: { key: "veg", name: "菜度", color: "#7dce7a" },
+  veg: { key: "veg", name: "蔬菜度", color: "#7dce7a" },
   fruit: { key: "fruit", name: "水果度", color: "#ff9b9b" },
   fish: { key: "fish", name: "鱼度", color: "#6d93ad" },
   egg: { key: "egg", name: "蛋度", color: "#e8c4a8" },
@@ -9,8 +12,19 @@ const FOOD_DEGREES = {
   monster: { key: "monster", name: "怪物度", color: "#c084fc" },
   dairy: { key: "dairy", name: "乳制品度", color: "#cfc8b4" },
   ice: { key: "ice", name: "冰度", color: "#8ec8f0" },
-  inedible: { key: "inedible", name: "不可食用度", color: "#9a9a9a" }
+  inedible: { key: "inedible", name: "不可食用度", color: "#9a9a9a" },
+  magic: { key: "magic", name: "魔法度", color: "#9b6bff" },
+  fat: { key: "fat", name: "油脂度", color: "#e6b85c" },
+  seed: { key: "seed", name: "种子度", color: "#a3c96b" },
+  decoration: { key: "decoration", name: "装饰度", color: "#d4a0c8" },
+  dried: { key: "dried", name: "干货度", color: "#b08968" },
+  precook: { key: "precook", name: "预处理度", color: "#7eb8a8" }
 };
+
+function normalizeDegreeKey(key) {
+  if (key == null || key === "") return "";
+  return String(key).trim();
+}
 
 /** 肥料：与 wormwood 的 brown / grey / lightblue 同色 */
 const FERTILIZER_TAGS = {
@@ -20,25 +34,30 @@ const FERTILIZER_TAGS = {
 };
 
 /**
- * 食用类型（DST FOODTYPE）。基础食物 / 料理共用字段 foodtype，可选 secondaryfoodtype。
- * 与烹饪「度」无关：度管锅，foodtype 管谁能吃。
+ * 食用类型（谁能吃）。基础食物 / 料理共用。
+ * 写法：只有一个写 foodtype；多个写 foodtype + foodtype2 + foodtype3…
+ * 或 foodtype1 + foodtype2…（写了 foodtype1 就必须有 foodtype2）。
+ * 与烹饪「度」无关。
  */
 const FOOD_TYPES = {
   veggie: { key: "veggie", name: "素食" },
-  meat: { key: "meat", name: "肉食" },
-  goodies: { key: "goodies", name: "好东西" },
   generic: { key: "generic", name: "通用" },
-  seeds: { key: "seeds", name: "种子" },
-  berry: { key: "berry", name: "浆果" },
-  monster: { key: "monster", name: "怪物" },
-  horrible: { key: "horrible", name: "可怕" },
-  roughage: { key: "roughage", name: "饲料" },
+  meat: { key: "meat", name: "肉" },
   elemental: { key: "elemental", name: "元素" },
   gears: { key: "gears", name: "齿轮" },
-  wood: { key: "wood", name: "木头" },
-  raw: { key: "raw", name: "生食" },
-  burnt: { key: "burnt", name: "烧焦" },
-  insect: { key: "insect", name: "昆虫" }
+  horrible: { key: "horrible", name: "可怕" },
+  insect: { key: "insect", name: "昆虫" },
+  seeds: { key: "seeds", name: "种子" },
+  berry: { key: "berry", name: "浆果" },
+  raw: { key: "raw", name: "生的" },
+  burnt: { key: "burnt", name: "烧焦的" },
+  nitre: { key: "nitre", name: "硝石" },
+  roughage: { key: "roughage", name: "粗食" },
+  wood: { key: "wood", name: "木制" },
+  goodies: { key: "goodies", name: "好东西" },
+  monster: { key: "monster", name: "怪物" },
+  moonshard: { key: "moonshard", name: "月亮碎片" },
+  miasma: { key: "miasma", name: "瘴气" }
 };
 
 const MOD_CACHE_KEY = "foodfarm.mods";
@@ -120,7 +139,9 @@ function foodDegreeMap(food) {
   const map = {};
   Object.keys(raw).forEach(key => {
     const n = Number(raw[key]);
-    map[key] = Number.isFinite(n) ? n : 0;
+    const norm = normalizeDegreeKey(key);
+    if (!norm) return;
+    map[norm] = (map[norm] || 0) + (Number.isFinite(n) ? n : 0);
   });
   return map;
 }
@@ -154,7 +175,7 @@ function limitEntryHitsFood(entry, food, degrees) {
   const name = entry.name != null ? String(entry.name).trim() : "";
   if (food && id && food.id === id) return true;
   if (food && name && food.name === name) return true;
-  const degree = entry.degree != null ? String(entry.degree).trim() : "";
+  const degree = normalizeDegreeKey(entry.degree);
   if (degree && Object.prototype.hasOwnProperty.call(degrees, degree) && degrees[degree] > 0) {
     return true;
   }
@@ -185,7 +206,7 @@ function dishMustUseFood(dish, food) {
 
 function foodSatisfiesRequire(food, req, degrees) {
   if (!req || req.degree == null) return false;
-  const key = String(req.degree);
+  const key = normalizeDegreeKey(req.degree);
   const amount = Object.prototype.hasOwnProperty.call(degrees, key) ? degrees[key] : 0;
   return compareOp(amount, req.op, req.value);
 }
@@ -226,8 +247,9 @@ function foodStatesHTML(entry) {
 }
 
 function degreeLabel(key) {
-  const conf = FOOD_DEGREES[key];
-  return (conf && conf.name) || key;
+  const norm = normalizeDegreeKey(key);
+  const conf = FOOD_DEGREES[norm];
+  return (conf && conf.name) || String(key == null ? "" : key);
 }
 
 function foodTypeLabel(key) {
@@ -236,13 +258,42 @@ function foodTypeLabel(key) {
   return (conf && conf.name) || String(key);
 }
 
-/** 展示 foodtype / secondaryfoodtype，例如「素食」或「肉食 / 怪物」 */
+/**
+ * 收集食用类型键：foodtype / foodtype2… 或 foodtype1 / foodtype2…
+ * 遇到空档停止。写了 foodtype1 却没有 foodtype2 时只返回空（无效写法）。
+ */
+function foodTypeKeys(entry) {
+  if (!entry || typeof entry !== "object") return [];
+  const out = [];
+  const push = v => {
+    if (v == null) return false;
+    const s = String(v).trim();
+    if (!s) return false;
+    out.push(s);
+    return true;
+  };
+
+  const has1 = entry.foodtype1 != null && String(entry.foodtype1).trim() !== "";
+  if (has1) {
+    const has2 = entry.foodtype2 != null && String(entry.foodtype2).trim() !== "";
+    if (!has2) return [];
+    push(entry.foodtype1);
+    for (let i = 2; i <= 16; i++) {
+      if (!push(entry["foodtype" + i])) break;
+    }
+    return out;
+  }
+
+  push(entry.foodtype);
+  for (let i = 2; i <= 16; i++) {
+    if (!push(entry["foodtype" + i])) break;
+  }
+  return out;
+}
+
+/** 展示例如「素食」或「肉 / 怪物」 */
 function foodTypeText(entry) {
-  if (!entry) return "";
-  const main = foodTypeLabel(entry.foodtype);
-  const second = foodTypeLabel(entry.secondaryfoodtype);
-  if (main && second) return main + " / " + second;
-  return main || second || "";
+  return foodTypeKeys(entry).map(foodTypeLabel).filter(Boolean).join(" / ");
 }
 
 function foodTypeHTML(entry) {
@@ -428,6 +479,7 @@ window.Foodfarm = {
   FOOD_DEGREES,
   FERTILIZER_TAGS,
   FOOD_TYPES,
+  normalizeDegreeKey,
   DATA,
   $,
   asset,
@@ -445,6 +497,7 @@ window.Foodfarm = {
   foodDegreesHTML,
   degreeLabel,
   foodTypeLabel,
+  foodTypeKeys,
   foodTypeText,
   foodTypeHTML,
   bindContentTags,

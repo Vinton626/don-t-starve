@@ -114,6 +114,24 @@ ice,
 inedible,
 .tag-text inedible,
 .profile-text inedible { color: #9a9a9a; }
+magic,
+.tag-text magic,
+.profile-text magic { color: #9b6bff; }
+fat,
+.tag-text fat,
+.profile-text fat { color: #e6b85c; }
+seed,
+.tag-text seed,
+.profile-text seed { color: #a3c96b; }
+decoration,
+.tag-text decoration,
+.profile-text decoration { color: #d4a0c8; }
+dried,
+.tag-text dried,
+.profile-text dried { color: #b08968; }
+precook,
+.tag-text precook,
+.profile-text precook { color: #7eb8a8; }
 
 /* 肥料：与 wormwood 的 brown / grey / lightblue 同色 */
 manure,

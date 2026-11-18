@@ -19,6 +19,12 @@
   dairy { color: #cfc8b4; }
   ice { color: #8ec8f0; }
   inedible { color: #9a9a9a; }
+  magic { color: #9b6bff; }
+  fat { color: #e6b85c; }
+  seed { color: #a3c96b; }
+  decoration { color: #d4a0c8; }
+  dried { color: #b08968; }
+  precook { color: #7eb8a8; }
   manure { color: #d4925a; }
   compost { color: #c5c5c5; }
   formula { color: #b3e5ff; }
@@ -32,18 +38,24 @@
 <p><b>与 skillrules 独立</b>：紫色、绿色、粉色等可以和技能树标签同色，不要求区分。只需避开全局规则 <a href="commonrules.html">commonrules.html</a> 里的色（三维、潮湿、伤害、b、warn、keyboard、notice 等）。本文件内部：各「度」之间、以及度与肥料之间，仍要可区分。</p>
 
 <h2>烹饪度颜色</h2>
-<p>基础食物的 <code>degrees</code> 键与标签同名。数字仍放在 <b>b</b> 里，文字用对应度标签。</p>
-<p><meat>肉度</meat> 的颜色是 #c2185b，洋红色。标签 <code>&lt;meat&gt;</code>，键 <code>meat</code>。</p>
-<p><veg>菜度</veg> 的颜色是 #7dce7a，绿色。标签 <code>&lt;veg&gt;</code>，键 <code>veg</code>。</p>
-<p><fruit>水果度</fruit> 的颜色是 #ff9b9b，浅红色。标签 <code>&lt;fruit&gt;</code>，键 <code>fruit</code>。</p>
-<p><fish>鱼度</fish> 的颜色是 #6d93ad，灰蓝色。标签 <code>&lt;fish&gt;</code>，键 <code>fish</code>。与全局 <code>damage</code> 灰不同，偏蓝。</p>
-<p><egg>蛋度</egg> 的颜色是 #e8c4a8，肉色。标签 <code>&lt;egg&gt;</code>，键 <code>egg</code>。比本文件里的粪肥棕更浅、更粉。</p>
-<p><sweetener>甜味剂度</sweetener> 的颜色是 #ffb6c1，粉色。标签 <code>&lt;sweetener&gt;</code>，键 <code>sweetener</code>。与全局物理伤害粉（#ffd0f8）不同，更深一点。</p>
-<p><monster>怪物度</monster> 的颜色是 #c084fc，紫色。标签 <code>&lt;monster&gt;</code>，键 <code>monster</code>。</p>
-<p><dairy>乳制品度</dairy> 的颜色是 #cfc8b4，米白偏灰。标签 <code>&lt;dairy&gt;</code>，键 <code>dairy</code>。纯白在深色背景上看不清，略压暗。</p>
-<p><ice>冰度</ice> 的颜色是 #8ec8f0，浅蓝色。标签 <code>&lt;ice&gt;</code>，键 <code>ice</code>。比本文件催长剂 / lightblue（#b3e5ff）更深，也避开全局位面浅蓝与潮湿度海蓝。</p>
-<p><inedible>不可食用度</inedible> 的颜色是 #9a9a9a，灰色。标签 <code>&lt;inedible&gt;</code>，键 <code>inedible</code>。比本文件堆肥灰（#c5c5c5）更深一档。</p>
-<p>例如 <b>1</b><veg>菜度</veg>、<b>1.5</b><fruit>水果度</fruit>。</p>
+<p>基础食物的 <code>degrees</code> 键与标签同名。数字仍放在 <b>b</b> 里，文字用对应度标签。完整清单仅以下这些，不要再加。</p>
+<p><meat>肉度</meat> 键 <code>meat</code>，#c2185b。</p>
+<p><veg>蔬菜度</veg> 键 <code>veg</code>，#7dce7a。不要写成 veggie（veggie 是食用类型「素食」）。</p>
+<p><fruit>水果度</fruit> 键 <code>fruit</code>，#ff9b9b。</p>
+<p><fish>鱼度</fish> 键 <code>fish</code>，#6d93ad。</p>
+<p><egg>蛋度</egg> 键 <code>egg</code>，#e8c4a8。</p>
+<p><sweetener>甜味剂度</sweetener> 键 <code>sweetener</code>，#ffb6c1。</p>
+<p><monster>怪物度</monster> 键 <code>monster</code>，#c084fc。</p>
+<p><dairy>乳制品度</dairy> 键 <code>dairy</code>，#cfc8b4。</p>
+<p><ice>冰度</ice> 键 <code>ice</code>，#8ec8f0。</p>
+<p><inedible>不可食用度</inedible> 键 <code>inedible</code>，#9a9a9a。</p>
+<p><magic>魔法度</magic> 键 <code>magic</code>，#9b6bff。</p>
+<p><fat>油脂度</fat> 键 <code>fat</code>，#e6b85c。</p>
+<p><seed>种子度</seed> 键 <code>seed</code>，#a3c96b。与食用类型 <code>seeds</code> 不同。</p>
+<p><decoration>装饰度</decoration> 键 <code>decoration</code>，#d4a0c8。</p>
+<p><dried>干货度</dried> 键 <code>dried</code>，#b08968。</p>
+<p><precook>预处理度</precook> 键 <code>precook</code>，#7eb8a8。</p>
+<p>例如 <b>1</b><veg>蔬菜度</veg>、<b>1.5</b><fruit>水果度</fruit>。</p>
 
 <h2>肥料颜色（种植）</h2>
 <p>与沃姆伍德正文里粪肥 / 堆肥 / 催长剂同色。人物页继续可用原标签；种植 / farm 正文优先用语义标签。</p>
@@ -55,31 +67,37 @@
 <h2>三肥圆圈 + 耗水/阶段</h2>
 <p>种植篇卡片与种子弹窗用四维圆圈：前三个是三肥净值（产出 − 消耗），第四个是耗水/阶段。写法同 commonrules 的 <code>state</code>。</p>
 <p><code>stat-formula</code> 催长剂（🧪，底色 #3d7fa6）、<code>stat-compost</code> 堆肥（🍂，底色 #6e6e6e）、<code>stat-manure</code> 粪肥（💩，底色 #8a5a2e）。肥料数值放在 b 里，正数带 +，例如 <b>+2</b>、<b>-4</b>。</p>
-<p><code>stat-water</code> 耗水/阶段（💧，底色 #2a6f9e）。文案写「耗水/阶段」，不要写「潮湿值」。数值用 notice 注明含义，例如 <code>&lt;notice text="耗水/阶段"&gt;&lt;b&gt;2&lt;/b&gt;&lt;/notice&gt;</code>。</p>
+<p><code>stat-water</code> 耗水/阶段（💧，底色 #2a6f9e）。文案写「耗水/阶段」，不要写「潮湿值」。数据里写百分比数值（如 <code>0.75</code> 表示 0.75%），页面展示时加 <code>%</code>。例如 <code>&lt;notice text="耗水/阶段"&gt;&lt;b&gt;0.75%&lt;/b&gt;&lt;/notice&gt;</code>。</p>
 <p>耗水/阶段<strong>不参与</strong>三肥配比运算，只在页面展示。</p>
 <p>生成肥料圆：<code>CommonTags.stateOrbHTML("formula", "&lt;b&gt;-4&lt;/b&gt;")</code>；水：<code>CommonTags.stateOrbHTML("water", "…")</code>。</p>
 
 <h2>食用类型（foodtype）</h2>
-<p>基础食物与料理都要写，对应游戏里谁能吃这类东西。和烹饪「度」无关。</p>
-<p>字段：</p>
-<p><code>foodtype</code>：主类型，字符串键。</p>
-<p><code>secondaryfoodtype</code>：次类型，可选；没有就写 <code>""</code>。游戏里浆果是 veggie+berry、怪物肉是 meat+monster 时用它。</p>
-<p>常用键与中文：</p>
-<p><code>veggie</code> 素食、<code>meat</code> 肉食、<code>goodies</code> 好东西、<code>generic</code> 通用、<code>seeds</code> 种子、<code>berry</code> 浆果、<code>monster</code> 怪物、<code>horrible</code> 可怕、<code>roughage</code> 饲料、<code>elemental</code> 元素、<code>gears</code> 齿轮、<code>wood</code> 木头、<code>raw</code> 生食、<code>burnt</code> 烧焦、<code>insect</code> 昆虫。</p>
+<p>普通食物本体、烤 <code>cooked</code>、晾 <code>dried</code>、种子 <code>seed</code>、料理都可写，对应谁能吃。和烹饪「度」无关。不要再用 <code>secondaryfoodtype</code>。</p>
+<p>写法：</p>
+<p>只有一种：写 <code>foodtype</code>，例如 <code>"foodtype":"veggie"</code>。</p>
+<p>多种：写 <code>foodtype</code> + <code>foodtype2</code> + <code>foodtype3</code>… 有几种写几个。例如浆果 <code>"foodtype":"veggie","foodtype2":"berry"</code>；怪物肉 <code>"foodtype":"meat","foodtype2":"monster"</code>。</p>
+<p>也可以从 <code>foodtype1</code> 起笔：必须同时有 <code>foodtype2</code>（只写 1 不合法）。之后同样 <code>foodtype3</code>…</p>
+<p>完整键与中文（仅这些）：</p>
+<p><code>veggie</code> 素食、<code>generic</code> 通用、<code>meat</code> 肉、<code>elemental</code> 元素、<code>gears</code> 齿轮、<code>horrible</code> 可怕、<code>insect</code> 昆虫、<code>seeds</code> 种子、<code>berry</code> 浆果、<code>raw</code> 生的、<code>burnt</code> 烧焦的、<code>nitre</code> 硝石、<code>roughage</code> 粗食、<code>wood</code> 木制、<code>goodies</code> 好东西、<code>monster</code> 怪物、<code>moonshard</code> 月亮碎片、<code>miasma</code> 瘴气。</p>
 <p>清单在 <code>js/foodfarm/common.js</code> 的 <code>FOOD_TYPES</code>。展示用 <code>Foodfarm.foodTypeText(entry)</code>。</p>
+
+<h2>保质期</h2>
+<p>普通食物、烤/晾、种子、料理都可写 <code>spoilDays</code>（天）。详情显示为「保质期」。没有就省略。</p>
 
 <h2>基础食物字段</h2>
 <p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。默认 / 省略视为 <code>false</code>。</p>
 <p><code>cooked</code>：烤熟形态子对象，可选。只有写了才参与切换。</p>
 <p><code>dried</code>：晾干形态子对象，可选（肉、海带等才有）。只有写了才参与切换；多数食物不必写这个字段。</p>
 <p>图鉴卡片右上角一个按钮，在<strong>已有形态</strong>之间循环，按钮文案是<strong>下一个</strong>形态：<code>生</code> / <code>烤</code> / <code>晾</code>。例如肉有烤+晾：生时显示「烤」→烤时「晾」→晾时「生」。只有烤：烤 ↔ 生。两个字段都没有则缩小显示 <code>*</code>，悬停提示「不可烤不可晾」。</p>
-<p>子对象常用字段：<code>id</code> / <code>name</code> / <code>health</code> / <code>hunger</code> / <code>sanity</code> / <code>foodtype</code> / <code>secondaryfoodtype</code> / <code>degrees</code>。</p>
+<p>烤/晾子对象常用字段：<code>id</code> / <code>name</code> / <code>health</code> / <code>hunger</code> / <code>sanity</code> / <code>spoilDays</code> / <code>foodtype</code>（及 <code>foodtype2</code>…）/ <code>degrees</code>。</p>
 
 <h2>种子字段</h2>
+<p><code>seed.foodtype</code>（及 <code>foodtype2</code>…）：种子自身的食用类型，常见 <code>seeds</code>。写法同普通食物。</p>
+<p><code>seed.spoilDays</code>：种子保质期（天）。没有就省略。</p>
 <p><code>seed.hate_season</code>：不喜欢的季节数组，取值 <code>spring</code> / <code>summer</code> / <code>autumn</code> / <code>winter</code>。不在数组里的季节都算合适。没有就写 <code>[]</code>。</p>
-<p><code>seed.water</code>：耗水/阶段，数字。种植卡片第四维展示用；不参与配比。没有可省略。</p>
+<p><code>seed.water</code>：耗水/阶段，百分比数值（如 <code>0.75</code> = 0.75%）。种植卡片第四维展示时带 <code>%</code>；不参与配比。没有可省略。</p>
 <p><code>seed.desc</code>：简短描述，可用正文标签；没有就写空字符串。</p>
-<p>种子自身的 <code>health</code> / <code>hunger</code> / <code>sanity</code> 是吃种子的三维，弹窗第三行显示。</p>
+<p>种子自身的 <code>health</code> / <code>hunger</code> / <code>sanity</code> 是吃种子的三维，弹窗显示。</p>
 
 <h2>料理详情里的配方举例</h2>
 <p>不枚举全部可行组合（组合数会爆炸）。详情底部「可实现举例」只用：必用原料 + 每种所需度的<strong>第一个纯单度食材</strong>（degrees 里只有一种度）+ 纯单度填充凑满 4 格。双度食材（如榴莲：水果+怪物）不拿来当度的代表例。</p>

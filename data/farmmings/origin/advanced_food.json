@@ -5,7 +5,6 @@
       "name": "蔬菜杂烩",
       "origin": "",
       "foodtype": "veggie",
-      "secondaryfoodtype": "",
       "health": 3,
       "hunger": 25,
       "sanity": 5,
@@ -14,7 +13,7 @@
       "priority": 0,
       "requires": [
         {
-          "degree": "veggie",
+          "degree": "veg",
           "op": ">=",
           "value": 0.5
         }
@@ -32,7 +31,6 @@
       "name": "鲜果可丽饼",
       "origin": "",
       "foodtype": "veggie",
-      "secondaryfoodtype": "",
       "health": 60,
       "hunger": 150,
       "sanity": 15,

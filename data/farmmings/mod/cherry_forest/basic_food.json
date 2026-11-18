@@ -7,10 +7,11 @@
       "source": "",
       "hide": false,
       "foodtype": "veggie",
-      "secondaryfoodtype": "berry",
+      "foodtype2": "berry",
       "health": null,
       "hunger": null,
       "sanity": null,
+      "spoilDays": null,
       "degrees": {}
     }
   ]

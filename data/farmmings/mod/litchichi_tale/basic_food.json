@@ -7,10 +7,10 @@
       "source": "",
       "hide": false,
       "foodtype": "veggie",
-      "secondaryfoodtype": "",
       "health": null,
       "hunger": null,
       "sanity": null,
+      "spoilDays": null,
       "degrees": {}
     }
   ]

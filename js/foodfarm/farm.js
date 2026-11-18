@@ -46,7 +46,7 @@ function plantStatesHTML(crop) {
   if (crop.water != null) {
     items.push({
       kind: "water",
-      valueHTML: `<notice text="耗水/阶段"><b>${esc(crop.water)}</b></notice>`
+      valueHTML: `<notice text="耗水/阶段"><b>${esc(crop.water)}%</b></notice>`
     });
   }
   return CommonTags.statesHTML(items);
@@ -180,8 +180,12 @@ function openSeedModal(id) {
   const lines = [
     seed.name ? `<p>种子：${esc(seed.name)}</p>` : "",
     `<p>来源：${esc(Foodfarm.originLabel(entry.food))}</p>`,
+    Foodfarm.foodTypeText(seed) ? `<p>类型：${Foodfarm.foodTypeHTML(seed)}</p>` : "",
+    seed.spoilDays != null && seed.spoilDays !== ""
+      ? `<p>保质期：<b>${esc(seed.spoilDays)}</b> 天</p>`
+      : "",
     usage ? `<p>${usage}</p>` : "",
-    crop.water != null ? `<p>耗水/阶段：<b>${esc(crop.water)}</b></p>` : "",
+    crop.water != null ? `<p>耗水/阶段：<b>${esc(crop.water)}%</b></p>` : "",
     `<p>不喜季节：${hate.size ? esc(seasonText(hate)) : "无"}</p>`,
     seed.desc ? `<p>${seed.desc}</p>` : ""
   ];

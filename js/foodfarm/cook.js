@@ -83,8 +83,10 @@ function openDishModal(dish) {
   Foodfarm.$("dish-modal-title").textContent = dish.name || dish.id || "料理";
   Foodfarm.$("dish-modal-stats").innerHTML = Foodfarm.foodStatesHTML(dish);
   const req = (dish.requires || []).map(r => {
-    const name = Foodfarm.degreeLabel ? Foodfarm.degreeLabel(r.degree) : r.degree;
-    return `${esc(r.op || ">=")}${esc(r.value)} <${esc(r.degree)}>${esc(name)}</${esc(r.degree)}>`;
+    const key = Foodfarm.normalizeDegreeKey ? Foodfarm.normalizeDegreeKey(r.degree) : r.degree;
+    const name = Foodfarm.degreeLabel ? Foodfarm.degreeLabel(key) : key;
+    const tag = esc(key || r.degree);
+    return `<${tag}>${esc(name)}</${tag}> ${esc(r.op || ">=")} <b>${esc(r.value)}</b>`;
   }).join("；");
   const must = (dish.must || []).map(m => {
     if (typeof m === "string") return esc(m);
@@ -92,7 +94,11 @@ function openDishModal(dish) {
   }).join("；");
   const limit = (dish.limit || []).map(l => {
     if (typeof l === "string") return esc(l);
-    if (l.degree) return `<${esc(l.degree)}>${esc(Foodfarm.degreeLabel(l.degree))}</${esc(l.degree)}>`;
+    if (l.degree) {
+      const key = Foodfarm.normalizeDegreeKey ? Foodfarm.normalizeDegreeKey(l.degree) : l.degree;
+      const tag = esc(key || l.degree);
+      return `<${tag}>${esc(Foodfarm.degreeLabel(key))}</${tag}>`;
+    }
     return esc(l.name || l.id || "");
   }).join("；");
   const examples = CookCalc.exampleRecipes(dish, cook.foods, cook.dishes);
@@ -303,7 +309,7 @@ function resultHTML(state) {
     return `<div class="cook-result-empty">已放 ${state.aggregate.count} / 4</div>`;
   }
   if (state.wetGoop) {
-    return `<div class="cook-result-dish"><div class="cook-result-name">湿腻焦糊</div><div class="muted">无匹配料理</div></div>`;
+    return `<div class="cook-result-dish"><div class="cook-result-name">潮湿黏糊</div><div class="muted">当前配方没有对应料理</div></div>`;
   }
   if (state.result) {
     const d = state.result;
