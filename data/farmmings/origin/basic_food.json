@@ -763,7 +763,8 @@
       "name": "针刺旋花",
       "origin": "",
       "source": "seeds",
-      "hide": false,
+      "hide": true,
+      "plantOnly": true,
       "foodtype": "",
       "seed": "seeds",
       "grow": {
@@ -906,6 +907,35 @@
         "degrees": {
           "veg": 0.5
         }
+      }
+    },
+    {
+      "id": "butter",
+      "name": "黄油",
+      "origin": "",
+      "hide": false,
+      "foodtype": "generic",
+      "health": 40,
+      "hunger": 25,
+      "sanity": 0,
+      "spoilDays": 40,
+      "degrees": {
+        "dairy": 1,
+        "fat": 1
+      }
+    },
+    {
+      "id": "honey",
+      "name": "蜂蜜",
+      "origin": "",
+      "hide": false,
+      "foodtype": "generic",
+      "health": 3,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 40,
+      "degrees": {
+        "sweetener": 1
       }
     },
     {

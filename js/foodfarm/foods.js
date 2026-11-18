@@ -114,7 +114,7 @@ function paintCardView(card, food, form) {
 }
 
 function catalogFoods() {
-  const base = Foodfarm.foodItems().filter(item => item && (item.id || item.name) && !item.hide);
+  const base = Foodfarm.foodItems().filter(item => item && (item.id || item.name) && !item.hide && !item.plantOnly);
   const seen = new Set(base.map(item => String(item.id || "")));
   const seeds = [];
   Foodfarm.foodItems().forEach(item => {

@@ -1286,10 +1286,37 @@ body.food-modal-open { overflow: hidden; }
   flex: 1 1 auto;
   overflow: auto;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 4px;
   align-content: flex-start;
 }
+.ing-degree { width: 100%; }
+.ing-degree-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid rgba(201, 162, 39, .35);
+  background: rgba(20, 14, 8, .72);
+  color: #f0d060;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+.ing-degree-toggle:hover { border-color: rgba(240, 208, 96, .75); }
+.ing-degree-arrow { width: 1em; color: #c9a227; }
+.ing-degree-name { flex: 1 1 auto; min-width: 0; }
+.ing-degree-count { color: #a89068; font-size: 12px; }
+.ing-degree-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 0 8px 16px;
+}
+.ing-degree-body[hidden] { display: none; }
 .cook-possible-btn {
   align-self: flex-start;
   padding: 6px 12px;

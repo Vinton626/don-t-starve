@@ -15,7 +15,8 @@ const cook = {
   healMin: 10,
   sanityMin: 10,
   gridHealMin: 10,
-  gridSanityMin: 10
+  gridSanityMin: 10,
+  openDegrees: new Set()
 };
 
 const esc = text => Foodfarm.escapeHTML(text == null ? "" : String(text));
@@ -33,7 +34,7 @@ function foodKey(food) {
 }
 
 function rebuild() {
-  cook.foods = Foodfarm.foodItems().filter(item => item && (item.id || item.name));
+  cook.foods = Foodfarm.foodItems().filter(item => item && (item.id || item.name) && !item.plantOnly);
   cook.dishes = Foodfarm.cookItems().filter(item => item && (item.id || item.name));
   cook.foodById.clear();
   cook.dishById.clear();
@@ -324,6 +325,68 @@ function addIngredient(food) {
 
 /* ---------- 左侧食材列表（桌面） ---------- */
 
+function degreeGroups(list) {
+  const order = (window.CookCalc && CookCalc.DEGREE_KEYS) || [];
+  const buckets = new Map();
+  const none = [];
+  list.forEach(food => {
+    const map = Foodfarm.foodDegreeMap(food);
+    const keys = Object.keys(map).filter(key => map[key] > 0);
+    if (!keys.length) {
+      none.push(food);
+      return;
+    }
+    keys.forEach(key => {
+      if (!buckets.has(key)) buckets.set(key, []);
+      buckets.get(key).push({ food, value: map[key] });
+    });
+  });
+  const keys = order.filter(key => buckets.has(key));
+  buckets.forEach((_, key) => {
+    if (keys.indexOf(key) < 0) keys.push(key);
+  });
+  return { keys, buckets, none };
+}
+
+function degreeSectionHTML(key, labelHTML, count, open, body) {
+  return (
+    `<section class="ing-degree">` +
+    `<button type="button" class="ing-degree-toggle" data-degree-toggle="${esc(key)}" aria-expanded="${open ? "true" : "false"}">` +
+    `<span class="ing-degree-arrow">${open ? "▾" : "▸"}</span>` +
+    `<span class="ing-degree-name tag-text">${labelHTML}</span>` +
+    `<span class="ing-degree-count">${count}</span>` +
+    `</button>` +
+    `<div class="ing-degree-body"${open ? "" : " hidden"}>${body}</div>` +
+    `</section>`
+  );
+}
+
+function degreeLabelHTML(key) {
+  const label = esc(Foodfarm.degreeLabel(key));
+  const known = Foodfarm.FOOD_DEGREES && Foodfarm.FOOD_DEGREES[key];
+  return known ? `<${key}>${label}</${key}>` : label;
+}
+
+function ingGroupsHTML(list, query, itemHTML) {
+  const groups = degreeGroups(list);
+  const parts = groups.keys.map(key => {
+    const items = groups.buckets.get(key);
+    const open = cook.openDegrees.has(key) || !!query;
+    return degreeSectionHTML(key, degreeLabelHTML(key), items.length, open, items.map(itemHTML).join(""));
+  });
+  if (groups.none.length) {
+    const open = cook.openDegrees.has("none") || !!query;
+    parts.push(degreeSectionHTML(
+      "none",
+      "无烹饪度",
+      groups.none.length,
+      open,
+      groups.none.map(food => itemHTML({ food, value: null })).join("")
+    ));
+  }
+  return parts.join("");
+}
+
 function renderIngList() {
   const host = Foodfarm.$("cook-ing-list");
   if (!host || NARROW.matches) return;
@@ -334,12 +397,15 @@ function renderIngList() {
   });
   const full = firstEmptySlot() < 0;
   host.innerHTML = list.length
-    ? list.map(f => {
-      const id = foodKey(f);
+    ? ingGroupsHTML(list, q, item => {
+      const food = item.food;
+      const id = foodKey(food);
       const on = cook.slots.some(s => s && foodKey(s) === id) ? " is-on" : "";
-      return `<button type="button" class="calc-seed${on}" data-food-id="${esc(id)}"${full ? " disabled" : ""}>${esc(f.name || f.id)}</button>`;
-    }).join("")
+      const val = item.value != null ? ` <b>${esc(item.value)}</b>` : "";
+      return `<button type="button" class="calc-seed${on}" data-food-id="${esc(id)}"${full ? " disabled" : ""}>${esc(food.name || food.id)}${val}</button>`;
+    })
     : `<p class="muted">没有匹配的食物</p>`;
+  Foodfarm.bindContentTags(host);
 }
 
 /* ---------- 度 / 结果 ---------- */
@@ -455,23 +521,17 @@ function renderPossibleList() {
 }
 
 function applyDishSample(dish) {
-  const fill = CookCalc.sampleFill(dish, cook.foods, cook.dishes);
-  if (!fill.ok && (!fill.slots || fill.slots.length < 4)) {
-    // 仍尽量填入已有格子
-  }
+  const fill = CookCalc.supplementFill(dish, cook.slots, cook.foods);
   const next = [null, null, null, null];
-  (fill.slots || []).slice(0, 4).forEach((ing, i) => {
-    next[i] = cook.foodById.get(foodKey(ing)) || cook.foods.find(f => foodKey(f) === foodKey(ing)) || null;
+  (fill.slots || []).forEach((item, i) => {
+    if (!item) return;
+    if (cook.slots[i]) {
+      next[i] = cook.slots[i];
+      return;
+    }
+    const key = foodKey(item);
+    next[i] = cook.foodById.get(key) || cook.foods.find(f => foodKey(f) === key) || null;
   });
-  // 若 sample 失败，至少把料理名展示在结果区：用 must 名去猜
-  if (next.every(x => !x) && Array.isArray(dish.must)) {
-    dish.must.forEach((m, i) => {
-      if (i > 3) return;
-      const name = typeof m === "string" ? m : (m.name || m.id || "");
-      const hit = cook.foods.find(f => f.name === name || f.id === name);
-      if (hit) next[i] = hit;
-    });
-  }
   cook.slots = next;
   closeModal("possible-modal");
   renderSlots();
@@ -503,12 +563,15 @@ function renderPickList() {
   });
   host.innerHTML = list.length
     ? `<button type="button" class="cook-possible-item is-clear" data-clear-slot="1">清空此格</button>` +
-      list.map(f =>
-        `<button type="button" class="cook-possible-item" data-food-id="${esc(foodKey(f))}">` +
-        `<span class="cook-possible-name">${esc(f.name || f.id)}</span>` +
-        `<span class="cook-possible-pri tag-text">${Foodfarm.foodDegreesHTML(f)}</span>` +
-        `</button>`
-      ).join("")
+      ingGroupsHTML(list, q, item => {
+        const food = item.food;
+        const val = item.value != null ? ` <b>${esc(item.value)}</b>` : "";
+        return (
+          `<button type="button" class="cook-possible-item" data-food-id="${esc(foodKey(food))}">` +
+          `<span class="cook-possible-name">${esc(food.name || food.id)}${val}</span>` +
+          `</button>`
+        );
+      })
     : `<p class="muted">没有匹配的食物</p>`;
   Foodfarm.bindContentTags(host);
 }
@@ -571,6 +634,17 @@ function bindUI() {
       const i = Number(slot.dataset.slot);
       if (NARROW.matches) openPickModal(i);
       else if (cook.slots[i]) setSlot(i, null);
+      return;
+    }
+
+    const degreeToggle = e.target.closest("[data-degree-toggle]");
+    if (degreeToggle) {
+      e.preventDefault();
+      const key = degreeToggle.getAttribute("data-degree-toggle");
+      if (cook.openDegrees.has(key)) cook.openDegrees.delete(key);
+      else cook.openDegrees.add(key);
+      renderIngList();
+      renderPickList();
       return;
     }
 

@@ -362,6 +362,93 @@
   }
 
   /**
+   * 在已有格子上补料，不替换已放入的食材。
+   * 只补尚未满足的 must / requires。都满足且 random 为 true 时，
+   * 用一种不在 limit 里、锅里还没有的度填满空格。
+   */
+  function supplementFill(dish, existing, foods) {
+    const slots = [null, null, null, null];
+    (Array.isArray(existing) ? existing : []).slice(0, SLOTS).forEach((item, i) => {
+      slots[i] = item || null;
+    });
+    if (!dish) return { slots };
+    const pool = (Array.isArray(foods) ? foods : []).map(ingredientFromFood).filter(Boolean);
+    const pureGroups = puresByDegree(pool);
+    const limits = Array.isArray(dish.limit) ? dish.limit : [];
+    const limitedDegrees = {};
+    limits.forEach(entry => {
+      const raw = typeof entry === "string" ? entry : (entry && entry.degree);
+      const key = normalizeDegreeKey(raw);
+      if (key) limitedDegrees[key] = true;
+    });
+
+    function blocked(ing) {
+      if (!ing) return true;
+      const names = {};
+      names[ing.id] = 1;
+      if (ing.name !== ing.id) names[ing.name] = 1;
+      return limits.some(entry => limitHits(entry, names, ing.degrees || {}));
+    }
+
+    function place(ing) {
+      const i = slots.findIndex(slot => !slot);
+      if (i < 0 || !ing || blocked(ing)) return false;
+      slots[i] = ing;
+      return true;
+    }
+
+    function pickDegree(key) {
+      const group = (pureGroups[key] || []).filter(ing => !blocked(ing));
+      if (group.length) return group[0];
+      return pool.find(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0) || null;
+    }
+
+    const must = Array.isArray(dish.must) ? dish.must : [];
+    must.forEach(entry => {
+      const needName = typeof entry === "string"
+        ? entry.trim()
+        : String((entry && (entry.name || entry.id)) || "").trim();
+      if (!needName) return;
+      let guard = 0;
+      while (!mustSatisfied(entry, aggregate(slots).names) && slots.some(slot => !slot) && guard < SLOTS) {
+        guard += 1;
+        const hit = pool.find(ing => !blocked(ing) && (ing.name === needName || ing.id === needName));
+        if (!hit || !place(hit)) break;
+      }
+    });
+
+    const requires = Array.isArray(dish.requires) ? dish.requires : [];
+    requires.forEach(req => {
+      if (!req || req.degree == null) return;
+      const op = String(req.op || ">=");
+      if (op !== ">" && op !== ">=" && op !== "==" && op !== "=") return;
+      const key = normalizeDegreeKey(req.degree);
+      let guard = 0;
+      while (!requireSatisfied(req, aggregate(slots).tags) && slots.some(slot => !slot) && guard < SLOTS) {
+        guard += 1;
+        const pick = pickDegree(key);
+        if (!pick || !place(pick)) break;
+      }
+    });
+
+    const agg = aggregate(slots);
+    const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
+      || requires.some(req => req && req.degree != null && !requireSatisfied(req, agg.tags));
+    if (!unmet && dish.random === true && slots.some(slot => !slot)) {
+      const usable = DEGREE_KEYS.filter(key => !limitedDegrees[key] && pickDegree(key));
+      const fresh = usable.filter(key => !(agg.tags[key] > 0));
+      const key = (fresh.length ? fresh : usable)[0];
+      const filler = key ? pickDegree(key) : null;
+      let guard = 0;
+      while (filler && slots.some(slot => !slot) && guard < SLOTS) {
+        guard += 1;
+        if (!place(filler)) break;
+      }
+    }
+    return { slots };
+  }
+
+  /**
    * 为料理生成示例填锅。优先用「只有一种度」的食材；must 仍按名字找。
    * foods 可含 hide:true 的原料。
    */
@@ -512,6 +599,7 @@
     filterWanted,
     isPureDegree,
     sampleFill,
+    supplementFill,
     exampleRecipes,
     priorityOf,
     weightOf,
