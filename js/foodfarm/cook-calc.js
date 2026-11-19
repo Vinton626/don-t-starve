@@ -291,6 +291,18 @@
     return w > 0 ? w : 1;
   }
 
+  /** 保底料理（潮湿黏糊）：不参与正常匹配，仅在没有其它料理时产出 */
+  function isFallbackDish(dish) {
+    if (!dish) return false;
+    if (dish.fallback === true) return true;
+    return String(dish.id || "") === "stickygoo";
+  }
+
+  function findFallbackDish(dishes) {
+    const list = Array.isArray(dishes) ? dishes : [];
+    return list.find(isFallbackDish) || null;
+  }
+
   /**
    * 从匹配列表中取出最高优先级一组（DST GetCandidateRecipes）
    */
@@ -299,6 +311,31 @@
     const sorted = matched.slice().sort((a, b) => priorityOf(b) - priorityOf(a));
     const top = priorityOf(sorted[0]);
     return sorted.filter(d => priorityOf(d) === top);
+  }
+
+  function cookResult(agg, matching, candidates, reason) {
+    const totalWeight = candidates.reduce((sum, d) => sum + weightOf(d), 0);
+    const wetGoop = reason === "fallback";
+    return {
+      ok: true,
+      reason,
+      message: wetGoop
+        ? "保底产出：" + (candidates[0].name || candidates[0].id || "潮湿黏糊")
+        : (candidates.length === 1
+          ? "确定产出：" + (candidates[0].name || candidates[0].id)
+          : "同优先级并列 " + candidates.length + " 道，游戏内按权重随机"),
+      aggregate: agg,
+      matching: matching.slice().sort((a, b) => priorityOf(b) - priorityOf(a)),
+      candidates,
+      result: candidates.length === 1 ? candidates[0] : null,
+      totalWeight,
+      chances: candidates.map(d => ({
+        dish: d,
+        weight: weightOf(d),
+        chance: totalWeight > 0 ? weightOf(d) / totalWeight : 0
+      })),
+      wetGoop
+    };
   }
 
   /**
@@ -310,7 +347,7 @@
    *   matching   全部匹配（含低优先级，给「可能产生」列表用；仅 filled 时有意义）
    *   candidates 最高优先级一组（真正会出锅的候选）
    *   result     唯一候选时直接给出；并列时为 null，看 candidates
-   *   wetGoop    满 4 格且无匹配
+   *   wetGoop    满 4 格且落到保底料理（潮湿黏糊）
    */
   function cook(slots, dishes) {
     const agg = aggregate(slots);
@@ -324,42 +361,32 @@
         matching: [],
         candidates: [],
         result: null,
+        chances: [],
         wetGoop: false
       };
     }
 
-    const matching = list.filter(d => dishMatches(d, agg.names, agg.tags));
+    const matching = list.filter(d => !isFallbackDish(d) && dishMatches(d, agg.names, agg.tags));
     const candidates = topPriorityGroup(matching);
-    if (!candidates.length) {
-      return {
-        ok: false,
-        reason: "wetgoop",
-        message: "湿腻焦糊：当前配方没有对应料理",
-        aggregate: agg,
-        matching: [],
-        candidates: [],
-        result: null,
-        wetGoop: true
-      };
+    if (candidates.length) {
+      return cookResult(agg, matching, candidates, candidates.length === 1 ? "unique" : "tie");
     }
 
-    const totalWeight = candidates.reduce((sum, d) => sum + weightOf(d), 0);
+    const fallback = findFallbackDish(list);
+    if (fallback) {
+      return cookResult(agg, [fallback], [fallback], "fallback");
+    }
+
     return {
-      ok: true,
-      reason: candidates.length === 1 ? "unique" : "tie",
-      message: candidates.length === 1
-        ? "确定产出：" + (candidates[0].name || candidates[0].id)
-        : "同优先级并列 " + candidates.length + " 道，游戏内按权重随机",
+      ok: false,
+      reason: "wetgoop",
+      message: "潮湿黏糊：当前配方没有对应料理",
       aggregate: agg,
-      matching: matching.slice().sort((a, b) => priorityOf(b) - priorityOf(a)),
-      candidates,
-      result: candidates.length === 1 ? candidates[0] : null,
-      totalWeight,
-      chances: candidates.map(d => ({
-        dish: d,
-        weight: weightOf(d),
-        chance: weightOf(d) / totalWeight
-      }))
+      matching: [],
+      candidates: [],
+      result: null,
+      chances: [],
+      wetGoop: true
     };
   }
 
@@ -367,15 +394,18 @@
   function previewPossible(slots, dishes) {
     const agg = aggregate(slots);
     const list = Array.isArray(dishes) ? dishes : [];
-    if (!agg.count) return { aggregate: agg, dishes: list.slice() };
+    const playable = list.filter(d => !isFallbackDish(d));
+    if (!agg.count) return { aggregate: agg, dishes: playable.slice() };
     if (agg.filled) {
       const r = cook(slots, dishes);
+      // 保底结果时列表里也只展示潮湿黏糊
       return { aggregate: agg, dishes: r.matching };
     }
 
     // 未满锅：limit 已踩中的排除；must/requires 只检查「已有量是否已超过失败」——
     // 宽松预览：当前 tags/names 不违反 limit，且已有 must 计数不超过需求失败的反向（即已放入的指名不冲突）
-    const loose = list.filter(dish => {
+    // 保底料理不进预览，避免每锅都挂着潮湿黏糊
+    const loose = playable.filter(dish => {
       const limits = Array.isArray(dish.limit) ? dish.limit : [];
       if (limits.some(entry => limitHits(entry, agg.names, agg.tags))) return false;
       // 已放入的度若某 requires 用 < / <= 且已经超标，则不可能
@@ -569,7 +599,7 @@
 
   /**
    * 为料理生成示例填锅。优先用「只有一种度」的食材；must 仍按名字找。
-   * foods 可含 hide:true 的原料。
+   * foods 可含 hide:true 的原料；调用方应已去掉 plantOnly / noCook。
    */
   function sampleFill(dish, foods, allDishes, variant) {
     if (!dish) return { ok: false, slots: [], message: "未选择料理" };
@@ -844,6 +874,8 @@
     ingredientFromFood,
     aggregate,
     dishMatches,
+    isFallbackDish,
+    findFallbackDish,
     cook,
     previewPossible,
     filterWanted,

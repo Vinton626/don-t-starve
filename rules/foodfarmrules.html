@@ -83,10 +83,12 @@
 
 <h2>保质期</h2>
 <p>普通食物、烤/晾、种子、料理都可写 <code>spoilDays</code>。数字是天数，详情显示为「保质期：N 天」。不会腐烂写 <code>"spoilDays": "永久"</code>，页面只显示「永久」，不加「天」。没有、或写 <code>null</code>，就省略这一行。</p>
+<p><code>fallback</code>：布尔。为 <code>true</code> 时这道是保底料理（原版潮湿黏糊 <code>stickygoo</code>）。满 4 格且没有任何其它料理匹配时，锅结果直接展示它的详情；不参与「可能产生」预览，避免每锅都挂着。判定时也不会和其它料理抢优先级。</p>
 <p>料理的 <code>cookSeconds</code>、<code>priority</code> 还没定稿时写 <code>"待补充"</code>。详情只显示「待补充」：烹饪时间后面不加「秒」。判定时这个优先级按 0 和其他料理比较。<code>must</code> 的 <code>op</code> 按原样显示，<code>"="</code> 表示该食材格数必须正好等于 <code>value</code>。<code>must.name</code> 前面可以写 <code>&lt;烤&gt;</code>、<code>&lt;晾&gt;</code>，对应这条食物的 <code>cooked.id</code>、<code>dried.id</code>。生的名字本身也算。只写 <code>&lt;烤&gt;大肉</code> 是生和烤两种；<code>&lt;烤&gt;&lt;晾&gt;大肉</code> 是生、烤、晾三种。两种食材都能用时，把它们放进 <code>or</code>：<code>{"or":[{"name":"黄油","op":"&gt;=","value":1},{"name":"蜂蜜","op":"&gt;=","value":1}]}</code>，满足其中一条即可。锅里有烤或晾的食物，格子右上角可以切换形态，晾在烤左边。</p>
 
 <h2>基础食物字段</h2>
 <p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。默认 / 省略视为 <code>false</code>。</p>
+<p><code>noCook</code>：布尔。为 <code>true</code> 时不能放进烹饪锅（选择栏、补格、举例配方都不会用到）。与 <code>hide</code> 互不干涉：图鉴显隐只看 <code>hide</code>，入锅只看 <code>noCook</code>（以及下面的 <code>plantOnly</code>）。特殊内容既不是料理、又不能入锅时，仍写在基础食物里，标 <code>noCook: true</code>；需要从普通食物图鉴藏掉就再加 <code>hide: true</code>。默认 / 省略视为 <code>false</code>。</p>
 <p><code>plantOnly</code>：布尔。为 <code>true</code> 时只留种植记录，不进食物图鉴，也不进烹饪锅。针刺旋花用它，并同时写 <code>hide: true</code>。</p>
 <p><code>cooked</code>：烤熟形态子对象，可选。只有写了才参与切换。</p>
 <p><code>dried</code>：晾干形态子对象，可选（肉、海带等才有）。只有写了才参与切换；多数食物不必写这个字段。</p>

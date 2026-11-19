@@ -49,7 +49,9 @@ function foodKey(food) {
 }
 
 function rebuild() {
-  cook.foods = Foodfarm.foodItems().filter(item => item && (item.id || item.name) && !item.plantOnly);
+  cook.foods = Foodfarm.foodItems().filter(item =>
+    item && (item.id || item.name) && !item.plantOnly && !item.noCook
+  );
   cook.dishes = Foodfarm.cookItems().filter(item => item && (item.id || item.name));
   cook.foodById.clear();
   cook.dishById.clear();
@@ -550,10 +552,6 @@ function filledResultHTML(state) {
   if (!state || !state.aggregate || !state.aggregate.filled) {
     return `<div class="cook-result-empty">放入 4 格食材</div>`;
   }
-  if (state.wetGoop) {
-    return `<div class="cook-result-dish"><div class="cook-result-name">湿腻焦糊</div><div class="muted">当前配方没有对应料理</div></div>`;
-  }
-
   const chances = Array.isArray(state.chances) && state.chances.length
     ? state.chances.slice()
     : (state.candidates || []).map(d => ({ dish: d, chance: 1 / Math.max(1, (state.candidates || []).length) }));
@@ -563,6 +561,7 @@ function filledResultHTML(state) {
     return (b.chance || 0) - (a.chance || 0);
   });
   if (!chances.length) {
+    if (state.result) return dishFullHTML(state.result);
     return `<div class="cook-result-empty">暂无结果</div>`;
   }
 

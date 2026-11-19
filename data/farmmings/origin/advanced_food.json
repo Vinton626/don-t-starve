@@ -108,6 +108,87 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "vegetableburger",
+      "name": "素食堡",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 30,
+      "hunger": 37.5,
+      "sanity": 33,
+      "spoilDays": 6,
+      "cookSeconds": 40,
+      "priority": 26,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>洋葱",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>叶肉",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "vegetablecocktail",
+      "name": "蔬菜鸡尾酒",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 33,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 15,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "veg",
+          "op": ">",
+          "value": 2
+        }
+      ],
+      "must": [
+          {
+          "or": [
+            {
+              "name": "<烤>番茄",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "<烤>芦笋",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [
+        { "degree": "meat" },
+        { "degree": "egg" },
+        { "degree": "inedible" }
+      ],
+      "random": false,
+      "effect": "无特殊效果"
+    },
+    {
       "id": "freshfruitcrepes",
       "name": "鲜果可丽饼",
       "origin": "",
@@ -140,6 +221,24 @@
       "limit": [],
       "random": false,
       "effect": "无特殊效果"
+    },
+    {
+      "id": "stickygoo",
+      "name": "潮湿黏糊",
+      "origin": "",
+      "foodtype": "generic",
+      "health": 0,
+      "hunger": 0,
+      "sanity": 0,
+      "spoilDays": 6,
+      "cookSeconds": 10,
+      "priority": -10,
+      "fallback": true,
+      "requires": [],
+      "must": [],
+      "limit": [],
+      "random": true,
+      "effect": "你这做的什么玩意"
     }
   ]
 }
