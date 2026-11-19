@@ -151,9 +151,12 @@ function dishInfoHTML(dish, opts) {
 
 function mustEntryHTML(entry) {
   if (entry == null) return "";
-  if (typeof entry === "string") return esc(entry);
+  if (typeof entry === "string") return esc(Foodfarm.mustNameLabel(entry) || entry);
   if (Array.isArray(entry.or)) return entry.or.map(mustEntryHTML).filter(Boolean).join(" 或 ");
-  const name = esc(entry.name || entry.id || "");
+  const rawName = entry.name != null && String(entry.name).trim()
+    ? String(entry.name).trim()
+    : (entry.id != null ? String(entry.id).trim() : "");
+  const name = esc(Foodfarm.mustNameLabel(rawName) || rawName);
   if (entry.value == null) return name;
   return `${name} ${esc(entry.op || ">=")} <b>${esc(entry.value)}</b>`;
 }

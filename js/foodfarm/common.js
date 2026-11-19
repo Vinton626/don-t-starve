@@ -471,6 +471,32 @@ function parseFormTags(name) {
   return { cooked, dried, base: text };
 }
 
+/** 展示用：<烤>玉米 → 玉米/烤玉米；有 cooked.name / dried.name 时用真实名 */
+function mustNameLabel(needName) {
+  const raw = String(needName || "").trim();
+  if (!raw) return "";
+  const spec = parseFormTags(raw);
+  if (!spec.base) return raw;
+  if (!spec.cooked && !spec.dried) return spec.base;
+  const food = foodItems().find(item =>
+    item && (item.name === spec.base || String(item.id || "") === spec.base)
+  ) || null;
+  const parts = [spec.base];
+  if (spec.cooked) {
+    const cookedName = food && food.cooked && String(food.cooked.name || "").trim()
+      ? String(food.cooked.name).trim()
+      : "烤" + spec.base;
+    parts.push(cookedName);
+  }
+  if (spec.dried) {
+    const driedName = food && food.dried && String(food.dried.name || "").trim()
+      ? String(food.dried.name).trim()
+      : "晾" + spec.base;
+    parts.push(driedName);
+  }
+  return parts.join("/");
+}
+
 function foodMatchesMustName(food, needName) {
   if (!food || !needName) return false;
   const spec = parseFormTags(needName);
@@ -811,6 +837,8 @@ window.Foodfarm = {
   bindOriginSections,
   isOriginCollapsed,
   foodDegreeMap,
+  parseFormTags,
+  mustNameLabel,
   foodMatchesDish,
   dishesForFood,
   foodStatesHTML,
