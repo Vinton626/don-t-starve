@@ -17,7 +17,9 @@ const cook = {
   gridHealMin: 10,
   gridSanityMin: 10,
   openDegrees: new Set(),
-  exampleCache: new Map()
+  exampleCache: new Map(),
+  /** 满锅并列时当前查看的料理 id */
+  resultFocusId: ""
 };
 
 function plainMetric(value) {
@@ -536,44 +538,63 @@ function degreesHTML(agg) {
   }).join("");
 }
 
-function resultHTML(state, full) {
-  if (!state) return `<div class="cook-result-empty">放入 4 格食材</div>`;
-  if (!state.aggregate.filled) {
-    return `<div class="cook-result-empty">已放 ${state.aggregate.count} / 4</div>`;
+function chancePercent(chance) {
+  const n = Number(chance);
+  if (!Number.isFinite(n) || n <= 0) return "0%";
+  const pct = Math.round(n * 1000) / 10;
+  return (Number.isInteger(pct) ? String(pct) : pct.toFixed(1)) + "%";
+}
+
+/** 满 4 格：直接展示详情；同优先级并列时用「概率+名称」标签切换 */
+function filledResultHTML(state) {
+  if (!state || !state.aggregate || !state.aggregate.filled) {
+    return `<div class="cook-result-empty">放入 4 格食材</div>`;
   }
   if (state.wetGoop) {
     return `<div class="cook-result-dish"><div class="cook-result-name">湿腻焦糊</div><div class="muted">当前配方没有对应料理</div></div>`;
   }
-  if (state.result) {
-    if (full) return dishFullHTML(state.result);
-    const d = state.result;
-    return (
-      `<button type="button" class="cook-result-dish" data-result-id="${esc(dishKey(d))}">` +
-      `<div class="cook-result-name">${esc(d.name || d.id)}</div>` +
-      `<div class="muted">点名称查看详情</div>` +
-      `</button>`
-    );
+
+  const chances = Array.isArray(state.chances) && state.chances.length
+    ? state.chances.slice()
+    : (state.candidates || []).map(d => ({ dish: d, chance: 1 / Math.max(1, (state.candidates || []).length) }));
+  chances.sort((a, b) => {
+    const pa = Number(b.dish && b.dish.priority) - Number(a.dish && a.dish.priority);
+    if (pa) return pa;
+    return (b.chance || 0) - (a.chance || 0);
+  });
+  if (!chances.length) {
+    return `<div class="cook-result-empty">暂无结果</div>`;
   }
-  if (full) {
-    return (
-      `<div class="cook-result-name">并列 ${state.candidates.length} 道</div>` +
-      state.candidates.map(dishFullHTML).join("")
-    );
+
+  const ids = chances.map(c => dishKey(c.dish));
+  if (!cook.resultFocusId || !ids.includes(cook.resultFocusId)) {
+    cook.resultFocusId = ids[0];
   }
-  return (
-    `<div class="cook-result-dish">` +
-    `<div class="cook-result-name">并列 ${state.candidates.length} 道</div>` +
-    `<div class="cook-preview-list">${state.candidates.map(d =>
-      `<button type="button" class="cook-preview-name" data-result-id="${esc(dishKey(d))}">${esc(d.name || d.id)}</button>`
-    ).join("")}</div>` +
-    `</div>`
-  );
+  const focus = chances.find(c => dishKey(c.dish) === cook.resultFocusId) || chances[0];
+  const tabs = chances.length > 1
+    ? `<div class="cook-result-tabs">${chances.map(c => {
+        const id = dishKey(c.dish);
+        const on = id === cook.resultFocusId ? " is-on" : "";
+        const label = `${chancePercent(c.chance)} ${c.dish.name || c.dish.id || ""}`;
+        return `<button type="button" class="cook-result-tab${on}" data-result-tab="${esc(id)}">${esc(label)}</button>`;
+      }).join("")}</div>`
+    : "";
+
+  return tabs + dishFullHTML(focus.dish);
 }
 
-/** 手机料理栏：未满 4 格时按名称列出可能产生的料理；满格后显示结果 */
+function resultHTML(state) {
+  if (!state) return `<div class="cook-result-empty">放入 4 格食材</div>`;
+  if (!state.aggregate.filled) {
+    return `<div class="cook-result-empty">已放 ${state.aggregate.count} / 4</div>`;
+  }
+  return filledResultHTML(state);
+}
+
+/** 手机料理栏：未满 4 格时按名称列出可能产生的料理；满格后直接展示详情 */
 function mobileResultHTML(state) {
   const filled = cook.slots.filter(Boolean);
-  if (filled.length >= 4) return resultHTML(state, false);
+  if (filled.length >= 4) return filledResultHTML(state);
 
   let list = CookCalc.previewPossible(filled, cook.dishes).dishes || [];
   const count = filled.length;
@@ -607,13 +628,14 @@ function renderCookState() {
     Foodfarm.bindContentTags(el);
   });
 
+  if (filled.length < 4) cook.resultFocusId = "";
   const ready = state && filled.length >= 4
     ? state
-    : (state ? { aggregate: state.aggregate, wetGoop: false, result: null, candidates: [], ok: false } : null);
+    : (state ? { aggregate: state.aggregate, wetGoop: false, result: null, candidates: [], chances: [], ok: false } : null);
   const desktop = Foodfarm.$("cook-result");
   const mobile = Foodfarm.$("cook-result-m");
   if (desktop) {
-    desktop.innerHTML = resultHTML(ready, true);
+    desktop.innerHTML = resultHTML(ready);
     Foodfarm.bindContentTags(desktop);
   }
   if (mobile) {
@@ -833,6 +855,13 @@ function bindUI() {
     if (pickFood) {
       setSlot(cook.pickIndex, cook.foodById.get(pickFood.dataset.foodId));
       closeModal("pick-modal");
+      return;
+    }
+
+    const resultTab = e.target.closest("[data-result-tab]");
+    if (resultTab) {
+      cook.resultFocusId = resultTab.getAttribute("data-result-tab") || "";
+      renderCookState();
       return;
     }
 

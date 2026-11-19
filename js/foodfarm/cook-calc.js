@@ -334,7 +334,7 @@
       return {
         ok: false,
         reason: "wetgoop",
-        message: "潮湿黏糊：当前配方没有对应料理",
+        message: "湿腻焦糊：当前配方没有对应料理",
         aggregate: agg,
         matching: [],
         candidates: [],
