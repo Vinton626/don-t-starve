@@ -546,44 +546,146 @@
     };
   }
 
+  function shuffle(list) {
+    const arr = list.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function pickOne(list) {
+    if (!list || !list.length) return null;
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
   /**
-   * 料理详情底部用的「可实现举例」，不做全量枚举。
-   * 给两条不同配方：先换满足度要求的食材，再换填充食材。
+   * 随机凑一条 4 格配方。
+   * 必用按名字放；度要求在该度的可选食材里随机挑。
+   * 都满足后：random 为 true 时，空格从所有不在 limit 里的纯单度食材里随机再配；
+   * 否则空格只继续用已经要求的度。
+   */
+  function randomFill(dish, foods) {
+    const slots = [];
+    if (!dish) return slots;
+    const pool = (Array.isArray(foods) ? foods : []).map(ingredientFromFood).filter(Boolean);
+    if (!pool.length) return slots;
+    const pureGroups = puresByDegree(pool);
+    const limits = Array.isArray(dish.limit) ? dish.limit : [];
+    const limitedDegrees = {};
+    limits.forEach(entry => {
+      const raw = typeof entry === "string" ? entry : (entry && entry.degree);
+      const key = normalizeDegreeKey(raw);
+      if (key) limitedDegrees[key] = true;
+    });
+
+    function blocked(ing) {
+      if (!ing) return true;
+      const names = {};
+      names[ing.id] = 1;
+      if (ing.name !== ing.id) names[ing.name] = 1;
+      return limits.some(entry => limitHits(entry, names, ing.degrees || {}));
+    }
+
+    function ofDegree(key, allowMixed) {
+      const pure = (pureGroups[key] || []).filter(ing => !blocked(ing));
+      if (pure.length || !allowMixed) return pure;
+      return pool.filter(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0);
+    }
+
+    function push(ing) {
+      if (!ing || slots.length >= SLOTS) return false;
+      slots.push(ing);
+      return true;
+    }
+
+    const must = Array.isArray(dish.must) ? dish.must : [];
+    must.forEach(entry => {
+      const needName = typeof entry === "string"
+        ? entry.trim()
+        : String((entry && (entry.name || entry.id)) || "").trim();
+      if (!needName) return;
+      const hits = pool.filter(ing => !blocked(ing) && (ing.name === needName || ing.id === needName));
+      const need = typeof entry === "object" && entry && entry.value != null ? Math.max(1, Math.ceil(num(entry.value))) : 1;
+      for (let n = 0; n < need && slots.length < SLOTS; n++) push(pickOne(hits));
+    });
+
+    const requires = Array.isArray(dish.requires) ? dish.requires : [];
+    requires.forEach(req => {
+      if (!req || req.degree == null) return;
+      const op = String(req.op || ">=");
+      if (op !== ">" && op !== ">=" && op !== "==" && op !== "=") return;
+      const key = normalizeDegreeKey(req.degree);
+      const group = ofDegree(key, true);
+      let guard = 0;
+      while (!requireSatisfied(req, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
+        guard += 1;
+        if (!push(pickOne(group))) break;
+      }
+    });
+
+    const agg = aggregate(slots);
+    const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
+      || requires.some(req => req && req.degree != null && !requireSatisfied(req, agg.tags));
+    if (unmet) return slots;
+
+    let bag = [];
+    if (dish.random === true) {
+      DEGREE_KEYS.forEach(key => {
+        if (limitedDegrees[key]) return;
+        ofDegree(key, false).forEach(ing => {
+          if (bag.indexOf(ing) < 0) bag.push(ing);
+        });
+      });
+    } else {
+      requires.forEach(req => {
+        if (!req || req.degree == null) return;
+        const key = normalizeDegreeKey(req.degree);
+        if (limitedDegrees[key]) return;
+        ofDegree(key, true).forEach(ing => {
+          if (bag.indexOf(ing) < 0) bag.push(ing);
+        });
+      });
+    }
+    bag = shuffle(bag);
+    let guard = 0;
+    while (slots.length < SLOTS && bag.length && guard < SLOTS * bag.length) {
+      guard += 1;
+      const fresh = bag.filter(ing => !slots.some(slot => (slot.id || slot.name) === (ing.id || ing.name)));
+      push(pickOne(fresh.length ? fresh : bag));
+    }
+    return slots;
+  }
+
+  /**
+   * 料理详情底部的可实现举例。每次随机配几条不同配方，只保留真正能做出该料理的结果。
    */
   function exampleRecipes(dish, foods, allDishes) {
-    const note = "以下为单度食材举例，不是全部可行配方。";
+    const note = "以下为随机举例，不是全部可行配方。";
+    const pool = (Array.isArray(foods) ? foods : []).map(ingredientFromFood).filter(Boolean);
+    if (!pool.length) return { recipes: [], note: "没有基础食物数据" };
     const found = [];
     const seen = {};
-    const plans = [
-      { reqIndex: 0, fillerIndex: 0 },
-      { reqIndex: 1, fillerIndex: 0 },
-      { reqIndex: 2, fillerIndex: 0 },
-      { reqIndex: 0, fillerIndex: 1 },
-      { reqIndex: 0, fillerIndex: 2 },
-      { reqIndex: 1, fillerIndex: 1 },
-      { reqIndex: 3, fillerIndex: 0 },
-      { reqIndex: 0, fillerIndex: 3 }
-    ];
-    plans.forEach(plan => {
-      const one = sampleFill(dish, foods, allDishes, plan);
-      if (!one.slots || one.slots.length < SLOTS) return;
-      const key = one.slots.map(s => s.id || s.name).join("\0");
-      if (seen[key]) return;
+    const want = 2;
+    for (let i = 0; i < 64 && found.length < want; i++) {
+      const slots = randomFill(dish, foods);
+      if (!slots || slots.length < SLOTS) continue;
+      if (!slotsMakeDish(slots, dish, allDishes)) continue;
+      const key = slots.map(slot => slot.id || slot.name).slice().sort().join("\0");
+      if (seen[key]) continue;
       seen[key] = true;
       found.push({
-        slots: one.slots,
-        names: one.slots.map(s => s.name || s.id),
-        ok: one.ok,
-        message: one.message
+        slots,
+        names: slots.map(slot => slot.name || slot.id),
+        ok: true,
+        message: "示例配方"
       });
-    });
-    const okOnes = found.filter(rec => rec.ok);
-    const recipes = (okOnes.length ? okOnes : found).slice(0, 2);
-    if (!recipes.length) {
-      const one = sampleFill(dish, foods, allDishes);
-      return { recipes: [], note: (one && one.message) || "暂无示例配方" };
     }
-    return { recipes, note };
+    if (!found.length) return { recipes: [], note: "暂无示例配方" };
+    return { recipes: found, note };
   }
 
   return {

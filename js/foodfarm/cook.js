@@ -16,8 +16,21 @@ const cook = {
   sanityMin: 10,
   gridHealMin: 10,
   gridSanityMin: 10,
-  openDegrees: new Set()
+  openDegrees: new Set(),
+  exampleCache: new Map()
 };
+
+function plainMetric(value) {
+  if (value == null || value === "") return "";
+  return String(value).trim();
+}
+
+function cookTimeText(value) {
+  const text = plainMetric(value);
+  if (!text) return "";
+  if (text === "待补充") return "待补充";
+  return text + " 秒";
+}
 
 const esc = text => Foodfarm.escapeHTML(text == null ? "" : String(text));
 
@@ -40,6 +53,7 @@ function rebuild() {
   cook.dishById.clear();
   cook.foods.forEach(f => cook.foodById.set(foodKey(f), f));
   cook.dishes.forEach(d => cook.dishById.set(dishKey(d), d));
+  cook.exampleCache.clear();
   cook.slots = cook.slots.map(s => {
     if (!s) return null;
     return cook.foodById.get(foodKey(s)) || null;
@@ -93,7 +107,9 @@ function dishInfoHTML(dish) {
   }).join("；");
   const must = (dish.must || []).map(m => {
     if (typeof m === "string") return esc(m);
-    return esc(m.name || m.id || "") + (m.value != null ? ` ≥${esc(m.value)}` : "");
+    const name = esc(m.name || m.id || "");
+    if (m.value == null) return name;
+    return `${name} ${esc(m.op || ">=")} <b>${esc(m.value)}</b>`;
   }).join("；");
   const limit = (dish.limit || []).map(l => {
     if (typeof l === "string") return esc(l);
@@ -107,8 +123,8 @@ function dishInfoHTML(dish) {
   return [
     `<p>${esc(originDishLabel(dish))}</p>`,
     `<p>类型：${Foodfarm.foodTypeHTML(dish)}</p>`,
-    dish.priority != null ? `<p>优先级：<b>${esc(dish.priority)}</b></p>` : "",
-    dish.cookSeconds != null ? `<p>烹饪：<b>${esc(dish.cookSeconds)}</b> 秒</p>` : "",
+    plainMetric(dish.priority) ? `<p>优先级：<b>${esc(plainMetric(dish.priority))}</b></p>` : "",
+    cookTimeText(dish.cookSeconds) ? `<p>烹饪：<b>${esc(cookTimeText(dish.cookSeconds))}</b></p>` : "",
     Foodfarm.spoilLabel(dish.spoilDays) ? `<p>保鲜：<b>${esc(Foodfarm.spoilLabel(dish.spoilDays))}</b></p>` : "",
     req ? `<p>度要求：${req}</p>` : "",
     must ? `<p>必用：${must}</p>` : "",
@@ -118,7 +134,11 @@ function dishInfoHTML(dish) {
 }
 
 function dishExamplesInner(dish, withNote) {
-  const examples = CookCalc.exampleRecipes(dish, cook.foods, cook.dishes);
+  const id = dishKey(dish);
+  if (!cook.exampleCache.has(id)) {
+    cook.exampleCache.set(id, CookCalc.exampleRecipes(dish, cook.foods, cook.dishes));
+  }
+  const examples = cook.exampleCache.get(id);
   const recipeLines = (examples.recipes || []).map(rec => {
     const names = (rec.names || []).map(n => esc(n)).join(" + ");
     const mark = rec.ok ? "" : ` <span class="muted">（${esc(rec.message || "未校验通过")}）</span>`;
@@ -515,7 +535,7 @@ function renderPossibleList() {
   host.innerHTML = list.map(d =>
     `<button type="button" class="cook-possible-item" data-dish-id="${esc(dishKey(d))}">` +
     `<span class="cook-possible-name">${esc(d.name || d.id)}</span>` +
-    `<span class="cook-possible-pri">优先级 ${esc(d.priority == null ? 0 : d.priority)}</span>` +
+    `<span class="cook-possible-pri">优先级 ${esc(plainMetric(d.priority) || "0")}</span>` +
     `</button>`
   ).join("");
 }

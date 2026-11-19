@@ -939,6 +939,34 @@
       }
     },
     {
+      "id": "purple_flower",
+      "name": "深色花瓣",
+      "origin": "",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 0,
+      "sanity": -5,
+      "spoilDays": 6,
+      "degrees": {
+        "decoration": 1,
+        "magic": 0.5
+      },
+      "dried": {
+        "id": "purple_flower_dried",
+        "name": "干深色花瓣",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 0,
+        "sanity": -5,
+        "spoilDays": "永久",
+        "degrees": {
+          "decoration": 1,
+          "magic": 0.5
+        }
+      }
+    },
+    {
       "id": "branch",
       "name": "树枝",
       "origin": "",

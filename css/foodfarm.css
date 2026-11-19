@@ -1470,7 +1470,66 @@ body.food-modal-open { overflow: hidden; }
   gap: 8px;
   flex-wrap: wrap;
 }
-.cook-calc-mobile { display: flex; flex-direction: column; gap: 12px; }
+.cook-calc-mobile {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 12px 12px;
+}
+.cook-mobile-title {
+  flex: 0 0 32px;
+  height: 32px;
+  margin: 0 -12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 14px;
+  color: #f0d060;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgba(201, 162, 39, .35);
+}
+.cook-calc-mobile .cook-result {
+  flex: 0 1 auto;
+  width: 100%;
+  max-height: 42%;
+  min-height: 0;
+  overflow: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.cook-calc-mobile .cook-result-dish { text-align: left; }
+.cook-calc-mobile .cook-result .food-card-stats states {
+  width: 100%;
+  min-width: 0;
+  gap: 6px;
+  justify-content: flex-start;
+}
+.cook-calc-mobile .cook-result .food-card-stats state {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 72px;
+}
+.cook-calc-mobile .cook-result .food-card-stats .stat-orb {
+  width: min(40px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+}
+.cook-calc-mobile .cook-slots.is-mobile {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+.cook-page .side-drawer-panel.cook-calc-panel:has(.cook-calc-mobile:not([hidden])) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
 .dish-recipes {
   margin-top: 12px;
   padding-top: 10px;
@@ -1539,9 +1598,9 @@ body.food-modal-open { overflow: hidden; }
   .calc-config-btn { display: inline-block; }
   .plan-list.is-two { grid-template-columns: 1fr; }
   .cook-page .calc-drawer .side-drawer-panel.cook-calc-panel {
-    width: min(92vw, 360px);
+    width: calc(100vw - 78px);
   }
-  .cook-pot-mobile { align-items: stretch; }
+  .cook-page .filter-drawer .side-drawer-handle { top: 210px; }
   .cook-slots.is-mobile .cook-slot { min-height: 48px; }
   .home-fab {
     top: 40px;

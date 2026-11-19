@@ -22,8 +22,8 @@ const farm = {
 };
 
 const RATIO_MODES = [
-  { id: "1-1", label: "1:1配比", note: "这里需要添加" },
-  { id: "3-3-3", label: "3+3+3配比", note: "这里需要添加" },
+  { id: "1-1", label: "1:1配比", note: "与所选作物各种 1 株，三种肥料都不为负。点另一株会换掉当前选择。" },
+  { id: "3-3-3", label: "3+3+3配比", note: "用三种作物的基础肥相加，总肥再乘 3。每种固定 3 株。" },
   { id: "9", label: "9格配比", note: "" }
 ];
 
@@ -284,12 +284,21 @@ function usedSlots() {
 
 function addPick(id) {
   if (!farm.cropById.has(id)) return;
-  if (pickIndex(id) >= 0) return;
-  if (farm.picks.length >= FarmCalc.MAX_CROPS) {
-    flashPickerNote("最多选择 " + FarmCalc.MAX_CROPS + " 种作物");
+  if (farm.ratioMode === "1-1") {
+    farm.picks = [{ id, count: 1 }];
+    afterPicksChange();
+    if (NARROW.matches) openPanel();
     return;
   }
-  farm.picks.unshift({ id, count: 1 });
+  if (pickIndex(id) >= 0) return;
+  const cap = farm.ratioMode === "3-3-3" ? 3 : FarmCalc.MAX_CROPS;
+  if (farm.picks.length >= cap) {
+    flashPickerNote(farm.ratioMode === "3-3-3"
+      ? "3+3+3 配比最多 3 种作物"
+      : "最多选择 " + FarmCalc.MAX_CROPS + " 种作物");
+    return;
+  }
+  farm.picks.unshift({ id, count: farm.ratioMode === "3-3-3" ? 3 : 1 });
   afterPicksChange();
   if (NARROW.matches) openPanel();
 }
@@ -297,9 +306,9 @@ function addPick(id) {
 function setPickCount(id, count) {
   const i = pickIndex(id);
   if (i < 0) return;
+  if (farm.ratioMode === "1-1" || farm.ratioMode === "3-3-3") return;
   const n = Math.max(1, Math.min(FarmCalc.DEFAULT_SLOTS, Math.floor(Number(count) || 1)));
   farm.picks[i].count = n;
-  if (farm.ratioMode === "3-3-3") return;
   afterPicksChange();
 }
 
@@ -338,16 +347,19 @@ function renderPicker() {
 
   const used = usedSlots();
   const fixedThree = farm.ratioMode === "3-3-3";
+  const fixedOne = farm.ratioMode === "1-1";
   if (farm.picks.length) {
     const usedText = fixedThree
       ? `已选 <b>${farm.picks.length}</b> / 3 种，每种 3 株`
-      : `已选 <b>${used}</b> / ${FarmCalc.DEFAULT_SLOTS} 格`;
+      : (fixedOne
+        ? `已选 <b>1</b> 种，数量固定为 1`
+        : `已选 <b>${used}</b> / ${FarmCalc.DEFAULT_SLOTS} 格`);
     selected.innerHTML =
       `<div class="calc-used">${usedText}</div>` +
       farm.picks.map(p => {
         const crop = farm.cropById.get(p.id);
-        const count = fixedThree ? 3 : p.count;
-        const lock = fixedThree ? " disabled" : "";
+        const count = fixedThree ? 3 : (fixedOne ? 1 : p.count);
+        const lock = fixedThree || fixedOne ? " disabled" : "";
         return (
           `<div class="calc-pick" data-id="${esc(p.id)}">` +
           `<span class="calc-pick-name">${esc(crop.name)}</span>` +
@@ -456,6 +468,10 @@ function applyRatioMode(id) {
     const item = ratioModeById(opt.dataset.mode);
     if (tip && item) tip.textContent = item.note || "这里需要添加";
   });
+  if (mode.id === "1-1") {
+    if (farm.picks.length > 1) farm.picks = farm.picks.slice(0, 1);
+    farm.picks.forEach(pick => { pick.count = 1; });
+  }
   if (mode.id === "3-3-3") {
     if (farm.picks.length > 3) {
       farm.picks = farm.picks.slice(0, 3);
@@ -507,7 +523,10 @@ function setConfigOpen(open) {
   const btn = Foodfarm.$("calc-config-btn");
   if (!config) return;
   config.hidden = !open;
-  if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+  if (btn) {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "返回配比" : "选择种子";
+  }
 }
 
 /** 窄屏且面板打开时，种子选择移进面板的配置框；其余情况留在左抽屉 */
@@ -650,7 +669,7 @@ function renderResult() {
   if (r.mode === "3-3-3") {
     netHost.innerHTML =
       fertStatesHTML(r.base || {}) +
-      `<div class="calc-net-note">每种固定 <b>3</b> 株，一共 <b>3</b> 种、<b>9</b> 格</div>`;
+      `<div class="calc-net-note">三种作物的基础肥相加后再 ×<b>3</b></div>`;
     const note = modeNoteHTML();
     if (!r.ok) {
       body.innerHTML = note + `<p class="calc-warn"><warn>${esc(r.message || "没有配比")}</warn></p>`;

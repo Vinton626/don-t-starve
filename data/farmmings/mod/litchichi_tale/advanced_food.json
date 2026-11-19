@@ -1,21 +1,38 @@
 {
   "items": [
     {
-      "id": "",
-      "name": "",
+      "id": "long_march",
+      "name": "幽幽大行军",
       "origin": "litchichi_tale",
-      "foodtype": "",
-      "health": null,
-      "hunger": null,
-      "sanity": null,
-      "spoilDays": null,
-      "cookSeconds": null,
-      "priority": null,
+      "hide": false,
+      "foodtype": "meat",
+      "health": 200,
+      "hunger": 200,
+      "sanity": 200,
+      "spoilDays": 52,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
       "requires": [],
-      "must": [],
+      "must": [
+        {
+          "name": "噩梦燃料",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "深色花瓣",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "怪物肉",
+          "op": "=",
+          "value": 1
+        }
+      ],
       "limit": [],
       "random": false,
-      "effect": ""
+      "effect": "食用时立即复活5个地皮范围内尚未开始复活的幽灵玩家，可同时救起多名队友"
     }
   ]
 }
