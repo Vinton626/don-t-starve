@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>料理篇</title>
 <link rel="stylesheet" href="../../css/common-tags.css">
-<link rel="stylesheet" href="../../css/foodfarm.css?v=23">
+<link rel="stylesheet" href="../../css/foodfarm.css?v=24">
 </head>
 <body class="cook-page">
   <aside class="mod-drawer" id="mod-drawer">
@@ -32,13 +32,15 @@
       <div class="cook-calc-mobile" id="cook-calc-mobile" hidden>
         <div class="cook-mobile-title">烹饪锅</div>
         <div class="cook-result tag-text" id="cook-result-m">
-          <div class="cook-result-empty">放入 4 格食材</div>
+          <div class="cook-result-empty">可能产生的料理将显示在这里</div>
         </div>
-        <div class="cook-degrees tag-text" id="cook-degrees-m"></div>
-        <div class="cook-slots is-mobile" id="cook-slots-m"></div>
-        <div class="cook-mobile-actions">
-          <button type="button" class="cook-possible-btn" id="cook-possible-btn-m">可能产生的食物</button>
-          <button type="button" class="filter-reset" id="cook-clear-slots-m">清空锅</button>
+        <div class="cook-mobile-foot">
+          <div class="cook-degrees tag-text" id="cook-degrees-m"></div>
+          <div class="cook-slots is-mobile" id="cook-slots-m"></div>
+          <div class="cook-mobile-actions">
+            <button type="button" class="cook-possible-btn" id="cook-possible-btn-m">可能产生的食物</button>
+            <button type="button" class="filter-reset" id="cook-clear-slots-m">清空锅</button>
+          </div>
         </div>
       </div>
     </div>
@@ -143,6 +145,6 @@
   <script src="../../js/common/tags.js?v=13"></script>
   <script src="../../js/foodfarm/common.js?v=4"></script>
   <script src="../../js/foodfarm/cook-calc.js?v=8"></script>
-  <script src="../../js/foodfarm/cook.js?v=9"></script>
+  <script src="../../js/foodfarm/cook.js?v=10"></script>
 </body>
 </html>

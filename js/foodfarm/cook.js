@@ -542,7 +542,7 @@ function resultHTML(state, full) {
     return `<div class="cook-result-empty">已放 ${state.aggregate.count} / 4</div>`;
   }
   if (state.wetGoop) {
-    return `<div class="cook-result-dish"><div class="cook-result-name">潮湿黏糊</div><div class="muted">当前配方没有对应料理</div></div>`;
+    return `<div class="cook-result-dish"><div class="cook-result-name">湿腻焦糊</div><div class="muted">当前配方没有对应料理</div></div>`;
   }
   if (state.result) {
     if (full) return dishFullHTML(state.result);
@@ -550,10 +550,7 @@ function resultHTML(state, full) {
     return (
       `<button type="button" class="cook-result-dish" data-result-id="${esc(dishKey(d))}">` +
       `<div class="cook-result-name">${esc(d.name || d.id)}</div>` +
-      (Foodfarm.foodTypeText(d)
-        ? `<div class="food-card-type">${Foodfarm.foodTypeHTML(d)}</div>`
-        : "") +
-      `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(d)}</div>` +
+      `<div class="muted">点名称查看详情</div>` +
       `</button>`
     );
   }
@@ -566,10 +563,31 @@ function resultHTML(state, full) {
   return (
     `<div class="cook-result-dish">` +
     `<div class="cook-result-name">并列 ${state.candidates.length} 道</div>` +
-    `<div class="cook-tie-list">${state.candidates.map(d =>
-      `<button type="button" class="calc-seed" data-result-id="${esc(dishKey(d))}">${esc(d.name || d.id)}</button>`
+    `<div class="cook-preview-list">${state.candidates.map(d =>
+      `<button type="button" class="cook-preview-name" data-result-id="${esc(dishKey(d))}">${esc(d.name || d.id)}</button>`
     ).join("")}</div>` +
     `</div>`
+  );
+}
+
+/** 手机料理栏：未满 4 格时按名称列出可能产生的料理；满格后显示结果 */
+function mobileResultHTML(state) {
+  const filled = cook.slots.filter(Boolean);
+  if (filled.length >= 4) return resultHTML(state, false);
+
+  let list = CookCalc.previewPossible(filled, cook.dishes).dishes || [];
+  const count = filled.length;
+  const head = count
+    ? `<div class="cook-preview-label">已放 ${count} / 4 · 可能产生 ${list.length} 道</div>`
+    : `<div class="cook-preview-label">可能产生的料理（点名称查看）</div>`;
+  if (!list.length) {
+    return head + `<div class="cook-result-empty">暂无可能料理</div>`;
+  }
+  return (
+    head +
+    `<div class="cook-preview-list">${list.map(d =>
+      `<button type="button" class="cook-preview-name" data-dish-id="${esc(dishKey(d))}">${esc(d.name || d.id)}</button>`
+    ).join("")}</div>`
   );
 }
 
@@ -599,7 +617,7 @@ function renderCookState() {
     Foodfarm.bindContentTags(desktop);
   }
   if (mobile) {
-    mobile.innerHTML = resultHTML(ready, false);
+    mobile.innerHTML = mobileResultHTML(ready);
     Foodfarm.bindContentTags(mobile);
   }
 }
@@ -815,6 +833,12 @@ function bindUI() {
     if (pickFood) {
       setSlot(cook.pickIndex, cook.foodById.get(pickFood.dataset.foodId));
       closeModal("pick-modal");
+      return;
+    }
+
+    const preview = e.target.closest("#cook-result-m [data-dish-id]");
+    if (preview) {
+      openDishModal(cook.dishById.get(preview.dataset.dishId));
       return;
     }
 
