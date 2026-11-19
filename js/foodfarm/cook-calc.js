@@ -490,7 +490,7 @@
   /**
    * 在已有格子上补料，不替换已放入的食材。
    * 必用、度要求都在符合条件的食材里随机挑。
-   * 都满足且 random 为 true 时，随机选一种不在 limit 里、优先锅里还没有的度，再用该度的食材随机填满空格。
+   * 都满足后，随机选一种不在 limit 里、优先锅里还没有的度，再用该度的食材随机填满空格。
    */
   function supplementFill(dish, existing, foods) {
     const slots = [null, null, null, null];
@@ -583,7 +583,7 @@
     const agg = aggregate(slots);
     const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
       || requires.some(req => req && req.degree != null && !requireSatisfied(req, agg.tags));
-    if (!unmet && dish.random === true && slots.some(slot => !slot)) {
+    if (!unmet && slots.some(slot => !slot)) {
       const usable = DEGREE_KEYS.filter(key => !limitedDegrees[key] && foodsOfDegree(key).length);
       const fresh = usable.filter(key => !(agg.tags[key] > 0));
       const key = pickOne(fresh.length ? fresh : usable);
@@ -718,8 +718,7 @@
   /**
    * 随机凑一条 4 格配方。
    * 必用按名字放；度要求在该度的可选食材里随机挑。
-   * 都满足后：random 为 true 时，空格从所有不在 limit 里的纯单度食材里随机再配；
-   * 否则空格只继续用已经要求的度。
+   * 都满足后，空格从所有不在 limit 里的纯单度食材里随机再配。
    */
   function randomFill(dish, foods) {
     const slots = [];
@@ -789,23 +788,12 @@
     if (unmet) return slots;
 
     let bag = [];
-    if (dish.random === true) {
-      DEGREE_KEYS.forEach(key => {
-        if (limitedDegrees[key]) return;
-        ofDegree(key, false).forEach(ing => {
-          if (bag.indexOf(ing) < 0) bag.push(ing);
-        });
+    DEGREE_KEYS.forEach(key => {
+      if (limitedDegrees[key]) return;
+      ofDegree(key, false).forEach(ing => {
+        if (bag.indexOf(ing) < 0) bag.push(ing);
       });
-    } else {
-      requires.forEach(req => {
-        if (!req || req.degree == null) return;
-        const key = normalizeDegreeKey(req.degree);
-        if (limitedDegrees[key]) return;
-        ofDegree(key, true).forEach(ing => {
-          if (bag.indexOf(ing) < 0) bag.push(ing);
-        });
-      });
-    }
+    });
     bag = shuffle(bag);
     let guard = 0;
     while (slots.length < SLOTS && bag.length && guard < SLOTS * bag.length) {

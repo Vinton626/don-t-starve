@@ -384,8 +384,8 @@ body {
   text-decoration: none;
   font-size: clamp(22px, 3vw, 30px);
   font-weight: 700;
-  letter-spacing: .28em;
-  text-indent: .28em;
+  letter-spacing: .18em;
+  text-indent: .18em;
   text-shadow: 0 2px 2px rgba(0, 0, 0, .85);
   transition: border-color .15s ease, color .15s ease, background .15s ease;
 }
@@ -394,13 +394,60 @@ body {
   border-color: rgba(240, 208, 96, .85);
   background: rgba(42, 30, 16, .9);
 }
-.hub-card-food {
-  grid-column: 1 / -1;
-  letter-spacing: .18em;
-  text-indent: .18em;
-}
 
+.fish-card-weight {
+  color: #a89068;
+  font-size: 12px;
+}
 .food-toolbar { flex: 0 0 auto; margin-bottom: 12px; }
+.origin-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.origin-section {
+  min-width: 0;
+}
+.origin-section-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 5px 10px;
+  border: 1px solid rgba(201, 162, 39, .4);
+  background: rgba(20, 14, 8, .78);
+  color: #f0d060;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: .06em;
+  text-align: left;
+  cursor: pointer;
+}
+.origin-section-toggle:hover {
+  border-color: rgba(240, 208, 96, .8);
+  color: #ffe7a0;
+}
+.origin-section-arrow {
+  width: 1em;
+  color: #c9a227;
+  flex: 0 0 auto;
+}
+.origin-section-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.origin-section-count {
+  color: #a89068;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.origin-section-body {
+  min-width: 0;
+}
+.origin-section-body[hidden] {
+  display: none;
+}
 .food-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -1465,6 +1512,15 @@ body.food-modal-open { overflow: hidden; }
   flex-direction: column;
 }
 .cook-result-empty { color: #8a7860; font-size: 13px; text-align: center; }
+.cook-warly-note {
+  margin: 0 0 8px;
+  padding: 6px 8px;
+  border: 1px solid rgba(201, 162, 39, .45);
+  background: rgba(42, 30, 16, .75);
+  color: #ffe7a0;
+  font-size: 13px;
+  line-height: 1.5;
+}
 .cook-result-dish {
   width: 100%;
   border: 0;
@@ -1687,7 +1743,6 @@ body.food-modal-open { overflow: hidden; }
     letter-spacing: .16em;
     text-indent: .16em;
   }
-  .hub-card-food { grid-column: auto; }
   .food-grid {
     grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
     gap: 8px;

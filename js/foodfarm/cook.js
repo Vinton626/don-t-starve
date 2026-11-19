@@ -96,7 +96,9 @@ function renderGrid() {
     host.innerHTML = `<p class="empty-center">条件太多了，无对应料理</p>`;
     return;
   }
-  host.innerHTML = `<div class="food-grid">${list.map(dishCardHTML).join("")}</div>`;
+  const groups = Foodfarm.groupItemsByOrigin(list);
+  host.innerHTML = Foodfarm.originSectionsHTML(groups, dishCardHTML);
+  Foodfarm.bindOriginSections(host);
   Foodfarm.bindContentTags(host);
 }
 
@@ -105,7 +107,18 @@ function originDishLabel(dish) {
   return name === "原版" ? "原版料理" : `${name}料理`;
 }
 
-function dishInfoHTML(dish) {
+function isWarlyDish(dish) {
+  return !!(dish && String(dish.exclusive || "").trim() === "warly");
+}
+
+function warlyTipHTML(withExtra) {
+  let text = "大厨特色菜，需要使用便携烹饪锅烹饪";
+  if (withExtra) text += "。普通烹饪锅只会做出其他料理";
+  return `<p class="cook-warly-note">${esc(text)}</p>`;
+}
+
+function dishInfoHTML(dish, opts) {
+  const skipWarlyTip = opts && opts.skipWarlyTip;
   const req = (dish.requires || []).map(r => {
     const key = Foodfarm.normalizeDegreeKey ? Foodfarm.normalizeDegreeKey(r.degree) : r.degree;
     const name = Foodfarm.degreeLabel ? Foodfarm.degreeLabel(key) : key;
@@ -124,6 +137,7 @@ function dishInfoHTML(dish) {
   }).join("；");
   return [
     `<p>${esc(originDishLabel(dish))}</p>`,
+    !skipWarlyTip && isWarlyDish(dish) ? warlyTipHTML(false) : "",
     `<p>类型：${Foodfarm.foodTypeHTML(dish)}</p>`,
     plainMetric(dish.priority) ? `<p>优先级：<b>${esc(plainMetric(dish.priority))}</b></p>` : "",
     cookTimeText(dish.cookSeconds) ? `<p>烹饪：<b>${esc(cookTimeText(dish.cookSeconds))}</b></p>` : "",
@@ -203,14 +217,14 @@ function dishDescHTML(dish) {
   return dishInfoHTML(dish) + `<div class="dish-recipes" data-dish-examples="${id}" data-example-note="1">${dishExamplesMarkup(dish, true)}</div>`;
 }
 
-function dishFullHTML(dish) {
+function dishFullHTML(dish, opts) {
   return (
     `<article class="cook-dish">` +
     `<div class="cook-dish-head">` +
     `<div class="cook-dish-name">${esc(dish.name || dish.id)}</div>` +
     `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(dish)}</div>` +
     `</div>` +
-    `<div class="cook-dish-scroll tag-text">${dishInfoHTML(dish)}</div>` +
+    `<div class="cook-dish-scroll tag-text">${dishInfoHTML(dish, opts)}</div>` +
     `<div class="cook-dish-examples tag-text" data-dish-examples="${esc(dishKey(dish))}">${dishExamplesMarkup(dish, false)}</div>` +
     `</article>`
   );
@@ -561,7 +575,10 @@ function filledResultHTML(state) {
     return (b.chance || 0) - (a.chance || 0);
   });
   if (!chances.length) {
-    if (state.result) return dishFullHTML(state.result);
+    if (state.result) {
+      const tip = isWarlyDish(state.result) ? warlyTipHTML(false) : "";
+      return tip + dishFullHTML(state.result, { skipWarlyTip: isWarlyDish(state.result) });
+    }
     return `<div class="cook-result-empty">暂无结果</div>`;
   }
 
@@ -570,6 +587,12 @@ function filledResultHTML(state) {
     cook.resultFocusId = ids[0];
   }
   const focus = chances.find(c => dishKey(c.dish) === cook.resultFocusId) || chances[0];
+  const hasWarly = chances.some(c => isWarlyDish(c.dish));
+  const matching = Array.isArray(state.matching) && state.matching.length
+    ? state.matching
+    : chances.map(c => c.dish);
+  const hasOther = matching.some(d => d && !isWarlyDish(d));
+  const tip = hasWarly ? warlyTipHTML(hasOther) : "";
   const tabs = chances.length > 1
     ? `<div class="cook-result-tabs">${chances.map(c => {
         const id = dishKey(c.dish);
@@ -579,7 +602,7 @@ function filledResultHTML(state) {
       }).join("")}</div>`
     : "";
 
-  return tabs + dishFullHTML(focus.dish);
+  return tip + tabs + dishFullHTML(focus.dish, { skipWarlyTip: hasWarly });
 }
 
 function resultHTML(state) {

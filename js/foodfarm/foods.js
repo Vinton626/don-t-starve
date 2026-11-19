@@ -114,7 +114,9 @@ function paintCardView(card, food, form) {
 }
 
 function catalogFoods() {
-  const base = Foodfarm.foodItems().filter(item => item && (item.id || item.name) && !item.hide && !item.plantOnly);
+  const base = Foodfarm.foodItems().filter(item =>
+    item && (item.id || item.name) && !item.hide && !item.plantOnly
+  );
   const seen = new Set(base.map(item => String(item.id || "")));
   const seeds = [];
   Foodfarm.foodItems().forEach(item => {
@@ -123,10 +125,7 @@ function catalogFoods() {
     const id = String(seed.id || "");
     if (!id || seen.has(id)) return;
     seen.add(id);
-    seeds.push(Object.assign({ origin: item.origin, hide: false }, seed, {
-      cooked: undefined,
-      dried: undefined
-    }));
+    seeds.push(Object.assign({ origin: item.origin, hide: false }, seed));
   });
   return base.concat(seeds);
 }
@@ -149,7 +148,9 @@ function renderFoods() {
     Foodfarm.bindContentTags(host);
     return;
   }
-  host.innerHTML = `<div class="food-grid">${items.map(foodCardHTML).join("")}</div>`;
+  const groups = Foodfarm.groupItemsByOrigin(items);
+  host.innerHTML = Foodfarm.originSectionsHTML(groups, foodCardHTML);
+  Foodfarm.bindOriginSections(host);
   Foodfarm.bindContentTags(host);
 
   host.querySelectorAll(".food-card").forEach(card => {

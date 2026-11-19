@@ -23,7 +23,6 @@
         { "degree": "meat" },
         { "degree": "inedible" }
       ],
-      "random": true,
       "effect": "无特殊效果"
     },
     {
@@ -48,7 +47,35 @@
       "limit": [
         { "degree": "inedible" }
       ],
-      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "baconegg",
+      "name": "培根煎蛋",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 75,
+      "sanity": 5,
+      "spoilDays": 20,
+      "cookSeconds": 40,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">",
+          "value": 1
+        },
+        {
+          "degree": "egg",
+          "op": ">",
+          "value": 1
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "veg" }
+      ],
       "effect": "无特殊效果"
     },
     {
@@ -73,7 +100,45 @@
       "limit": [
         { "degree": "inedible" }
       ],
-      "random": true,
+      "effect": "无特殊效果"
+    },
+    {
+      "id":"butterflymuffin",
+      "name": "蝴蝶松饼",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 0.5
+        }
+      ],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "蝴蝶翅膀",
+              "op": "=",
+              "value": 1
+            },
+            {
+              "name": "月蛾翅膀",
+              "op": "=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [
+        { "degree": "meat" }
+      ],
       "effect": "无特殊效果"
     },
     {
@@ -104,7 +169,6 @@
       "limit": [
         { "degree": "meat" }
       ],
-      "random": true,
       "effect": "无特殊效果"
     },
     {
@@ -138,7 +202,6 @@
         }
       ],
       "limit": [],
-      "random": true,
       "effect": "无特殊效果"
     },
     {
@@ -185,13 +248,88 @@
         { "degree": "egg" },
         { "degree": "inedible" }
       ],
-      "random": false,
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "fishtacos",
+      "name": "鱼肉玉米卷",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 6,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "<烤>玉米",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "爆米花鱼",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "玉米鳕鱼",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "friedfishfillet",
+      "name": "炸鱼排",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 40,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "inedible",
+          "op": "<=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
       "effect": "无特殊效果"
     },
     {
       "id": "freshfruitcrepes",
       "name": "鲜果可丽饼",
       "origin": "",
+      "exclusive": "warly",
       "foodtype": "veggie",
       "health": 60,
       "hunger": 150,
@@ -219,7 +357,6 @@
         }
       ],
       "limit": [],
-      "random": false,
       "effect": "无特殊效果"
     },
     {
@@ -237,7 +374,6 @@
       "requires": [],
       "must": [],
       "limit": [],
-      "random": true,
       "effect": "你这做的什么玩意"
     }
   ]

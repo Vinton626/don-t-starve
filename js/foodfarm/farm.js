@@ -124,7 +124,12 @@ function renderGrid() {
     host.innerHTML = `<p class="empty-center">${full ? "根本没有这样用肥的种子植株" : "条件太多了，无对应种子植株"}</p>`;
     return;
   }
-  host.innerHTML = `<div class="food-grid">${list.map(seedCardHTML).join("")}</div>`;
+  const groups = Foodfarm.groupItemsByOrigin(list, crop => {
+    const entry = farm.entryById.get(crop.id);
+    return (entry && entry.food) || crop;
+  });
+  host.innerHTML = Foodfarm.originSectionsHTML(groups, seedCardHTML);
+  Foodfarm.bindOriginSections(host);
   Foodfarm.bindContentTags(host);
 }
 

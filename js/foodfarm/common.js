@@ -113,6 +113,121 @@ function cookItems() {
   return Array.isArray(DATA.cook && DATA.cook.items) ? DATA.cook.items : [];
 }
 
+/** 钓鱼区域：键写在 fishing.areas 里 */
+const FISH_AREAS = {
+  freshwater: { key: "freshwater", name: "淡水" },
+  shallow: { key: "shallow", name: "浅海" },
+  ocean: { key: "ocean", name: "中层海" },
+  deep: { key: "deep", name: "深海" },
+  dangerous: { key: "dangerous", name: "危险海域" },
+  waterlogged: { key: "waterlogged", name: "水中木" }
+};
+
+const FISH_SEASONS = {
+  spring: { key: "spring", name: "春" },
+  summer: { key: "summer", name: "夏" },
+  autumn: { key: "autumn", name: "秋" },
+  winter: { key: "winter", name: "冬" }
+};
+
+/** 鱼类标识：fish === true，或字符串 "fish" */
+function isFishItem(entry) {
+  if (!entry) return false;
+  if (entry.fish === true) return true;
+  return String(entry.fish || "").trim().toLowerCase() === "fish";
+}
+
+function fishItems() {
+  return foodItems().filter(item => item && (item.id || item.name) && isFishItem(item));
+}
+
+function fishAreaLabel(key) {
+  const conf = FISH_AREAS[String(key || "").trim()];
+  return (conf && conf.name) || String(key || "");
+}
+
+function fishSeasonLabel(key) {
+  const conf = FISH_SEASONS[String(key || "").trim()];
+  return (conf && conf.name) || String(key || "");
+}
+
+function fishingInfo(entry) {
+  const raw = entry && entry.fishing;
+  return raw && typeof raw === "object" ? raw : {};
+}
+
+function fishAreasOf(entry) {
+  const areas = fishingInfo(entry).areas;
+  return (Array.isArray(areas) ? areas : []).map(String).filter(Boolean);
+}
+
+/** 展示用：未写区域时提示不指定特殊区域 */
+function fishAreasText(entry) {
+  const list = fishAreasOf(entry).map(fishAreaLabel).filter(Boolean);
+  if (!list.length) return "不指定特殊区域";
+  return list.join("、");
+}
+
+function fishDropsOf(entry) {
+  const drops = fishingInfo(entry).drops;
+  return Array.isArray(drops) ? drops.filter(Boolean) : [];
+}
+
+function fishSeasonsOf(entry) {
+  const seasons = fishingInfo(entry).seasons;
+  const list = (Array.isArray(seasons) ? seasons : []).map(String).filter(Boolean);
+  if (!list.length) return ["spring", "summer", "autumn", "winter"];
+  return list;
+}
+
+/** 展示用：四季齐全写「四季」，否则春、夏… */
+function fishSeasonsText(entry) {
+  const list = fishSeasonsOf(entry);
+  const all = ["spring", "summer", "autumn", "winter"];
+  if (list.length === 4 && all.every(key => list.indexOf(key) >= 0)) return "四季";
+  return list.map(fishSeasonLabel).filter(Boolean).join("、");
+}
+
+function fishEventsOf(entry) {
+  const events = fishingInfo(entry).events;
+  return (Array.isArray(events) ? events : []).map(String).filter(Boolean);
+}
+
+function fishWeightRange(entry) {
+  const info = fishingInfo(entry);
+  const weight = info.weight && typeof info.weight === "object" ? info.weight : null;
+  const min = weight && weight.min != null ? Number(weight.min) : (info.weightMin != null ? Number(info.weightMin) : NaN);
+  const max = weight && weight.max != null ? Number(weight.max) : (info.weightMax != null ? Number(info.weightMax) : NaN);
+  return {
+    min: Number.isFinite(min) ? min : null,
+    max: Number.isFinite(max) ? max : null
+  };
+}
+
+function fishChanceText(chance) {
+  if (chance == null || chance === "") return "";
+  if (typeof chance === "string") return chance.trim();
+  const n = Number(chance);
+  if (!Number.isFinite(n)) return String(chance);
+  if (n >= 0 && n <= 1) {
+    const pct = Math.round(n * 1000) / 10;
+    return (Number.isInteger(pct) ? String(pct) : pct.toFixed(1)) + "%";
+  }
+  return String(n) + "%";
+}
+
+function fishDropLabel(drop) {
+  if (drop == null) return "";
+  if (typeof drop === "string") return drop.trim();
+  if (typeof drop !== "object") return String(drop);
+  const name = drop.name != null && String(drop.name).trim() ? String(drop.name).trim() : "";
+  const id = drop.id != null && String(drop.id).trim() ? String(drop.id).trim() : "";
+  const base = name || id;
+  if (!base) return "";
+  const chance = fishChanceText(drop.chance != null ? drop.chance : drop.prob);
+  return chance ? base + "（" + chance + "）" : base;
+}
+
 function modList() {
   const block = DATA.mod;
   if (!block) return [];
@@ -132,6 +247,128 @@ function originLabel(entry) {
   const tag = String(entry.origin || "").trim();
   const hit = modList().find(mod => modKey(mod) === tag);
   return (hit && hit.name) || tag;
+}
+
+function originKeyOf(entry) {
+  if (isVanilla(entry)) return "";
+  return String(entry.origin || "").trim();
+}
+
+function foodTypeSortKey(entry) {
+  return foodTypeKeys(entry).join("\0");
+}
+
+function itemDisplayName(item) {
+  return String((item && (item.name || item.id)) || "");
+}
+
+function compareItemsByTypeThenName(a, b, metaOf) {
+  const ma = metaOf ? metaOf(a) : a;
+  const mb = metaOf ? metaOf(b) : b;
+  const ta = foodTypeSortKey(ma);
+  const tb = foodTypeSortKey(mb);
+  if (ta !== tb) return ta.localeCompare(tb, "zh");
+  return itemDisplayName(a).localeCompare(itemDisplayName(b), "zh");
+}
+
+/** 先按模组配置顺序分组，组内再按 foodtype、名字排序。foodtype 不单独做标题。 */
+function groupItemsByOrigin(items, metaOf) {
+  const list = Array.isArray(items) ? items : [];
+  const buckets = new Map();
+  list.forEach(item => {
+    const meta = metaOf ? metaOf(item) : item;
+    const key = originKeyOf(meta);
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(item);
+  });
+  const ordered = [];
+  const seen = new Set();
+  modList().forEach(mod => {
+    const key = modKey(mod);
+    if (!buckets.has(key)) return;
+    seen.add(key);
+    ordered.push({
+      key,
+      label: originLabel({ origin: key }),
+      items: buckets.get(key).slice().sort((a, b) => compareItemsByTypeThenName(a, b, metaOf))
+    });
+  });
+  [...buckets.keys()]
+    .filter(key => !seen.has(key))
+    .sort((a, b) => a.localeCompare(b, "zh"))
+    .forEach(key => {
+      ordered.push({
+        key,
+        label: originLabel({ origin: key }),
+        items: buckets.get(key).slice().sort((a, b) => compareItemsByTypeThenName(a, b, metaOf))
+      });
+    });
+  return ordered;
+}
+
+/** 收起的模组 tag；空集合表示全部展开 */
+const collapsedOrigins = new Set();
+
+function isOriginCollapsed(key) {
+  return collapsedOrigins.has(key == null ? "" : String(key));
+}
+
+function toggleOriginCollapsed(key) {
+  const k = key == null ? "" : String(key);
+  if (collapsedOrigins.has(k)) collapsedOrigins.delete(k);
+  else collapsedOrigins.add(k);
+  return collapsedOrigins.has(k);
+}
+
+function syncOriginSection(section, collapsed) {
+  if (!section) return;
+  section.classList.toggle("is-collapsed", !!collapsed);
+  const btn = section.querySelector("[data-origin-toggle]");
+  const arrow = section.querySelector(".origin-section-arrow");
+  const body = section.querySelector(".origin-section-body");
+  if (btn) btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  if (arrow) arrow.textContent = collapsed ? "▸" : "▾";
+  if (body) body.hidden = !!collapsed;
+}
+
+function originSectionsHTML(groups, cardHTML) {
+  const renderCard = typeof cardHTML === "function" ? cardHTML : () => "";
+  return (
+    `<div class="origin-sections">` +
+    (Array.isArray(groups) ? groups : []).map(group => {
+      const collapsed = isOriginCollapsed(group.key);
+      const key = escapeHTML(group.key == null ? "" : String(group.key));
+      const title = escapeHTML(group.label || "未分类");
+      const count = Array.isArray(group.items) ? group.items.length : 0;
+      return (
+        `<section class="origin-section${collapsed ? " is-collapsed" : ""}" data-origin="${key}">` +
+        `<button type="button" class="origin-section-toggle" data-origin-toggle="${key}" aria-expanded="${collapsed ? "false" : "true"}">` +
+        `<span class="origin-section-arrow" aria-hidden="true">${collapsed ? "▸" : "▾"}</span>` +
+        `<span class="origin-section-title">${title}</span>` +
+        `<span class="origin-section-count">${count}</span>` +
+        `</button>` +
+        `<div class="origin-section-body"${collapsed ? " hidden" : ""}>` +
+        `<div class="food-grid">${(group.items || []).map(renderCard).join("")}</div>` +
+        `</div>` +
+        `</section>`
+      );
+    }).join("") +
+    `</div>`
+  );
+}
+
+function bindOriginSections(host) {
+  if (!host || host.dataset.originBound === "1") return;
+  host.dataset.originBound = "1";
+  host.addEventListener("click", e => {
+    const btn = e.target.closest("[data-origin-toggle]");
+    if (!btn || !host.contains(btn)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const key = btn.getAttribute("data-origin-toggle") || "";
+    const collapsed = toggleOriginCollapsed(key);
+    syncOriginSection(btn.closest(".origin-section"), collapsed);
+  });
 }
 
 function findFoodById(id) {
@@ -276,13 +513,12 @@ function foodMatchesDishDegrees(food, dish) {
   return requires.some(req => foodSatisfiesRequire(food, req, degrees));
 }
 
-/** 食物能否作为该料理原料：非 limit，且（度命中 requires / random 填充 / must 指名） */
+/** 食物能否作为该料理原料：非 limit，且（度命中 requires / must 指名） */
 function foodMatchesDish(food, dish) {
   if (!food || !dish) return false;
   if (!dish.id && !dish.name) return false;
   if (dishLimitsFood(dish, food)) return false;
   if (dishMustUseFood(dish, food)) return true;
-  if (dish.random === true) return true;
   if (foodMatchesDishDegrees(food, dish)) return true;
   return false;
 }
@@ -538,6 +774,8 @@ window.Foodfarm = {
   FOOD_DEGREES,
   FERTILIZER_TAGS,
   FOOD_TYPES,
+  FISH_AREAS,
+  FISH_SEASONS,
   normalizeDegreeKey,
   DATA,
   $,
@@ -546,6 +784,20 @@ window.Foodfarm = {
   spoilLabel,
   foodItems,
   cookItems,
+  fishItems,
+  isFishItem,
+  fishAreaLabel,
+  fishSeasonLabel,
+  fishingInfo,
+  fishAreasOf,
+  fishAreasText,
+  fishDropsOf,
+  fishSeasonsOf,
+  fishSeasonsText,
+  fishEventsOf,
+  fishWeightRange,
+  fishChanceText,
+  fishDropLabel,
   modList,
   plantEntries,
   findFoodById,
@@ -553,6 +805,11 @@ window.Foodfarm = {
   plantSeed,
   isVanilla,
   originLabel,
+  originKeyOf,
+  groupItemsByOrigin,
+  originSectionsHTML,
+  bindOriginSections,
+  isOriginCollapsed,
   foodDegreeMap,
   foodMatchesDish,
   dishesForFood,

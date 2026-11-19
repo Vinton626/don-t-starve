@@ -84,10 +84,21 @@
 <h2>保质期</h2>
 <p>普通食物、烤/晾、种子、料理都可写 <code>spoilDays</code>。数字是天数，详情显示为「保质期：N 天」。不会腐烂写 <code>"spoilDays": "永久"</code>，页面只显示「永久」，不加「天」。没有、或写 <code>null</code>，就省略这一行。</p>
 <p><code>fallback</code>：布尔。为 <code>true</code> 时这道是保底料理（原版潮湿黏糊 <code>stickygoo</code>）。满 4 格且没有任何其它料理匹配时，锅结果直接展示它的详情；不参与「可能产生」预览，避免每锅都挂着。判定时也不会和其它料理抢优先级。</p>
-<p>料理的 <code>cookSeconds</code>、<code>priority</code> 还没定稿时写 <code>"待补充"</code>。详情只显示「待补充」：烹饪时间后面不加「秒」。判定时这个优先级按 0 和其他料理比较。<code>must</code> 的 <code>op</code> 按原样显示，<code>"="</code> 表示该食材格数必须正好等于 <code>value</code>。<code>must.name</code> 前面可以写 <code>&lt;烤&gt;</code>、<code>&lt;晾&gt;</code>，对应这条食物的 <code>cooked.id</code>、<code>dried.id</code>。生的名字本身也算。只写 <code>&lt;烤&gt;大肉</code> 是生和烤两种；<code>&lt;烤&gt;&lt;晾&gt;大肉</code> 是生、烤、晾三种。两种食材都能用时，把它们放进 <code>or</code>：<code>{"or":[{"name":"黄油","op":"&gt;=","value":1},{"name":"蜂蜜","op":"&gt;=","value":1}]}</code>，满足其中一条即可。锅里有烤或晾的食物，格子右上角可以切换形态，晾在烤左边。</p>
+<p>料理的 <code>cookSeconds</code>、<code>priority</code> 还没定稿时写 <code>"待补充"</code>。详情只显示「待补充」：烹饪时间后面不加「秒」。判定时这个优先级按 0 和其他料理比较。<code>must</code> 的 <code>op</code> 按原样显示，<code>"="</code> 表示该食材格数必须正好等于 <code>value</code>。<code>must.name</code> 前面可以写 <code>&lt;烤&gt;</code>、<code>&lt;晾&gt;</code>，对应这条食物的 <code>cooked.id</code>、<code>dried.id</code>。生的名字本身也算。只写 <code>&lt;烤&gt;大肉</code> 是生和烤两种；<code>&lt;烤&gt;&lt;晾&gt;大肉</code> 是生、烤、晾三种。两种食材都能用时，把它们放进 <code>or</code>：<code>{"or":[{"name":"黄油","op":"&gt;=","value":1},{"name":"蜂蜜","op":"&gt;=","value":1}]}</code>，满足其中一条即可。锅里有烤或晾的食物，格子右上角可以切换形态，晾在烤左边。沃利专属料理写字符串字段 <code>"exclusive": "warly"</code>。卡片详情提示「大厨特色菜，需要使用便携烹饪锅烹饪」；烹饪锅最终结果里出现这道菜时也显示这句。同一配方还匹配到任何其他料理（不论优先级高低）时，再加一句「普通烹饪锅只会做出其他料理」。</p>
 
 <h2>基础食物字段</h2>
-<p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。默认 / 省略视为 <code>false</code>。</p>
+<p><code>fish</code>：鱼类标识。写 <code>true</code>（或字符串 <code>"fish"</code>）时进入钓鱼指南。鱼类仍写在 <code>basic_food.json</code> 里。多数鱼同时写 <code>hide: true</code>，普通食物图鉴不显示；钓鱼指南不看 <code>hide</code>，仍会列出全部鱼类。</p>
+<p><code>fishing</code>：钓鱼信息对象，可选。常用键：</p>
+<ul>
+  <li><code>areas</code>：区域数组。取值 <code>freshwater</code> 淡水、<code>shallow</code> 浅海、<code>ocean</code> 中层海、<code>deep</code> 深海、<code>dangerous</code> 危险海域、<code>waterlogged</code> 水中木。不写或空数组时页面显示「不指定特殊区域」。</li>
+  <li><code>drops</code>：掉落数组。每项可以是字符串，或 <code>{"name":"鱼肉","chance":1}</code> / <code>{"id":"...","name":"...","chance":0.25}</code>。<code>chance</code> 为 0–1 时按百分比显示，大于 1 时当百分数，字符串原样显示。</li>
+  <li><code>seasons</code>：出现季节数组，<code>spring</code> / <code>summer</code> / <code>autumn</code> / <code>winter</code>。不写或空数组视为四季，页面显示「四季」；只有少数鱼需要指定季节时才写。</li>
+  <li><code>events</code>：活动名字符串数组，与季节一起显示在「出现」。</li>
+  <li><code>weight</code>：<code>{"min":最轻,"max":最重}</code>。也可直接写 <code>weightMin</code> / <code>weightMax</code>。</li>
+  <li><code>note</code>：补充说明，可选。</li>
+</ul>
+<p>由海草产生的鱼：写在条目的 <code>source</code>（例如 <code>"source": "海草"</code>），不要塞进季节/活动。季节/活动只写真正的出现时段；<code>source</code> 表示从哪里产出。</p>
+<p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。鱼类常用它从图鉴藏掉。默认 / 省略视为 <code>false</code>。</p>
 <p><code>noCook</code>：布尔。为 <code>true</code> 时不能放进烹饪锅（选择栏、补格、举例配方都不会用到）。与 <code>hide</code> 互不干涉：图鉴显隐只看 <code>hide</code>，入锅只看 <code>noCook</code>（以及下面的 <code>plantOnly</code>）。特殊内容既不是料理、又不能入锅时，仍写在基础食物里，标 <code>noCook: true</code>；需要从普通食物图鉴藏掉就再加 <code>hide: true</code>。默认 / 省略视为 <code>false</code>。</p>
 <p><code>plantOnly</code>：布尔。为 <code>true</code> 时只留种植记录，不进食物图鉴，也不进烹饪锅。针刺旋花用它，并同时写 <code>hide: true</code>。</p>
 <p><code>cooked</code>：烤熟形态子对象，可选。只有写了才参与切换。</p>
@@ -102,9 +113,9 @@
 <p><code>seed.water</code>：耗水/阶段，百分比数值（如 <code>0.75</code> = 0.75%）。种植卡片第四维展示时带 <code>%</code>；不参与配比。没有可省略。</p>
 <p><code>seed.desc</code>：简短描述，可用正文标签；没有就写空字符串。</p>
 <p><code>seed</code> 可以写成完整对象，也可以写成另一条食物的 id，多种植株共用同一颗种子时用 id。例如必忘我和后面的杂草都写 <code>"seed": "seeds"</code>，种子本体只写一次，并带上它自己的 <code>cooked</code>、<code>degrees</code>。每株不一样的肥、水、季节不要写进种子，写在植株的 <code>grow</code> 里，种植篇会叠到这颗种子上。</p>
-<p>嵌在植株里的种子也会出现在普通食物图鉴，按名字或 id 搜索。同一种子只出现一张卡片。</p>
+<p>原版作物种子烤熟后都是同一份烤种子：写与 <code>seeds.cooked</code> 相同的对象即可，<code>id</code> 为 <code>seeds_cooked</code>，名字「烤种子」。嵌在植株里的种子也会出现在普通食物图鉴，按名字或 id 搜索。同一种子只出现一张卡片。</p>
 
 <h2>料理详情里的配方举例</h2>
-<p>不枚举全部可行组合（组合数会爆炸）。详情底部「可实现举例」每次随机给出至多两条不同的 4 格配方。必用原料按名字放入；每种度要求在不触犯 limit 的食材里随机挑选，有纯单度食材时优先用纯单度。需求和必用都满足以后，<code>random</code> 为 true 时，剩下的空格从所有不在 limit 里的纯单度食材中再随机配；否则空格只继续使用已经要求的度。凑满后用烹饪判定校验，只有真正会做出这道菜的配方才展示。举例下面有「随机生成其他」，点一次会再随机两条，并避开当前正在显示的配方。烹饪锅里点「可能制作的料理」也是随机补空格：已有食材保留，必用和度要求在符合条件的食材里随机挑；<code>random</code> 为 true 且这些都满足后，再随机选一种不在 limit 里、优先锅里还没有的度，把剩下的空格补上。</p>
+<p>不枚举全部可行组合（组合数会爆炸）。详情底部「可实现举例」每次随机给出至多两条不同的 4 格配方。必用原料按名字放入；每种度要求在不触犯 limit 的食材里随机挑选，有纯单度食材时优先用纯单度。需求和必用都满足以后，剩下的空格从所有不在 limit 里的纯单度食材中再随机配。凑满后用烹饪判定校验，只有真正会做出这道菜的配方才展示。举例下面有「随机生成其他」，点一次会再随机两条，并避开当前正在显示的配方。烹饪锅里点「可能制作的料理」也是随机补空格：已有食材保留，必用和度要求在符合条件的食材里随机挑；这些都满足后，再随机选一种不在 limit 里、优先锅里还没有的度，把剩下的空格补上。料理数据不必再写 <code>random</code>。</p>
 </body>
 </html>

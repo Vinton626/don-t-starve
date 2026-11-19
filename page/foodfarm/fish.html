@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>钓鱼指南</title>
+<link rel="stylesheet" href="../../css/common-tags.css">
+<link rel="stylesheet" href="../../css/foodfarm.css?v=28">
+</head>
+<body>
+  <aside class="mod-drawer" id="mod-drawer">
+    <div class="mod-drawer-panel">
+      <div class="mod-drawer-title">模组选择</div>
+      <div class="mod-checks" id="mod-list"></div>
+    </div>
+    <button type="button" class="mod-drawer-handle" id="mod-drawer-handle" aria-expanded="false">
+      <span>模组选择</span>
+      <span class="mod-drawer-arrow" id="mod-drawer-arrow">&gt;</span>
+    </button>
+  </aside>
+  <a class="home-fab" href="../../index.html">首页</a>
+  <a class="home-fab back-fab" href="../foodfarm.html">上一页</a>
+
+  <div class="page">
+    <h1 class="title">钓鱼指南</h1>
+    <main class="content-host">
+      <input type="search" class="food-search" id="fish-search" placeholder="搜索鱼类 / 区域 / 掉落" autocomplete="off">
+      <div class="panel-body" id="fish-body"></div>
+    </main>
+  </div>
+
+  <div class="food-modal" id="fish-modal" hidden>
+    <div class="food-modal-backdrop" id="fish-modal-backdrop"></div>
+    <div class="food-modal-panel" role="dialog" aria-modal="true" aria-labelledby="fish-modal-title">
+      <div class="food-modal-head">
+        <h2 class="food-modal-title" id="fish-modal-title">鱼</h2>
+        <button type="button" class="food-modal-close" id="fish-modal-close" aria-label="关闭">×</button>
+      </div>
+      <div class="food-modal-stats tag-text" id="fish-modal-stats"></div>
+      <div class="food-modal-meta" id="fish-modal-meta"></div>
+      <div class="food-modal-desc tag-text" id="fish-modal-desc"></div>
+    </div>
+  </div>
+
+  <aside class="page-overview" id="page-overview">
+    <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
+    <div class="page-overview-panel" id="page-overview-panel" hidden>
+      <div class="page-overview-title" id="page-overview-title">概述</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">列出全部 <code>fish: true</code> 的鱼类，不看 <code>hide</code>。卡片按模组分组；点开看区域、掉落、季节/活动与重量区间。未写区域显示「不指定特殊区域」。海草产生的鱼写在 <code>source</code>。</div>
+    </div>
+  </aside>
+
+  <div id="notice-tip" class="notice-tip tag-text" hidden></div>
+  <script>window.APP_ROOT = "../../";</script>
+  <script src="../../js/common/tags.js?v=13"></script>
+  <script src="../../js/foodfarm/common.js?v=9"></script>
+  <script src="../../js/foodfarm/fish.js?v=3"></script>
+</body>
+</html>

@@ -34,13 +34,25 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["summer"],
+        "hate_season": [
+          "summer"
+        ],
         "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": -4,
           "compost": 2,
           "manure": 2
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -78,13 +90,25 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["winter"],
+        "hate_season": [
+          "winter"
+        ],
         "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": 2,
           "compost": -4,
           "manure": 2
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -122,13 +146,25 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["summer"],
+        "hate_season": [
+          "summer"
+        ],
         "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": 2,
           "compost": 2,
           "manure": -4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -166,13 +202,25 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["winter"],
+        "hate_season": [
+          "winter"
+        ],
         "water": 3.5,
         "desc": "",
         "fertilizer": {
           "formula": -2,
           "compost": -2,
           "manure": 4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -210,13 +258,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["summer","autumn"],
+        "hate_season": [
+          "summer",
+          "autumn"
+        ],
         "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": 2,
           "compost": -4,
           "manure": 2
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -254,13 +315,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["summer","winter"],
+        "hate_season": [
+          "summer",
+          "winter"
+        ],
         "water": 2,
         "desc": "",
         "fertilizer": {
           "formula": 2,
           "compost": 2,
           "manure": -4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -298,13 +372,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["spring","summer"],
+        "hate_season": [
+          "spring",
+          "summer"
+        ],
         "water": 2,
         "desc": "",
         "fertilizer": {
           "formula": -4,
           "compost": 2,
           "manure": 2
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -342,13 +429,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["autumn","winter"],
+        "hate_season": [
+          "autumn",
+          "winter"
+        ],
         "water": 3.5,
         "desc": "",
         "fertilizer": {
           "formula": 4,
           "compost": -2,
           "manure": -2
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -386,13 +486,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["spring","summer"],
+        "hate_season": [
+          "spring",
+          "summer"
+        ],
         "water": 2,
         "desc": "",
         "fertilizer": {
           "formula": 4,
           "compost": 4,
           "manure": -8
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -434,13 +547,27 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["summer","autumn","winter"],
+        "hate_season": [
+          "summer",
+          "autumn",
+          "winter"
+        ],
         "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": 4,
           "compost": -8,
           "manure": 4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -485,6 +612,16 @@
           "formula": 4,
           "compost": -8,
           "manure": 4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -522,13 +659,25 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["winter"],
+        "hate_season": [
+          "winter"
+        ],
         "water": 2,
         "desc": "",
         "fertilizer": {
           "formula": -8,
           "compost": 4,
           "manure": 4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -566,13 +715,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["spring","winter"],
+        "hate_season": [
+          "spring",
+          "winter"
+        ],
         "water": 0.75,
         "desc": "",
         "fertilizer": {
           "formula": 4,
           "compost": 4,
           "manure": -8
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -610,13 +772,26 @@
         "hunger": 9.375,
         "sanity": 0,
         "spoilDays": 40,
-        "hate_season": ["autumn","winter"],
+        "hate_season": [
+          "autumn",
+          "winter"
+        ],
         "water": 2,
         "desc": "",
         "fertilizer": {
           "formula": 8,
           "compost": -4,
           "manure": -4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
         }
       }
     },
@@ -817,6 +992,32 @@
       }
     },
     {
+      "id": "leafmeat",
+      "name": "叶肉",
+      "origin": "",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": -10,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 1
+      },
+      "cooked": {
+        "id": "cookedleafmeat",
+        "name": "熟叶肉",
+        "foodtype": "meat",
+        "health": 1,
+        "hunger": 18.75,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {
+          "meat": 1
+        }
+      }
+    },
+    {
       "id": "monster",
       "name": "怪物肉",
       "origin": "",
@@ -854,6 +1055,75 @@
         "degrees": {
           "meat": 1,
           "monster": 1
+        }
+      }
+    },
+    {
+      "id": "butterflywings",
+      "name": "蝴蝶翅膀",
+      "origin": "",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 8,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "decoration": 2
+      }
+    },
+    {
+      "id": "moonbutterflywings",
+      "name": "月蛾翅膀",
+      "origin": "",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 8,
+      "hunger": 9.375,
+      "sanity": 15,
+      "spoilDays": 6,
+      "degrees": {
+        "decoration": 2
+      }
+    },
+    {
+      "id": "littlefish",
+      "name": "小鱼块",
+      "origin": "",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 1,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "meat": 0.5,
+        "fish": 0.5
+      },
+      "cooked": {
+        "id": "littlefish_cooked",
+        "name": "熟小鱼块",
+        "foodtype": "meat",
+        "health": 3,
+        "hunger": 18.75,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "meat": 0.5,
+          "fish": 0.5
+        }
+      },
+      "dried": {
+        "id": "littlefish_dried",
+        "name": "小鱼干",
+        "foodtype": "meat",
+        "health": 15,
+        "hunger": 12.5,
+        "sanity": 20,
+        "spoilDays": 15,
+        "degrees": {
+          "meat": 0.5,
+          "fish": 0.5
         }
       }
     },
@@ -972,7 +1242,7 @@
       "origin": "",
       "hide": true,
       "foodtype": "",
-      "health": null ,
+      "health": null,
       "hunger": null,
       "sanity": null,
       "spoilDays": 3,
@@ -991,6 +1261,60 @@
       "sanity": null,
       "degrees": {
         "inedible": 1
+      }
+    },
+    {
+      "id": "cornfish",
+      "name": "玉米鳕鱼",
+      "fish": true,
+      "hide": true,
+      "degrees": {
+        "veg": 1
+      },
+      "fishing": {
+        "areas": ["ocean","shallow"],
+        "drops": [
+          { "name": "玉米", "chance": 1 }
+        ],
+        "events": [],
+        "weight": { "min": 161.48, "max": 241.8 }
+      }
+    },
+    {
+      "id": "popcornfish",
+      "name": "爆米花鱼",
+      "fish": true,
+      "hide":true,
+      "degrees": {
+        "veg": 1
+      },
+      "fishing": {
+        "areas": ["shallow"],
+        "drops": [
+          { "name": "爆米花", "chance": 1 }
+        ],
+        "events": [],
+        "weight": { "min": 33.08, "max": 47.74 }
+      }
+    },
+    {
+      "id": "spittlefish",
+      "name": "口水鱼",
+      "fish": true,
+      "hide": true,
+      "source": "海草",
+      "degrees": {
+        "meat": 0.5,
+        "fish": 0.5
+      },
+      "fishing": {
+        "areas": [],
+        "drops": [
+          { "name": "小鱼块", "chance": 1 }
+        ],
+        "seasons": ["autumn", "winter"],
+        "events": [],
+        "weight": { "min": 31.15, "max": 49.2 }
       }
     }
   ]
