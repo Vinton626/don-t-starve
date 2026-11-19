@@ -53,10 +53,13 @@ function rebuild() {
   cook.dishById.clear();
   cook.foods.forEach(f => cook.foodById.set(foodKey(f), f));
   cook.dishes.forEach(d => cook.dishById.set(dishKey(d), d));
+  if (window.CookCalc && CookCalc.useFoods) CookCalc.useFoods(cook.foods);
   cook.exampleCache.clear();
   cook.slots = cook.slots.map(s => {
     if (!s) return null;
-    return cook.foodById.get(foodKey(s)) || null;
+    const base = cook.foodById.get(s.baseId || foodKey(s));
+    if (!base) return null;
+    return presentSlot(base, s.form);
   });
 }
 
@@ -105,12 +108,7 @@ function dishInfoHTML(dish) {
     const tag = esc(key || r.degree);
     return `<${tag}>${esc(name)}</${tag}> ${esc(r.op || ">=")} <b>${esc(r.value)}</b>`;
   }).join("；");
-  const must = (dish.must || []).map(m => {
-    if (typeof m === "string") return esc(m);
-    const name = esc(m.name || m.id || "");
-    if (m.value == null) return name;
-    return `${name} ${esc(m.op || ">=")} <b>${esc(m.value)}</b>`;
-  }).join("；");
+  const must = (dish.must || []).map(mustEntryHTML).join("；");
   const limit = (dish.limit || []).map(l => {
     if (typeof l === "string") return esc(l);
     if (l.degree) {
@@ -133,26 +131,72 @@ function dishInfoHTML(dish) {
   ].join("");
 }
 
-function dishExamplesInner(dish, withNote) {
+function mustEntryHTML(entry) {
+  if (entry == null) return "";
+  if (typeof entry === "string") return esc(entry);
+  if (Array.isArray(entry.or)) return entry.or.map(mustEntryHTML).filter(Boolean).join(" 或 ");
+  const name = esc(entry.name || entry.id || "");
+  if (entry.value == null) return name;
+  return `${name} ${esc(entry.op || ">=")} <b>${esc(entry.value)}</b>`;
+}
+
+function ensureExamples(dish) {
   const id = dishKey(dish);
   if (!cook.exampleCache.has(id)) {
     cook.exampleCache.set(id, CookCalc.exampleRecipes(dish, cook.foods, cook.dishes));
   }
-  const examples = cook.exampleCache.get(id);
+  return cook.exampleCache.get(id);
+}
+
+function exampleRecipeKey(rec) {
+  return (rec && rec.slots || []).map(slot => slot.id || slot.name).slice().sort().join("\0");
+}
+
+function dishExamplesMarkup(dish, withNote) {
+  const id = dishKey(dish);
+  const examples = ensureExamples(dish);
   const recipeLines = (examples.recipes || []).map(rec => {
     const names = (rec.names || []).map(n => esc(n)).join(" + ");
     const mark = rec.ok ? "" : ` <span class="muted">（${esc(rec.message || "未校验通过")}）</span>`;
     return `<li>${names}${mark}</li>`;
   }).join("");
+  const showNote = withNote || (examples.note && examples.note.indexOf("没有其他") === 0);
   return (
     `<div class="food-modal-label">可实现举例</div>` +
-    (withNote ? `<p class="muted">${esc(examples.note || "")}</p>` : "") +
-    (recipeLines ? `<ul class="dish-recipe-list">${recipeLines}</ul>` : `<p class="muted">暂无示例</p>`)
+    (showNote ? `<p class="muted">${esc(examples.note || "")}</p>` : "") +
+    (recipeLines ? `<ul class="dish-recipe-list">${recipeLines}</ul>` : `<p class="muted">暂无示例</p>`) +
+    `<button type="button" class="cook-example-reroll" data-reroll-examples="${esc(id)}">随机生成其他</button>`
   );
 }
 
+function refreshExampleBlocks(id) {
+  const dish = cook.dishById.get(id);
+  if (!dish) return;
+  document.querySelectorAll("[data-dish-examples]").forEach(el => {
+    if (el.getAttribute("data-dish-examples") !== id) return;
+    el.innerHTML = dishExamplesMarkup(dish, el.getAttribute("data-example-note") === "1");
+    Foodfarm.bindContentTags(el);
+  });
+}
+
+function rerollExamples(id) {
+  const dish = cook.dishById.get(id);
+  if (!dish || !window.CookCalc) return;
+  const current = ensureExamples(dish);
+  const exclude = {};
+  (current.recipes || []).forEach(rec => {
+    const key = exampleRecipeKey(rec);
+    if (key) exclude[key] = true;
+  });
+  const next = CookCalc.exampleRecipes(dish, cook.foods, cook.dishes, { exclude, want: 2 });
+  if (next.fresh) cook.exampleCache.set(id, next);
+  else cook.exampleCache.set(id, { recipes: current.recipes || [], note: "没有其他可行配方" });
+  refreshExampleBlocks(id);
+}
+
 function dishDescHTML(dish) {
-  return dishInfoHTML(dish) + `<div class="dish-recipes">${dishExamplesInner(dish, true)}</div>`;
+  const id = esc(dishKey(dish));
+  return dishInfoHTML(dish) + `<div class="dish-recipes" data-dish-examples="${id}" data-example-note="1">${dishExamplesMarkup(dish, true)}</div>`;
 }
 
 function dishFullHTML(dish) {
@@ -163,7 +207,7 @@ function dishFullHTML(dish) {
     `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(dish)}</div>` +
     `</div>` +
     `<div class="cook-dish-scroll tag-text">${dishInfoHTML(dish)}</div>` +
-    `<div class="cook-dish-examples tag-text">${dishExamplesInner(dish, false)}</div>` +
+    `<div class="cook-dish-examples tag-text" data-dish-examples="${esc(dishKey(dish))}">${dishExamplesMarkup(dish, false)}</div>` +
     `</article>`
   );
 }
@@ -282,12 +326,57 @@ function bindWantChecks() {
 
 /* ---------- 锅槽 ---------- */
 
+function baseOfSlot(item) {
+  if (!item) return null;
+  if (item._base) return item._base;
+  return cook.foodById.get(item.baseId || foodKey(item)) || null;
+}
+
+function presentSlot(base, form) {
+  if (!base) return null;
+  const mode = form === "cooked" || form === "dried" ? form : "raw";
+  const variant = mode === "raw" ? null : base[mode];
+  if (!variant || typeof variant !== "object") return base;
+  const id = variant.id != null && String(variant.id).trim() ? String(variant.id).trim() : foodKey(base) + "_" + mode;
+  const name = variant.name != null && String(variant.name).trim() ? variant.name : base.name;
+  return {
+    id,
+    name,
+    health: variant.health != null ? variant.health : base.health,
+    hunger: variant.hunger != null ? variant.hunger : base.hunger,
+    sanity: variant.sanity != null ? variant.sanity : base.sanity,
+    spoilDays: variant.spoilDays != null ? variant.spoilDays : base.spoilDays,
+    degrees: variant.degrees || base.degrees || {},
+    foodtype: variant.foodtype || base.foodtype || "",
+    origin: base.origin || "",
+    form: mode,
+    baseId: foodKey(base),
+    _base: base
+  };
+}
+
+function slotFormHTML(i, item) {
+  const base = baseOfSlot(item);
+  if (!base) return "";
+  const cooked = base.cooked && typeof base.cooked === "object";
+  const dried = base.dried && typeof base.dried === "object";
+  if (!cooked && !dried) return "";
+  const form = item.form || "raw";
+  const btn = (key, label) => {
+    const on = form === key ? " is-on" : "";
+    return `<span class="cook-slot-form${on}" data-slot-form="${key}" data-slot="${i}" role="button" aria-label="${label}">${label}</span>`;
+  };
+  return `<span class="cook-slot-forms">` + (dried ? btn("dried", "晾") : "") + (cooked ? btn("cooked", "烤") : "") + `</span>`;
+}
+
 function slotHTML(i, item, mobile) {
   const filled = !!item;
   const name = filled ? esc(item.name || item.id) : (mobile ? `格 ${i + 1}` : `${i + 1}`);
   const extra = filled && !mobile ? slotExtraHTML(item) : "";
+  const forms = filled ? slotFormHTML(i, item) : "";
   return (
-    `<button type="button" class="cook-slot${filled ? " is-filled" : ""}" data-slot="${i}">` +
+    `<button type="button" class="cook-slot${filled ? " is-filled" : ""}${forms ? " has-forms" : ""}" data-slot="${i}">` +
+    forms +
     `<span class="cook-slot-name">${name}</span>` +
     extra +
     (filled ? `<span class="cook-slot-clear" data-clear="${i}" title="清空">×</span>` : "") +
@@ -319,6 +408,14 @@ function renderSlots() {
 function firstEmptySlot() {
   const i = cook.slots.findIndex(s => !s);
   return i < 0 ? -1 : i;
+}
+
+function toggleSlotForm(index, form) {
+  const item = cook.slots[index];
+  const base = baseOfSlot(item);
+  if (!base || !base[form] || typeof base[form] !== "object") return;
+  const current = item.form || "raw";
+  setSlot(index, presentSlot(base, current === form ? "raw" : form));
 }
 
 function setSlot(index, food) {
@@ -420,7 +517,7 @@ function renderIngList() {
     ? ingGroupsHTML(list, q, item => {
       const food = item.food;
       const id = foodKey(food);
-      const on = cook.slots.some(s => s && foodKey(s) === id) ? " is-on" : "";
+      const on = cook.slots.some(s => s && (s.baseId || foodKey(s)) === id) ? " is-on" : "";
       const val = item.value != null ? ` <b>${esc(item.value)}</b>` : "";
       return `<button type="button" class="calc-seed${on}" data-food-id="${esc(id)}"${full ? " disabled" : ""}>${esc(food.name || food.id)}${val}</button>`;
     })
@@ -549,8 +646,9 @@ function applyDishSample(dish) {
       next[i] = cook.slots[i];
       return;
     }
-    const key = foodKey(item);
-    next[i] = cook.foodById.get(key) || cook.foods.find(f => foodKey(f) === key) || null;
+    const key = item.baseId || foodKey(item);
+    const base = cook.foodById.get(key) || cook.foods.find(f => foodKey(f) === key) || null;
+    next[i] = base ? presentSlot(base, item.form) : null;
   });
   cook.slots = next;
   closeModal("possible-modal");
@@ -641,11 +739,27 @@ function bindUI() {
     const close = e.target.closest("[data-close]");
     if (close) closeModal(close.dataset.close);
 
+    const reroll = e.target.closest("[data-reroll-examples]");
+    if (reroll) {
+      e.preventDefault();
+      e.stopPropagation();
+      rerollExamples(reroll.getAttribute("data-reroll-examples"));
+      return;
+    }
+
     const clearSlot = e.target.closest("[data-clear]");
     if (clearSlot) {
       e.preventDefault();
       e.stopPropagation();
       setSlot(Number(clearSlot.dataset.clear), null);
+      return;
+    }
+
+    const formBtn = e.target.closest("[data-slot-form]");
+    if (formBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleSlotForm(Number(formBtn.dataset.slot), formBtn.dataset.slotForm);
       return;
     }
 

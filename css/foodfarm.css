@@ -1385,10 +1385,43 @@ body.food-modal-open { overflow: hidden; }
   background: rgba(42, 30, 16, .9);
 }
 .cook-slot-name {
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100%;
+}
+.cook-slot-forms {
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 3px;
+  display: flex;
+  gap: 3px;
+}
+.cook-slot-form {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 162, 39, .7);
+  background: rgba(12, 9, 6, .92);
+  color: #f0d060;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+}
+.cook-slot-form.is-on {
+  background: #c9a227;
+  color: #1a1208;
+  border-color: #f0d060;
+}
+.cook-slot.has-forms {
+  padding-top: 22px;
+  padding-right: 46px;
+}
+.cook-slot.has-forms .cook-slot-clear {
+  top: auto;
+  bottom: 4px;
+  transform: none;
 }
 .cook-slot-clear {
   position: absolute;
@@ -1541,6 +1574,22 @@ body.food-modal-open { overflow: hidden; }
   line-height: 1.7;
 }
 .dish-recipe-list li { margin: 2px 0; }
+.cook-example-reroll {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border: 1px solid rgba(201, 162, 39, .7);
+  background: rgba(20, 14, 8, .9);
+  color: #f0d060;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+.cook-example-reroll:hover {
+  border-color: #f0d060;
+  color: #ffe7a0;
+}
 .cook-calc-desktop[hidden],
 .cook-calc-mobile[hidden] { display: none !important; }
 

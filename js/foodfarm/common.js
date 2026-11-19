@@ -220,19 +220,46 @@ function dishLimitsFood(dish, food) {
   return limits.some(entry => limitEntryHitsFood(entry, food, degrees));
 }
 
+function parseFormTags(name) {
+  let text = String(name || "").trim();
+  let cooked = false;
+  let dried = false;
+  for (let i = 0; i < 4; i++) {
+    const matched = text.match(/^<(烤|晾)>\s*/);
+    if (!matched) break;
+    if (matched[1] === "烤") cooked = true;
+    else dried = true;
+    text = text.slice(matched[0].length).trim();
+  }
+  return { cooked, dried, base: text };
+}
+
+function foodMatchesMustName(food, needName) {
+  if (!food || !needName) return false;
+  const spec = parseFormTags(needName);
+  if (!spec.base) return false;
+  const id = food.id != null ? String(food.id).trim() : "";
+  const isBase = food.name === spec.base || id === spec.base;
+  if (!spec.cooked && !spec.dried) return isBase;
+  if (isBase) return true;
+  if (spec.cooked && food.cooked && String(food.cooked.id || "") === id) return true;
+  if (spec.dried && food.dried && String(food.dried.id || "") === id) return true;
+  return false;
+}
+
 function dishMustUseFood(dish, food) {
   if (!food || !dish) return false;
   const must = Array.isArray(dish.must) ? dish.must : [];
   return must.some(entry => {
     if (entry == null) return false;
-    if (typeof entry === "string") {
-      const s = entry.trim();
-      return !!s && (food.id === s || food.name === s);
-    }
+    if (typeof entry === "string") return foodMatchesMustName(food, entry);
     if (typeof entry !== "object") return false;
+    if (Array.isArray(entry.or)) return entry.or.some(part => dishMustUseFood({ must: [part] }, food));
     const id = entry.id != null ? String(entry.id).trim() : "";
     const name = entry.name != null ? String(entry.name).trim() : "";
-    return (!!id && food.id === id) || (!!name && food.name === name);
+    if (id && food.id === id) return true;
+    if (name && foodMatchesMustName(food, name)) return true;
+    return false;
   });
 }
 

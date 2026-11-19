@@ -144,20 +144,116 @@
     return false;
   }
 
+  let foodCatalog = [];
+
+  function useFoods(foods) {
+    foodCatalog = Array.isArray(foods) ? foods : [];
+  }
+
+  function parseFormTags(name) {
+    let text = String(name || "").trim();
+    let cooked = false;
+    let dried = false;
+    for (let i = 0; i < 4; i++) {
+      const matched = text.match(/^<(烤|晾)>\s*/);
+      if (!matched) break;
+      if (matched[1] === "烤") cooked = true;
+      else dried = true;
+      text = text.slice(matched[0].length).trim();
+    }
+    return { cooked, dried, base: text };
+  }
+
+  /** <烤><晾>大肉：生 id，再加上 cooked.id、dried.id。只按 id 计数，避免名字和 id 算两遍。 */
+  function mustIdSet(needName) {
+    const spec = parseFormTags(needName);
+    const ids = new Set();
+    if (!spec.base) return { spec, ids };
+    foodCatalog.forEach(food => {
+      if (!food) return;
+      if (food.name !== spec.base && String(food.id || "") !== spec.base) return;
+      if (food.id != null && String(food.id).trim()) ids.add(String(food.id).trim());
+      if (spec.cooked && food.cooked && food.cooked.id != null && String(food.cooked.id).trim()) {
+        ids.add(String(food.cooked.id).trim());
+      }
+      if (spec.dried && food.dried && food.dried.id != null && String(food.dried.id).trim()) {
+        ids.add(String(food.dried.id).trim());
+      }
+    });
+    return { spec, ids };
+  }
+
+  function nameCount(names, needName) {
+    const key = String(needName || "").trim();
+    if (!key) return 0;
+    const found = mustIdSet(key);
+    if (!found.ids.size) return names[found.spec.base] || names[key] || 0;
+    let have = 0;
+    found.ids.forEach(id => { have += names[id] || 0; });
+    return have;
+  }
+
+  function mustNeedName(entry) {
+    if (typeof entry === "string") return entry.trim();
+    if (!entry || typeof entry !== "object") return "";
+    return String(entry.name || entry.id || "").trim();
+  }
+
+  function resolveMustEntry(entry, names, canFill) {
+    if (entry && Array.isArray(entry.or)) {
+      if (entry.or.some(part => mustSatisfied(part, names))) return null;
+      return entry.or.find(part => canFill(part)) || entry.or[0] || null;
+    }
+    return entry;
+  }
+
+  function formForMust(needName) {
+    const spec = parseFormTags(needName);
+    if (spec.cooked && !spec.dried) return "cooked";
+    if (spec.dried && !spec.cooked) return "dried";
+    return "raw";
+  }
+
+  function shapeForMust(ing, needName) {
+    if (!ing) return ing;
+    const form = formForMust(needName);
+    if (form === "raw") return ing;
+    const base = foodCatalog.find(food =>
+      String(food.id || "") === String(ing.id || "") || food.name === ing.name
+    );
+    const variant = base && base[form];
+    if (!variant || typeof variant !== "object") return ing;
+    const made = ingredientFromFood(Object.assign({}, base, variant));
+    if (!made) return ing;
+    made.form = form;
+    made.baseId = base.id != null ? String(base.id).trim() : String(ing.id || "");
+    return made;
+  }
+
+  function ingredientMatchesMust(ing, needName) {
+    if (!ing || !needName) return false;
+    const found = mustIdSet(needName);
+    const id = ing.id != null ? String(ing.id).trim() : "";
+    if (id && found.ids.has(id)) return true;
+    if (!found.ids.size) return ing.name === found.spec.base || id === found.spec.base;
+    return false;
+  }
+
   function mustSatisfied(entry, names) {
     if (entry == null) return false;
     if (typeof entry === "string") {
       const s = entry.trim();
-      return !!s && (names[s] || 0) >= 1;
+      return !!s && nameCount(names, s) >= 1;
     }
     if (typeof entry !== "object") return false;
+    if (Array.isArray(entry.or)) return entry.or.some(part => mustSatisfied(part, names));
     const id = entry.id != null ? String(entry.id).trim() : "";
     const name = entry.name != null ? String(entry.name).trim() : "";
     const need = entry.value == null ? 1 : num(entry.value);
     const op = entry.op || ">=";
     let have = 0;
     if (id) have = Math.max(have, names[id] || 0);
-    if (name) have = Math.max(have, names[name] || 0);
+    if (name) have = Math.max(have, nameCount(names, name));
     return compareOp(have, op, need);
   }
 
@@ -363,8 +459,8 @@
 
   /**
    * 在已有格子上补料，不替换已放入的食材。
-   * 只补尚未满足的 must / requires。都满足且 random 为 true 时，
-   * 用一种不在 limit 里、锅里还没有的度填满空格。
+   * 必用、度要求都在符合条件的食材里随机挑。
+   * 都满足且 random 为 true 时，随机选一种不在 limit 里、优先锅里还没有的度，再用该度的食材随机填满空格。
    */
   function supplementFill(dish, existing, foods) {
     const slots = [null, null, null, null];
@@ -397,23 +493,46 @@
       return true;
     }
 
-    function pickDegree(key) {
+    function foodsOfDegree(key) {
       const group = (pureGroups[key] || []).filter(ing => !blocked(ing));
-      if (group.length) return group[0];
-      return pool.find(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0) || null;
+      if (group.length) return group;
+      return pool.filter(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0);
+    }
+
+    function mustHits(needName) {
+      return pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName))
+        .map(ing => shapeForMust(ing, needName));
+    }
+
+    function resolveRandomMust(entry) {
+      if (entry && Array.isArray(entry.or)) {
+        const names = aggregate(slots).names;
+        if (entry.or.some(part => mustSatisfied(part, names))) return null;
+        const options = entry.or.filter(part => {
+          const name = mustNeedName(part);
+          return !!name && mustHits(name).length;
+        });
+        return pickOne(options.length ? options : entry.or);
+      }
+      return entry;
+    }
+
+    function placeRandom(group) {
+      if (!group || !group.length) return false;
+      const fresh = group.filter(ing => !slots.some(slot => slot && (slot.id || slot.name) === (ing.id || ing.name)));
+      return place(pickOne(fresh.length ? fresh : group));
     }
 
     const must = Array.isArray(dish.must) ? dish.must : [];
     must.forEach(entry => {
-      const needName = typeof entry === "string"
-        ? entry.trim()
-        : String((entry && (entry.name || entry.id)) || "").trim();
+      const target = resolveRandomMust(entry);
+      const needName = mustNeedName(target);
       if (!needName) return;
+      const hits = mustHits(needName);
       let guard = 0;
-      while (!mustSatisfied(entry, aggregate(slots).names) && slots.some(slot => !slot) && guard < SLOTS) {
+      while (!mustSatisfied(target, aggregate(slots).names) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
-        const hit = pool.find(ing => !blocked(ing) && (ing.name === needName || ing.id === needName));
-        if (!hit || !place(hit)) break;
+        if (!hits.length || !placeRandom(hits)) break;
       }
     });
 
@@ -423,11 +542,11 @@
       const op = String(req.op || ">=");
       if (op !== ">" && op !== ">=" && op !== "==" && op !== "=") return;
       const key = normalizeDegreeKey(req.degree);
+      const group = foodsOfDegree(key);
       let guard = 0;
       while (!requireSatisfied(req, aggregate(slots).tags) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
-        const pick = pickDegree(key);
-        if (!pick || !place(pick)) break;
+        if (!placeRandom(group)) break;
       }
     });
 
@@ -435,14 +554,14 @@
     const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
       || requires.some(req => req && req.degree != null && !requireSatisfied(req, agg.tags));
     if (!unmet && dish.random === true && slots.some(slot => !slot)) {
-      const usable = DEGREE_KEYS.filter(key => !limitedDegrees[key] && pickDegree(key));
+      const usable = DEGREE_KEYS.filter(key => !limitedDegrees[key] && foodsOfDegree(key).length);
       const fresh = usable.filter(key => !(agg.tags[key] > 0));
-      const key = (fresh.length ? fresh : usable)[0];
-      const filler = key ? pickDegree(key) : null;
+      const key = pickOne(fresh.length ? fresh : usable);
+      const group = key ? foodsOfDegree(key) : [];
       let guard = 0;
-      while (filler && slots.some(slot => !slot) && guard < SLOTS) {
+      while (group.length && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
-        if (!place(filler)) break;
+        if (!placeRandom(group)) break;
       }
     }
     return { slots };
@@ -481,13 +600,17 @@
 
     const must = Array.isArray(dish.must) ? dish.must : [];
     must.forEach(entry => {
-      const needName = typeof entry === "string"
-        ? entry.trim()
-        : String((entry && (entry.name || entry.id)) || "").trim();
-      const need = typeof entry === "object" && entry && entry.value != null ? Math.ceil(num(entry.value)) : 1;
+      const target = resolveMustEntry(entry, aggregate(slots).names, part => {
+        const name = mustNeedName(part);
+        return !!name && pool.some(ing => !blocked(ing) && ingredientMatchesMust(ing, name));
+      });
+      const needName = mustNeedName(target);
+      if (!needName) return;
+      const need = target && typeof target === "object" && target.value != null ? Math.ceil(num(target.value)) : 1;
       for (let n = 0; n < need && slots.length < SLOTS; n++) {
-        const hit = pool.find(ing =>
-          !blocked(ing) && (ing.name === needName || ing.id === needName)
+        const hit = shapeForMust(
+          pool.find(ing => !blocked(ing) && ingredientMatchesMust(ing, needName)),
+          needName
         );
         if (hit) push(hit);
       }
@@ -604,12 +727,15 @@
 
     const must = Array.isArray(dish.must) ? dish.must : [];
     must.forEach(entry => {
-      const needName = typeof entry === "string"
-        ? entry.trim()
-        : String((entry && (entry.name || entry.id)) || "").trim();
+      const target = resolveMustEntry(entry, aggregate(slots).names, part => {
+        const name = mustNeedName(part);
+        return !!name && pool.some(ing => !blocked(ing) && ingredientMatchesMust(ing, name));
+      });
+      const needName = mustNeedName(target);
       if (!needName) return;
-      const hits = pool.filter(ing => !blocked(ing) && (ing.name === needName || ing.id === needName));
-      const need = typeof entry === "object" && entry && entry.value != null ? Math.max(1, Math.ceil(num(entry.value))) : 1;
+      const hits = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName))
+        .map(ing => shapeForMust(ing, needName));
+      const need = target && typeof target === "object" && target.value != null ? Math.max(1, Math.ceil(num(target.value))) : 1;
       for (let n = 0; n < need && slots.length < SLOTS; n++) push(pickOne(hits));
     });
 
@@ -663,29 +789,50 @@
   /**
    * 料理详情底部的可实现举例。每次随机配几条不同配方，只保留真正能做出该料理的结果。
    */
-  function exampleRecipes(dish, foods, allDishes) {
+  function recipeKey(slots) {
+    return (Array.isArray(slots) ? slots : []).map(slot => slot.id || slot.name).slice().sort().join("\0");
+  }
+
+  function exampleRecipes(dish, foods, allDishes, options) {
     const note = "以下为随机举例，不是全部可行配方。";
     const pool = (Array.isArray(foods) ? foods : []).map(ingredientFromFood).filter(Boolean);
-    if (!pool.length) return { recipes: [], note: "没有基础食物数据" };
-    const found = [];
-    const seen = {};
-    const want = 2;
-    for (let i = 0; i < 64 && found.length < want; i++) {
-      const slots = randomFill(dish, foods);
-      if (!slots || slots.length < SLOTS) continue;
-      if (!slotsMakeDish(slots, dish, allDishes)) continue;
-      const key = slots.map(slot => slot.id || slot.name).slice().sort().join("\0");
-      if (seen[key]) continue;
-      seen[key] = true;
-      found.push({
-        slots,
-        names: slots.map(slot => slot.name || slot.id),
-        ok: true,
-        message: "示例配方"
-      });
+    if (!pool.length) return { recipes: [], note: "没有基础食物数据", fresh: 0 };
+    const want = Math.max(1, Math.floor(num(options && options.want)) || 2);
+    const blocked = {};
+    const exclude = options && options.exclude;
+    if (exclude && typeof exclude === "object") {
+      Object.keys(exclude).forEach(key => { if (exclude[key]) blocked[key] = true; });
     }
-    if (!found.length) return { recipes: [], note: "暂无示例配方" };
-    return { recipes: found, note };
+
+    function gather(skip, limit) {
+      const found = [];
+      const seen = Object.assign({}, skip);
+      for (let i = 0; i < 96 && found.length < limit; i++) {
+        const slots = randomFill(dish, foods);
+        if (!slots || slots.length < SLOTS) continue;
+        if (!slotsMakeDish(slots, dish, allDishes)) continue;
+        const key = recipeKey(slots);
+        if (seen[key]) continue;
+        seen[key] = true;
+        found.push({
+          slots,
+          names: slots.map(slot => slot.name || slot.id),
+          ok: true,
+          message: "示例配方"
+        });
+      }
+      return found;
+    }
+
+    const fresh = gather(blocked, want);
+    const recipes = fresh.slice();
+    if (recipes.length < want && Object.keys(blocked).length) {
+      const already = {};
+      recipes.forEach(rec => { already[recipeKey(rec.slots)] = true; });
+      gather(already, want - recipes.length).forEach(rec => recipes.push(rec));
+    }
+    if (!recipes.length) return { recipes: [], note: "暂无示例配方", fresh: 0 };
+    return { recipes, note, fresh: fresh.length };
   }
 
   return {
@@ -693,6 +840,7 @@
     DEGREE_KEYS,
     WANT,
     num,
+    useFoods,
     ingredientFromFood,
     aggregate,
     dishMatches,
