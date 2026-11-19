@@ -87,7 +87,7 @@
 <p>料理的 <code>cookSeconds</code>、<code>priority</code> 还没定稿时写 <code>"待补充"</code>。详情只显示「待补充」：烹饪时间后面不加「秒」。判定时这个优先级按 0 和其他料理比较。<code>must</code> 的 <code>op</code> 按原样显示，<code>"="</code> 表示该食材格数必须正好等于 <code>value</code>。<code>must.name</code> 前面可以写 <code>&lt;烤&gt;</code>、<code>&lt;晾&gt;</code>，对应这条食物的 <code>cooked.id</code>、<code>dried.id</code>。生的名字本身也算。只写 <code>&lt;烤&gt;大肉</code> 是生和烤两种；<code>&lt;烤&gt;&lt;晾&gt;大肉</code> 是生、烤、晾三种。两种食材都能用时，把它们放进 <code>or</code>：<code>{"or":[{"name":"黄油","op":"&gt;=","value":1},{"name":"蜂蜜","op":"&gt;=","value":1}]}</code>，满足其中一条即可。锅里有烤或晾的食物，格子右上角可以切换形态，晾在烤左边。沃利专属料理写字符串字段 <code>"exclusive": "warly"</code>。卡片详情提示「大厨特色菜，需要使用便携烹饪锅烹饪」；烹饪锅最终结果里出现这道菜时也显示这句。同一配方还匹配到任何其他料理（不论优先级高低）时，再加一句「普通烹饪锅只会做出其他料理」。</p>
 
 <h2>基础食物字段</h2>
-<p><code>fish</code>：鱼类标识。写 <code>true</code>（或字符串 <code>"fish"</code>）时进入钓鱼指南。鱼类仍写在 <code>basic_food.json</code> 里。多数鱼同时写 <code>hide: true</code>，普通食物图鉴不显示；钓鱼指南不看 <code>hide</code>，仍会列出全部鱼类。</p>
+<p><code>fish</code>：鱼类标识。写 <code>true</code>（或字符串 <code>"fish"</code>）时进入钓鱼指南。鱼类仍写在 <code>basic_food.json</code> 里。多数海鱼写 <code>hide: true</code>，普通食物图鉴不显示；淡水鱼可当普通食物写三维，不写 <code>hide</code> 就会出现在食物图鉴，也可同时出现在钓鱼指南。钓鱼指南不展示生命/饥饿/理智三维，只看区域、掉落、季节/活动与重量。</p>
 <p><code>fishing</code>：钓鱼信息对象，可选。常用键：</p>
 <ul>
   <li><code>areas</code>：区域数组。取值 <code>freshwater</code> 淡水、<code>shallow</code> 浅海、<code>ocean</code> 中层海、<code>deep</code> 深海、<code>dangerous</code> 危险海域、<code>waterlogged</code> 水中木。不写或空数组时页面显示「不指定特殊区域」。</li>

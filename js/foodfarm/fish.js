@@ -20,7 +20,6 @@ function fishCardHTML(fish) {
     `<div class="food-card-name">${esc(fish.name || fish.id || "未命名")}</div>` +
     (areasText ? `<div class="food-card-type">${esc(areasText)}</div>` : "") +
     (weightText ? `<div class="fish-card-weight">重量 ${esc(weightText)}</div>` : "") +
-    `<div class="food-card-stats tag-text">${Foodfarm.foodStatesHTML(fish)}</div>` +
     `</button>`
   );
 }
@@ -81,14 +80,10 @@ function fishDetailHTML(fish) {
   return [
     `<p>来源：${esc(Foodfarm.originLabel(fish))}</p>`,
     fish.source ? `<p>产出：${esc(fish.source)}</p>` : "",
-    Foodfarm.foodTypeText(fish) ? `<p>类型：${Foodfarm.foodTypeHTML(fish)}</p>` : "",
     areasText ? `<p>区域：${esc(areasText)}</p>` : "",
     drops.length ? `<p>掉落：${esc(drops.join("、"))}</p>` : "",
     appear.length ? `<p>出现：${esc(appear.join("；"))}</p>` : "",
     weightText ? `<p>重量：<b>${esc(weightText)}</b></p>` : "",
-    Foodfarm.spoilLabel(fish.spoilDays)
-      ? `<p>保质期：<b>${esc(Foodfarm.spoilLabel(fish.spoilDays))}</b></p>`
-      : "",
     info.note ? `<p>${info.note}</p>` : ""
   ].join("");
 }
@@ -97,7 +92,8 @@ function openFishModal(fish) {
   if (!fish) return;
   activeFish = fish;
   Foodfarm.$("fish-modal-title").textContent = fish.name || fish.id || "鱼";
-  Foodfarm.$("fish-modal-stats").innerHTML = Foodfarm.foodStatesHTML(fish);
+  const stats = Foodfarm.$("fish-modal-stats");
+  if (stats) stats.innerHTML = "";
   const meta = Foodfarm.$("fish-modal-meta");
   if (meta) {
     const areasText = Foodfarm.fishAreasText(fish);
