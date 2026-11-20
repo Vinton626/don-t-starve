@@ -123,7 +123,11 @@ function dishInfoHTML(dish, opts) {
     const key = Foodfarm.normalizeDegreeKey ? Foodfarm.normalizeDegreeKey(r.degree) : r.degree;
     const name = Foodfarm.degreeLabel ? Foodfarm.degreeLabel(key) : key;
     const tag = esc(key || r.degree);
-    return `<${tag}>${esc(name)}</${tag}> ${esc(r.op || ">=")} <b>${esc(r.value)}</b>`;
+    const labeled = `<${tag}>${esc(name)}</${tag}>`;
+    const op = String(r.op || ">=");
+    if (op === "<=") return `0 &lt; ${labeled} ≤ <b>${esc(r.value)}</b>`;
+    if (op === "<") return `0 &lt; ${labeled} &lt; <b>${esc(r.value)}</b>`;
+    return `${labeled} ${esc(op)} <b>${esc(r.value)}</b>`;
   }).join("；");
   const must = (dish.must || []).map(mustEntryHTML).join("；");
   const limit = (dish.limit || []).map(l => {

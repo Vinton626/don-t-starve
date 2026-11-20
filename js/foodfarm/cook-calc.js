@@ -264,10 +264,33 @@
     return key == null ? "" : String(key).trim();
   }
 
+  function isUpperBoundOp(op) {
+    const s = String(op || ">=");
+    return s === "<" || s === "<=";
+  }
+
+  /**
+   * requires 判定。`<` / `<=` 隐含「该度必须 > 0」：
+   *   <= N  ⇒  0 < have <= N
+   *   <  N  ⇒  0 < have <  N
+   */
   function requireSatisfied(req, tags) {
     if (!req || req.degree == null) return false;
     const key = normalizeDegreeKey(req.degree);
-    return compareOp(tags[key] || 0, req.op, req.value);
+    const have = tags[key] || 0;
+    const op = String(req.op || ">=");
+    if (isUpperBoundOp(op) && !(have > 0)) return false;
+    return compareOp(have, op, req.value);
+  }
+
+  /** 往该度再加 add 后是否仍不破上界（下界要求始终允许加） */
+  function requireAllowsAdd(req, tags, addAmount) {
+    if (!req || req.degree == null) return false;
+    const key = normalizeDegreeKey(req.degree);
+    const next = (tags[key] || 0) + num(addAmount);
+    const op = String(req.op || ">=");
+    if (!isUpperBoundOp(op)) return num(addAmount) > 0;
+    return compareOp(next, op, req.value);
   }
 
   /** 单道料理是否匹配当前 names/tags（不看槽位是否满 4） */
@@ -408,14 +431,15 @@
     const loose = playable.filter(dish => {
       const limits = Array.isArray(dish.limit) ? dish.limit : [];
       if (limits.some(entry => limitHits(entry, agg.names, agg.tags))) return false;
-      // 已放入的度若某 requires 用 < / <= 且已经超标，则不可能
+      // 已放入的度若某 requires 用 < / <= 且已经超标，则不可能；度为 0 仍可后续补上（隐含 >0 不在此提前排除）
       const requires = Array.isArray(dish.requires) ? dish.requires : [];
       for (let i = 0; i < requires.length; i++) {
         const req = requires[i];
         if (!req || req.degree == null) continue;
-        const have = agg.tags[String(req.degree)] || 0;
+        const key = normalizeDegreeKey(req.degree);
+        const have = agg.tags[key] || 0;
         const op = String(req.op || ">=");
-        if ((op === "<" || op === "<=") && !compareOp(have, op, req.value)) return false;
+        if (isUpperBoundOp(op) && have > 0 && !compareOp(have, op, req.value)) return false;
         if ((op === "==" || op === "=") && have > num(req.value)) return false;
       }
       return true;
@@ -570,13 +594,15 @@
     requires.forEach(req => {
       if (!req || req.degree == null) return;
       const op = String(req.op || ">=");
-      if (op !== ">" && op !== ">=" && op !== "==" && op !== "=") return;
+      if (op !== ">" && op !== ">=" && op !== "==" && op !== "=" && !isUpperBoundOp(op)) return;
       const key = normalizeDegreeKey(req.degree);
       const group = foodsOfDegree(key);
       let guard = 0;
       while (!requireSatisfied(req, aggregate(slots).tags) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
-        if (!placeRandom(group)) break;
+        const tags = aggregate(slots).tags;
+        const fits = group.filter(ing => requireAllowsAdd(req, tags, (ing.degrees || {})[key]));
+        if (!fits.length || !placeRandom(fits)) break;
       }
     });
 
@@ -649,17 +675,21 @@
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
     requires.forEach(req => {
       if (!req || req.degree == null || slots.length >= SLOTS) return;
-      const key = String(req.degree);
-      const need = num(req.value);
-      let have = slots.reduce((sum, ing) => sum + num(ing.degrees[key]), 0);
+      const key = normalizeDegreeKey(req.degree);
       const group = (pureGroups[key] || []).filter(ing => !blocked(ing));
-      const pure = group.length ? group[Math.min(reqIndex, group.length - 1)] : null;
-      while (have < need && slots.length < SLOTS) {
-        const pick = pure
-          || pool.find(ing => !blocked(ing) && num(ing.degrees[key]) > 0);
-        if (!pick) break;
-        push(pick);
-        have += num(pick.degrees[key]);
+      const mixed = pool.filter(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0);
+      let guard = 0;
+      while (!requireSatisfied(req, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
+        guard += 1;
+        const tags = aggregate(slots).tags;
+        const cands = (group.length ? group : mixed).filter(ing =>
+          requireAllowsAdd(req, tags, (ing.degrees || {})[key])
+        );
+        if (!cands.length) break;
+        const pick = group.length
+          ? cands[Math.min(reqIndex, cands.length - 1)]
+          : cands[0];
+        if (!pick || !push(pick)) break;
       }
     });
 
@@ -772,13 +802,15 @@
     requires.forEach(req => {
       if (!req || req.degree == null) return;
       const op = String(req.op || ">=");
-      if (op !== ">" && op !== ">=" && op !== "==" && op !== "=") return;
+      if (op !== ">" && op !== ">=" && op !== "==" && op !== "=" && !isUpperBoundOp(op)) return;
       const key = normalizeDegreeKey(req.degree);
       const group = ofDegree(key, true);
       let guard = 0;
       while (!requireSatisfied(req, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
         guard += 1;
-        if (!push(pickOne(group))) break;
+        const tags = aggregate(slots).tags;
+        const fits = group.filter(ing => requireAllowsAdd(req, tags, (ing.degrees || {})[key]));
+        if (!fits.length || !push(pickOne(fits))) break;
       }
     });
 
@@ -862,6 +894,7 @@
     ingredientFromFood,
     aggregate,
     dishMatches,
+    requireSatisfied,
     isFallbackDish,
     findFallbackDish,
     cook,

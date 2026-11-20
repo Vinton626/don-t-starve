@@ -530,7 +530,10 @@ function foodSatisfiesRequire(food, req, degrees) {
   if (!req || req.degree == null) return false;
   const key = normalizeDegreeKey(req.degree);
   const amount = Object.prototype.hasOwnProperty.call(degrees, key) ? degrees[key] : 0;
-  return compareOp(amount, req.op, req.value);
+  const op = String(req.op || ">=");
+  // 与锅判定一致：< / <= 隐含该度必须 > 0
+  if ((op === "<" || op === "<=") && !(amount > 0)) return false;
+  return compareOp(amount, op, req.value);
 }
 
 function foodMatchesDishDegrees(food, dish) {

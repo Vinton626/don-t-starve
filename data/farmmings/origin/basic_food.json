@@ -954,6 +954,34 @@
       }
     },
     {
+      "id": "mandragora",
+      "name": "曼德拉草",
+      "origin": "",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 60,
+      "hunger": 75,
+      "sanity": 0,
+      "spoilDays": "永久",
+      "degrees": {
+        "veg": 1,
+        "magic": 1
+      },
+      "cooked": {
+        "id": "mandragora_cooked",
+        "name": "熟曼德拉草",
+        "foodtype": "veggie",
+        "health": 100,
+        "hunger": 150,
+        "sanity": 0,
+        "spoilDays": "永久",
+        "degrees": {
+          "veg": 1,
+          "magic": 1
+        }
+      }
+    },
+    {
       "id": "meat",
       "name": "大肉",
       "origin": "",
@@ -992,6 +1020,44 @@
       }
     },
     {
+      "id": "smallmeat",
+      "name": "小肉",
+      "origin": "",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": -10,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 0.5
+      },
+      "cooked": {
+        "id": "smallmeat_cooked",
+        "name": "熟小肉",
+        "foodtype": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {
+          "meat": 0.5
+        }
+      },
+      "dried": {
+        "id": "smallmeat_dried",
+        "name": "小肉干",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 12.5,
+        "sanity": 10,
+        "spoilDays": 20,
+        "degrees": {
+          "meat": 0.5
+        }
+      }
+    },
+    {
       "id": "leafmeat",
       "name": "叶肉",
       "origin": "",
@@ -1014,6 +1080,44 @@
         "spoilDays": 10,
         "degrees": {
           "meat": 1
+        }
+      }
+    },
+    {
+      "id": "froglegs",
+      "name": "蛙腿",
+      "origin": "",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": -10,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 0.5
+      },
+      "cooked": {
+        "id": "froglegs_cooked",
+        "name": "熟蛙腿",
+        "foodtype": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {
+          "meat": 0.5
+        }
+      },
+      "dried": {
+        "id": "smallmeat_dried",
+        "name": "小肉干",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 12.5,
+        "sanity": 10,
+        "spoilDays": 20,
+        "degrees": {
+          "meat": 0.5
         }
       }
     },

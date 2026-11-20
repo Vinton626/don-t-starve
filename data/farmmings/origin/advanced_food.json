@@ -50,6 +50,162 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "meatstew",
+      "name": "肉汤",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 12,
+      "hunger": 150,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 15,
+      "priority": 0,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 3
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "inedible" }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "polishdumplings",
+      "name": "波兰水饺",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 40,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 20,
+      "cookSeconds": 20,
+      "priority": 5,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 0.5
+        },
+        {
+          "degree": "egg",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "inedible" }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "honeyham",
+      "name": "蜜汁火腿",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 30,
+      "hunger": 75,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 2,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 1.5
+        }
+      ],
+      "must": [
+        {
+          "name": "蜂蜜",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        { "degree": "inedible" }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "honeymeat",
+      "name": "蜜汁卤肉",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 2,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": "<=",
+          "value": 1.5
+        }
+      ],
+      "must": [
+        {
+          "name": "蜂蜜",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        { "degree": "inedible" }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "meatstick",
+      "name": "肉串",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 5,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "monster",
+          "op": "<=",
+          "value": 1
+        },
+        {
+          "degree": "inedible",
+          "op": "<=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "baconegg",
       "name": "培根煎蛋",
       "origin": "",
@@ -79,6 +235,34 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "froglegsandwich",
+      "name": "蛙腿三明治",
+      "origin": "",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 0.5
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>蛙腿",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "monstermeatpie",
       "name": "怪物千层饼",
       "origin": "",
@@ -98,6 +282,32 @@
       ],
       "must": [],
       "limit": [
+        { "degree": "inedible" }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "jam",
+      "name": "果酱",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 0,
+      "requires": [
+        {
+          "degree": "fruit",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "veg" },
+        { "degree": "meat" },
         { "degree": "inedible" }
       ],
       "effect": "无特殊效果"
@@ -323,6 +533,101 @@
         }
       ],
       "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "fruiticecream",
+      "name": "水果圣代",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 25,
+      "sanity": 5,
+      "spoilDays": 6,
+      "cookSeconds": 10,
+      "priority": 0,
+      "requires": [
+        {
+          "degree": "fruit",
+          "op": ">=",
+          "value": 3
+        }
+      ],
+      "must": [],
+      "limit": [
+        { "degree": "veg" },
+        { "degree": "meat" }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "mandragorasoup",
+      "name": "曼德拉草汤",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": 100,
+      "hunger": 150,
+      "sanity": 5,
+      "spoilDays": 6,
+      "cookSeconds": 60,
+      "priority": 10,
+      "requires": [],
+      "must": [
+        {
+          "name": "曼德拉草",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "powdercake",
+      "name": "粉末蛋糕",
+      "origin": "",
+      "foodtype": "veggie",
+      "health": -3,
+      "hunger": 0,
+      "sanity": 0,
+      "spoilDays": 18750,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "<烤>玉米",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "爆米花鱼",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "玉米鳕鱼",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "name": "蜂蜜",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        { "degree": "meat" }
+      ],
       "effect": "无特殊效果"
     },
     {
