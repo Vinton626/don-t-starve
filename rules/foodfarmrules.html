@@ -84,26 +84,41 @@
 <h2>保质期</h2>
 <p>普通食物、烤/晾、种子、料理都可写 <code>spoilDays</code>。数字是天数，详情显示为「保质期：N 天」。不会腐烂写 <code>"spoilDays": "永久"</code>，页面只显示「永久」，不加「天」。没有、或写 <code>null</code>，就省略这一行。</p>
 <p><code>fallback</code>：布尔。为 <code>true</code> 时这道是保底料理（原版潮湿黏糊 <code>stickygoo</code>）。满 4 格且没有任何其它料理匹配时，锅结果直接展示它的详情；不参与「可能产生」预览，避免每锅都挂着。判定时也不会和其它料理抢优先级。</p>
-<p><code>requires</code> 的 <code>op</code>：<code>&gt;</code> / <code>&gt;=</code> / <code>=</code> 按字面比较。写 <code>&lt;=</code> 时判定为 <b>0 &lt; 该度 ≤ value</b>（必须有一点、且不超过）；写 <code>&lt;</code> 同理为 <b>0 &lt; 该度 &lt; value</b>。开区间如 <code>1 &lt; n &lt; 2</code> 写两条（数组是且）：</p>
+<p><code>requires</code> 的 <code>op</code>：<code>&gt;</code> / <code>&gt;=</code> / <code>=</code> 按字面比较。写 <code>&lt;=</code> 时判定为 <b>0 &lt; 该度 ≤ value</b>（必须有一点、且不超过）；写 <code>&lt;</code> 同理为 <b>0 &lt; 该度 &lt; value</b>。开区间如 <code>1 &lt; n &lt; 2</code> 写两条（数组是且）。某条也可以是 <code>or</code>，满足其中任一分支即可，例如水果 &gt; 0 或蔬菜 ≥ 0.5：</p>
+<pre><code>"requires": [
+  { "degree": "meat", "op": "&gt;", "value": 1 },
+  { "or": [
+    { "degree": "fruit", "op": "&gt;", "value": 0 },
+    { "degree": "veg", "op": "&gt;=", "value": 0.5 }
+  ]}
+]</code></pre>
+<p>开区间两条（数组是且）示例：</p>
 <pre><code>"requires": [
   { "degree": "meat", "op": "&gt;", "value": 1 },
   { "degree": "meat", "op": "&lt;", "value": 2 }
 ]</code></pre>
 <p>闭区间用 <code>&gt;=</code> + <code>&lt;=</code>。若只要「至多 N、可以为 0」，用 <code>limit</code> 禁止该度，或不要单独写带隐含下界的 <code>&lt;</code> / <code>&lt;=</code>。</p>
-<p>料理的 <code>cookSeconds</code>、<code>priority</code> 还没定稿时写 <code>"待补充"</code>。详情只显示「待补充」：烹饪时间后面不加「秒」。判定时这个优先级按 0 和其他料理比较。<code>must</code> 的 <code>op</code> 按原样显示，<code>"="</code> 表示该食材格数必须正好等于 <code>value</code>。<code>must.name</code> 前面可以写 <code>&lt;烤&gt;</code>、<code>&lt;晾&gt;</code>，对应这条食物的 <code>cooked.id</code>、<code>dried.id</code>。生的名字本身也算。只写 <code>&lt;烤&gt;大肉</code> 是生和烤两种；<code>&lt;烤&gt;&lt;晾&gt;大肉</code> 是生、烤、晾三种。两种食材都能用时，把它们放进 <code>or</code>：<code>{"or":[{"name":"黄油","op":"&gt;=","value":1},{"name":"蜂蜜","op":"&gt;=","value":1}]}</code>，满足其中一条即可。锅里有烤或晾的食物，格子右上角可以切换形态，晾在烤左边。沃利专属料理写字符串字段 <code>"exclusive": "warly"</code>。卡片详情提示「大厨特色菜，需要使用便携烹饪锅烹饪」；烹饪锅最终结果里出现这道菜时也显示这句。同一配方还匹配到任何其他料理（不论优先级高低）时，再加一句「普通烹饪锅只会做出其他料理」。</p>
+<p>料理的 <code>cookSeconds</code>、<code>priority</code> 还没定稿时写 <code>"待补充"</code>。详情只显示「待补充」：烹饪时间后面不加「秒」。判定时这个优先级按 0 和其他料理比较。<code>must</code> 的 <code>op</code> 按原样显示，<code>"="</code> 表示该食材格数必须正好等于 <code>value</code>。<code>must.name</code> 前面可以写 <code>&lt;烤&gt;</code>、<code>&lt;晾&gt;</code>，对应这条食物的 <code>cooked.id</code>、<code>dried.id</code>。生的名字本身也算。只写 <code>&lt;烤&gt;大肉</code> 是生和烤两种；<code>&lt;烤&gt;&lt;晾&gt;大肉</code> 是生、烤、晾三种。两种食材都能用时，把它们放进 <code>or</code>：<code>{"or":[{"name":"黄油","op":"&gt;=","value":1},{"name":"蜂蜜","op":"&gt;=","value":1}]}</code>，满足其中一条即可。若两项都允许烤、但不能全烤（鳄梨酱：仙人掌肉 + 石果），<code>must</code> 只写两条 <code>&lt;烤&gt;…</code>，再加碟级字段 <code>"atLeastOneRaw": ["仙人掌肉","石果"]</code>：名单里至少有一种是生的；这不是再占一格必用，其余两格仍可随便填。锅里有烤或晾的食物，格子右上角可以切换形态，晾在烤左边。沃利专属料理写字符串字段 <code>"exclusive": "warly"</code>。卡片详情提示「大厨特色菜，需要使用便携烹饪锅烹饪」；烹饪锅最终结果里出现这道菜时也显示这句。同一配方还匹配到任何其他料理（不论优先级高低）时，再加一句「普通烹饪锅只会做出其他料理」。</p>
 
 <h2>基础食物字段</h2>
-<p><code>fish</code>：鱼类标识。写 <code>true</code>（或字符串 <code>"fish"</code>）时进入钓鱼指南。鱼类仍写在 <code>basic_food.json</code> 里。多数海鱼写 <code>hide: true</code>，普通食物图鉴不显示；淡水鱼可当普通食物写三维，不写 <code>hide</code> 就会出现在食物图鉴，也可同时出现在钓鱼指南。钓鱼指南不展示生命/饥饿/理智三维，只看区域、掉落、季节/活动与重量。</p>
+<p><code>fish</code>：鱼类标识。写 <code>true</code>（或字符串 <code>"fish"</code>）时进入钓鱼指南。鱼类仍写在 <code>basic_food.json</code> 里。多数海鱼写 <code>hide: true</code>，普通食物图鉴不显示；池塘/苔藓池塘里的鱼可当普通食物写三维，不写 <code>hide</code> 就会出现在食物图鉴，也可同时出现在钓鱼指南。钓鱼指南不展示生命/饥饿/理智三维，只看区域、掉落、季节/活动与重量。</p>
 <p><code>fishing</code>：钓鱼信息对象，可选。常用键：</p>
 <ul>
-  <li><code>areas</code>：区域数组。取值 <code>freshwater</code> 淡水、<code>shallow</code> 浅海、<code>ocean</code> 中层海、<code>deep</code> 深海、<code>dangerous</code> 危险海域、<code>waterlogged</code> 水中木。不写或空数组时页面显示「不指定特殊区域」。</li>
-  <li><code>drops</code>：掉落数组。每项可以是字符串，或 <code>{"name":"鱼肉","chance":1}</code> / <code>{"id":"...","name":"...","chance":0.25}</code>。<code>chance</code> 为 0–1 时按百分比显示，大于 1 时当百分数，字符串原样显示。</li>
+  <li><code>areas</code>：区域数组。取值 <code>pond</code> 池塘、<code>mossy_pond</code> 苔藓池塘、<code>shallow</code> 浅海、<code>ocean</code> 中层海、<code>deep</code> 深海、<code>dangerous</code> 危险海域、<code>waterlogged</code> 水中木。不写或空数组时页面显示「不指定特殊区域」。</li>
+  <li><code>drops</code>（也可写在条目顶层，见下）：掉落数组。鱼类仍可写在 <code>fishing.drops</code>。</li>
   <li><code>seasons</code>：出现季节数组，<code>spring</code> / <code>summer</code> / <code>autumn</code> / <code>winter</code>。不写或空数组视为四季，页面显示「四季」；只有少数鱼需要指定季节时才写。</li>
   <li><code>events</code>：活动名字符串数组，与季节一起显示在「出现」。</li>
   <li><code>weight</code>：<code>{"min":最轻,"max":最重}</code>。也可直接写 <code>weightMin</code> / <code>weightMax</code>。</li>
   <li><code>note</code>：补充说明，可选。</li>
 </ul>
-<p>由海草产生的鱼：写在条目的 <code>source</code>（例如 <code>"source": "海草"</code>），不要塞进季节/活动。季节/活动只写真正的出现时段；<code>source</code> 表示从哪里产出。</p>
+<p>由海草产生的鱼：写在条目的 <code>source</code>（例如 <code>"source": "海草"</code>），不要塞进季节/活动。季节/活动只写真正的出现时段；<code>source</code> 表示从哪里产出。条目不必写 <code>origin</code>：归属由 <code>mod_config.json</code> 的路径与 <code>tag</code> 在加载时注入。</p>
+<p><code>drops</code>：通用掉落，写在条目顶层。普通食物（如鼹鼠）、鱼类、之后的怪物篇都用同一套。推荐数组；也可以写单个对象。每项可以是字符串，或 <code>{"name":"小肉","chance":1}</code> / <code>{"name":"小肉","value":1,"chance":1}</code> / <code>{"id":"...","name":"...","chance":0.25}</code>。<code>value</code>（或 <code>count</code>）是数量，写了就显示为 ×N（含 ×1）；不写则不缀数量；<code>chance</code> 为 0–1 时按百分比显示，大于 1 时当百分数，字符串原样显示。未写该字段：页面不显示掉落行；显式 <code>"drops": null</code>：显示「无掉落物」。鱼类若只写在 <code>fishing.drops</code> 里也认；新数据优先写顶层 <code>drops</code>。</p>
+<p><code>effect</code>：效果文案，基础食物与料理都可写。页面显示「效果：…」。冷食写 <code>&lt;冷食&gt;</code>，热食写 <code>&lt;热食&gt;</code>，后面接持续时间等（例如 <code>"&lt;冷食&gt;持续5秒"</code>）。展示时展开为：</p>
+<ul>
+  <li>冷食：在角色个体温度高于12°时生效，降低个体体感温度40°，</li>
+  <li>热食：在角色个体温度低于62°时生效，提升个体体感温度40°(提升效果会随新鲜度减少而减少)，</li>
+</ul>
+<p>词条「冷食」「热食」带颜色（冷 <code>#6ec8f0</code>，热 <code>#e4572e</code>）。烤/晾子对象若未单独写 <code>effect</code>，不继承生的效果。</p>
 <p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。鱼类常用它从图鉴藏掉。默认 / 省略视为 <code>false</code>。</p>
 <p><code>noCook</code>：布尔。为 <code>true</code> 时不能放进烹饪锅（选择栏、补格、举例配方都不会用到）。与 <code>hide</code> 互不干涉：图鉴显隐只看 <code>hide</code>，入锅只看 <code>noCook</code>（以及下面的 <code>plantOnly</code>）。特殊内容既不是料理、又不能入锅时，仍写在基础食物里，标 <code>noCook: true</code>；需要从普通食物图鉴藏掉就再加 <code>hide: true</code>。默认 / 省略视为 <code>false</code>。</p>
 <p><code>plantOnly</code>：布尔。为 <code>true</code> 时只留种植记录，不进食物图鉴，也不进烹饪锅。针刺旋花用它，并同时写 <code>hide: true</code>。</p>

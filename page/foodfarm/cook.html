@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>料理篇</title>
 <link rel="stylesheet" href="../../css/common-tags.css">
-<link rel="stylesheet" href="../../css/foodfarm.css?v=27">
+<link rel="stylesheet" href="../../css/foodfarm.css?v=29">
 </head>
 <body class="cook-page">
   <aside class="mod-drawer" id="mod-drawer">
@@ -69,8 +69,9 @@
     <button type="button" class="side-drawer-handle" id="cook-filter-handle" aria-expanded="false">筛选</button>
     <div class="side-drawer-panel">
       <div class="side-drawer-title">筛选</div>
+      <input type="search" class="side-search" id="grid-dish-search" placeholder="搜索料理名" autocomplete="off">
       <div class="filter-group">
-        <div class="filter-label">我想做</div>
+        <div class="filter-label">筛选条件</div>
         <div class="filter-checks" id="grid-want-checks"></div>
         <div class="cook-want-custom">
           <label>回生命值 &gt; <input type="number" id="grid-heal-min" value="10" min="0" step="1"></label>
@@ -108,7 +109,7 @@
         <button type="button" class="food-modal-close" data-close="possible-modal" aria-label="关闭">×</button>
       </div>
       <div class="cook-want">
-        <div class="filter-label">我想做</div>
+        <div class="filter-label">筛选条件</div>
         <div class="filter-checks" id="cook-want-checks"></div>
         <div class="cook-want-custom">
           <label>回生命值 &gt; <input type="number" id="cook-heal-min" value="10" min="0" step="1"></label>
@@ -136,15 +137,15 @@
     <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
     <div class="page-overview-panel" id="page-overview-panel" hidden>
       <div class="page-overview-title" id="page-overview-title">概述</div>
-      <div class="page-overview-body tag-text" id="page-overview-body">主区是料理图鉴，可用「我想做」筛选。左抽屉四格锅按度与必用原料匹配料理；点卡片看配方举例，或一键往锅里填入样例组合。</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">主区是料理图鉴，可用右侧筛选按名字与条件过滤。左抽屉四格锅按度与必用原料匹配料理；点卡片看配方举例，或一键往锅里填入样例组合。</div>
     </div>
   </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>
-  <script src="../../js/common/tags.js?v=13"></script>
-  <script src="../../js/foodfarm/common.js?v=11"></script>
-  <script src="../../js/foodfarm/cook-calc.js?v=12"></script>
-  <script src="../../js/foodfarm/cook.js?v=18"></script>
+  <script src="../../js/common/tags.js?v=14"></script>
+  <script src="../../js/foodfarm/common.js?v=16"></script>
+  <script src="../../js/foodfarm/cook-calc.js?v=15"></script>
+  <script src="../../js/foodfarm/cook.js?v=22"></script>
 </body>
 </html>

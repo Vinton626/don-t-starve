@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>钓鱼指南</title>
 <link rel="stylesheet" href="../../css/common-tags.css">
-<link rel="stylesheet" href="../../css/foodfarm.css?v=28">
+<link rel="stylesheet" href="../../css/foodfarm.css?v=29">
 </head>
 <body>
   <aside class="mod-drawer" id="mod-drawer">
@@ -21,10 +21,18 @@
   <a class="home-fab" href="../../index.html">首页</a>
   <a class="home-fab back-fab" href="../foodfarm.html">上一页</a>
 
+  <aside class="side-drawer filter-drawer" id="fish-filter-drawer">
+    <button type="button" class="side-drawer-handle" id="fish-filter-handle" aria-expanded="false">筛选</button>
+    <div class="side-drawer-panel">
+      <div class="side-drawer-title">筛选</div>
+      <input type="search" class="side-search" id="fish-search" placeholder="搜索鱼类 / 区域 / 掉落" autocomplete="off">
+      <button type="button" class="filter-reset" id="fish-filter-reset">清空筛选</button>
+    </div>
+  </aside>
+
   <div class="page">
     <h1 class="title">钓鱼指南</h1>
     <main class="content-host">
-      <input type="search" class="food-search" id="fish-search" placeholder="搜索鱼类 / 区域 / 掉落" autocomplete="off">
       <div class="panel-body" id="fish-body"></div>
     </main>
   </div>
@@ -52,8 +60,8 @@
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>
-  <script src="../../js/common/tags.js?v=13"></script>
-  <script src="../../js/foodfarm/common.js?v=9"></script>
-  <script src="../../js/foodfarm/fish.js?v=4"></script>
+  <script src="../../js/common/tags.js?v=14"></script>
+  <script src="../../js/foodfarm/common.js?v=16"></script>
+  <script src="../../js/foodfarm/fish.js?v=7"></script>
 </body>
 </html>

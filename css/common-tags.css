@@ -151,6 +151,14 @@ formula,
   border-bottom: 1px dashed rgba(240, 208, 96, .75);
 }
 
+/* 冷食 / 热食（effect 展开用） */
+coldfood,
+.tag-text coldfood,
+.profile-text coldfood { color: #6ec8f0; }
+hotfood,
+.tag-text hotfood,
+.profile-text hotfood { color: #e4572e; }
+
 .notice-tip {
   position: fixed;
   z-index: 45;

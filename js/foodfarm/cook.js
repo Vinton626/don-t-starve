@@ -16,6 +16,7 @@ const cook = {
   sanityMin: 10,
   gridHealMin: 10,
   gridSanityMin: 10,
+  gridSearch: "",
   openDegrees: new Set(),
   exampleCache: new Map(),
   /** 满锅并列时当前查看的料理 id */
@@ -88,10 +89,12 @@ function renderGrid() {
     host.innerHTML = `<p class="empty-center">暂无料理数据。</p>`;
     return;
   }
-  const list = CookCalc.filterWanted(cook.dishes, [...cook.gridWant], {
+  let list = CookCalc.filterWanted(cook.dishes, [...cook.gridWant], {
     healMin: cook.gridHealMin,
     sanityMin: cook.gridSanityMin
   });
+  const q = String(cook.gridSearch || "").trim().toLowerCase();
+  if (q) list = list.filter(d => `${d.name || ""} ${d.id || ""}`.toLowerCase().includes(q));
   if (!list.length) {
     host.innerHTML = `<p class="empty-center">条件太多了，无对应料理</p>`;
     return;
@@ -119,7 +122,9 @@ function warlyTipHTML(withExtra) {
 
 function dishInfoHTML(dish, opts) {
   const skipWarlyTip = opts && opts.skipWarlyTip;
-  const req = (dish.requires || []).map(r => {
+  const requireEntryHTML = r => {
+    if (!r) return "";
+    if (Array.isArray(r.or)) return r.or.map(requireEntryHTML).filter(Boolean).join(" 或 ");
     const key = Foodfarm.normalizeDegreeKey ? Foodfarm.normalizeDegreeKey(r.degree) : r.degree;
     const name = Foodfarm.degreeLabel ? Foodfarm.degreeLabel(key) : key;
     const tag = esc(key || r.degree);
@@ -128,8 +133,15 @@ function dishInfoHTML(dish, opts) {
     if (op === "<=") return `0 &lt; ${labeled} ≤ <b>${esc(r.value)}</b>`;
     if (op === "<") return `0 &lt; ${labeled} &lt; <b>${esc(r.value)}</b>`;
     return `${labeled} ${esc(op)} <b>${esc(r.value)}</b>`;
-  }).join("；");
+  };
+  const req = (dish.requires || []).map(requireEntryHTML).filter(Boolean).join("；");
   const must = (dish.must || []).map(mustEntryHTML).join("；");
+  const rawAmong = (Array.isArray(dish.atLeastOneRaw) ? dish.atLeastOneRaw : [])
+    .map(name => String(name == null ? "" : name).trim())
+    .filter(Boolean);
+  const rawNote = rawAmong.length
+    ? `（${rawAmong.map(n => esc(n)).join("、")}至少有一个为生，不能都烤）`
+    : "";
   const limit = (dish.limit || []).map(l => {
     if (typeof l === "string") return esc(l);
     if (l.degree) {
@@ -147,9 +159,12 @@ function dishInfoHTML(dish, opts) {
     cookTimeText(dish.cookSeconds) ? `<p>烹饪：<b>${esc(cookTimeText(dish.cookSeconds))}</b></p>` : "",
     Foodfarm.spoilLabel(dish.spoilDays) ? `<p>保鲜：<b>${esc(Foodfarm.spoilLabel(dish.spoilDays))}</b></p>` : "",
     req ? `<p>度要求：${req}</p>` : "",
-    must ? `<p>必用：${must}</p>` : "",
+    must || rawNote ? `<p>必用：${must || ""}${rawNote}</p>` : "",
     limit ? `<p>限制：${limit}</p>` : "",
-    dish.effect ? `<p>效果：${dish.effect}</p>` : ""
+    (() => {
+      const fx = Foodfarm.effectHTML(dish.effect);
+      return fx ? `<p class="tag-text">效果：${fx}</p>` : "";
+    })()
   ].join("");
 }
 
@@ -281,7 +296,14 @@ function syncLayout() {
   renderCookState();
 }
 
-/* ---------- 筛选 / 我想做 ---------- */
+/* ---------- 筛选条件 ---------- */
+
+const WANT_MUTEX = {
+  heal: "healthDown",
+  healthDown: "heal",
+  sanityUp: "sanityDown",
+  sanityDown: "sanityUp"
+};
 
 function wantChecksHTML(prefix) {
   return Object.values(CookCalc.WANT).map(w =>
@@ -312,8 +334,19 @@ function bindWantChecks() {
     const input = e.target.closest("input[data-want]");
     if (!input) return;
     const set = input.dataset.scope === "grid" ? cook.gridWant : cook.calcWant;
-    if (input.checked) set.add(input.dataset.want);
-    else set.delete(input.dataset.want);
+    const key = input.dataset.want;
+    if (input.checked) {
+      const opposite = WANT_MUTEX[key];
+      if (opposite) {
+        set.delete(opposite);
+        const host = input.closest(".filter-checks");
+        const other = host && host.querySelector(`input[data-want="${opposite}"]`);
+        if (other) other.checked = false;
+      }
+      set.add(key);
+    } else {
+      set.delete(key);
+    }
     if (input.dataset.scope === "grid") renderGrid();
     else renderPossibleList();
   });
@@ -333,16 +366,27 @@ function bindWantChecks() {
   bindNum("grid-heal-min", "gridHealMin", "grid");
   bindNum("grid-sanity-min", "gridSanityMin", "grid");
 
+  const search = Foodfarm.$("grid-dish-search");
+  if (search) {
+    search.addEventListener("input", () => {
+      cook.gridSearch = search.value || "";
+      renderGrid();
+    });
+  }
+
   const reset = Foodfarm.$("cook-filter-reset");
   if (reset) {
     reset.addEventListener("click", () => {
       cook.gridWant.clear();
+      cook.gridSearch = "";
       cook.gridHealMin = 10;
       cook.gridSanityMin = 10;
       const h = Foodfarm.$("grid-heal-min");
       const s = Foodfarm.$("grid-sanity-min");
+      const q = Foodfarm.$("grid-dish-search");
       if (h) h.value = "10";
       if (s) s.value = "10";
+      if (q) q.value = "";
       renderWantChecks();
       renderGrid();
     });

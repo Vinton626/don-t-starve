@@ -66,7 +66,7 @@ function renderFish() {
 
 function fishDetailHTML(fish) {
   const areasText = Foodfarm.fishAreasText(fish);
-  const drops = Foodfarm.fishDropsOf(fish).map(Foodfarm.fishDropLabel).filter(Boolean);
+  const drops = Foodfarm.dropsDisplay(fish);
   const seasonsText = Foodfarm.fishSeasonsText(fish);
   const events = Foodfarm.fishEventsOf(fish).filter(Boolean);
   const weight = Foodfarm.fishWeightRange(fish);
@@ -81,7 +81,7 @@ function fishDetailHTML(fish) {
     `<p>来源：${esc(Foodfarm.originLabel(fish))}</p>`,
     fish.source ? `<p>产出：${esc(fish.source)}</p>` : "",
     areasText ? `<p>区域：${esc(areasText)}</p>` : "",
-    drops.length ? `<p>掉落：${esc(drops.join("、"))}</p>` : "",
+    drops != null ? `<p>掉落：${esc(drops)}</p>` : "",
     appear.length ? `<p>出现：${esc(appear.join("；"))}</p>` : "",
     weightText ? `<p>重量：<b>${esc(weightText)}</b></p>` : "",
     info.note ? `<p>${info.note}</p>` : ""
@@ -116,6 +116,19 @@ function closeFishModal() {
   activeFish = null;
 }
 
+function drawerOpen(id) {
+  const drawer = Foodfarm.$(id);
+  return !!(drawer && drawer.classList.contains("is-open"));
+}
+
+function setDrawer(id, open) {
+  const drawer = Foodfarm.$(id);
+  if (!drawer) return;
+  drawer.classList.toggle("is-open", !!open);
+  const handle = drawer.querySelector(".side-drawer-handle");
+  if (handle) handle.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
 function bindFishUI() {
   const host = Foodfarm.$("fish-body");
   if (host && host.dataset.bound !== "1") {
@@ -129,11 +142,23 @@ function bindFishUI() {
     });
   }
 
+  const drawer = Foodfarm.$("fish-filter-drawer");
+  const handle = drawer && drawer.querySelector(".side-drawer-handle");
+  if (handle) handle.addEventListener("click", () => setDrawer("fish-filter-drawer", !drawerOpen("fish-filter-drawer")));
+
   const search = Foodfarm.$("fish-search");
   if (search && search.dataset.bound !== "1") {
     search.dataset.bound = "1";
     search.addEventListener("input", () => {
       fishQuery = search.value || "";
+      renderFish();
+    });
+  }
+  const reset = Foodfarm.$("fish-filter-reset");
+  if (reset) {
+    reset.addEventListener("click", () => {
+      fishQuery = "";
+      if (search) search.value = "";
       renderFish();
     });
   }

@@ -1,9 +1,60 @@
 {
   "items": [
     {
+      "id": "berry",
+      "name": "浆果",
+      "hide": false,
+      "foodtype1": "veggie",
+      "foodtype2": "berry",
+      "health": 0,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 0.5
+      },
+      "cooked": {
+        "id": "berry_cooked",
+        "name": "烤浆果",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 0.5
+        }
+      }
+    },
+    {
+      "id": "juicy_berry",
+      "name": "多汁浆果",
+      "hide": false,
+      "foodtype1": "veggie",
+      "foodtype2": "berry",
+      "health": 1,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 2,
+      "degrees": {
+        "fruit": 0.5
+      },
+      "cooked": {
+        "id": "juicy_berry_cooked",
+        "name": "烤多汁浆果",
+        "foodtype": "veggie",
+        "health": 3,
+        "hunger": 18.75,
+        "sanity": 0,
+        "spoilDays": 1,
+        "degrees": {
+          "fruit": 0.5
+        }
+      }
+    },
+    {
       "id": "carrot",
       "name": "胡萝卜",
-      "origin": "",
       "source": "carrot_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -59,7 +110,6 @@
     {
       "id": "corn",
       "name": "玉米",
-      "origin": "",
       "source": "corn_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -115,7 +165,6 @@
     {
       "id": "potato",
       "name": "土豆",
-      "origin": "",
       "source": "potato_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -171,7 +220,6 @@
     {
       "id": "tomato",
       "name": "番茄",
-      "origin": "",
       "source": "tomato_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -227,7 +275,6 @@
     {
       "id": "asparagus",
       "name": "芦笋",
-      "origin": "",
       "source": "asparagus_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -284,7 +331,6 @@
     {
       "id": "eggplant",
       "name": "茄子",
-      "origin": "",
       "source": "eggplant_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -341,7 +387,6 @@
     {
       "id": "pumpkin",
       "name": "南瓜",
-      "origin": "",
       "source": "pumpkin_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -398,7 +443,6 @@
     {
       "id": "watermelon",
       "name": "西瓜",
-      "origin": "",
       "source": "watermelon_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -409,6 +453,7 @@
       "degrees": {
         "fruit": 1
       },
+      "effect": "<冷食>持续5秒",
       "cooked": {
         "id": "watermelon_cooked",
         "name": "烤西瓜",
@@ -455,7 +500,6 @@
     {
       "id": "dragonfruit",
       "name": "火龙果",
-      "origin": "",
       "source": "dragonfruit_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -512,7 +556,6 @@
     {
       "id": "durian",
       "name": "榴莲",
-      "origin": "",
       "source": "durian_seeds",
       "hide": false,
       "foodtype1": "veggie",
@@ -574,7 +617,6 @@
     {
       "id": "garlic",
       "name": "大蒜",
-      "origin": "",
       "source": "garlic_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -628,7 +670,6 @@
     {
       "id": "onion",
       "name": "洋葱",
-      "origin": "",
       "source": "onion_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -684,7 +725,6 @@
     {
       "id": "chili",
       "name": "辣椒",
-      "origin": "",
       "source": "chili_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -741,7 +781,6 @@
     {
       "id": "pomegranate",
       "name": "石榴",
-      "origin": "",
       "source": "pomegranate_seeds",
       "hide": false,
       "foodtype": "veggie",
@@ -798,16 +837,12 @@
     {
       "id": "seeds",
       "name": "种子",
-      "origin": "",
       "hide": false,
       "foodtype": "seeds",
       "health": 0,
       "hunger": 4.6875,
       "sanity": 0,
       "spoilDays": 40,
-      "degrees": {
-        "seed": 1
-      },
       "cooked": {
         "id": "seeds_cooked",
         "name": "烤种子",
@@ -820,9 +855,35 @@
       }
     },
     {
+      "id": "birchnut",
+      "name": "桦栗果",
+      "hide": true,
+      "foodtype": "raw",
+      "health": 1,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 20,
+      "degrees": {
+        "seed": 1
+      }
+    },
+    {
+      "id": "cookedbirchnut",
+      "name": "烤桦栗果",
+      "hide": false,
+      "foodtype1": "seeds",
+      "foodtype2": "roughage",
+      "health": 1,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "seed": 1
+      }
+    },
+    {
       "id": "forgetmenot",
       "name": "必忘我",
-      "origin": "",
       "source": "",
       "hide": false,
       "foodtype": "veggie",
@@ -860,7 +921,6 @@
     {
       "id": "firenettle",
       "name": "火荨麻",
-      "origin": "",
       "source": "seeds",
       "hide": false,
       "foodtype": "",
@@ -898,7 +958,6 @@
     {
       "id": "tillweed",
       "name": "犁地草",
-      "origin": "",
       "source": "seeds",
       "hide": false,
       "foodtype": "",
@@ -936,7 +995,6 @@
     {
       "id": "ivy",
       "name": "针刺旋花",
-      "origin": "",
       "source": "seeds",
       "hide": true,
       "plantOnly": true,
@@ -956,7 +1014,6 @@
     {
       "id": "mandragora",
       "name": "曼德拉草",
-      "origin": "",
       "hide": false,
       "foodtype": "veggie",
       "health": 60,
@@ -984,7 +1041,6 @@
     {
       "id": "meat",
       "name": "大肉",
-      "origin": "",
       "hide": false,
       "foodtype": "meat",
       "health": 1,
@@ -1022,7 +1078,6 @@
     {
       "id": "smallmeat",
       "name": "小肉",
-      "origin": "",
       "hide": false,
       "foodtype": "meat",
       "health": 0,
@@ -1060,7 +1115,6 @@
     {
       "id": "leafmeat",
       "name": "叶肉",
-      "origin": "",
       "hide": false,
       "foodtype": "meat",
       "health": 0,
@@ -1084,9 +1138,45 @@
       }
     },
     {
+      "id": "birdlegs",
+      "name": "鸟腿",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": -10,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 0.5
+      },
+      "cooked": {
+        "id": "birdlegs_cooked",
+        "name": "熟鸟腿",
+        "foodtype": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {
+          "meat": 0.5
+        }
+      },
+      "dried": {
+        "id": "smallmeat_dried",
+        "name": "小肉干",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 12.5,
+        "sanity": 10,
+        "spoilDays": 20,
+        "degrees": {
+          "meat": 0.5
+        }
+      }
+    },
+    {
       "id": "froglegs",
       "name": "蛙腿",
-      "origin": "",
       "hide": false,
       "foodtype": "meat",
       "health": 0,
@@ -1124,7 +1214,6 @@
     {
       "id": "monster",
       "name": "怪物肉",
-      "origin": "",
       "hide": false,
       "foodtype": "meat",
       "health": -20,
@@ -1165,7 +1254,6 @@
     {
       "id": "butterflywings",
       "name": "蝴蝶翅膀",
-      "origin": "",
       "hide": false,
       "foodtype": "veggie",
       "health": 8,
@@ -1179,7 +1267,6 @@
     {
       "id": "moonbutterflywings",
       "name": "月蛾翅膀",
-      "origin": "",
       "hide": false,
       "foodtype": "veggie",
       "health": 8,
@@ -1193,7 +1280,6 @@
     {
       "id": "littlefish",
       "name": "小鱼块",
-      "origin": "",
       "hide": false,
       "foodtype": "meat",
       "health": 1,
@@ -1234,7 +1320,6 @@
     {
       "id": "ice",
       "name": "冰",
-      "origin": "",
       "hide": false,
       "foodtype": "generic",
       "health": 0.5,
@@ -1243,17 +1328,114 @@
       "spoilDays": 3,
       "degrees": {
         "ice": 1
+      },
+      "effect": "<冷食>持续7.5秒"
+    },
+    {
+      "id": "electric_sheep_milk",
+      "name": "带电的羊奶",
+      "foodtype": "generic",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": 10,
+      "spoilDays": 6,
+      "degrees": {
+        "dairy": 1
+      }
+    },
+    {
+      "id": "stonefruit",
+      "name": "石果",
+      "foodtype": "veggie",
+      "health": 1,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "stonefruit_cooked",
+        "name": "熟石果",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 15,
+        "spoilDays": 2,
+        "degrees": {
+          "veg": 1
+        }
+      }
+    },
+    {
+      "id": "cactusmeat",
+      "name": "仙人掌肉",
+      "foodtype": "veggie",
+      "health": -3,
+      "hunger": 12.5,
+      "sanity": -5,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "cactusmeat_cooked",
+        "name": "熟仙人掌肉",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 15,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 1
+        }
+      }
+    },
+    {
+      "id": "cactusflower",
+      "name": "仙人掌花",
+      "foodtype": "veggie",
+      "health": 8,
+      "hunger": 12.5,
+      "sanity": 5,
+      "spoilDays": 3,
+      "degrees": {
+        "veg": 1
+      }
+    },
+    {
+      "id": "milkwhite_object",
+      "name": "乳白物",
+      "foodtype": "generic",
+      "health": 8,
+      "hunger": 12.5,
+      "sanity": -20,
+      "spoilDays": 10,
+      "degrees": {
+        "dairy": 1
+      }
+    },
+    {
+      "id": "moss",
+      "name": "苔藓",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": -5,
+      "spoilDays": 2,
+      "degrees": {
+        "veg": 1
       }
     },
     {
       "id": "kelp",
       "name": "海带叶",
-      "origin": "",
       "hide": false,
-      "foodtype": "gener",
+      "foodtype": "veggie",
       "health": -1,
       "hunger": 9.375,
-      "sanity": -1,
+      "sanity": -10,
       "spoilDays": 10,
       "degrees": {
         "veg": 0.5
@@ -1264,7 +1446,7 @@
         "foodtype": "veggie",
         "health": 0,
         "hunger": 9.375,
-        "sanity": 1,
+        "sanity": -5,
         "spoilDays": 10,
         "degrees": {
           "veg": 0.5
@@ -1274,9 +1456,9 @@
         "id": "kelp_dried",
         "name": "干海带叶",
         "foodtype": "veggie",
-        "health": 0,
+        "health": 1,
         "hunger": 9.375,
-        "sanity": 0,
+        "sanity": 10,
         "spoilDays": 20,
         "degrees": {
           "veg": 0.5
@@ -1286,7 +1468,6 @@
     {
       "id": "butter",
       "name": "黄油",
-      "origin": "",
       "hide": false,
       "foodtype": "generic",
       "health": 40,
@@ -1301,7 +1482,6 @@
     {
       "id": "honey",
       "name": "蜂蜜",
-      "origin": "",
       "hide": false,
       "foodtype": "generic",
       "health": 3,
@@ -1315,7 +1495,6 @@
     {
       "id": "purple_flower",
       "name": "深色花瓣",
-      "origin": "",
       "hide": false,
       "foodtype": "veggie",
       "health": 0,
@@ -1343,7 +1522,6 @@
     {
       "id": "branch",
       "name": "树枝",
-      "origin": "",
       "hide": true,
       "foodtype": "",
       "health": null,
@@ -1357,7 +1535,6 @@
     {
       "id": "nightmarefuel",
       "name": "噩梦燃料",
-      "origin": "",
       "hide": true,
       "foodtype": "",
       "health": null,
@@ -1365,6 +1542,93 @@
       "sanity": null,
       "degrees": {
         "inedible": 1
+      }
+    },
+    {
+      "id": "moles",
+      "name": "鼹鼠",
+      "foodtype": "meat",
+      "hide": true,
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "spoilDays": 2,
+      "degrees": {
+        "meat": 0.5
+      },
+      "drops": {
+        "name": "小肉",
+        "value": 1,
+        "chance": 1
+      }
+    },
+    {
+      "id": "eel",
+      "name": "鳗鱼", 
+      "hide": false,
+      "foodtype": "meat",
+      "health": 3,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "meat": 0.5,
+        "fish": 1
+      },
+      "cooked": {
+        "id": "eel_cooked",
+        "name": "熟鳗鱼",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "meat": 0.5,
+          "fish": 1
+        }
+      },
+      "dried": {
+        "id": "smallmeat_dried",
+        "name": "小肉干",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 12.5,
+        "sanity": 10,
+        "spoilDays": 20,
+        "degrees": {
+          "meat": 0.5
+        }
+      }
+    },
+    {
+      "id": "liveeel",
+      "name": "活鳗鱼",
+      "fish": true,
+      "hide": true,
+      "health": 3,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "meat": 0.5,
+        "fish": 1
+      },
+      "fishing": {
+        "areas": [
+          "mossy_pond"
+        ],
+        "drops": [
+          {
+            "name": "鳗鱼",
+            "chance": 1
+          }
+        ],
+        "events": [],
+        "weight": {
+          "min": 165.16,
+          "max": 212.12
+        }
       }
     },
     {
@@ -1376,29 +1640,46 @@
         "veg": 1
       },
       "fishing": {
-        "areas": ["ocean","shallow"],
+        "areas": [
+          "ocean",
+          "shallow"
+        ],
         "drops": [
-          { "name": "玉米", "chance": 1 }
+          {
+            "name": "玉米",
+            "chance": 1
+          }
         ],
         "events": [],
-        "weight": { "min": 161.48, "max": 241.8 }
+        "weight": {
+          "min": 161.48,
+          "max": 241.8
+        }
       }
     },
     {
       "id": "popcornfish",
       "name": "爆米花鱼",
       "fish": true,
-      "hide":true,
+      "hide": true,
       "degrees": {
         "veg": 1
       },
       "fishing": {
-        "areas": ["shallow"],
+        "areas": [
+          "shallow"
+        ],
         "drops": [
-          { "name": "爆米花", "chance": 1 }
+          {
+            "name": "爆米花",
+            "chance": 1
+          }
         ],
         "events": [],
-        "weight": { "min": 33.08, "max": 47.74 }
+        "weight": {
+          "min": 33.08,
+          "max": 47.74
+        }
       }
     },
     {
@@ -1414,11 +1695,20 @@
       "fishing": {
         "areas": [],
         "drops": [
-          { "name": "小鱼块", "chance": 1 }
+          {
+            "name": "小鱼块",
+            "chance": 1
+          }
         ],
-        "seasons": ["autumn", "winter"],
+        "seasons": [
+          "autumn",
+          "winter"
+        ],
         "events": [],
-        "weight": { "min": 31.15, "max": 49.2 }
+        "weight": {
+          "min": 31.15,
+          "max": 49.2
+        }
       }
     }
   ]

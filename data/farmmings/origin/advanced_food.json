@@ -3,7 +3,6 @@
     {
       "id": "vegetablemedley",
       "name": "蔬菜杂烩",
-      "origin": "",
       "foodtype": "veggie",
       "health": 3,
       "hunger": 25,
@@ -20,15 +19,45 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "meat" },
-        { "degree": "inedible" }
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
-      "id":"meatball",
+      "id": "pickledeggplant",
+      "name": "酿茄子",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>茄子",
+          "op": ">",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "<热食>持续5秒"
+    },
+    {
+      "id": "meatball",
       "name": "肉丸",
-      "origin": "",
       "foodtype": "meat",
       "health": 3,
       "hunger": 62.5,
@@ -45,14 +74,15 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "inedible" }
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "meatstew",
       "name": "肉汤",
-      "origin": "",
       "foodtype": "meat",
       "health": 12,
       "hunger": 150,
@@ -69,14 +99,15 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "inedible" }
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "polishdumplings",
       "name": "波兰水饺",
-      "origin": "",
       "foodtype": "meat",
       "health": 40,
       "hunger": 37.5,
@@ -103,14 +134,15 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "inedible" }
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "honeyham",
       "name": "蜜汁火腿",
-      "origin": "",
       "foodtype": "meat",
       "health": 30,
       "hunger": 75,
@@ -133,14 +165,15 @@
         }
       ],
       "limit": [
-        { "degree": "inedible" }
+        {
+          "degree": "inedible"
+        }
       ],
-      "effect": "无特殊效果"
+      "effect": "<热食>持续10秒"
     },
     {
       "id": "honeymeat",
       "name": "蜜汁卤肉",
-      "origin": "",
       "foodtype": "meat",
       "health": 20,
       "hunger": 37.5,
@@ -163,14 +196,15 @@
         }
       ],
       "limit": [
-        { "degree": "inedible" }
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "meatstick",
       "name": "肉串",
-      "origin": "",
       "foodtype": "meat",
       "health": 3,
       "hunger": 37.5,
@@ -203,12 +237,52 @@
         }
       ],
       "limit": [],
-      "effect": "无特殊效果"
+      "effect": "<热食>持续15秒"
+    },
+    {
+      "id": "turkeydinner",
+      "name": "火鸡正餐",
+      "foodtype": "meat",
+      "health": 40,
+      "hunger": 75,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">",
+          "value": 1
+        },
+        {
+          "or": [
+            {
+              "degree": "fruit",
+              "op": ">",
+              "value": 0
+            },
+            {
+              "degree": "veg",
+              "op": ">=",
+              "value": 0.5
+            }
+          ]
+        }
+      ],
+      "must": [
+        {
+          "name": "鸟腿",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [],
+      "effect": "<热食>持续10秒"
     },
     {
       "id": "baconegg",
       "name": "培根煎蛋",
-      "origin": "",
       "foodtype": "meat",
       "health": 20,
       "hunger": 75,
@@ -230,14 +304,15 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "veg" }
+        {
+          "degree": "veg"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "froglegsandwich",
       "name": "蛙腿三明治",
-      "origin": "",
       "foodtype": "meat",
       "health": 20,
       "hunger": 37.5,
@@ -265,7 +340,6 @@
     {
       "id": "monstermeatpie",
       "name": "怪物千层饼",
-      "origin": "",
       "foodtype": "meat",
       "health": -20,
       "hunger": 37.5,
@@ -282,14 +356,15 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "inedible" }
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "jam",
       "name": "果酱",
-      "origin": "",
       "foodtype": "veggie",
       "health": 3,
       "hunger": 37.5,
@@ -306,16 +381,21 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "veg" },
-        { "degree": "meat" },
-        { "degree": "inedible" }
+        {
+          "degree": "veg"
+        },
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
-      "id":"butterflymuffin",
+      "id": "butterflymuffin",
       "name": "蝴蝶松饼",
-      "origin": "",
       "foodtype": "veggie",
       "health": 20,
       "hunger": 37.5,
@@ -347,14 +427,15 @@
         }
       ],
       "limit": [
-        { "degree": "meat" }
+        {
+          "degree": "meat"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
-      "id":"dragonfruitpie",
+      "id": "dragonfruitpie",
       "name": "火龙果派",
-      "origin": "",
       "foodtype": "veggie",
       "health": 40,
       "hunger": 75,
@@ -377,14 +458,15 @@
         }
       ],
       "limit": [
-        { "degree": "meat" }
+        {
+          "degree": "meat"
+        }
       ],
-      "effect": "无特殊效果"
+      "effect": "<热食>持续10秒"
     },
     {
       "id": "vegetableburger",
       "name": "素食堡",
-      "origin": "",
       "foodtype": "meat",
       "health": 30,
       "hunger": 37.5,
@@ -417,7 +499,6 @@
     {
       "id": "vegetablecocktail",
       "name": "蔬菜鸡尾酒",
-      "origin": "",
       "foodtype": "veggie",
       "health": 3,
       "hunger": 25,
@@ -438,7 +519,7 @@
         }
       ],
       "must": [
-          {
+        {
           "or": [
             {
               "name": "<烤>番茄",
@@ -454,16 +535,21 @@
         }
       ],
       "limit": [
-        { "degree": "meat" },
-        { "degree": "egg" },
-        { "degree": "inedible" }
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "inedible"
+        }
       ],
       "effect": "无特殊效果"
     },
     {
       "id": "fishtacos",
       "name": "鱼肉玉米卷",
-      "origin": "",
       "foodtype": "meat",
       "health": 20,
       "hunger": 37.5,
@@ -505,7 +591,6 @@
     {
       "id": "friedfishfillet",
       "name": "炸鱼排",
-      "origin": "",
       "foodtype": "meat",
       "health": 40,
       "hunger": 37.5,
@@ -538,7 +623,6 @@
     {
       "id": "fruiticecream",
       "name": "水果圣代",
-      "origin": "",
       "foodtype": "veggie",
       "health": 20,
       "hunger": 25,
@@ -555,15 +639,60 @@
       ],
       "must": [],
       "limit": [
-        { "degree": "veg" },
-        { "degree": "meat" }
+        {
+          "degree": "veg"
+        },
+        {
+          "degree": "meat"
+        }
       ],
-      "effect": "无特殊效果"
+      "effect": "<冷食>持续5秒"
+    },
+    {
+      "id": "flowersalad",
+      "name": "花沙拉",
+      "foodtype": "veggie",
+      "health": 40,
+      "hunger": 12.5,
+      "sanity": 5,
+      "spoilDays":6,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "仙人掌花",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "fruit"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "sweetner"
+        },
+        {
+          "degree": "inedible"
+        }
+      ]
     },
     {
       "id": "mandragorasoup",
       "name": "曼德拉草汤",
-      "origin": "",
       "foodtype": "veggie",
       "health": 100,
       "hunger": 150,
@@ -585,7 +714,6 @@
     {
       "id": "powdercake",
       "name": "粉末蛋糕",
-      "origin": "",
       "foodtype": "veggie",
       "health": -3,
       "hunger": 0,
@@ -626,14 +754,340 @@
         }
       ],
       "limit": [
-        { "degree": "meat" }
+        {
+          "degree": "meat"
+        }
       ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "unagi",
+      "name": "鳗鱼料理",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 20,
+      "requires": [],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "<烤>鳗鱼",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "活鳗鱼",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "or": [
+            {
+              "name": "苔藓",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "<烤><晾>海带叶",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "watermelonicecream",
+      "name": "西瓜冰棍",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": 20,
+      "spoilDays": 3,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "西瓜",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "veg"
+        }
+      ],
+      "effect": "<冷食>持续10秒"
+    },
+    {
+      "id": "icecream",
+      "name": "冰淇凌",
+      "foodtype": "goodies",
+      "health": 0,
+      "hunger": 25,
+      "sanity": 50,
+      "spoilDays": 3,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "sweetner",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "dairy",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "veg"
+        },
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "<冷食>持续15秒"
+    },
+    {
+      "id": "avocadosauce",
+      "name": "鳄梨酱",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 0,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [],
+      "must": [
+        {
+          "or": [
+            { 
+              "name": "仙人掌肉",
+              "op": ">=",
+              "value": 1
+            },
+            { 
+              "name": "石果",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [
+        {
+          "degree": "fruit"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "toffee",
+      "name": "太妃糖",
+      "foodtype": "goodie",
+      "health": -3,
+      "hunger": 25,
+      "sanity": 15,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "sweetner",
+          "op": ">=",
+          "value": 3
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "mixednuts",
+      "name": "什锦干果",
+      "foodtype": "veggie",
+      "health": 30,
+      "hunger": 12.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "seed",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "degree": "fruit",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "桦栗果",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "烤桦栗果",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "or": [
+            {
+              "name": "<烤>浆果",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "<烤>多汁浆果",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "veg"
+        },
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "egg"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "pumpkincookie",
+      "name": "南瓜饼干",
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 37.5,
+      "sanity": 15,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "sweetner",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>南瓜",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "waffles",
+      "name": "华夫饼",
+      "foodtype": "veggie",
+      "health": 60,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 6,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "egg",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "黄油",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "or": [
+            {
+              "name": "<烤>浆果",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "<烤>多汁浆果",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [],
       "effect": "无特殊效果"
     },
     {
       "id": "freshfruitcrepes",
       "name": "鲜果可丽饼",
-      "origin": "",
       "exclusive": "warly",
       "foodtype": "veggie",
       "health": 60,
@@ -667,7 +1121,6 @@
     {
       "id": "stickygoo",
       "name": "潮湿黏糊",
-      "origin": "",
       "foodtype": "generic",
       "health": 0,
       "hunger": 0,

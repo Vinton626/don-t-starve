@@ -46,6 +46,9 @@ function displayFood(raw, form) {
     id: c.id != null && String(c.id).trim() ? String(c.id) : String(raw.id || "") + "_" + mode,
     name: c.name != null && String(c.name).trim() ? c.name : (prefix + (raw.name || raw.id || "")),
     origin: c.origin != null ? c.origin : raw.origin,
+    // 烤/晾未写 effect / drops 时不继承生的
+    effect: Object.prototype.hasOwnProperty.call(c, "effect") ? c.effect : "",
+    drops: Object.prototype.hasOwnProperty.call(c, "drops") ? c.drops : [],
     seed: undefined,
     cooked: undefined,
     dried: undefined,
@@ -261,6 +264,8 @@ function openFoodModal(food, form) {
   if (title) title.textContent = view.name || view.id || "食物";
   if (stats) stats.innerHTML = Foodfarm.foodStatesHTML(view);
   if (meta) {
+    const fx = Foodfarm.effectHTML(view.effect);
+    const drops = Foodfarm.dropsDisplay(view);
     meta.innerHTML =
       `<span>来源：${Foodfarm.escapeHTML(Foodfarm.originLabel(view))}</span>` +
       `<span>类型：${Foodfarm.foodTypeHTML(view)}</span>` +
@@ -268,7 +273,9 @@ function openFoodModal(food, form) {
       (Foodfarm.spoilLabel(view.spoilDays)
         ? `<span>保质期：<b>${Foodfarm.escapeHTML(Foodfarm.spoilLabel(view.spoilDays))}</b></span>`
         : "") +
-      (view.id ? `<span>id：${Foodfarm.escapeHTML(view.id)}</span>` : "");
+      (view.id ? `<span>id：${Foodfarm.escapeHTML(view.id)}</span>` : "") +
+      (fx ? `<span class="tag-text">效果：${fx}</span>` : "") +
+      (drops != null ? `<span>掉落：${Foodfarm.escapeHTML(drops)}</span>` : "");
   }
   if (degrees) degrees.innerHTML = Foodfarm.foodDegreesHTML(view);
   if (seed) seed.innerHTML = mode === "raw" ? seedBriefHTML(food) : "";
@@ -317,17 +324,43 @@ function bindFoodModal() {
   });
 }
 
-function bindFoodSearch() {
-  const input = Foodfarm.$("food-search");
-  if (!input || input.dataset.bound === "1") return;
-  input.dataset.bound = "1";
-  input.addEventListener("input", () => {
-    foodQuery = input.value || "";
-    renderFoods();
-  });
+function drawerOpen(id) {
+  const drawer = Foodfarm.$(id);
+  return !!(drawer && drawer.classList.contains("is-open"));
 }
 
-bindFoodSearch();
+function setDrawer(id, open) {
+  const drawer = Foodfarm.$(id);
+  if (!drawer) return;
+  drawer.classList.toggle("is-open", !!open);
+  const handle = drawer.querySelector(".side-drawer-handle");
+  if (handle) handle.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function bindFoodFilter() {
+  const drawer = Foodfarm.$("food-filter-drawer");
+  const handle = drawer && drawer.querySelector(".side-drawer-handle");
+  if (handle) handle.addEventListener("click", () => setDrawer("food-filter-drawer", !drawerOpen("food-filter-drawer")));
+
+  const input = Foodfarm.$("food-search");
+  if (input && input.dataset.bound !== "1") {
+    input.dataset.bound = "1";
+    input.addEventListener("input", () => {
+      foodQuery = input.value || "";
+      renderFoods();
+    });
+  }
+  const reset = Foodfarm.$("food-filter-reset");
+  if (reset) {
+    reset.addEventListener("click", () => {
+      foodQuery = "";
+      if (input) input.value = "";
+      renderFoods();
+    });
+  }
+}
+
+bindFoodFilter();
 bindFoodModal();
 
 Foodfarm.bootFoodfarm({

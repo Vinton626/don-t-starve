@@ -21,7 +21,7 @@
     "magic", "fat", "seed", "decoration", "dried", "precook"
   ];
 
-  /** 「我想做」筛选项；原版无稳定「扣饥饿」料理，故不收录 hungerDown */
+  /** 筛选条件；回生命/扣生命、回理智/扣理智在 UI 里互斥。原版无稳定「扣饥饿」料理，故不收录 hungerDown */
   const WANT = {
     heal: { key: "heal", name: "回生命值料理", test: d => num(d.health) > 10 },
     sanityUp: { key: "sanityUp", name: "回理智值料理", test: d => num(d.sanity) > 10 },
@@ -270,12 +270,15 @@
   }
 
   /**
-   * requires 判定。`<` / `<=` 隐含「该度必须 > 0」：
+   * requires 判定。支持 {"or":[...]}，任一分支满足即可。
+   * `<` / `<=` 隐含「该度必须 > 0」：
    *   <= N  ⇒  0 < have <= N
    *   <  N  ⇒  0 < have <  N
    */
   function requireSatisfied(req, tags) {
-    if (!req || req.degree == null) return false;
+    if (!req) return false;
+    if (Array.isArray(req.or)) return req.or.some(part => requireSatisfied(part, tags));
+    if (req.degree == null) return false;
     const key = normalizeDegreeKey(req.degree);
     const have = tags[key] || 0;
     const op = String(req.op || ">=");
@@ -285,12 +288,67 @@
 
   /** 往该度再加 add 后是否仍不破上界（下界要求始终允许加） */
   function requireAllowsAdd(req, tags, addAmount) {
-    if (!req || req.degree == null) return false;
+    if (!req) return false;
+    if (Array.isArray(req.or)) {
+      return req.or.some(part => requireAllowsAdd(part, tags, addAmount));
+    }
+    if (req.degree == null) return false;
     const key = normalizeDegreeKey(req.degree);
     const next = (tags[key] || 0) + num(addAmount);
     const op = String(req.op || ">=");
     if (!isUpperBoundOp(op)) return num(addAmount) > 0;
     return compareOp(next, op, req.value);
+  }
+
+  /** 未满锅预览：该要求是否已被当前度永久打破（or 要每个分支都打破才算） */
+  function requirePreviewBroken(req, tags) {
+    if (!req) return false;
+    if (Array.isArray(req.or)) return req.or.every(part => requirePreviewBroken(part, tags));
+    if (req.degree == null) return false;
+    const key = normalizeDegreeKey(req.degree);
+    const have = tags[key] || 0;
+    const op = String(req.op || ">=");
+    if (isUpperBoundOp(op) && have > 0 && !compareOp(have, op, req.value)) return true;
+    if ((op === "==" || op === "=") && have > num(req.value)) return true;
+    return false;
+  }
+
+  /** 补格时解析 requires：or 已满足则跳过，否则挑一条还能补的分支 */
+  function resolveRequireEntry(req, tags, canFill) {
+    if (req && Array.isArray(req.or)) {
+      if (req.or.some(part => requireSatisfied(part, tags))) return null;
+      return req.or.find(part => canFill(part)) || req.or[0] || null;
+    }
+    return req;
+  }
+
+  function requireCanFill(req, foodsOfDegreeFn) {
+    if (!req || req.degree == null) return false;
+    const op = String(req.op || ">=");
+    if (op !== ">" && op !== ">=" && op !== "==" && op !== "=" && !isUpperBoundOp(op)) return false;
+    const key = normalizeDegreeKey(req.degree);
+    return !!(foodsOfDegreeFn && foodsOfDegreeFn(key).length);
+  }
+
+  /** 碟级约束：列出的生食材名里至少有一种数量 ≥ 1（用来排除「两项都烤」） */
+  function atLeastOneRawList(dish) {
+    return (Array.isArray(dish && dish.atLeastOneRaw) ? dish.atLeastOneRaw : [])
+      .map(name => String(name == null ? "" : name).trim())
+      .filter(Boolean);
+  }
+
+  function atLeastOneRawSatisfied(dish, names) {
+    const list = atLeastOneRawList(dish);
+    if (!list.length) return true;
+    return list.some(name => nameCount(names, name) >= 1);
+  }
+
+  /** 补格时：若 atLeastOneRaw 尚未满足，且本条 must 的基底在名单里，则强制放生的 */
+  function shouldForceRawMust(dish, needName, names) {
+    const list = atLeastOneRawList(dish);
+    if (!list.length || atLeastOneRawSatisfied(dish, names)) return false;
+    const base = parseFormTags(needName).base;
+    return !!base && list.indexOf(base) >= 0;
   }
 
   /** 单道料理是否匹配当前 names/tags（不看槽位是否满 4） */
@@ -300,6 +358,7 @@
     if (limits.some(entry => limitHits(entry, names, tags))) return false;
     const must = Array.isArray(dish.must) ? dish.must : [];
     if (must.some(entry => !mustSatisfied(entry, names))) return false;
+    if (!atLeastOneRawSatisfied(dish, names)) return false;
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
     if (requires.some(req => !requireSatisfied(req, tags))) return false;
     return true;
@@ -433,15 +492,7 @@
       if (limits.some(entry => limitHits(entry, agg.names, agg.tags))) return false;
       // 已放入的度若某 requires 用 < / <= 且已经超标，则不可能；度为 0 仍可后续补上（隐含 >0 不在此提前排除）
       const requires = Array.isArray(dish.requires) ? dish.requires : [];
-      for (let i = 0; i < requires.length; i++) {
-        const req = requires[i];
-        if (!req || req.degree == null) continue;
-        const key = normalizeDegreeKey(req.degree);
-        const have = agg.tags[key] || 0;
-        const op = String(req.op || ">=");
-        if (isUpperBoundOp(op) && have > 0 && !compareOp(have, op, req.value)) return false;
-        if ((op === "==" || op === "=") && have > num(req.value)) return false;
-      }
+      if (requires.some(req => requirePreviewBroken(req, agg.tags))) return false;
       return true;
     });
     return {
@@ -451,7 +502,7 @@
   }
 
   /**
-   * 「我想做」过滤。wantKeys 为 WANT 的 key 数组；多选为且（同时满足）。
+   * 筛选条件过滤。wantKeys 为 WANT 的 key 数组；多选为且（同时满足）。
    * 自定义阈值：options.healMin 默认 10，options.sanityMin 默认 10
    */
   function filterWanted(dishes, wantKeys, options) {
@@ -582,7 +633,11 @@
       const target = resolveRandomMust(entry);
       const needName = mustNeedName(target);
       if (!needName) return;
-      const hits = mustHits(needName);
+      const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
+      const pickName = forceRaw ? parseFormTags(needName).base : needName;
+      const hits = forceRaw
+        ? pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName))
+        : mustHits(needName);
       let guard = 0;
       while (!mustSatisfied(target, aggregate(slots).names) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
@@ -592,23 +647,25 @@
 
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
     requires.forEach(req => {
-      if (!req || req.degree == null) return;
-      const op = String(req.op || ">=");
+      const target = resolveRequireEntry(req, aggregate(slots).tags, part => requireCanFill(part, foodsOfDegree));
+      if (!target || target.degree == null) return;
+      const op = String(target.op || ">=");
       if (op !== ">" && op !== ">=" && op !== "==" && op !== "=" && !isUpperBoundOp(op)) return;
-      const key = normalizeDegreeKey(req.degree);
+      const key = normalizeDegreeKey(target.degree);
       const group = foodsOfDegree(key);
       let guard = 0;
-      while (!requireSatisfied(req, aggregate(slots).tags) && slots.some(slot => !slot) && guard < SLOTS) {
+      while (!requireSatisfied(target, aggregate(slots).tags) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
         const tags = aggregate(slots).tags;
-        const fits = group.filter(ing => requireAllowsAdd(req, tags, (ing.degrees || {})[key]));
+        const fits = group.filter(ing => requireAllowsAdd(target, tags, (ing.degrees || {})[key]));
         if (!fits.length || !placeRandom(fits)) break;
       }
     });
 
     const agg = aggregate(slots);
     const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
-      || requires.some(req => req && req.degree != null && !requireSatisfied(req, agg.tags));
+      || !atLeastOneRawSatisfied(dish, agg.names)
+      || requires.some(req => !requireSatisfied(req, agg.tags));
     if (!unmet && slots.some(slot => !slot)) {
       const usable = DEGREE_KEYS.filter(key => !limitedDegrees[key] && foodsOfDegree(key).length);
       const fresh = usable.filter(key => !(agg.tags[key] > 0));
@@ -664,26 +721,32 @@
       if (!needName) return;
       const need = target && typeof target === "object" && target.value != null ? Math.ceil(num(target.value)) : 1;
       for (let n = 0; n < need && slots.length < SLOTS; n++) {
-        const hit = shapeForMust(
-          pool.find(ing => !blocked(ing) && ingredientMatchesMust(ing, needName)),
-          needName
-        );
+        const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
+        const pickName = forceRaw ? parseFormTags(needName).base : needName;
+        const baseHit = pool.find(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName));
+        const hit = forceRaw ? baseHit : shapeForMust(baseHit, needName);
         if (hit) push(hit);
       }
     });
 
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
     requires.forEach(req => {
-      if (!req || req.degree == null || slots.length >= SLOTS) return;
-      const key = normalizeDegreeKey(req.degree);
+      const ofDeg = key => {
+        const pure = (pureGroups[key] || []).filter(ing => !blocked(ing));
+        if (pure.length) return pure;
+        return pool.filter(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0);
+      };
+      const target = resolveRequireEntry(req, aggregate(slots).tags, part => requireCanFill(part, ofDeg));
+      if (!target || target.degree == null || slots.length >= SLOTS) return;
+      const key = normalizeDegreeKey(target.degree);
       const group = (pureGroups[key] || []).filter(ing => !blocked(ing));
       const mixed = pool.filter(ing => !blocked(ing) && num((ing.degrees || {})[key]) > 0);
       let guard = 0;
-      while (!requireSatisfied(req, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
+      while (!requireSatisfied(target, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
         guard += 1;
         const tags = aggregate(slots).tags;
         const cands = (group.length ? group : mixed).filter(ing =>
-          requireAllowsAdd(req, tags, (ing.degrees || {})[key])
+          requireAllowsAdd(target, tags, (ing.degrees || {})[key])
         );
         if (!cands.length) break;
         const pick = group.length
@@ -792,31 +855,35 @@
       });
       const needName = mustNeedName(target);
       if (!needName) return;
-      const hits = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName))
-        .map(ing => shapeForMust(ing, needName));
+      const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
+      const pickName = forceRaw ? parseFormTags(needName).base : needName;
+      const hits = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName))
+        .map(ing => (forceRaw ? ing : shapeForMust(ing, needName)));
       const need = target && typeof target === "object" && target.value != null ? Math.max(1, Math.ceil(num(target.value))) : 1;
       for (let n = 0; n < need && slots.length < SLOTS; n++) push(pickOne(hits));
     });
 
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
     requires.forEach(req => {
-      if (!req || req.degree == null) return;
-      const op = String(req.op || ">=");
+      const target = resolveRequireEntry(req, aggregate(slots).tags, part => requireCanFill(part, key => ofDegree(key, true)));
+      if (!target || target.degree == null) return;
+      const op = String(target.op || ">=");
       if (op !== ">" && op !== ">=" && op !== "==" && op !== "=" && !isUpperBoundOp(op)) return;
-      const key = normalizeDegreeKey(req.degree);
+      const key = normalizeDegreeKey(target.degree);
       const group = ofDegree(key, true);
       let guard = 0;
-      while (!requireSatisfied(req, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
+      while (!requireSatisfied(target, aggregate(slots).tags) && slots.length < SLOTS && guard < SLOTS) {
         guard += 1;
         const tags = aggregate(slots).tags;
-        const fits = group.filter(ing => requireAllowsAdd(req, tags, (ing.degrees || {})[key]));
+        const fits = group.filter(ing => requireAllowsAdd(target, tags, (ing.degrees || {})[key]));
         if (!fits.length || !push(pickOne(fits))) break;
       }
     });
 
     const agg = aggregate(slots);
     const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
-      || requires.some(req => req && req.degree != null && !requireSatisfied(req, agg.tags));
+      || !atLeastOneRawSatisfied(dish, agg.names)
+      || requires.some(req => !requireSatisfied(req, agg.tags));
     if (unmet) return slots;
 
     let bag = [];

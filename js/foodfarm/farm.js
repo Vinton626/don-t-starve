@@ -14,6 +14,7 @@ const farm = {
   entryById: new Map(),
   picks: [],
   search: "",
+  gridSearch: "",
   filter: { fit: new Set(), exclude: new Set(), consume: new Set(), produce: new Set() },
   result: null,
   panelOpen: false,
@@ -99,6 +100,12 @@ function passesFilter(crop) {
   for (const s of f.exclude) if (!hate.has(s)) return false;
   for (const k of f.consume) if (!(crop.consume[k] > 0)) return false;
   for (const k of f.produce) if (!(crop.produce[k] > 0)) return false;
+  const q = String(farm.gridSearch || "").trim().toLowerCase();
+  if (q) {
+    const seed = entry && entry.seed;
+    const blob = `${crop.name || ""} ${crop.id || ""} ${(seed && seed.name) || ""} ${(seed && seed.id) || ""}`.toLowerCase();
+    if (!blob.includes(q)) return false;
+  }
   return true;
 }
 
@@ -161,10 +168,19 @@ function renderFilterChecks() {
       renderGrid();
     });
   });
+  const plantSearch = Foodfarm.$("plant-search");
+  if (plantSearch) {
+    plantSearch.addEventListener("input", () => {
+      farm.gridSearch = plantSearch.value || "";
+      renderGrid();
+    });
+  }
   const reset = Foodfarm.$("filter-reset");
   if (reset) {
     reset.addEventListener("click", () => {
       Object.values(farm.filter).forEach(set => set.clear());
+      farm.gridSearch = "";
+      if (plantSearch) plantSearch.value = "";
       document.querySelectorAll(".filter-checks input[data-group]").forEach(input => { input.checked = false; });
       renderGrid();
     });

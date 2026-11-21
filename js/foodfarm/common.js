@@ -115,7 +115,8 @@ function cookItems() {
 
 /** 钓鱼区域：键写在 fishing.areas 里 */
 const FISH_AREAS = {
-  freshwater: { key: "freshwater", name: "淡水" },
+  pond: { key: "pond", name: "池塘" },
+  mossy_pond: { key: "mossy_pond", name: "苔藓池塘" },
   shallow: { key: "shallow", name: "浅海" },
   ocean: { key: "ocean", name: "中层海" },
   deep: { key: "deep", name: "深海" },
@@ -168,9 +169,38 @@ function fishAreasText(entry) {
   return list.join("、");
 }
 
+/** 归一化 drops：支持数组，或单个对象/字符串 */
+function normalizeDropsList(raw) {
+  if (raw == null || raw === "") return [];
+  if (Array.isArray(raw)) return raw.filter(Boolean);
+  if (typeof raw === "string" || typeof raw === "object") return [raw];
+  return [];
+}
+
+/** 取 drops 原值；未写字段返回 undefined；显式 null 保留为 null */
+function dropsRaw(entry) {
+  if (!entry || typeof entry !== "object") return undefined;
+  if (Object.prototype.hasOwnProperty.call(entry, "drops")) return entry.drops;
+  const info = entry.fishing;
+  if (info && typeof info === "object" && Object.prototype.hasOwnProperty.call(info, "drops")) {
+    return info.drops;
+  }
+  return undefined;
+}
+
+/**
+ * 掉落：条目顶层 drops（普通食物、之后怪物等通用）。
+ * 鱼类若只写在 fishing.drops 里也认，兼容旧数据。
+ * 显式 null / 未写字段 → 空数组（列表用）；展示请用 dropsDisplay。
+ */
+function dropsOf(entry) {
+  const raw = dropsRaw(entry);
+  if (raw == null) return [];
+  return normalizeDropsList(raw);
+}
+
 function fishDropsOf(entry) {
-  const drops = fishingInfo(entry).drops;
-  return Array.isArray(drops) ? drops.filter(Boolean) : [];
+  return dropsOf(entry);
 }
 
 function fishSeasonsOf(entry) {
@@ -204,7 +234,7 @@ function fishWeightRange(entry) {
   };
 }
 
-function fishChanceText(chance) {
+function dropChanceText(chance) {
   if (chance == null || chance === "") return "";
   if (typeof chance === "string") return chance.trim();
   const n = Number(chance);
@@ -216,7 +246,7 @@ function fishChanceText(chance) {
   return String(n) + "%";
 }
 
-function fishDropLabel(drop) {
+function dropLabel(drop) {
   if (drop == null) return "";
   if (typeof drop === "string") return drop.trim();
   if (typeof drop !== "object") return String(drop);
@@ -224,8 +254,41 @@ function fishDropLabel(drop) {
   const id = drop.id != null && String(drop.id).trim() ? String(drop.id).trim() : "";
   const base = name || id;
   if (!base) return "";
-  const chance = fishChanceText(drop.chance != null ? drop.chance : drop.prob);
-  return chance ? base + "（" + chance + "）" : base;
+  const qtyRaw = drop.value != null ? drop.value : drop.count;
+  const hasQty = qtyRaw != null && qtyRaw !== "";
+  const qty = hasQty ? Number(qtyRaw) : NaN;
+  // 写了 value/count 就显示个数（含 1）；没写则不缀 ×N
+  const qtyText = hasQty && Number.isFinite(qty) ? "×" + String(qty) : (hasQty ? "×" + String(qtyRaw) : "");
+  const chance = dropChanceText(drop.chance != null ? drop.chance : drop.prob);
+  let out = base + qtyText;
+  if (chance) out += "（" + chance + "）";
+  return out;
+}
+
+function dropsText(entry) {
+  return dropsOf(entry).map(dropLabel).filter(Boolean).join("、");
+}
+
+/**
+ * 展示用掉落文案：
+ * - 未写 drops → null（整行不显示）
+ * - drops: null → 「无掉落物」
+ * - 有内容 → 格式化列表；空数组仍不显示
+ */
+function dropsDisplay(entry) {
+  const raw = dropsRaw(entry);
+  if (raw === undefined) return null;
+  if (raw === null) return "无掉落物";
+  const text = normalizeDropsList(raw).map(dropLabel).filter(Boolean).join("、");
+  return text || null;
+}
+
+function fishChanceText(chance) {
+  return dropChanceText(chance);
+}
+
+function fishDropLabel(drop) {
+  return dropLabel(drop);
 }
 
 function modList() {
@@ -471,6 +534,27 @@ function parseFormTags(name) {
   return { cooked, dried, base: text };
 }
 
+/** 冷食 / 热食：数据里写 <冷食>、<热食>，展示时展开说明 */
+const COLD_FOOD_EFFECT =
+  "在角色个体温度高于12°时生效，降低个体体感温度40°，";
+const HOT_FOOD_EFFECT =
+  "在角色个体温度低于62°时生效，提升个体体感温度40°(提升效果会随新鲜度减少而减少)，";
+
+function effectHTML(raw) {
+  const text = String(raw == null ? "" : raw).trim();
+  if (!text) return "";
+  let out = text
+    .replace(/<\/?冷食>/g, m => (m.charAt(1) === "/" ? "" : "\0COLD\0"))
+    .replace(/<\/?热食>/g, m => (m.charAt(1) === "/" ? "" : "\0HOT\0"));
+  out = out
+    .replace(/\0COLD\0/g, `<coldfood>冷食</coldfood>:${COLD_FOOD_EFFECT}`)
+    .replace(/\0HOT\0/g, `<hotfood>热食</hotfood>:${HOT_FOOD_EFFECT}`);
+  if (window.CommonTags && typeof CommonTags.escapeKeepingTags === "function") {
+    return CommonTags.escapeKeepingTags(out);
+  }
+  return out;
+}
+
 /** 展示用：<烤>玉米 → 玉米/烤玉米；有 cooked.name / dried.name 时用真实名 */
 function mustNameLabel(needName) {
   const raw = String(needName || "").trim();
@@ -527,7 +611,9 @@ function dishMustUseFood(dish, food) {
 }
 
 function foodSatisfiesRequire(food, req, degrees) {
-  if (!req || req.degree == null) return false;
+  if (!req) return false;
+  if (Array.isArray(req.or)) return req.or.some(part => foodSatisfiesRequire(food, part, degrees));
+  if (req.degree == null) return false;
   const key = normalizeDegreeKey(req.degree);
   const amount = Object.prototype.hasOwnProperty.call(degrees, key) ? degrees[key] : 0;
   const op = String(req.op || ">=");
@@ -717,25 +803,45 @@ function renderModList(onChange) {
   });
 }
 
-function mergeItems(blocks) {
+/** 合并条目；归属用 mod_config 的 tag 注入为 origin，JSON 里不必再写 */
+function mergeItems(parts) {
   const items = [];
-  blocks.forEach(block => {
-    const list = block && Array.isArray(block.items) ? block.items : [];
-    list.forEach(item => items.push(item));
+  (parts || []).forEach(part => {
+    const tag = part && part.tag != null ? String(part.tag) : "";
+    const list = part && part.block && Array.isArray(part.block.items) ? part.block.items : [];
+    list.forEach(item => {
+      if (!item || typeof item !== "object") return;
+      const copy = Object.assign({}, item);
+      copy.origin = tag;
+      items.push(copy);
+    });
   });
   return { items };
 }
 
+async function loadModBlock(path) {
+  if (!path) return { items: [] };
+  return loadJson(path).catch(() => ({ items: [] }));
+}
+
 async function reloadEnabledData() {
   const mods = modList().filter(mod => DATA.enabledTags.includes(modKey(mod)));
-  const basicPaths = mods.map(mod => mod.basic).filter(Boolean);
-  const advancedPaths = mods.map(mod => mod.advanced).filter(Boolean);
-  const [basicBlocks, advancedBlocks] = await Promise.all([
-    Promise.all(basicPaths.map(path => loadJson(path).catch(() => ({ items: [] })))),
-    Promise.all(advancedPaths.map(path => loadJson(path).catch(() => ({ items: [] }))))
+  const [basicParts, advancedParts] = await Promise.all([
+    Promise.all(
+      mods.map(async mod => ({
+        tag: modKey(mod),
+        block: await loadModBlock(mod.basic)
+      }))
+    ),
+    Promise.all(
+      mods.map(async mod => ({
+        tag: modKey(mod),
+        block: await loadModBlock(mod.advanced)
+      }))
+    )
   ]);
-  DATA.food = mergeItems(basicBlocks);
-  DATA.cook = mergeItems(advancedBlocks);
+  DATA.food = mergeItems(basicParts);
+  DATA.cook = mergeItems(advancedParts);
 }
 
 function bindContentTags(root) {
@@ -820,6 +926,12 @@ window.Foodfarm = {
   fishingInfo,
   fishAreasOf,
   fishAreasText,
+  dropsOf,
+  dropsRaw,
+  dropsText,
+  dropsDisplay,
+  dropLabel,
+  dropChanceText,
   fishDropsOf,
   fishSeasonsOf,
   fishSeasonsText,
@@ -842,6 +954,7 @@ window.Foodfarm = {
   foodDegreeMap,
   parseFormTags,
   mustNameLabel,
+  effectHTML,
   foodMatchesDish,
   dishesForFood,
   foodStatesHTML,

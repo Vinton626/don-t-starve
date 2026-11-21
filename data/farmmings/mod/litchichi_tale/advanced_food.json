@@ -3,7 +3,6 @@
     {
       "id": "long_march",
       "name": "幽幽大行军",
-      "origin": "litchichi_tale",
       "hide": false,
       "foodtype": "meat",
       "health": 200,

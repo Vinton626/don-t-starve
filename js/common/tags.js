@@ -54,7 +54,9 @@
     "formula",
     "brown",
     "grey",
-    "lightblue"
+    "lightblue",
+    "coldfood",
+    "hotfood"
   ];
 
   const TAG_COLORS = {
@@ -91,7 +93,9 @@
     formula: "#b3e5ff",
     brown: "#d4925a",
     grey: "#c5c5c5",
-    lightblue: "#b3e5ff"
+    lightblue: "#b3e5ff",
+    coldfood: "#6ec8f0",
+    hotfood: "#e4572e"
   };
 
   function escapeHTML(s) {

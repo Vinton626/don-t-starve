@@ -3,7 +3,6 @@
     {
       "id": "cherry",
       "name": "樱桃",
-      "origin": "cherry_forest",
       "source": "",
       "hide": false,
       "foodtype": "veggie",
