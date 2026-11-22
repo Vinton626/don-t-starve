@@ -1138,6 +1138,30 @@
       }
     },
     {
+      "id": "birdegg",
+      "name": "鸟蛋",
+      "foodtype": "egg",
+      "health": 0,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "egg": 1
+      },
+      "cooked": {
+        "id": "birdegg_cooked",
+        "name": "熟鸟蛋",
+        "foodtype": "egg",
+        "health": 0,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "egg": 1
+        }
+      }
+    },
+    {
       "id": "birdlegs",
       "name": "鸟腿",
       "hide": false,
