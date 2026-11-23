@@ -117,6 +117,7 @@ function isWarlyDish(dish) {
 function warlyTipHTML(withExtra) {
   let text = "大厨特色菜，需要使用便携烹饪锅烹饪";
   if (withExtra) text += "。普通烹饪锅只会做出其他料理";
+  text += "，实际烹饪时间会由于锅属性减少20%";
   return `<p class="cook-warly-note">${esc(text)}</p>`;
 }
 

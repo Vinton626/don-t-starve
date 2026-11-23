@@ -29,6 +29,205 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "dragonfruitpie",
+      "name": "火龙果派",
+      "foodtype": "veggie",
+      "health": 40,
+      "hunger": 75,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "fruit",
+          "op": ">=",
+          "value": 1.5
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>火龙果",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "<热食>持续10秒"
+    },
+    {
+      "id": "vegetablecocktail",
+      "name": "蔬菜鸡尾酒",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 33,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 15,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "veg",
+          "op": ">",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "<烤>番茄",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "<烤>芦笋",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "asparagusteak",
+      "name": "芦笋汤",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 18.75,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>芦笋",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "creamedpotatoes",
+      "name": "奶油土豆泥",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 33,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 20,
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>土豆",
+          "op": ">=",
+          "value": 2
+        },
+        {
+          "name": "<烤>大蒜",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "varietyrot",
+      "name": "花式回旋块茎",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 15,
+      "spoilDays": 10,
+      "cookSeconds": 15,
+      "priority": 10,
+      "requires": [
+        {
+          "or": [
+            {
+              "degree": "monster",
+              "op": "<=",
+              "value": 1
+            },
+            {
+              "degree": "monster",
+              "op": "=",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "degree": "inedible",
+          "op": "<=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>土豆",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "pickledeggplant",
       "name": "酿茄子",
       "foodtype": "veggie",
@@ -54,6 +253,42 @@
       ],
       "limit": [],
       "effect": "<热食>持续5秒"
+    },
+    {
+      "id": "saladfresca",
+      "name": "生鲜萨尔萨酱",
+      "foodtype":"veggie",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 33,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 20,
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>番茄",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>洋葱",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "egg"
+        }
+      ],
+      "effect": "无特殊效果"
     },
     {
       "id": "meatball",
@@ -201,6 +436,63 @@
         }
       ],
       "effect": "无特殊效果"
+    },
+    {
+      "id": "spicychili",
+      "name": "辣椒炖肉",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 0,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 1.5
+        },
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 1.5
+        }
+      ],
+      "must": [],
+      "limit": [],
+      "effect": "<热食>持续15秒"
+    },
+    {
+      "id": "stuffedpepperpopers",
+      "name": "爆炒填馅辣椒",
+      "foodtype": "meat",
+      "health": 30,
+      "hunger": 25,
+      "sanity": -5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 20,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": "<=",
+          "value": 1.5
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>辣椒",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "<热食>持续15秒"
     },
     {
       "id": "meatstick",
@@ -394,6 +686,46 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "bananapop",
+      "name": "香蕉冻",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 12.5,
+      "sanity": 33,
+      "spoilDays": 3,
+      "cookSeconds": 10,
+      "priority": 20,
+      "source": "锅制作与小丑机400-599分获取",
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>香蕉",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "fish"
+        }
+      ],
+      "effect": "<冷食>持续10秒"
+    },
+    {
       "id": "butterflymuffin",
       "name": "蝴蝶松饼",
       "foodtype": "veggie",
@@ -434,37 +766,6 @@
       "effect": "无特殊效果"
     },
     {
-      "id": "dragonfruitpie",
-      "name": "火龙果派",
-      "foodtype": "veggie",
-      "health": 40,
-      "hunger": 75,
-      "sanity": 5,
-      "spoilDays": 15,
-      "cookSeconds": 40,
-      "priority": 1,
-      "requires": [
-        {
-          "degree": "fruit",
-          "op": ">=",
-          "value": 1.5
-        }
-      ],
-      "must": [
-        {
-          "name": "<烤>火龙果",
-          "op": ">=",
-          "value": 1
-        }
-      ],
-      "limit": [
-        {
-          "degree": "meat"
-        }
-      ],
-      "effect": "<热食>持续10秒"
-    },
-    {
       "id": "vegetableburger",
       "name": "素食堡",
       "foodtype": "meat",
@@ -494,57 +795,6 @@
         }
       ],
       "limit": [],
-      "effect": "无特殊效果"
-    },
-    {
-      "id": "vegetablecocktail",
-      "name": "蔬菜鸡尾酒",
-      "foodtype": "veggie",
-      "health": 3,
-      "hunger": 25,
-      "sanity": 33,
-      "spoilDays": 15,
-      "cookSeconds": 10,
-      "priority": 15,
-      "requires": [
-        {
-          "degree": "ice",
-          "op": ">",
-          "value": 0
-        },
-        {
-          "degree": "veg",
-          "op": ">",
-          "value": 2
-        }
-      ],
-      "must": [
-        {
-          "or": [
-            {
-              "name": "<烤>番茄",
-              "op": ">=",
-              "value": 1
-            },
-            {
-              "name": "<烤>芦笋",
-              "op": ">=",
-              "value": 1
-            }
-          ]
-        }
-      ],
-      "limit": [
-        {
-          "degree": "meat"
-        },
-        {
-          "degree": "egg"
-        },
-        {
-          "degree": "inedible"
-        }
-      ],
       "effect": "无特殊效果"
     },
     {
@@ -761,6 +1011,27 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "seafoodsoup",
+      "name": "海鲜浓汤",
+      "foodtype": "meat",
+      "health": 40,
+      "hunger": 37.5,
+      "sanity": 20,
+      "spoilDays": 10,
+      "cookSeconds": 20,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "unagi",
       "name": "鳗鱼料理",
       "foodtype": "meat",
@@ -799,6 +1070,96 @@
               "value": 1
             }
           ]
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "sourcitrusfish",
+      "name": "酸橘汁腌鱼",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 25,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 20,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 2
+        },
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "egg"
+        }
+      ],
+      "effect": "<冷食>持续10秒"
+    },
+    {
+      "id": "seafoodsteak",
+      "name": "海鲜牛排",
+      "foodtype": "meat",
+      "health": 60,
+      "hunger": 37.5,
+      "sanity": 33,
+      "spoilDays": 10,
+      "cookSeconds": 20,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 2.5
+        },
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 1.5
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "ice"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "californiaroll",
+      "name": "加州卷",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 10,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 20,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤><晾>海带叶",
+          "op": "=",
+          "value": 2
         }
       ],
       "limit": [],
@@ -950,6 +1311,34 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "rainbowcandy",
+      "name": "彩虹糖豆",
+      "foodtype": "goodies",
+      "health": "2+120",
+      "hunger": 0,
+      "sanity": 5,
+      "spoilDays": "永久",
+      "cookSeconds": 50,
+      "priority": 12,
+      "requires": [],
+      "must": [
+        {
+          "name": "蜂王浆",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "monster"
+        }
+      ],
+      "effect": "食用后可在后续2分钟内每2秒恢复2点生命值，加上食物本身恢复值共恢复122点生命值"
+    },
+    {
       "id": "mixednuts",
       "name": "什锦干果",
       "foodtype": "veggie",
@@ -1086,6 +1475,33 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "monstertart",
+      "name": "怪物蛋挞",
+      "exclusive": "warly",
+      "foodtype1": "meat",
+      "foodtype2": "monster",
+      "health": -20,
+      "hunger": 62.5,
+      "sanity": -20,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "monster",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "freshfruitcrepes",
       "name": "鲜果可丽饼",
       "exclusive": "warly",
@@ -1116,6 +1532,315 @@
         }
       ],
       "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "asparagussoup",
+      "name": "芦笋冷汤",
+      "exclusive": "warly",
+      "foodtype1": "veggie",
+      "foodtype2": "monster",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 10,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>芦笋",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [],
+      "effect": "<冷食>持续5分钟"
+    },
+    {
+      "id": "bonebroth",
+      "name": "骨头汤",
+      "foodtype": "meat",
+      "exclusive": "warly",
+      "foodtype1": "veggie",
+      "foodtype2": "monster",
+      "health": 32,
+      "hunger": 150,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "inedible",
+          "op": "<=",
+          "value": 3
+        }
+      ],
+      "must": [
+        {
+          "name": "骨头碎片",
+          "op": ">=",
+          "value": 2
+        },
+        {
+          "name": "<烤>洋葱",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "bluefinfillet",
+      "name": "蓝带鱼排",
+      "foodtype": "meat",
+      "exclusive": "warly",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": -10,
+      "spoilDays": 8,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>蛙腿",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "食用后立刻清空潮湿度，维持干燥并免疫酸雨扣生命值效果持续5分钟"
+    },
+    {
+      "id": "glowingberrymousse",
+      "name": "发光浆果慕斯",
+      "foodtype": "veggie",
+      "exclusive": "warly",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 10,
+      "spoilDays": 8,
+      "cookSeconds": 20,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "fruit",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "or": [
+            {
+              "name": "发光浆果",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "小发光浆果",
+              "op": ">=",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "食用后自身会变为光源提供照明，效果持续2天。照明范围会随时间缩小"
+    },
+    {
+      "id": "terrorqueenpie",
+      "name": "恐怖国王饼",
+      "foodtype": "veggie",
+      "exclusive": "warly",
+      "health": 1,
+      "hunger": 25,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [],
+      "must": [
+        {
+          "name": "噩梦燃料",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "<烤>土豆",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "<烤>洋葱",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后会按比例对调角色的生命值与理智值"
+    },
+    {
+      "id": "hotdragonchilisalad",
+      "name": "辣龙椒沙拉",
+      "foodtype": "veggie",
+      "health": -3,
+      "hunger": 25,
+      "sanity": 10,
+      "spoilDays": 15,
+      "cookSeconds": 15,
+      "priority": 30,
+      "requires": [
+        {
+          "name": "<烤>辣椒",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>火龙果",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "egg"
+        }
+      ],
+      "effect": "<热食>持续5分钟，不会受时间冷却影响"
+    },
+    {
+      "id": "seafoodsoup",
+      "name": "海鲜杂烩",
+      "foodtype": "meat",
+      "health": 60,
+      "hunger": 112.5,
+      "sanity": 33,
+      "spoilDays": 8,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>洋葱",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>番茄",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "voltgoathornice",
+      "name": "伏特羊角冻",
+      "foodtype": "goodies",
+      "health": 3,
+      "hunger": 37.5,
+      "sanity": 10,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "sweetener",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "伏特羊角",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "食用后所有攻击将具有<notice text=\"干燥目标一般为×1.5倍伤害，潮湿目标最高为×2.5倍伤害，绝缘目标一般为×1倍伤害\">带电</notice>标签，持续5分钟"
+    },
+    {
+      "id": "puffedpotatosouffle",
+      "name": "蓬松土豆蛋奶酥",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 15,
+      "spoilDays": 10,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "egg",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>土豆",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "inedible"
+        }
+      ],
       "effect": "无特殊效果"
     },
     {

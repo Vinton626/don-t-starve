@@ -53,6 +53,61 @@
       }
     },
     {
+      "id": "small_glowing_berry",
+      "name": "小发光浆果",
+      "hide": false,
+      "foodtype": "veggie",
+      "source": "采集洞穴神秘植物",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": -10,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 0.5
+      },
+      "effect": "食用后自身会变为光源提供照明60秒，照明范围会随时间缩小。可作为鼹鼠帽燃料"
+    },
+    {
+      "id": "glowing_berry",
+      "name": "发光浆果",
+      "hide": false,
+      "foodtype": "veggie",
+      "source": "击败洞穴蠕虫、击败巨大洞穴蠕虫、砍伐种植于相关位置的巨石枝",
+      "health": 11,
+      "hunger": 25,
+      "sanity": -10,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 1
+      },
+      "effect": "食用后自身会变为光源提供照明240秒，照明范围会随时间缩小。可作为鼹鼠帽燃料"
+    },
+    {
+      "id": "banana",
+      "name": "香蕉",
+      "source": "地下香蕉树、猴岛香蕉丛、击杀穴居猴、挖海盗藏宝X、敲毁穴居猴桶、小丑机200-399分获得",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 1,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "banana_cooked",
+        "name": "熟香蕉",
+        "health": 3,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "fruit": 1
+        }
+      }
+    },
+    {
       "id": "carrot",
       "name": "胡萝卜",
       "source": "carrot_seeds",
@@ -1140,7 +1195,7 @@
     {
       "id": "birdegg",
       "name": "鸟蛋",
-      "foodtype": "egg",
+      "foodtype": "meat",
       "health": 0,
       "hunger": 9.375,
       "sanity": 0,
@@ -1151,7 +1206,7 @@
       "cooked": {
         "id": "birdegg_cooked",
         "name": "熟鸟蛋",
-        "foodtype": "egg",
+        "foodtype": "meat",
         "health": 0,
         "hunger": 12.5,
         "sanity": 0,
@@ -1440,6 +1495,19 @@
       }
     },
     {
+      "id": "royaljelly",
+      "name": "蜂王浆",
+      "foodtype": "generic",
+      "health": 40,
+      "hunger": 12.5,
+      "sanity": 15,
+      "spoilDays": 10,
+      "source": "击杀蜂王或开启赃物带包装",
+      "degrees": {
+        "sweetener": 3
+      }
+    },
+    {
       "id": "moss",
       "name": "苔藓",
       "hide": false,
@@ -1557,6 +1625,30 @@
       }
     },
     {
+      "id": "bonefragment",
+      "name": "骨头碎片",
+      "hide": true,
+      "foodtype": "",
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "degrees": {
+        "inedible": 1
+      }
+    },
+    {
+      "id": "voltgoathorn",
+      "name": "伏特羊角",
+      "hide": true,
+      "foodtype": "",
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "degrees":{
+        "inedible": 1
+      }
+    },
+    {
       "id": "nightmarefuel",
       "name": "噩梦燃料",
       "hide": true,
@@ -1571,7 +1663,7 @@
     {
       "id": "moles",
       "name": "鼹鼠",
-      "foodtype": "meat",
+      "foodtype": "",
       "hide": true,
       "health": null,
       "hunger": null,
