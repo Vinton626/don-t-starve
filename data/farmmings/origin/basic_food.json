@@ -134,7 +134,7 @@
       },
       "seed": {
         "id": "carrot_seeds",
-        "name": "胡萝卜种子",
+        "name": "椭圆形种子",
         "foodtype": "seeds",
         "health": 0.5,
         "hunger": 9.375,
@@ -975,8 +975,8 @@
     },
     {
       "id": "firenettle",
-      "name": "火荨麻",
-      "source": "seeds",
+      "name": "火荨麻叶",
+      "source": "veggie",
       "hide": false,
       "foodtype": "",
       "health": -3,
@@ -988,8 +988,8 @@
       },
       "dried": {
         "id": "firenettle_dried",
-        "name": "干火荨麻",
-        "foodtype": "",
+        "name": "干火荨麻叶",
+        "foodtype": "veggie",
         "health": -3,
         "hunger": 0,
         "sanity": -5,
@@ -1013,9 +1013,9 @@
     {
       "id": "tillweed",
       "name": "犁地草",
-      "source": "seeds",
+      "source": "veggie",
       "hide": false,
-      "foodtype": "",
+      "foodtype": "veggie",
       "health": 1,
       "hunger": 0,
       "sanity": 0,
@@ -1026,7 +1026,7 @@
       "dried": {
         "id": "tillweed_dried",
         "name": "干犁地草",
-        "foodtype": "",
+        "foodtype": "veggie",
         "health": 8,
         "hunger": 0,
         "sanity": 0,

@@ -322,6 +322,10 @@ function foodTypeSortKey(entry) {
   return foodTypeKeys(entry).join("\0");
 }
 
+function isSeedsType(entry) {
+  return foodTypeKeys(entry).indexOf("seeds") >= 0;
+}
+
 function itemDisplayName(item) {
   return String((item && (item.name || item.id)) || "");
 }
@@ -329,6 +333,10 @@ function itemDisplayName(item) {
 function compareItemsByTypeThenName(a, b, metaOf) {
   const ma = metaOf ? metaOf(a) : a;
   const mb = metaOf ? metaOf(b) : b;
+  const sa = isSeedsType(ma);
+  const sb = isSeedsType(mb);
+  // 种子类放到组内最后，避免夹在普通食物中间
+  if (sa !== sb) return sa ? 1 : -1;
   const ta = foodTypeSortKey(ma);
   const tb = foodTypeSortKey(mb);
   if (ta !== tb) return ta.localeCompare(tb, "zh");

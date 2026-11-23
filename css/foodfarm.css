@@ -672,12 +672,16 @@ body {
 }
 .food-modal-stats states { margin-top: 0; }
 .food-modal-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
   margin-bottom: 12px;
   color: #a89068;
   font-size: 13px;
+  line-height: 1.45;
+}
+.food-modal-meta > .meta-long {
+  grid-column: 1 / -1;
 }
 .food-modal-block { margin-bottom: 12px; }
 .food-modal-label {
@@ -685,6 +689,12 @@ body {
   color: #f0d060;
   font-size: 13px;
   letter-spacing: .08em;
+}
+.food-modal-seed-brief {
+  margin-bottom: 12px;
+  color: #a89068;
+  font-size: 13px;
+  line-height: 1.45;
 }
 .food-modal-degrees {
   display: flex;
@@ -710,7 +720,6 @@ body {
   color: #f0d060;
   font-size: 13px;
 }
-.food-modal-seed states { margin-top: 6px; }
 .muted { color: #8a7860; font-size: 13px; }
 
 .food-cook {
@@ -1729,6 +1738,12 @@ body.food-modal-open { overflow: hidden; }
 .cook-calc-desktop[hidden],
 .cook-calc-mobile[hidden] { display: none !important; }
 
+@media (max-width: 720px) and (orientation: portrait) {
+  .food-modal-meta {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   body {
     padding: 52px 10px 24px;
@@ -1769,7 +1784,6 @@ body.food-modal-open { overflow: hidden; }
     padding: 1px 5px;
   }
   .food-modal { padding: 10px; }
-  .food-modal-panel { width: min(100%, 440px); }
   .side-drawer-panel { width: min(86vw, 300px); }
   .side-drawer-handle { top: 112px; padding: 10px 5px; font-size: 12px; }
   .calc-panel {
@@ -1807,5 +1821,52 @@ body.food-modal-open { overflow: hidden; }
     height: 32px;
     padding: 0 10px;
     font-size: 12px;
+  }
+}
+
+@media (max-width: 720px) and (orientation: portrait) {
+  .food-modal-panel { width: min(100%, 440px); }
+}
+
+/* 横屏矮屏：弹窗加宽，短字段两列，效果/掉落独占一行 */
+@media (orientation: landscape) and (max-height: 560px) {
+  .food-modal {
+    padding: 8px 14px;
+    align-items: stretch;
+  }
+  .food-modal-panel {
+    width: min(720px, 94vw);
+    max-height: calc(100vh - 16px);
+    padding: 14px 20px 16px;
+  }
+  .food-modal-title {
+    font-size: 22px;
+  }
+  .food-modal-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 20px;
+    font-size: 15px;
+  }
+  .food-modal-label {
+    font-size: 14px;
+  }
+  .food-modal-seed-brief {
+    font-size: 15px;
+  }
+  .food-modal-stats .stat-orb {
+    width: 52px;
+    height: 52px;
+  }
+  .food-modal-stats .stat-emoji {
+    font-size: 24px;
+  }
+  .food-modal-stats .stat-value {
+    min-width: 60px;
+    font-size: 13px;
+  }
+  .degree-chip,
+  .food-type-chip {
+    font-size: 14px;
+    padding: 4px 10px;
   }
 }

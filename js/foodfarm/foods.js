@@ -182,22 +182,20 @@ function renderFoods() {
 }
 
 function seedBriefHTML(food) {
+  // 杂草等只挂通用 seeds id，弹窗再展一次「种子」没信息量；种植页仍用 resolveSeed
+  if (!food || food.seed == null || food.seed === "") return "";
+  if (typeof food.seed === "string") {
+    const ref = String(food.seed).trim();
+    if (!ref || ref === "seeds") return "";
+  }
   const seed = Foodfarm.resolveSeed(food);
   if (!seed) return "";
-  const name = Foodfarm.escapeHTML(seed.name || seed.id || "种子");
-  const type = Foodfarm.foodTypeText(seed)
-    ? ` ${Foodfarm.foodTypeHTML(seed)}`
-    : "";
-  const spoilText = Foodfarm.spoilLabel(seed.spoilDays);
-  const spoil = spoilText
-    ? ` <span>保质期：<b>${Foodfarm.escapeHTML(spoilText)}</b></span>`
-    : "";
-  return (
-    `<div class="food-modal-block">` +
-    `<div class="food-modal-label">种子</div>` +
-    `<div class="food-modal-seed tag-text">${name}${type}${spoil} ${Foodfarm.foodStatesHTML(seed)}</div>` +
-    `</div>`
-  );
+  const seedId = String(seed.id || "").trim();
+  if (seedId === "seeds") return "";
+  const name = Foodfarm.escapeHTML(seed.name || seed.id || "");
+  if (!name) return "";
+  // 有种子时只一行：种子：xxx（三维/保质期看种子卡片本身）
+  return `<div class="food-modal-seed-brief">种子：${name}</div>`;
 }
 
 function paintCookPanel(expanded) {
@@ -269,15 +267,14 @@ function openFoodModal(food, form) {
     const fx = Foodfarm.effectHTML(view.effect);
     const drops = Foodfarm.dropsDisplay(view);
     meta.innerHTML =
-      `<span>来源：${Foodfarm.escapeHTML(Foodfarm.originLabel(view))}</span>` +
-      `<span>类型：${Foodfarm.foodTypeHTML(view)}</span>` +
-      `<span>形态：${Foodfarm.escapeHTML(formLabel(mode))}</span>` +
+      `<span class="meta-short">来源：${Foodfarm.escapeHTML(Foodfarm.originLabel(view))}</span>` +
+      `<span class="meta-short">类型：${Foodfarm.foodTypeHTML(view)}</span>` +
+      `<span class="meta-short">形态：${Foodfarm.escapeHTML(formLabel(mode))}</span>` +
       (Foodfarm.spoilLabel(view.spoilDays)
-        ? `<span>保质期：<b>${Foodfarm.escapeHTML(Foodfarm.spoilLabel(view.spoilDays))}</b></span>`
+        ? `<span class="meta-short">保质期：<b>${Foodfarm.escapeHTML(Foodfarm.spoilLabel(view.spoilDays))}</b></span>`
         : "") +
-      (view.id ? `<span>id：${Foodfarm.escapeHTML(view.id)}</span>` : "") +
-      (fx ? `<span class="tag-text">效果：${fx}</span>` : "") +
-      (drops != null ? `<span>掉落：${Foodfarm.escapeHTML(drops)}</span>` : "");
+      (fx ? `<span class="meta-long tag-text">效果：${fx}</span>` : "") +
+      (drops != null ? `<span class="meta-long">掉落：${Foodfarm.escapeHTML(drops)}</span>` : "");
   }
   if (degrees) degrees.innerHTML = Foodfarm.foodDegreesHTML(view);
   if (seed) seed.innerHTML = mode === "raw" ? seedBriefHTML(food) : "";
