@@ -239,27 +239,54 @@
     return entry;
   }
 
-  function formForMust(needName) {
+  /**
+   * <烤>X / <晾>X：匹配时生也算（见 mustIdSet），举例时也要能抽到生/烤/晾，不能只出烤。
+   * 无形态标签时只用生。
+   */
+  function allowedMustForms(needName) {
     const spec = parseFormTags(needName);
-    if (spec.cooked && !spec.dried) return "cooked";
-    if (spec.dried && !spec.cooked) return "dried";
-    return "raw";
+    if (!spec.cooked && !spec.dried) return ["raw"];
+    const forms = ["raw"];
+    if (spec.cooked) forms.push("cooked");
+    if (spec.dried) forms.push("dried");
+    return forms;
   }
 
-  function shapeForMust(ing, needName) {
+  function baseFoodForIng(ing) {
+    if (!ing) return null;
+    const id = String(ing.baseId || ing.id || "").trim();
+    const name = String(ing.name || "").trim();
+    return foodCatalog.find(food =>
+      (id && String(food.id || "") === id) || (name && food.name === name)
+    ) || null;
+  }
+
+  function shapeForMust(ing, needName, form) {
     if (!ing) return ing;
-    const form = formForMust(needName);
-    if (form === "raw") return ing;
-    const base = foodCatalog.find(food =>
-      String(food.id || "") === String(ing.id || "") || food.name === ing.name
-    );
-    const variant = base && base[form];
+    const pick = form || "raw";
+    if (pick === "raw") {
+      const raw = Object.assign({}, ing);
+      raw.form = "raw";
+      return raw;
+    }
+    const base = baseFoodForIng(ing);
+    const variant = base && base[pick];
     if (!variant || typeof variant !== "object") return ing;
     const made = ingredientFromFood(Object.assign({}, base, variant));
     if (!made) return ing;
-    made.form = form;
+    made.form = pick;
     made.baseId = base.id != null ? String(base.id).trim() : String(ing.id || "");
     return made;
+  }
+
+  function pickShapeForMust(ing, needName) {
+    if (!ing) return ing;
+    const base = baseFoodForIng(ing);
+    const forms = allowedMustForms(needName).filter(form => {
+      if (form === "raw") return true;
+      return !!(base && base[form] && typeof base[form] === "object");
+    });
+    return shapeForMust(ing, needName, pickOne(forms.length ? forms : ["raw"]));
   }
 
   function ingredientMatchesMust(ing, needName, preferOrigin) {
@@ -643,8 +670,7 @@
     }
 
     function mustHits(needName) {
-      return pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName, preferOrigin))
-        .map(ing => shapeForMust(ing, needName));
+      return pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName, preferOrigin));
     }
 
     function resolveRandomMust(entry) {
@@ -673,13 +699,16 @@
       if (!needName) return;
       const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
       const pickName = forceRaw ? parseFormTags(needName).base : needName;
-      const hits = forceRaw
+      const bases = forceRaw
         ? pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin))
         : mustHits(needName);
       let guard = 0;
       while (!mustSatisfied(target, aggregate(slots).names, preferOrigin) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
-        if (!hits.length || !placeRandom(hits)) break;
+        if (!bases.length) break;
+        const base = pickOne(bases);
+        const shaped = forceRaw ? base : pickShapeForMust(base, needName);
+        if (!place(shaped)) break;
       }
     });
 
@@ -763,7 +792,7 @@
         const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
         const pickName = forceRaw ? parseFormTags(needName).base : needName;
         const baseHit = pool.find(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin));
-        const hit = forceRaw ? baseHit : shapeForMust(baseHit, needName);
+        const hit = forceRaw ? baseHit : pickShapeForMust(baseHit, needName);
         if (hit) push(hit);
       }
     });
@@ -897,10 +926,13 @@
       if (!needName) return;
       const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
       const pickName = forceRaw ? parseFormTags(needName).base : needName;
-      const hits = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin))
-        .map(ing => (forceRaw ? ing : shapeForMust(ing, needName)));
+      const bases = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin));
       const need = target && typeof target === "object" && target.value != null ? Math.max(1, Math.ceil(num(target.value))) : 1;
-      for (let n = 0; n < need && slots.length < SLOTS; n++) push(pickOne(hits));
+      for (let n = 0; n < need && slots.length < SLOTS; n++) {
+        const base = pickOne(bases);
+        if (!base) break;
+        push(forceRaw ? base : pickShapeForMust(base, needName));
+      }
     });
 
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
