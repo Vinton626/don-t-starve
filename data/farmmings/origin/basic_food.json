@@ -1067,6 +1067,129 @@
       }
     },
     {
+      "id": "redmushroom",
+      "name": "红蘑菇",
+      "foodtype": "veggie",
+      "health": -20,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 0.5
+      },
+      "cooked": {
+        "id": "redmushroom_cooked",
+        "name": "熟红蘑菇",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 0,
+        "sanity": -10,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 0.5
+        }
+      }
+    },
+    {
+      "id": "greenmushroom",
+      "name": "绿蘑菇",
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": -50,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 0.5
+      },
+      "cooked": {
+        "id": "greenmushroom_cooked",
+        "name": "熟绿蘑菇",
+        "foodtype": "veggie",
+        "health": -1,
+        "hunger": 0,
+        "sanity": 15,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 0.5
+        }
+      }
+    },
+    {
+      "id": "bluemushroom",
+      "name": "蓝蘑菇",
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 12.5,
+      "sanity": -15,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 0.5
+      },
+      "cooked": {
+        "id": "bluemushroom_cooked",
+        "name": "熟蓝蘑菇",
+        "foodtype": "veggie",
+        "health": -3,
+        "hunger": 0,
+        "sanity": 10,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 0.5
+        }
+      }
+    },
+    {
+      "id": "moonmushroom",
+      "name": "月亮蘑菇",
+      "foodtype": "veggie",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": 10,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 0.5
+      },
+      "cooked": {
+        "id": "moonmushroom_cooked",
+        "name": "熟月亮蘑菇",
+        "foodtype": "veggie",
+        "health": 0,
+        "hunger": -12.5,
+        "sanity": -10,
+        "spoilDays": 10,
+        "degrees": {
+          "veg": 0.5
+        }
+      },
+      "effect": "s使用后增加<b>2(玩家单位)/4(非玩家单位)点</b>催眠值"
+    },
+    {
+      "id": "fig",
+      "name": "无花果",
+      "foodtype1": "veggie",
+      "foodtype2": "berry",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 0.5
+      },
+      "cooked": {
+        "id": "fig_cooked",
+        "name": "熟无花果",
+        "foodtype1": "veggie",
+        "foodtype2": "berry",
+        "health": 1,
+        "hunger": 18.75,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 0.5
+        }
+      }
+    },
+    {
       "id": "mandragora",
       "name": "曼德拉草",
       "hide": false,
@@ -1217,6 +1340,32 @@
       }
     },
     {
+      "id": "tallbirdegg",
+      "name": "高脚鸟蛋",
+      "hide": false,
+      "foodtype": "meat",
+      "source": "采集高脚鸟巢或开启赃物带包装",
+      "health": 3,
+      "hunger": 25,
+      "sanity": 0,
+      "spoilDays": "永久",
+      "degrees": {
+        "egg": 4
+      },
+      "cooked": {
+        "id": "tallbirdegg_cooked",
+        "name": "煎高脚鸟蛋",
+        "foodtype": "meat",
+        "health": 0,
+        "hunger": 37.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "egg": 4
+        }
+      }
+    },
+    {
       "id": "birdlegs",
       "name": "鸟腿",
       "hide": false,
@@ -1271,6 +1420,90 @@
         "foodtype": "meat",
         "health": 1,
         "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 10,
+        "degrees": {
+          "meat": 0.5
+        }
+      },
+      "dried": {
+        "id": "smallmeat_dried",
+        "name": "小肉干",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 12.5,
+        "sanity": 10,
+        "spoilDays": 20,
+        "degrees": {
+          "meat": 0.5
+        }
+      }
+    },
+    {
+      "id": "elephantnose",
+      "name": "象鼻",
+      "foodtype": "meat",
+      "health": 30,
+      "hunger": 37.5,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 1
+      },
+      "cooked": {
+        "id": "elephantnose_cooked",
+        "name": "象鼻排",
+        "foodtype": "meat",
+        "health": 40,
+        "hunger": 75,
+        "sanity": 0,
+        "spoilDays": 15,
+        "degrees": {
+          "meat": 1
+        }
+      }
+    },
+    {
+      "id": "winter_elephantnose",
+      "name": "冬象鼻",
+      "foodtype": "meat",
+      "health": 30,
+      "hunger": 37.5,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 1
+      },
+      "cooked": {
+        "id": "elephantnose_cooked",
+        "name": "象鼻排",
+        "foodtype": "meat",
+        "health": 40,
+        "hunger": 75,
+        "sanity": 0,
+        "spoilDays": 15,
+        "degrees": {
+          "meat": 1
+        }
+      }
+    },
+    {
+      "id": "nakednose",
+      "name": "裸露鼻孔",
+      "foodtype": "meat",
+      "health": 3,
+      "hunger": 12.5,
+      "sanity": -10,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 0.5
+      },
+      "cooked": {
+        "id": "nakednose_cooked",
+        "name": "炭烤鼻孔",
+        "foodtype": "meat",
+        "health": 8,
+        "hunger": 18.75,
         "sanity": 0,
         "spoilDays": 10,
         "degrees": {
@@ -1612,6 +1845,33 @@
       }
     },
     {
+      "id": "urchin",
+      "name": "藤壶",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": -5,
+      "spoilDays": 6,
+      "degrees": {
+        "meat": 0.25,
+        "fish": 0.25
+      },
+      "cooked": {
+        "id": "urchin_cooked",
+        "name": "熟藤壶",
+        "foodtype": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 15,
+        "degrees": {
+          "meat": 0.25,
+          "fish": 0.25
+        }
+      }
+    },
+    {
       "id": "branch",
       "name": "树枝",
       "hide": true,
@@ -1661,6 +1921,21 @@
       }
     },
     {
+      "id": "collecteddust",
+      "name": "尘土快",
+      "foodtype": "elemental",
+      "hide": false,
+      "source":"远古档案馆开启蒸馏的知识解锁蓝图、每个远古窑必定含有一个",
+      "health": 10,
+      "hunger": 1,
+      "sanity": 0,
+      "spoilDays": "永久",
+      "degrees": {
+        "decoration": 2
+      },
+      "effect": "非冒险家食物，可通过学习远古档案馆蓝图制作"
+    },
+    {
       "id": "moles",
       "name": "鼹鼠",
       "foodtype": "",
@@ -1676,6 +1951,55 @@
         "name": "小肉",
         "value": 1,
         "chance": 1
+      }
+    },
+    {
+      "id": "wobster",
+      "name": "龙虾",
+      "fish": true,
+      "hide": true,
+      "health": null,
+      "hunger": null,
+      "sanity": null,
+      "spoilDays": 4,
+      "degrees": {
+        "meat": 1,
+        "fish": 1
+      },
+      "fishing": {
+        "areas": [
+          "shallow"
+        ],
+        "drops": [
+          {
+            "name": "死龙虾",
+            "chance": 1
+          }
+        ],
+        "events": [],
+        "weight": {
+          "min": 153.67,
+          "max": 307.34
+        }
+      }
+    },
+    {
+      "id": "deadwobster",
+      "name": "死龙虾",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 1,
+      "hunger": 12.5,
+      "sanity": 0,
+      "spoilDays": 3,
+      "cooked": {
+        "id": "deliciouswobster",
+        "name": "美味的龙虾",
+        "foodtyp": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 6
       }
     },
     {

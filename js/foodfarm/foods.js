@@ -42,11 +42,11 @@ function displayFood(raw, form) {
   const c = formVariant(raw, mode);
   if (!c) return raw;
   const prefix = FORM_PREFIX[mode] || "";
-  return Object.assign({}, raw, c, {
+  const view = Object.assign({}, raw, c, {
     id: c.id != null && String(c.id).trim() ? String(c.id) : String(raw.id || "") + "_" + mode,
     name: c.name != null && String(c.name).trim() ? c.name : (prefix + (raw.name || raw.id || "")),
     origin: c.origin != null ? c.origin : raw.origin,
-    // 烤/晾未写 effect / drops 时不继承生的
+    // 烤/晾未写 effect / drops / degrees 时不继承生的
     effect: Object.prototype.hasOwnProperty.call(c, "effect") ? c.effect : "",
     drops: Object.prototype.hasOwnProperty.call(c, "drops") ? c.drops : [],
     seed: undefined,
@@ -55,6 +55,8 @@ function displayFood(raw, form) {
     _raw: raw,
     _form: mode
   });
+  if (!Object.prototype.hasOwnProperty.call(c, "degrees")) delete view.degrees;
+  return view;
 }
 
 function cardBodyHTML(view) {

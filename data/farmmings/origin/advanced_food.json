@@ -291,6 +291,99 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "mushroomcake",
+      "name": "蘑菇蛋糕",
+      "foodtype": "goodies",
+      "health": 0,
+      "hunger": 25,
+      "sanity": 10,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 30,
+      "requires": [],
+      "must": [
+        {
+          "name": "红蘑菇",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "绿蘑菇",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "蓝蘑菇",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "月亮蘑菇",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后清除催眠值，提升催眠抗性持续<b>1天</b>，在<b>30秒</b>内完全免疫催眠"
+    },
+    {
+      "id": "relaxationtea",
+      "name": "舒缓茶",
+      "foodtype": "veggie",
+      "health": 3,
+      "hunger": 0,
+      "sanity": "15+30",
+      "spoilDays": 3,
+      "cookSeconds": 20,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "sweetener",
+          "op": ">",
+          "value": 0
+        },
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "<晾>必忘我",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "monster"
+        },
+        {
+          "degree": "fish"
+        },
+        {
+          "degree": "veg"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "inedible"
+        },
+        {
+          "degree": "dairy"
+        },
+        {
+          "degree": "fat"
+        }
+      ],
+      "effect": "<热食>持续5秒，食用后再<b>60秒</b>内每<b>2秒</b>恢复<b>5点</b><sanity>理智值</sanity>，加上本身效果一共恢复<b>45点</b><sanity>理智值</sanity>"
+    },
+    {
       "id": "meatball",
       "name": "肉丸",
       "foodtype": "meat",
@@ -798,6 +891,81 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "leafymeatloaf",
+      "name": "叶肉糕",
+      "foodtype": "meat",
+      "health": 8,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 20,
+      "cookSeconds": 40,
+      "priority": 25,
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>叶肉",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "beefgreenleaf",
+      "name": "牛肉绿叶菜",
+      "foodtype": "meat",
+      "health": 40,
+      "hunger": 75,
+      "sanity": 5,
+      "spoilDays": 6,
+      "cookSeconds": 40,
+      "priority": 25,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 3
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>叶肉",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "jellysalad",
+      "name": "果冻沙拉",
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 37.5,
+      "sanity": 50,
+      "spoilDays": 6,
+      "cookSeconds": 40,
+      "priority": 50,
+      "requires": [
+        {
+          "degree": "sweetener",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>叶肉",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "fishtacos",
       "name": "鱼肉玉米卷",
       "foodtype": "meat",
@@ -1011,6 +1179,182 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "lobsterdinner",
+      "name": "龙虾正餐",
+      "foodtype": "meat",
+      "health": 60,
+      "hunger": 37.5,
+      "sanity": 50,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 25,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "龙虾",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "ice"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "lobstersoup",
+      "name": "龙虾汤",
+      "foodtype": "meat",
+      "health": 60,
+      "hunger": 25,
+      "sanity": 10,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "龙虾",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "unagihead",
+      "name": "酿鱼头",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 75,
+      "sanity": 0,
+      "spoilDays": 3,
+      "cookSeconds": 40,
+      "priority": 26,
+      "requires": [
+        {
+          "degree": "fish",
+          "op": ">=",
+          "value": 1.25
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>藤壶",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "urchinpita",
+      "name": "藤壶皮塔饼",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 25,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 0.5
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>藤壶",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "urchinnoodles",
+      "name": "藤壶中细面",
+      "foodtype": "meat",
+      "health": 30,
+      "hunger": 75,
+      "sanity": 20,
+      "spoilDays": 6,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>藤壶",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "urchinholdasushi",
+      "name": "藤壶握寿司",
+      "foodtype": "meat",
+      "health": 40,
+      "hunger": 37.5,
+      "sanity": 15,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "egg",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>藤壶",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>海带叶",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "seafoodsoup",
       "name": "海鲜浓汤",
       "foodtype": "meat",
@@ -1028,6 +1372,27 @@
         }
       ],
       "must": [],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "amberfood",
+      "name": "琥珀美食",
+      "foodtype": "meat",
+      "health": 0,
+      "hunger": 12.5,
+      "sanity": 12.5,
+      "spoilDays": "永久",
+      "cookSeconds": 40,
+      "priority": 100,
+      "requires": [],
+      "must": [
+        {
+          "name": "尘土快",
+          "op": ">=",
+          "value": 1
+        }
+      ],
       "limit": [],
       "effect": "无特殊效果"
     },
@@ -1164,6 +1529,38 @@
       ],
       "limit": [],
       "effect": "无特殊效果"
+    },
+    {
+      "id": "milkmadehat",
+      "name": "牛奶帽",
+      "foodtype": null,
+      "health": 0,
+      "hunger": "+3.90625/5秒",
+      "sanity": "-1.33/分钟",
+      "spoilDays": 0.5,
+      "cookSeconds": 40,
+      "priority": 55,
+      "requires": [
+        {
+          "degree": "dairy",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "海带叶",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "裸露鼻孔",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "头部装备，只有装备时才会腐烂，全程可恢复<b>187.5点</b><hunger>饥饿值</hunger>并损失<b>5.3点</b><sanity>精神值</sanity>"
     },
     {
       "id": "watermelonicecream",

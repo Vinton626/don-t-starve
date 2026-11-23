@@ -466,6 +466,12 @@ function plantEntries() {
     }));
 }
 
+/** 是否写了 degrees 对象（含空对象）。未写则不可入锅。 */
+function hasDegreesField(food) {
+  if (!food || !Object.prototype.hasOwnProperty.call(food, "degrees")) return false;
+  return food.degrees != null && typeof food.degrees === "object";
+}
+
 function foodDegreeMap(food) {
   const raw = food && food.degrees && typeof food.degrees === "object" ? food.degrees : {};
   const map = {};
@@ -701,18 +707,28 @@ function foodTypeKeys(entry) {
   return out;
 }
 
-/** 展示例如「素食」或「肉 / 怪物」 */
+/** 显式 foodtype: null → 非食物（与未写 foodtype 区分） */
+function isNonFood(entry) {
+  return !!(entry && Object.prototype.hasOwnProperty.call(entry, "foodtype") && entry.foodtype === null);
+}
+
+/** 展示例如「素食」或「肉 / 怪物」；foodtype 为 null 时为「非食物」 */
 function foodTypeText(entry) {
+  if (isNonFood(entry)) return "非食物";
   return foodTypeKeys(entry).map(foodTypeLabel).filter(Boolean).join(" / ");
 }
 
 function foodTypeHTML(entry) {
+  if (isNonFood(entry)) return `<span class="muted">非食物</span>`;
   const text = foodTypeText(entry);
   if (!text) return `<span class="muted">未标注食用类型</span>`;
   return `<span class="food-type-chip">${escapeHTML(text)}</span>`;
 }
 
 function foodDegreesHTML(food) {
+  if (!hasDegreesField(food)) {
+    return `<span class="muted">该食物不可放入烹饪锅</span>`;
+  }
   const degrees = foodDegreeMap(food);
   const keys = Object.keys(degrees).filter(k => degrees[k] !== 0);
   if (!keys.length) return `<span class="muted">无烹饪度</span>`;
@@ -951,6 +967,7 @@ window.Foodfarm = {
   originSectionsHTML,
   bindOriginSections,
   isOriginCollapsed,
+  hasDegreesField,
   foodDegreeMap,
   parseFormTags,
   mustNameLabel,
@@ -962,6 +979,7 @@ window.Foodfarm = {
   degreeLabel,
   foodTypeLabel,
   foodTypeKeys,
+  isNonFood,
   foodTypeText,
   foodTypeHTML,
   bindContentTags,

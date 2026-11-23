@@ -74,7 +74,7 @@
 <h2>食用类型（foodtype）</h2>
 <p>普通食物本体、烤 <code>cooked</code>、晾 <code>dried</code>、种子 <code>seed</code>、料理都可写，对应谁能吃。和烹饪「度」无关。不要再用 <code>secondaryfoodtype</code>。</p>
 <p>写法：</p>
-<p>只有一种：写 <code>foodtype</code>，例如 <code>"foodtype":"veggie"</code>。</p>
+<p>只有一种：写 <code>foodtype</code>，例如 <code>"foodtype":"veggie"</code>。显式写 <code>"foodtype": null</code> 时页面显示「非食物」（与未写该字段的「未标注食用类型」不同）。</p>
 <p>多种：写 <code>foodtype</code> + <code>foodtype2</code> + <code>foodtype3</code>… 有几种写几个。例如浆果 <code>"foodtype":"veggie","foodtype2":"berry"</code>；怪物肉 <code>"foodtype":"meat","foodtype2":"monster"</code>。</p>
 <p>也可以从 <code>foodtype1</code> 起笔：必须同时有 <code>foodtype2</code>（只写 1 不合法）。之后同样 <code>foodtype3</code>…</p>
 <p>完整键与中文（仅这些）：</p>
@@ -120,7 +120,8 @@
 </ul>
 <p>词条「冷食」「热食」带颜色（冷 <code>#6ec8f0</code>，热 <code>#e4572e</code>）。烤/晾子对象若未单独写 <code>effect</code>，不继承生的效果。</p>
 <p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。鱼类常用它从图鉴藏掉。默认 / 省略视为 <code>false</code>。</p>
-<p><code>noCook</code>：布尔。为 <code>true</code> 时不能放进烹饪锅（选择栏、补格、举例配方都不会用到）。与 <code>hide</code> 互不干涉：图鉴显隐只看 <code>hide</code>，入锅只看 <code>noCook</code>（以及下面的 <code>plantOnly</code>）。特殊内容既不是料理、又不能入锅时，仍写在基础食物里，标 <code>noCook: true</code>；需要从普通食物图鉴藏掉就再加 <code>hide: true</code>。默认 / 省略视为 <code>false</code>。</p>
+<p><code>degrees</code>：烹饪度对象。不写该字段时，普通食物图鉴的「烹饪度」位置显示「该食物不可放入烹饪锅」，且不会出现在烹饪锅选择栏 / 补格 / 举例里（死龙虾这类可食用但不能入锅的用它）。写了空对象 <code>{}</code> 则仍显示「无烹饪度」，但算写了字段。烤/晾子对象若未单独写 <code>degrees</code>，不继承生的度。</p>
+<p><code>noCook</code>：布尔。为 <code>true</code> 时不能放进烹饪锅（选择栏、补格、举例配方都不会用到）。与 <code>hide</code> 互不干涉：图鉴显隐只看 <code>hide</code>，入锅看 <code>noCook</code>、<code>plantOnly</code>，以及是否写了 <code>degrees</code>。特殊内容既不是料理、又不能入锅时，仍写在基础食物里，标 <code>noCook: true</code>；需要从普通食物图鉴藏掉就再加 <code>hide: true</code>。默认 / 省略视为 <code>false</code>。</p>
 <p><code>plantOnly</code>：布尔。为 <code>true</code> 时只留种植记录，不进食物图鉴，也不进烹饪锅。针刺旋花用它，并同时写 <code>hide: true</code>。</p>
 <p><code>cooked</code>：烤熟形态子对象，可选。只有写了才参与切换。</p>
 <p><code>dried</code>：晾干形态子对象，可选（肉、海带等才有）。只有写了才参与切换；多数食物不必写这个字段。</p>

@@ -51,7 +51,7 @@ function foodKey(food) {
 
 function rebuild() {
   cook.foods = Foodfarm.foodItems().filter(item =>
-    item && (item.id || item.name) && !item.plantOnly && !item.noCook
+    item && (item.id || item.name) && !item.plantOnly && !item.noCook && Foodfarm.hasDegreesField(item)
   );
   cook.dishes = Foodfarm.cookItems().filter(item => item && (item.id || item.name));
   cook.foodById.clear();
