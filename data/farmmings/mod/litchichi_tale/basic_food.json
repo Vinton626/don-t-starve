@@ -2,15 +2,197 @@
   "items": [
     {
       "id": "litchi",
-      "name": "荔枝",
-      "source": "",
+      "name": "荔只只",
+      "source": "carrot_seeds",
       "hide": false,
       "foodtype": "veggie",
-      "health": null,
-      "hunger": null,
-      "sanity": null,
-      "spoilDays": null,
-      "degrees": {}
+      "health": 17.7,
+      "hunger": 12.7,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "litchi_cooked",
+        "name": "烤荔只只",
+        "foodtype": "veggie",
+        "health": 0,
+        "hunger": 7.7,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "fruit": 1
+        }
+      },
+      "seed": {
+        "id": "litchi_seeds",
+        "name": "荔只只种子",
+        "foodtype": "seeds",
+        "health": 4,
+        "hunger": 4,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": [
+          "summer"
+        ],
+        "water": "仅知适中",
+        "desc": "采摘时有<b>10%</b>概率额外获得鲜荔圆子奶茶",
+        "fertilizer": {
+          "formula": 4,
+          "compost": 4,
+          "manure": -8
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
+        }
+      }
+    },
+    {
+      "id": "peanut",
+      "name": "花生",
+      "source": "peanut_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 4,
+      "hunger": 10,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "veg": 1
+      },
+      "cooked": {
+        "id": "peanut_cooked",
+        "name": "焗花生",
+        "foodtype": "veggie",
+        "health": 0,
+        "hunger": 5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "veg": 1
+        }
+      },
+      "seed": {
+        "id": "peanut_seeds",
+        "name": "花生种子",
+        "foodtype": "seeds",
+        "health": 4,
+        "hunger": 4,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": [
+          "summer",
+          "winter"
+        ],
+        "water": "仅知适中",
+        "desc": "",
+        "fertilizer": {
+          "formula": 12,
+          "compost": -4,
+          "manure": -8
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
+        }
+      }
+    },
+    {
+      "id": "blueberry",
+      "name": "蓝莓",
+      "source": "blueberry_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 4,
+      "hunger": 12.5,
+      "sanity": 3,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "blueberry_cooked",
+        "name": "烤蓝莓",
+        "foodtype": "veggie",
+        "health": 0,
+        "hunger": 12.5,
+        "sanity": 20,
+        "spoilDays": 6,
+        "degrees": {
+          "fruit": 1
+        }
+      },
+      "seed": {
+        "id": "blueberry_seeds",
+        "name": "蓝莓种子",
+        "foodtype": "seeds",
+        "health": 4,
+        "hunger": 4,
+        "sanity": 0,
+        "spoilDays": 40,
+        "hate_season": [
+          "winter"
+        ],
+        "water": "仅知较高",
+        "desc": "",
+        "fertilizer": {
+          "formula": -2,
+          "compost": -2,
+          "manure": 4
+        },
+        "cooked": {
+          "id": "seeds_cooked",
+          "name": "烤种子",
+          "foodtype": "seeds",
+          "health": 1,
+          "hunger": 4.6875,
+          "sanity": 0,
+          "spoilDays": 10,
+          "degrees": {}
+        }
+      }
+    },
+    {
+      "id": "strawberry",
+      "name": "草莓",
+      "source": "草莓丛",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 7,
+      "hunger": 7,
+      "sanity": 7,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      }
+    },
+    {
+      "id": "cherry",
+      "name": "樱桃",
+      "source": "cherry_seeds",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 8,
+      "hunger": 8,
+      "sanity": 8,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      }
     }
   ]
 }

@@ -3,15 +3,150 @@
     {
       "id": "cherry",
       "name": "樱桃",
-      "source": "",
+      "source": "砍伐樱花树、击杀樱花小精灵、击杀守护者",
       "hide": false,
       "foodtype": "veggie",
-      "foodtype2": "berry",
+      "health": 1,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 10,
+      "degrees": {
+        "fruit": 0.5
+      },
+      "cooked": {
+        "id": "cherry_cooked",
+        "name": "烘焙樱桃",
+        "foodtype": "veggie",
+        "health": 3,
+        "hunger": 12.5,
+        "sanity": 10,
+        "spoilDays": 6,
+        "degrees": {
+          "fruit": 0.5
+        }
+      }
+    },
+    {
+      "id": "rose_fruit",
+      "name": "玫瑰果",
+      "source": "玫瑰丛",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": -1,
+      "hunger": 10,
+      "sanity": -5,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "rose_fruit_cooked",
+        "name": "烤玫瑰果",
+        "foodtype": "veggie",
+        "health": 3,
+        "hunger": 12,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 1
+        }
+      }
+    },
+    {
+      "id": "gooseberry",
+      "name": "鹅莓",
+      "source": "鹅莓灌木",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 1,
+      "hunger": 13,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "fruit": 1
+      },
+      "cooked": {
+        "id": "gooseberry_cooked",
+        "name": "烤鹅莓果",
+        "foodtype": "veggie",
+        "health": 3,
+        "hunger": 9,
+        "sanity": 0,
+        "spoilDays": 3,
+        "degrees": {
+          "fruit": 1
+        }
+      }
+    },
+    {
+      "id": "cherry_shrimp",
+      "name": "樱虾",
+      "fish": true,
+      "hide": true,
       "health": null,
       "hunger": null,
       "sanity": null,
-      "spoilDays": null,
-      "degrees": {}
+      "spoilDays": 1,
+      "degrees": {
+        "fruit": 0.5,
+        "fish": 0.5
+      },
+      "cooked": {
+        "id": "cherry_shrimp_cooked",
+        "name": "熟樱虾",
+        "foodtyp": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "fish": 0.5,
+          "fruit": 0.5
+        }
+      },
+      "fishing": {
+        "areas": [
+          "cherry_pond"
+        ],
+        "drops": [
+          {
+            "name": "死樱虾",
+            "chance": 1
+          }
+        ],
+        "events": [],
+        "weight": {
+          "min": 12.14,
+          "max": 38.48
+        }
+      }
+    },
+    {
+      "id": "dead_cherry_shrimp",
+      "name": "死樱虾",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 1,
+      "hunger": 9.375,
+      "sanity": 0,
+      "spoilDays": 3,
+      "degrees": {
+        "fish": 0.5,
+        "fruit": 0.5
+      },
+      "cooked": {
+        "id": "cherry_shrimp_cooked",
+        "name": "熟樱虾",
+        "foodtyp": "meat",
+        "health": 1,
+        "hunger": 12.5,
+        "sanity": 0,
+        "spoilDays": 6,
+        "degrees": {
+          "fish": 0.5,
+          "fruit": 0.5
+        }
+      }
     }
   ]
 }

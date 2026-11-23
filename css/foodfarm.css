@@ -1116,6 +1116,15 @@ body.food-modal-open { overflow: hidden; }
   font-size: 13px;
 }
 .plan-net { font-size: 12px; color: #a89068; }
+.plan-seasons {
+  font-size: 12px;
+  color: #7dce7a;
+}
+.calc-season-check {
+  flex: 0 0 auto;
+  margin-left: 4px;
+  font-size: 13px;
+}
 .calc-config[hidden] { display: none; }
 .calc-config {
   position: absolute;

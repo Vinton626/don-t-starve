@@ -19,12 +19,14 @@ const farm = {
   result: null,
   panelOpen: false,
   calcTimer: 0,
-  ratioMode: "9"
+  ratioMode: "9",
+  /** 配比卡片是否标注共同适合季节 */
+  considerSeason: false
 };
 
 const RATIO_MODES = [
   { id: "1-1", label: "1:1配比", note: "与所选作物各种 1 株，三种肥料都不为负。点另一株会换掉当前选择。" },
-  { id: "3-3-3", label: "3+3+3配比", note: "用三种作物的基础肥相加，总肥再乘 3。每种固定 3 株。" },
+  { id: "3-3-3", label: "3+3+3配比", note: "每株计数只能是 3 或 6，合计 9 格。可做 3+3+3，或 3+6；已选之外的格按同样规则补齐。" },
   { id: "9", label: "9格配比", note: "" }
 ];
 
@@ -73,6 +75,47 @@ function hateSeasons(entry) {
 
 function seasonText(keys) {
   return SEASONS.filter(s => keys.has(s.key)).map(s => s.name).join("、");
+}
+
+/**
+ * n 株共同适合季节 = 四季减去各株 hate_season 的并集。
+ * 没有共同季节时返回空数组。
+ */
+function commonFitSeasonKeys(crops) {
+  const hate = new Set();
+  (crops || []).forEach(crop => {
+    if (!crop) return;
+    const entry = farm.entryById.get(crop.id) || farm.entryById.get(String(crop.id || ""));
+    hateSeasons(entry).forEach(key => hate.add(key));
+  });
+  return SEASONS.filter(s => !hate.has(s.key)).map(s => s.key);
+}
+
+function commonFitSeasonHTML(crops) {
+  if (!farm.considerSeason) return "";
+  const keys = commonFitSeasonKeys(crops);
+  if (!keys.length) return "";
+  return `<div class="plan-seasons">共同适合：${esc(seasonText(new Set(keys)))}</div>`;
+}
+
+function cropsFromPair(mate) {
+  const focus = farm.result && farm.result.focus;
+  return [focus, mate && mate.crop].filter(Boolean);
+}
+
+function cropsFromPlanParts(plan, result) {
+  const list = [];
+  const seen = new Set();
+  const push = crop => {
+    if (!crop || !crop.id || seen.has(crop.id)) return;
+    seen.add(crop.id);
+    list.push(crop);
+  };
+  ((result && result.locked) || []).forEach(item => push(item && item.crop));
+  ((plan && plan.parts) || []).forEach(part => {
+    ((part.group && part.group.members) || []).forEach(push);
+  });
+  return list;
 }
 
 function rebuildCrops() {
@@ -315,8 +358,12 @@ function addPick(id) {
   const cap = farm.ratioMode === "3-3-3" ? 3 : FarmCalc.MAX_CROPS;
   if (farm.picks.length >= cap) {
     flashPickerNote(farm.ratioMode === "3-3-3"
-      ? "3+3+3 配比最多 3 种作物"
+      ? "最多 3 种作物（3+3+3 或 3+6）"
       : "最多选择 " + FarmCalc.MAX_CROPS + " 种作物");
+    return;
+  }
+  if (farm.ratioMode === "3-3-3" && usedSlots() + 3 > FarmCalc.DEFAULT_SLOTS) {
+    flashPickerNote("剩余格不足 3，无法再选");
     return;
   }
   farm.picks.unshift({ id, count: farm.ratioMode === "3-3-3" ? 3 : 1 });
@@ -327,7 +374,22 @@ function addPick(id) {
 function setPickCount(id, count) {
   const i = pickIndex(id);
   if (i < 0) return;
-  if (farm.ratioMode === "1-1" || farm.ratioMode === "3-3-3") return;
+  if (farm.ratioMode === "1-1") return;
+  if (farm.ratioMode === "3-3-3") {
+    const cur = farm.picks[i].count >= 6 ? 6 : 3;
+    let next = Math.floor(Number(count) || cur);
+    if (next > cur) next = 6;
+    else if (next < cur) next = 3;
+    else next = next >= 6 ? 6 : 3;
+    const others = usedSlots() - farm.picks[i].count;
+    if (others + next > FarmCalc.DEFAULT_SLOTS) {
+      flashPickerNote("总数不能超过 9 格（每株 3 或 6）");
+      return;
+    }
+    farm.picks[i].count = next;
+    afterPicksChange();
+    return;
+  }
   const n = Math.max(1, Math.min(FarmCalc.DEFAULT_SLOTS, Math.floor(Number(count) || 1)));
   farm.picks[i].count = n;
   afterPicksChange();
@@ -367,11 +429,11 @@ function renderPicker() {
   if (!selected || !seeds) return;
 
   const used = usedSlots();
-  const fixedThree = farm.ratioMode === "3-3-3";
+  const tripleMode = farm.ratioMode === "3-3-3";
   const fixedOne = farm.ratioMode === "1-1";
   if (farm.picks.length) {
-    const usedText = fixedThree
-      ? `已选 <b>${farm.picks.length}</b> / 3 种，每种 3 株`
+    const usedText = tripleMode
+      ? `已选 <b>${farm.picks.length}</b> 种，共 <b>${used}</b> / 9 格（每株 3 或 6）`
       : (fixedOne
         ? `已选 <b>1</b> 种，数量固定为 1`
         : `已选 <b>${used}</b> / ${FarmCalc.DEFAULT_SLOTS} 格`);
@@ -379,13 +441,16 @@ function renderPicker() {
       `<div class="calc-used">${usedText}</div>` +
       farm.picks.map(p => {
         const crop = farm.cropById.get(p.id);
-        const count = fixedThree ? 3 : (fixedOne ? 1 : p.count);
-        const lock = fixedThree || fixedOne ? " disabled" : "";
+        const count = tripleMode ? (p.count >= 6 ? 6 : 3) : (fixedOne ? 1 : p.count);
+        const lock = fixedOne ? " disabled" : "";
+        const minAttr = tripleMode ? "3" : "1";
+        const maxAttr = tripleMode ? "6" : String(FarmCalc.DEFAULT_SLOTS);
+        const stepAttr = tripleMode ? ' step="3"' : "";
         return (
           `<div class="calc-pick" data-id="${esc(p.id)}">` +
           `<span class="calc-pick-name">${esc(crop.name)}</span>` +
           `<button type="button" class="calc-step" data-step="-1" aria-label="减少"${lock}>−</button>` +
-          `<input type="number" class="calc-count" min="1" max="${FarmCalc.DEFAULT_SLOTS}" value="${count}"${lock}>` +
+          `<input type="number" class="calc-count" min="${minAttr}" max="${maxAttr}"${stepAttr} value="${count}"${lock}>` +
           `<button type="button" class="calc-step" data-step="1" aria-label="增加"${lock}>+</button>` +
           `<button type="button" class="calc-remove" data-remove aria-label="移除">×</button>` +
           `</div>`
@@ -496,9 +561,14 @@ function applyRatioMode(id) {
   if (mode.id === "3-3-3") {
     if (farm.picks.length > 3) {
       farm.picks = farm.picks.slice(0, 3);
-      flashPickerNote("3+3+3 配比最多 3 种作物");
+      flashPickerNote("最多 3 种作物（3+3+3 或 3+6）");
     }
-    farm.picks.forEach(pick => { pick.count = 3; });
+    farm.picks.forEach(pick => { pick.count = pick.count >= 6 ? 6 : 3; });
+    while (usedSlots() > FarmCalc.DEFAULT_SLOTS && farm.picks.length) {
+      const last = farm.picks[farm.picks.length - 1];
+      if (last.count >= 6) last.count = 3;
+      else farm.picks.pop();
+    }
   }
   renderPicker();
   scheduleCalc();
@@ -521,6 +591,17 @@ function bindRatioMode() {
       return;
     }
     if (!e.target.closest("#calc-mode")) setRatioMenu(false);
+  });
+}
+
+function bindSeasonCheck() {
+  const input = Foodfarm.$("calc-season-check");
+  if (!input || input.dataset.bound === "1") return;
+  input.dataset.bound = "1";
+  input.checked = !!farm.considerSeason;
+  input.addEventListener("change", () => {
+    farm.considerSeason = !!input.checked;
+    renderResult();
   });
 }
 
@@ -598,7 +679,10 @@ function computeResult() {
   if (farm.ratioMode === "1-1") return FarmCalc.solvePair(focus, farm.crops);
   if (farm.ratioMode === "3-3-3") {
     return FarmCalc.solveTriple(
-      farm.picks.map(p => ({ crop: farm.cropById.get(p.id), count: 3 })),
+      farm.picks.map(p => ({
+        crop: farm.cropById.get(p.id),
+        count: p.count >= 6 ? 6 : 3
+      })),
       farm.crops,
       { limit: PLAN_ROWS_LIMIT }
     );
@@ -628,6 +712,7 @@ function pairCardHTML(mate) {
     `<div class="plan-card pair-card">` +
     `<div class="plan-chips"><span class="plan-chip">${esc(mate.crop.name)} ×<b>1</b></span></div>` +
     `<div class="plan-net">与所选各种 1 株，合计 ${net}</div>` +
+    commonFitSeasonHTML(cropsFromPair(mate)) +
     `</div>`
   );
 }
@@ -644,11 +729,12 @@ function tripleCardHTML(plan, index, result) {
     `<button type="button" class="plan-card" data-index="${index}">` +
     `<div class="plan-chips">${locked}${fills}</div>` +
     `<div class="plan-net">${net}</div>` +
+    commonFitSeasonHTML(cropsFromPlanParts(plan, result)) +
     `</button>`
   );
 }
 
-function planCardHTML(plan, index) {
+function planCardHTML(plan, index, result) {
   const chips = (plan.parts || []).map(part =>
     `<span class="plan-chip">${esc(groupLabel(part.group))} ×<b>${part.count}</b></span>`
   ).join("");
@@ -657,6 +743,7 @@ function planCardHTML(plan, index) {
     `<button type="button" class="plan-card" data-index="${index}">` +
     `<div class="plan-chips">${chips}</div>` +
     `<div class="plan-net">${net}</div>` +
+    commonFitSeasonHTML(cropsFromPlanParts(plan, result || farm.result)) +
     `</button>`
   );
 }
@@ -690,7 +777,7 @@ function renderResult() {
   if (r.mode === "3-3-3") {
     netHost.innerHTML =
       fertStatesHTML(r.base || {}) +
-      `<div class="calc-net-note">三种作物的基础肥相加后再 ×<b>3</b></div>`;
+      `<div class="calc-net-note">已选 <b>${r.used || 0}</b> 株（3 或 6）；剩余 <b>${Math.max(0, 9 - (r.used || 0))}</b> 格按 3 / 6 补齐</div>`;
     const note = modeNoteHTML();
     if (!r.ok) {
       body.innerHTML = note + `<p class="calc-warn"><warn>${esc(r.message || "没有配比")}</warn></p>`;
@@ -755,12 +842,17 @@ function openPlanModal(index) {
   const plan = index < 0 ? r.closest : r.plans && r.plans[index];
   if (!plan) return;
 
-  Foodfarm.$("plan-modal-net").innerHTML = fertStatesHTML(plan.net);
+  const netHost = Foodfarm.$("plan-modal-net");
+  if (netHost) {
+    netHost.innerHTML =
+      fertStatesHTML(plan.net) +
+      commonFitSeasonHTML(cropsFromPlanParts(plan, r));
+  }
 
-  const lockedRows = r.locked.map(item =>
+  const lockedRows = (r.locked || []).map(item =>
     `<details class="plan-row"><summary><span>${esc(item.crop.name)}</span><span>×<b>${item.count}</b>（已选）</span></summary>${memberTableHTML([item.crop])}</details>`
   ).join("");
-  const fillRows = plan.parts.map(part => {
+  const fillRows = (plan.parts || []).map(part => {
     const sig = FarmCalc.NUTRIENTS.map(k => `${fertTag(k)} <b>${esc(signed(part.group.delta[k]))}</b>`).join(" ");
     return (
       `<details class="plan-row"><summary><span>${esc(groupLabel(part.group))}</span><span>×<b>${part.count}</b></span></summary>` +
@@ -774,6 +866,7 @@ function openPlanModal(index) {
   const emptyFill = r.used < r.slots ? "没有其他种子可补种" : "已满 " + r.slots + " 格，无需补种";
   rows.innerHTML = lockedRows + (fillRows || `<p class="muted">${emptyFill}</p>`);
   Foodfarm.bindContentTags(rows);
+  if (netHost) Foodfarm.bindContentTags(netHost);
   openModal("plan-modal");
 }
 
@@ -793,6 +886,7 @@ bindModals();
 bindDrawers();
 bindPicker();
 bindPanel();
+bindSeasonCheck();
 
 Foodfarm.bootFoodfarm({
   onReady: renderAll,

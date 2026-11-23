@@ -136,10 +136,12 @@ function dishInfoHTML(dish, opts) {
     return `${labeled} ${esc(op)} <b>${esc(r.value)}</b>`;
   };
   const req = (dish.requires || []).map(requireEntryHTML).filter(Boolean).join("；");
-  const must = (dish.must || []).map(mustEntryHTML).join("；");
+  const preferOrigin = dish.origin != null ? dish.origin : "";
+  const must = (dish.must || []).map(entry => mustEntryHTML(entry, preferOrigin)).join("；");
   const rawAmong = (Array.isArray(dish.atLeastOneRaw) ? dish.atLeastOneRaw : [])
     .map(name => String(name == null ? "" : name).trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map(name => Foodfarm.mustNameLabel(name, preferOrigin) || name);
   const rawNote = rawAmong.length
     ? `（${rawAmong.map(n => esc(n)).join("、")}至少有一个为生，不能都烤）`
     : "";
@@ -169,14 +171,16 @@ function dishInfoHTML(dish, opts) {
   ].join("");
 }
 
-function mustEntryHTML(entry) {
+function mustEntryHTML(entry, preferOrigin) {
   if (entry == null) return "";
-  if (typeof entry === "string") return esc(Foodfarm.mustNameLabel(entry) || entry);
-  if (Array.isArray(entry.or)) return entry.or.map(mustEntryHTML).filter(Boolean).join(" 或 ");
+  if (typeof entry === "string") return esc(Foodfarm.mustNameLabel(entry, preferOrigin) || entry);
+  if (Array.isArray(entry.or)) {
+    return entry.or.map(part => mustEntryHTML(part, preferOrigin)).filter(Boolean).join(" 或 ");
+  }
   const rawName = entry.name != null && String(entry.name).trim()
     ? String(entry.name).trim()
     : (entry.id != null ? String(entry.id).trim() : "");
-  const name = esc(Foodfarm.mustNameLabel(rawName) || rawName);
+  const name = esc(Foodfarm.mustNameLabel(rawName, preferOrigin) || rawName);
   if (entry.value == null) return name;
   return `${name} ${esc(entry.op || ">=")} <b>${esc(entry.value)}</b>`;
 }

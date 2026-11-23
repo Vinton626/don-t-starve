@@ -409,48 +409,121 @@
     };
   }
 
+  /** 把 remaining 拆成若干 3/6（非递减，避免重复分拆） */
+  function tripleCountPartitions(remaining) {
+    if (remaining === 0) return [[]];
+    if (remaining < 0 || remaining > 9 || remaining % 3 !== 0) return [];
+    const out = [];
+    (function walk(left, minPart, acc) {
+      if (left === 0) {
+        out.push(acc.slice());
+        return;
+      }
+      [3, 6].forEach(part => {
+        if (part < minPart || part > left) return;
+        acc.push(part);
+        walk(left - part, part, acc);
+        acc.pop();
+      });
+    })(remaining, 3, []);
+    return out;
+  }
+
+  /** counts 的去重全排列，用于把 [3,6] 分给不同补种组 */
+  function uniqueCountPerms(counts) {
+    const sorted = (counts || []).slice().sort((a, b) => a - b);
+    const out = [];
+    const used = new Array(sorted.length).fill(false);
+    const cur = [];
+    (function walk() {
+      if (cur.length === sorted.length) {
+        out.push(cur.slice());
+        return;
+      }
+      for (let i = 0; i < sorted.length; i++) {
+        if (used[i]) continue;
+        if (i > 0 && sorted[i] === sorted[i - 1] && !used[i - 1]) continue;
+        used[i] = true;
+        cur.push(sorted[i]);
+        walk();
+        cur.pop();
+        used[i] = false;
+      }
+    })();
+    return out;
+  }
+
+  function normalizeTripleCount(count) {
+    const n = Math.floor(num(count));
+    return n >= 6 ? 6 : 3;
+  }
+
   /**
-   * 凑满 3 种作物。先用每种 1 株的基础肥相加，三项都不为负才算配上，
-   * 展示的总肥是这个基础合计再乘 3（每种实际种 3 株）。
+   * 3+3+3 / 3+6 配比：已选作物每株计数只能是 3 或 6，合计 ≤ 9。
+   * 剩余格用 3、6 的组合补齐；总肥按株数加权，三项都不为负才算配上。
    */
   function solveTriple(locked, pool, options) {
     const opts = options || {};
     const limit = Math.max(1, Math.floor(num(opts.limit) || 300));
-    const picks = (Array.isArray(locked) ? locked : []).filter(item => item && item.crop);
+    const picks = (Array.isArray(locked) ? locked : [])
+      .filter(item => item && item.crop)
+      .map(item => ({ crop: item.crop, count: normalizeTripleCount(item.count) }));
     if (!picks.length) return { ok: false, mode: "3-3-3", reason: "empty", message: "请先选择一种作物" };
     if (picks.length > 3) {
-      return { ok: false, mode: "3-3-3", reason: "kinds", message: "3+3+3 配比最多 3 种作物" };
+      return { ok: false, mode: "3-3-3", reason: "kinds", message: "最多 3 种作物（3+3+3 或 3+6）" };
     }
 
-    let lockedBase = { formula: 0, compost: 0, manure: 0 };
-    picks.forEach(item => { lockedBase = addNet(lockedBase, item.crop.delta, 1); });
-    const need = 3 - picks.length;
+    const used = picks.reduce((sum, item) => sum + item.count, 0);
+    if (used > 9) {
+      return { ok: false, mode: "3-3-3", reason: "slots", message: "已选株数超过 9 格" };
+    }
+
+    let lockedNet = { formula: 0, compost: 0, manure: 0 };
+    picks.forEach(item => { lockedNet = addNet(lockedNet, item.crop.delta, item.count); });
+    const remaining = 9 - used;
     const lockedIds = new Set(picks.map(item => item.crop.id));
     const groups = groupByDelta((Array.isArray(pool) ? pool : []).filter(crop => crop && !lockedIds.has(crop.id)));
     const plans = [];
-    const consider = extra => {
-      let sum = lockedBase;
-      extra.forEach(group => { sum = addNet(sum, group.delta, 1); });
-      if (NUTRIENTS.some(key => sum[key] < 0)) return;
-      const net = scaleNet(sum, 3);
+    const consider = parts => {
+      let net = lockedNet;
+      parts.forEach(part => { net = addNet(net, part.group.delta, part.count); });
+      if (NUTRIENTS.some(key => net[key] < 0)) return;
       plans.push({
-        parts: extra.map(group => ({ group, count: 3 })),
-        net,
+        parts: parts.map(part => ({ group: part.group, count: part.count })),
+        net: Object.assign({}, net),
         surplus: surplusOf(net)
       });
     };
-    if (!need) consider([]);
-    else if (groups.length >= need) combinations(groups, need).forEach(consider);
+
+    const partitions = tripleCountPartitions(remaining);
+    partitions.forEach(counts => {
+      const need = counts.length;
+      if (!need) {
+        consider([]);
+        return;
+      }
+      if (groups.length < need) return;
+      const perms = uniqueCountPerms(counts);
+      combinations(groups, need).forEach(chosen => {
+        perms.forEach(perm => {
+          consider(chosen.map((group, i) => ({ group, count: perm[i] })));
+        });
+      });
+    });
 
     const head = {
       mode: "3-3-3",
       slots: 9,
-      used: picks.length * 3,
-      base: scaleNet(lockedBase, 3),
-      locked: picks.map(item => ({ crop: item.crop, count: 3 }))
+      used,
+      base: Object.assign({}, lockedNet),
+      locked: picks.map(item => ({ crop: item.crop, count: item.count }))
     };
     if (!plans.length) {
-      return Object.assign(head, { ok: false, reason: "deficit", message: "没有三种作物基础肥相加后仍不为负的配比" });
+      return Object.assign(head, {
+        ok: false,
+        reason: "deficit",
+        message: "没有在 3+3+3 / 3+6 规则下肥料不为负的配比"
+      });
     }
     plans.sort((a, b) => a.surplus - b.surplus || a.parts.length - b.parts.length);
     return Object.assign(head, { ok: true, total: plans.length, plans: plans.slice(0, limit) });

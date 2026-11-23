@@ -117,6 +117,7 @@ function cookItems() {
 const FISH_AREAS = {
   pond: { key: "pond", name: "池塘" },
   mossy_pond: { key: "mossy_pond", name: "苔藓池塘" },
+  cherry_pond: { key: "cherry_pond", name: "樱花池塘" },
   shallow: { key: "shallow", name: "浅海" },
   ocean: { key: "ocean", name: "中层海" },
   deep: { key: "deep", name: "深海" },
@@ -434,16 +435,32 @@ function bindOriginSections(host) {
   });
 }
 
-function findFoodById(id) {
+function findFoodById(id, preferOrigin) {
   const key = String(id || "");
   if (!key) return null;
-  return foodItems().find(item => item && String(item.id) === key) || null;
+  const items = foodItems();
+  const exact = items.filter(item => item && String(item.id) === key);
+  if (exact.length === 1) return exact[0];
+  if (exact.length > 1) {
+    if (preferOrigin != null) {
+      const hit = exact.find(item => String(item.origin || "") === String(preferOrigin));
+      if (hit) return hit;
+    }
+    return exact.find(item => !String(item.origin || "").trim()) || exact[0];
+  }
+  const byBase = items.filter(item => item && String(item.baseId || "") === key);
+  if (!byBase.length) return null;
+  if (preferOrigin != null) {
+    const hit = byBase.find(item => String(item.origin || "") === String(preferOrigin));
+    if (hit) return hit;
+  }
+  return byBase.find(item => !String(item.origin || "").trim()) || byBase[0];
 }
 
 /** seed 可以是内嵌对象，或另一条食物的 id（多种植株共用同一颗种子） */
 function resolveSeed(item) {
   if (!item || item.seed == null || item.seed === "") return null;
-  if (typeof item.seed === "string") return findFoodById(item.seed);
+  if (typeof item.seed === "string") return findFoodById(item.seed, item.origin);
   if (typeof item.seed === "object") return item.seed;
   return null;
 }
@@ -562,26 +579,44 @@ function effectHTML(raw) {
 }
 
 /** 展示用：<烤>玉米 → 玉米/烤玉米；有 cooked.name / dried.name 时用真实名 */
-function mustNameLabel(needName) {
+function findFoodForMustBase(base, preferOrigin) {
+  const key = String(base || "").trim();
+  if (!key) return null;
+  const items = foodItems().filter(item => {
+    if (!item) return false;
+    if (item.name === key || String(item.id || "") === key) return true;
+    if (String(item.baseName || "") === key || String(item.baseId || "") === key) return true;
+    return false;
+  });
+  if (!items.length) return null;
+  if (preferOrigin != null) {
+    const same = items.filter(item => String(item.origin || "") === String(preferOrigin));
+    if (same.length) return same[0];
+  }
+  const exact = items.find(item => item.name === key || String(item.id || "") === key);
+  if (exact) return exact;
+  return items.find(item => !String(item.origin || "").trim()) || items[0];
+}
+
+function mustNameLabel(needName, preferOrigin) {
   const raw = String(needName || "").trim();
   if (!raw) return "";
   const spec = parseFormTags(raw);
   if (!spec.base) return raw;
-  if (!spec.cooked && !spec.dried) return spec.base;
-  const food = foodItems().find(item =>
-    item && (item.name === spec.base || String(item.id || "") === spec.base)
-  ) || null;
-  const parts = [spec.base];
+  const food = findFoodForMustBase(spec.base, preferOrigin);
+  const shown = food && food.name ? String(food.name) : spec.base;
+  if (!spec.cooked && !spec.dried) return shown;
+  const parts = [shown];
   if (spec.cooked) {
     const cookedName = food && food.cooked && String(food.cooked.name || "").trim()
       ? String(food.cooked.name).trim()
-      : "烤" + spec.base;
+      : "烤" + shown;
     parts.push(cookedName);
   }
   if (spec.dried) {
     const driedName = food && food.dried && String(food.dried.name || "").trim()
       ? String(food.dried.name).trim()
-      : "晾" + spec.base;
+      : "晾" + shown;
     parts.push(driedName);
   }
   return parts.join("/");
@@ -835,6 +870,79 @@ function mergeItems(parts) {
   return { items };
 }
 
+function modDisplayName(tag) {
+  const key = tag == null ? "" : String(tag);
+  const hit = modList().find(mod => modKey(mod) === key);
+  return (hit && hit.name) || key || "原版";
+}
+
+/** 一条食物上参与匹配的 id/name 节点（本体、烤、晾、内嵌种子及其烤） */
+function itemIdentityScopes(item) {
+  const scopes = [];
+  if (!item || typeof item !== "object") return scopes;
+  scopes.push(item);
+  if (item.cooked && typeof item.cooked === "object") scopes.push(item.cooked);
+  if (item.dried && typeof item.dried === "object") scopes.push(item.dried);
+  if (item.seed && typeof item.seed === "object") {
+    scopes.push(item.seed);
+    if (item.seed.cooked && typeof item.seed.cooked === "object") scopes.push(item.seed.cooked);
+  }
+  return scopes;
+}
+
+/**
+ * 跨模组同 id / 同名时：模组条目 id 加 tag_ 前缀，名字加「模组名·」前缀。
+ * 原版（origin 为空）保持原样；仅出现在同一模组内的重复（如多种作物共用烤种子）不改。
+ */
+function disambiguateCollidingItems(items) {
+  const list = Array.isArray(items) ? items : [];
+  const idMap = new Map();
+  const nameMap = new Map();
+
+  list.forEach(item => {
+    itemIdentityScopes(item).forEach(scope => {
+      const id = scope.id != null ? String(scope.id).trim() : "";
+      const name = scope.name != null ? String(scope.name).trim() : "";
+      if (id) {
+        if (!idMap.has(id)) idMap.set(id, []);
+        idMap.get(id).push({ item, scope });
+      }
+      if (name) {
+        if (!nameMap.has(name)) nameMap.set(name, []);
+        nameMap.get(name).push({ item, scope });
+      }
+    });
+  });
+
+  const originsOf = entries => {
+    const set = new Set();
+    entries.forEach(entry => set.add(String(entry.item.origin || "")));
+    return set;
+  };
+
+  idMap.forEach((entries, id) => {
+    if (originsOf(entries).size < 2) return;
+    entries.forEach(({ item, scope }) => {
+      const tag = String(item.origin || "").trim();
+      if (!tag) return;
+      if (scope.baseId == null) scope.baseId = id;
+      if (!String(scope.id).startsWith(tag + "_")) scope.id = tag + "_" + id;
+    });
+  });
+
+  nameMap.forEach((entries, name) => {
+    if (originsOf(entries).size < 2) return;
+    entries.forEach(({ item, scope }) => {
+      const tag = String(item.origin || "").trim();
+      if (!tag) return;
+      const label = modDisplayName(tag);
+      if (scope.baseName == null) scope.baseName = name;
+      const cur = String(scope.name || "");
+      if (!cur.startsWith(label + "·")) scope.name = label + "·" + name;
+    });
+  });
+}
+
 async function loadModBlock(path) {
   if (!path) return { items: [] };
   return loadJson(path).catch(() => ({ items: [] }));
@@ -857,7 +965,9 @@ async function reloadEnabledData() {
     )
   ]);
   DATA.food = mergeItems(basicParts);
+  disambiguateCollidingItems(DATA.food.items);
   DATA.cook = mergeItems(advancedParts);
+  disambiguateCollidingItems(DATA.cook.items);
 }
 
 function bindContentTags(root) {

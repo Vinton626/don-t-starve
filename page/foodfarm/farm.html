@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>种植篇</title>
 <link rel="stylesheet" href="../../css/common-tags.css">
-<link rel="stylesheet" href="../../css/foodfarm.css?v=29">
+<link rel="stylesheet" href="../../css/foodfarm.css?v=30">
 </head>
 <body class="farm-page">
   <aside class="mod-drawer" id="mod-drawer">
@@ -76,10 +76,14 @@
         </button>
         <div class="calc-mode-list" id="calc-mode-list" role="listbox" hidden>
           <button type="button" class="calc-mode-opt" role="option" data-mode="1-1" aria-selected="false">1:1配比<span class="calc-mode-tip" role="tooltip">与所选作物各种 1 株，三种肥料都不为负。点另一株会换掉当前选择。</span></button>
-          <button type="button" class="calc-mode-opt" role="option" data-mode="3-3-3" aria-selected="false">3+3+3配比<span class="calc-mode-tip" role="tooltip">用三种作物的基础肥相加，总肥再乘 3。每种固定 3 株。</span></button>
+          <button type="button" class="calc-mode-opt" role="option" data-mode="3-3-3" aria-selected="false">3+3+3配比<span class="calc-mode-tip" role="tooltip">每株计数只能是 3 或 6，合计 9 格。可做 3+3+3，或 3+6；已选之外的格按同样规则补齐。</span></button>
           <button type="button" class="calc-mode-opt is-on" role="option" data-mode="9" aria-selected="true">9格配比<span class="calc-mode-tip" role="tooltip">这里需要添加</span></button>
         </div>
       </div>
+      <label class="mod-check calc-season-check">
+        <input type="checkbox" id="calc-season-check">
+        <span>考虑季节</span>
+      </label>
       <button type="button" class="food-modal-close" id="calc-panel-close" aria-label="关闭">×</button>
     </div>
     <div class="calc-net tag-text" id="calc-net"></div>
@@ -118,15 +122,15 @@
     <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
     <div class="page-overview-panel" id="page-overview-panel" hidden>
       <div class="page-overview-title" id="page-overview-title">概述</div>
-      <div class="page-overview-body tag-text" id="page-overview-body">看作物每阶段三肥净值、耗水/阶段与适宜季节。左侧配比计算器只按三肥凑中性（耗水不参与）；右侧按季节与肥料筛选。</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">看作物每阶段三肥净值、耗水/阶段与适宜季节。左侧配比计算器只按三肥凑中性（耗水不参与）；勾选「考虑季节」后，每条配比会标出各作物共同适合的季节（由各自不喜季节取并集后，看四季里还剩哪些；没有共同季节则不显示）。右侧按季节与肥料筛选。</div>
     </div>
   </aside>
 
   <div id="notice-tip" class="notice-tip tag-text" hidden></div>
   <script>window.APP_ROOT = "../../";</script>
   <script src="../../js/common/tags.js?v=13"></script>
-  <script src="../../js/foodfarm/common.js?v=6"></script>
-  <script src="../../js/foodfarm/farm-calc.js?v=12"></script>
-  <script src="../../js/foodfarm/farm.js?v=19"></script>
+  <script src="../../js/foodfarm/common.js?v=19"></script>
+  <script src="../../js/foodfarm/farm-calc.js?v=13"></script>
+  <script src="../../js/foodfarm/farm.js?v=21"></script>
 </body>
 </html>

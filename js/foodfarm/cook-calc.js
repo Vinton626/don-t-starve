@@ -164,14 +164,46 @@
     return { cooked, dried, base: text };
   }
 
-  /** <烤><晾>大肉：生 id，再加上 cooked.id、dried.id。只按 id 计数，避免名字和 id 算两遍。 */
-  function mustIdSet(needName) {
+  function foodMatchesMustBase(food, base) {
+    if (!food || !base) return { exact: false, soft: false };
+    const id = food.id != null ? String(food.id).trim() : "";
+    const name = food.name != null ? String(food.name).trim() : "";
+    const baseId = food.baseId != null ? String(food.baseId).trim() : "";
+    const baseName = food.baseName != null ? String(food.baseName).trim() : "";
+    const exact = name === base || id === base;
+    const soft = baseName === base || baseId === base;
+    return { exact, soft };
+  }
+
+  /**
+   * <烤><晾>大肉：生 id，再加上 cooked.id、dried.id。只按 id 计数。
+   * preferOrigin：料理所属模组；短名优先对同模组（消歧后的 baseName/baseId）食材。
+   */
+  function mustIdSet(needName, preferOrigin) {
     const spec = parseFormTags(needName);
     const ids = new Set();
     if (!spec.base) return { spec, ids };
+    const hits = [];
     foodCatalog.forEach(food => {
       if (!food) return;
-      if (food.name !== spec.base && String(food.id || "") !== spec.base) return;
+      const match = foodMatchesMustBase(food, spec.base);
+      if (!match.exact && !match.soft) return;
+      hits.push({ food, exact: match.exact, soft: match.soft });
+    });
+    let chosen = hits;
+    if (preferOrigin != null) {
+      const same = hits.filter(hit => String(hit.food.origin || "") === String(preferOrigin));
+      if (same.length) chosen = same;
+      else chosen = hits.filter(hit => hit.exact);
+    } else {
+      const exact = hits.filter(hit => hit.exact);
+      if (exact.length) chosen = exact;
+      else {
+        const vanilla = hits.filter(hit => !String(hit.food.origin || "").trim());
+        chosen = vanilla.length ? vanilla : hits;
+      }
+    }
+    chosen.forEach(({ food }) => {
       if (food.id != null && String(food.id).trim()) ids.add(String(food.id).trim());
       if (spec.cooked && food.cooked && food.cooked.id != null && String(food.cooked.id).trim()) {
         ids.add(String(food.cooked.id).trim());
@@ -183,10 +215,10 @@
     return { spec, ids };
   }
 
-  function nameCount(names, needName) {
+  function nameCount(names, needName, preferOrigin) {
     const key = String(needName || "").trim();
     if (!key) return 0;
-    const found = mustIdSet(key);
+    const found = mustIdSet(key, preferOrigin);
     if (!found.ids.size) return names[found.spec.base] || names[key] || 0;
     let have = 0;
     found.ids.forEach(id => { have += names[id] || 0; });
@@ -199,9 +231,9 @@
     return String(entry.name || entry.id || "").trim();
   }
 
-  function resolveMustEntry(entry, names, canFill) {
+  function resolveMustEntry(entry, names, canFill, preferOrigin) {
     if (entry && Array.isArray(entry.or)) {
-      if (entry.or.some(part => mustSatisfied(part, names))) return null;
+      if (entry.or.some(part => mustSatisfied(part, names, preferOrigin))) return null;
       return entry.or.find(part => canFill(part)) || entry.or[0] || null;
     }
     return entry;
@@ -230,30 +262,33 @@
     return made;
   }
 
-  function ingredientMatchesMust(ing, needName) {
+  function ingredientMatchesMust(ing, needName, preferOrigin) {
     if (!ing || !needName) return false;
-    const found = mustIdSet(needName);
+    const found = mustIdSet(needName, preferOrigin);
     const id = ing.id != null ? String(ing.id).trim() : "";
     if (id && found.ids.has(id)) return true;
     if (!found.ids.size) return ing.name === found.spec.base || id === found.spec.base;
     return false;
   }
 
-  function mustSatisfied(entry, names) {
+  function mustSatisfied(entry, names, preferOrigin) {
     if (entry == null) return false;
     if (typeof entry === "string") {
       const s = entry.trim();
-      return !!s && nameCount(names, s) >= 1;
+      return !!s && nameCount(names, s, preferOrigin) >= 1;
     }
     if (typeof entry !== "object") return false;
-    if (Array.isArray(entry.or)) return entry.or.some(part => mustSatisfied(part, names));
+    if (Array.isArray(entry.or)) return entry.or.some(part => mustSatisfied(part, names, preferOrigin));
     const id = entry.id != null ? String(entry.id).trim() : "";
     const name = entry.name != null ? String(entry.name).trim() : "";
     const need = entry.value == null ? 1 : num(entry.value);
     const op = entry.op || ">=";
     let have = 0;
-    if (id) have = Math.max(have, names[id] || 0);
-    if (name) have = Math.max(have, nameCount(names, name));
+    if (id) {
+      have = Math.max(have, names[id] || 0);
+      have = Math.max(have, nameCount(names, id, preferOrigin));
+    }
+    if (name) have = Math.max(have, nameCount(names, name, preferOrigin));
     return compareOp(have, op, need);
   }
 
@@ -340,7 +375,8 @@
   function atLeastOneRawSatisfied(dish, names) {
     const list = atLeastOneRawList(dish);
     if (!list.length) return true;
-    return list.some(name => nameCount(names, name) >= 1);
+    const preferOrigin = dish && dish.origin != null ? dish.origin : "";
+    return list.some(name => nameCount(names, name, preferOrigin) >= 1);
   }
 
   /** 补格时：若 atLeastOneRaw 尚未满足，且本条 must 的基底在名单里，则强制放生的 */
@@ -354,10 +390,11 @@
   /** 单道料理是否匹配当前 names/tags（不看槽位是否满 4） */
   function dishMatches(dish, names, tags) {
     if (!dish || (!dish.id && !dish.name)) return false;
+    const preferOrigin = dish.origin != null ? dish.origin : "";
     const limits = Array.isArray(dish.limit) ? dish.limit : [];
     if (limits.some(entry => limitHits(entry, names, tags))) return false;
     const must = Array.isArray(dish.must) ? dish.must : [];
-    if (must.some(entry => !mustSatisfied(entry, names))) return false;
+    if (must.some(entry => !mustSatisfied(entry, names, preferOrigin))) return false;
     if (!atLeastOneRawSatisfied(dish, names)) return false;
     const requires = Array.isArray(dish.requires) ? dish.requires : [];
     if (requires.some(req => !requireSatisfied(req, tags))) return false;
@@ -573,6 +610,7 @@
       slots[i] = item || null;
     });
     if (!dish) return { slots };
+    const preferOrigin = dish.origin != null ? dish.origin : "";
     const pool = (Array.isArray(foods) ? foods : []).map(ingredientFromFood).filter(Boolean);
     const pureGroups = puresByDegree(pool);
     const limits = Array.isArray(dish.limit) ? dish.limit : [];
@@ -605,14 +643,14 @@
     }
 
     function mustHits(needName) {
-      return pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName))
+      return pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, needName, preferOrigin))
         .map(ing => shapeForMust(ing, needName));
     }
 
     function resolveRandomMust(entry) {
       if (entry && Array.isArray(entry.or)) {
         const names = aggregate(slots).names;
-        if (entry.or.some(part => mustSatisfied(part, names))) return null;
+        if (entry.or.some(part => mustSatisfied(part, names, preferOrigin))) return null;
         const options = entry.or.filter(part => {
           const name = mustNeedName(part);
           return !!name && mustHits(name).length;
@@ -636,10 +674,10 @@
       const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
       const pickName = forceRaw ? parseFormTags(needName).base : needName;
       const hits = forceRaw
-        ? pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName))
+        ? pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin))
         : mustHits(needName);
       let guard = 0;
-      while (!mustSatisfied(target, aggregate(slots).names) && slots.some(slot => !slot) && guard < SLOTS) {
+      while (!mustSatisfied(target, aggregate(slots).names, preferOrigin) && slots.some(slot => !slot) && guard < SLOTS) {
         guard += 1;
         if (!hits.length || !placeRandom(hits)) break;
       }
@@ -663,7 +701,7 @@
     });
 
     const agg = aggregate(slots);
-    const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
+    const unmet = must.some(entry => !mustSatisfied(entry, agg.names, preferOrigin))
       || !atLeastOneRawSatisfied(dish, agg.names)
       || requires.some(req => !requireSatisfied(req, agg.tags));
     if (!unmet && slots.some(slot => !slot)) {
@@ -686,6 +724,7 @@
    */
   function sampleFill(dish, foods, allDishes, variant) {
     if (!dish) return { ok: false, slots: [], message: "未选择料理" };
+    const preferOrigin = dish.origin != null ? dish.origin : "";
     const reqIndex = variant && typeof variant === "object" ? (Number(variant.reqIndex) || 0) : (Number(variant) || 0);
     const fillerIndex = variant && typeof variant === "object" ? (Number(variant.fillerIndex) || 0) : (Number(variant) || 0);
     const pool = (Array.isArray(foods) ? foods : [])
@@ -715,15 +754,15 @@
     must.forEach(entry => {
       const target = resolveMustEntry(entry, aggregate(slots).names, part => {
         const name = mustNeedName(part);
-        return !!name && pool.some(ing => !blocked(ing) && ingredientMatchesMust(ing, name));
-      });
+        return !!name && pool.some(ing => !blocked(ing) && ingredientMatchesMust(ing, name, preferOrigin));
+      }, preferOrigin);
       const needName = mustNeedName(target);
       if (!needName) return;
       const need = target && typeof target === "object" && target.value != null ? Math.ceil(num(target.value)) : 1;
       for (let n = 0; n < need && slots.length < SLOTS; n++) {
         const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
         const pickName = forceRaw ? parseFormTags(needName).base : needName;
-        const baseHit = pool.find(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName));
+        const baseHit = pool.find(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin));
         const hit = forceRaw ? baseHit : shapeForMust(baseHit, needName);
         if (hit) push(hit);
       }
@@ -816,6 +855,7 @@
   function randomFill(dish, foods) {
     const slots = [];
     if (!dish) return slots;
+    const preferOrigin = dish.origin != null ? dish.origin : "";
     const pool = (Array.isArray(foods) ? foods : []).map(ingredientFromFood).filter(Boolean);
     if (!pool.length) return slots;
     const pureGroups = puresByDegree(pool);
@@ -851,13 +891,13 @@
     must.forEach(entry => {
       const target = resolveMustEntry(entry, aggregate(slots).names, part => {
         const name = mustNeedName(part);
-        return !!name && pool.some(ing => !blocked(ing) && ingredientMatchesMust(ing, name));
-      });
+        return !!name && pool.some(ing => !blocked(ing) && ingredientMatchesMust(ing, name, preferOrigin));
+      }, preferOrigin);
       const needName = mustNeedName(target);
       if (!needName) return;
       const forceRaw = shouldForceRawMust(dish, needName, aggregate(slots).names);
       const pickName = forceRaw ? parseFormTags(needName).base : needName;
-      const hits = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName))
+      const hits = pool.filter(ing => !blocked(ing) && ingredientMatchesMust(ing, pickName, preferOrigin))
         .map(ing => (forceRaw ? ing : shapeForMust(ing, needName)));
       const need = target && typeof target === "object" && target.value != null ? Math.max(1, Math.ceil(num(target.value))) : 1;
       for (let n = 0; n < need && slots.length < SLOTS; n++) push(pickOne(hits));
@@ -881,7 +921,7 @@
     });
 
     const agg = aggregate(slots);
-    const unmet = must.some(entry => !mustSatisfied(entry, agg.names))
+    const unmet = must.some(entry => !mustSatisfied(entry, agg.names, preferOrigin))
       || !atLeastOneRawSatisfied(dish, agg.names)
       || requires.some(req => !requireSatisfied(req, agg.tags));
     if (unmet) return slots;
