@@ -976,9 +976,9 @@
     {
       "id": "firenettle",
       "name": "火荨麻叶",
-      "source": "veggie",
+      "source": "",
       "hide": false,
-      "foodtype": "",
+      "foodtype": "veggie",
       "health": -3,
       "hunger": 0,
       "sanity": -5,
@@ -1013,7 +1013,7 @@
     {
       "id": "tillweed",
       "name": "犁地草",
-      "source": "veggie",
+      "source": "",
       "hide": false,
       "foodtype": "veggie",
       "health": 1,
