@@ -469,6 +469,36 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "rabbitstew",
+      "name": "炖兔子",
+      "foodtype": "meat",
+      "health": 12,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 10,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": "<",
+          "value": 1
+        },
+        {
+          "degree": "ice",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "inedible"
+        }
+      ],
+      "effect": "<热食>持续5秒"
+    },
+    {
       "id": "honeyham",
       "name": "蜜汁火腿",
       "foodtype": "meat",
@@ -696,6 +726,87 @@
       "effect": "无特殊效果"
     },
     {
+      "id": "plainegg",
+      "name": "普通煎蛋",
+      "foodtype": "meat",
+      "health": 3,
+      "hunger": 50,
+      "sanity": 5,
+      "spoilDays": 10,
+      "cookSeconds": 20,
+      "priority": 0,
+      "requires": [
+        {
+          "degree": "egg",
+          "op": ">=",
+          "value": 3
+        }
+      ],
+      "must": [],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "breakfastpot",
+      "name": "早餐锅",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 5,
+      "spoilDays": 20,
+      "cookSeconds": 20,
+      "priority": 1,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "degree": "egg",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "dairy"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "scotchegg",
+      "name": "苏格兰高鸟蛋",
+      "foodtype": "meat",
+      "health": 60,
+      "hunger": 150,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 10,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "高脚鸟蛋",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
+    },
+    {
       "id": "froglegsandwich",
       "name": "蛙腿三明治",
       "foodtype": "meat",
@@ -746,6 +857,32 @@
         }
       ],
       "effect": "无特殊效果"
+    },
+    {
+      "id": "nightcap",
+      "name": "酿夜帽",
+      "foodtype": "meat",
+      "health": -20,
+      "hunger": 18.75,
+      "sanity": -15,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 30,
+      "requires": [],
+      "must": [
+        {
+          "name": "月亮蘑菇",
+          "op": ">=",
+          "value": 2
+        },
+        {
+          "name": "怪物肉",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "使用后提升自身<b>10点</b>催眠值，催眠时间为<b>20秒</b>"
     },
     {
       "id": "jam",
@@ -817,6 +954,216 @@
         }
       ],
       "effect": "<冷食>持续10秒"
+    },
+    {
+      "id": "icebananapop",
+      "name": "冰香蕉冻唇蜜",
+      "foodtype": "goodies",
+      "health": 30,
+      "hunger": 18.75,
+      "sanity": 15,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 2,
+      "requires": [
+        {
+          "degree": "ice",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>香蕉",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "fish"
+        }
+      ],
+      "effect": "<冷食>持续15秒"
+    },
+    {
+      "id": "bananasmoothie",
+      "name": "香蕉奶昔",
+      "foodtype": "veggie",
+      "health": 8,
+      "hunger": 25,
+      "sanity": 33,
+      "spoilDays": 15,
+      "cookSeconds": 10,
+      "priority": 1,
+      "requires": [
+      ],
+      "must": [
+        {
+          "name": "<烤>香蕉",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "monster"
+        },
+        {
+          "degree": "fish"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "figgyroast",
+      "name": "无花果烤串",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 37.5,
+      "sanity": 10,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "or": [
+            {
+              "degree": "monster",
+              "op": "<=",
+              "value": 1
+            },
+            {
+              "degree": "monster",
+              "op": "=",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>无花果",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "树枝",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "<热食>持续15秒"
+    },
+    {
+      "id": "figyforgwich",
+      "name": "无花果蛙腿三明治",
+      "foodtype": "meat",
+      "health": 20,
+      "hunger": 25,
+      "sanity": 5,
+      "spoilDays": 15,
+      "cookSeconds": 20,
+      "priority": 1,
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>无花果",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>蛙腿",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "<热食>持续15秒"
+    },
+    {
+      "id": "figatoni",
+      "name": "无花果意面",
+      "foodtype": "veggie",
+      "health": 30,
+      "hunger": 56.25,
+      "sanity": 15,
+      "spoilDays": 6,
+      "cookSeconds": 40,
+      "priority": 30,
+      "requires": [
+        {
+          "degree": "veg",
+          "op": ">=",
+          "value": 2
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>无花果",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "figymutt",
+      "name": "无花果酿象鼻",
+      "foodtype": "meat",
+      "health": 60,
+      "hunger": 150,
+      "sanity": 15,
+      "spoilDays": 15,
+      "cookSeconds": 40,
+      "priority": 40,
+      "requires": [
+        {
+          "degree": "meat",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "must": [
+        {
+          "name": "<烤>无花果",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "or": [
+            {
+              "name": "<烤>象鼻",
+              "op": ">=",
+              "value": 1
+            },
+            {
+              "name": "<烤>冬象鼻",
+              "op": ">=",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "limit": [],
+      "effect": "无特殊效果"
     },
     {
       "id": "butterflymuffin",
@@ -2236,6 +2583,99 @@
         },
         {
           "degree": "inedible"
+        }
+      ],
+      "effect": "无特殊效果"
+    },
+    {
+      "id": "steamedbranch",
+      "name": "蒸树枝",
+      "foodtype1": "roughage",
+      "foodtype2": "wood",
+      "health": 15,
+      "hunger": 100,
+      "sanity": 0,
+      "spoilDays": 20,
+      "cookSeconds": 10,
+      "priority": -5,
+      "requires": [
+        {
+          "degree": "inedible",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "monster"
+        },
+        {
+          "degree": "fish"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "dairy"
+        },
+        {
+          "degree": "magic"
+        },
+        {
+          "degree": "fat"
+        }
+      ],
+      "effect": "这是给牛牛吃的，冒险家不许抢"
+    },
+    {
+      "id": "piflowynut",
+      "name": "皮弗娄牛零食",
+      "foodtype": "roughage",
+      "health": 75,
+      "hunger": 25,
+      "sanity": 0,
+      "spoilDays": 20,
+      "cookSeconds": 40,
+      "priority": -4,
+      "requires": [
+        {
+          "degree": "seed",
+          "op": ">",
+          "value": 0
+        }
+      ],
+      "must": [
+        {
+          "name": "<晾>必忘我",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        },
+        {
+          "degree": "monster"
+        },
+        {
+          "degree": "fish"
+        },
+        {
+          "degree": "egg"
+        },
+        {
+          "degree": "dairy"
+        },
+        {
+          "degree": "magic"
+        },
+        {
+          "degree": "fat"
         }
       ],
       "effect": "无特殊效果"
