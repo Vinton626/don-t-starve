@@ -21,7 +21,9 @@ const farm = {
   calcTimer: 0,
   ratioMode: "9",
   /** 配比卡片是否标注共同适合季节 */
-  considerSeason: false
+  considerSeason: false,
+  /** 勾选的肥视为「不缺」，配比时该项可负到 DEFICIT_FLOOR */
+  allowDeficit: { formula: false, compost: false, manure: false }
 };
 
 const RATIO_MODES = [
@@ -605,6 +607,29 @@ function bindSeasonCheck() {
   });
 }
 
+function allowDeficitOptions() {
+  return {
+    formula: !!farm.allowDeficit.formula,
+    compost: !!farm.allowDeficit.compost,
+    manure: !!farm.allowDeficit.manure
+  };
+}
+
+function bindDeficitChecks() {
+  const host = Foodfarm.$("calc-deficit-checks");
+  if (!host || host.dataset.bound === "1") return;
+  host.dataset.bound = "1";
+  host.querySelectorAll("input[data-nutrient]").forEach(input => {
+    const key = input.getAttribute("data-nutrient");
+    if (!key || !Object.prototype.hasOwnProperty.call(farm.allowDeficit, key)) return;
+    input.checked = !!farm.allowDeficit[key];
+    input.addEventListener("change", () => {
+      farm.allowDeficit[key] = !!input.checked;
+      scheduleCalc();
+    });
+  });
+}
+
 function panelVisible() {
   if (!farm.picks.length) return false;
   return NARROW.matches ? farm.panelOpen : drawerOpen("calc-drawer");
@@ -676,7 +701,8 @@ function scheduleCalc() {
 function computeResult() {
   if (!farm.picks.length) return null;
   const focus = farm.cropById.get(farm.picks[0].id);
-  if (farm.ratioMode === "1-1") return FarmCalc.solvePair(focus, farm.crops);
+  const opts = { limit: PLAN_ROWS_LIMIT, allowDeficit: allowDeficitOptions() };
+  if (farm.ratioMode === "1-1") return FarmCalc.solvePair(focus, farm.crops, opts);
   if (farm.ratioMode === "3-3-3") {
     return FarmCalc.solveTriple(
       farm.picks.map(p => ({
@@ -684,13 +710,13 @@ function computeResult() {
         count: p.count >= 6 ? 6 : 3
       })),
       farm.crops,
-      { limit: PLAN_ROWS_LIMIT }
+      opts
     );
   }
   return FarmCalc.solveFill(
     farm.picks.map(p => ({ crop: farm.cropById.get(p.id), count: p.count })),
     farm.crops,
-    { limit: PLAN_ROWS_LIMIT }
+    opts
   );
 }
 
@@ -718,11 +744,12 @@ function pairCardHTML(mate) {
 }
 
 function tripleCardHTML(plan, index, result) {
+  // 3+6 时已选/补种可能是 6，不能写死 ×3
   const locked = (result.locked || []).map(item =>
-    `<span class="plan-chip">${esc(item.crop.name)} ×<b>3</b></span>`
+    `<span class="plan-chip">${esc(item.crop.name)} ×<b>${esc(item.count)}</b></span>`
   ).join("");
   const fills = (plan.parts || []).map(part =>
-    `<span class="plan-chip">${esc(groupLabel(part.group))} ×<b>3</b></span>`
+    `<span class="plan-chip">${esc(groupLabel(part.group))} ×<b>${esc(part.count)}</b></span>`
   ).join("");
   const net = FarmCalc.NUTRIENTS.map(k => `${fertTag(k)} <b>${esc(signed(plan.net[k]))}</b>`).join(" ");
   return (
@@ -887,6 +914,7 @@ bindDrawers();
 bindPicker();
 bindPanel();
 bindSeasonCheck();
+bindDeficitChecks();
 
 Foodfarm.bootFoodfarm({
   onReady: renderAll,

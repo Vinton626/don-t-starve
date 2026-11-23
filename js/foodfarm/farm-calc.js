@@ -15,6 +15,8 @@
   const MAX_CROPS = 8;
   const DEFAULT_SLOTS = 9;
   const DEFAULT_LIMIT = 20;
+  /** 「不缺」勾选后，该项肥料允许的最低净值；再低不收录 */
+  const DEFICIT_FLOOR = -16;
 
   /** 家族条件只作页面提示，不参与配比计算 */
   const FAMILY = {
@@ -122,13 +124,29 @@
     return net;
   }
 
-  function deficitOf(net) {
+  /**
+   * options.allowDeficit: { formula?, compost?, manure? } 为 true 的项允许负到 DEFICIT_FLOOR。
+   * 返回每项肥料的最低可接受净值（默认 0）。
+   */
+  function nutrientFloors(options) {
+    const allow = (options && options.allowDeficit) || {};
+    const floors = {};
+    NUTRIENTS.forEach(key => {
+      floors[key] = allow[key] ? DEFICIT_FLOOR : 0;
+    });
+    return floors;
+  }
+
+  function deficitOf(net, floors) {
+    const floorOf = floors || {};
     let total = 0;
     let max = 0;
     NUTRIENTS.forEach(key => {
-      if (net[key] < 0) {
-        total -= net[key];
-        max = Math.max(max, -net[key]);
+      const floor = floorOf[key] != null ? floorOf[key] : 0;
+      if (net[key] < floor) {
+        const d = floor - net[key];
+        total += d;
+        max = Math.max(max, d);
       }
     });
     return { total, max };
@@ -136,6 +154,17 @@
 
   function surplusOf(net) {
     return NUTRIENTS.reduce((sum, key) => sum + Math.max(0, net[key]), 0);
+  }
+
+  /** 允许为负的项，越接近 0 越好（用于排序） */
+  function softDeficitOf(net, floors) {
+    const floorOf = floors || {};
+    let total = 0;
+    NUTRIENTS.forEach(key => {
+      if ((floorOf[key] != null ? floorOf[key] : 0) >= 0) return;
+      if (net[key] < 0) total -= net[key];
+    });
+    return total;
   }
 
   function spreadOf(counts) {
@@ -156,10 +185,17 @@
     };
   }
 
-  function diagnose(crops, closest) {
+  function diagnose(crops, closest, floors) {
+    const floorOf = floors || {};
     const deficits = NUTRIENTS
-      .filter(key => closest.net[key] < 0)
-      .map(key => ({ key, name: nutrientName(key), amount: -closest.net[key] }));
+      .filter(key => {
+        const floor = floorOf[key] != null ? floorOf[key] : 0;
+        return closest.net[key] < floor;
+      })
+      .map(key => {
+        const floor = floorOf[key] != null ? floorOf[key] : 0;
+        return { key, name: nutrientName(key), amount: floor - closest.net[key] };
+      });
 
     const advice = deficits.map(def => {
       const consumers = crops
@@ -211,6 +247,7 @@
       return { ok: false, reason: "slots", message: slots + " 格最多种 " + slots + " 种" };
     }
 
+    const floors = nutrientFloors(opts);
     const solutions = [];
     let closest = null;
     let closestScore = null;
@@ -220,9 +257,16 @@
       forEachComposition(slots, kinds, minPer, counts => {
         checked += 1;
         const net = netOf(group, counts);
-        const def = deficitOf(net);
+        const def = deficitOf(net, floors);
         if (def.total === 0) {
-          solutions.push({ group, counts: counts.slice(), net, surplus: surplusOf(net), spread: spreadOf(counts) });
+          solutions.push({
+            group,
+            counts: counts.slice(),
+            net,
+            surplus: surplusOf(net),
+            soft: softDeficitOf(net, floors),
+            spread: spreadOf(counts)
+          });
           return;
         }
         const score = [def.total, def.max];
@@ -234,7 +278,7 @@
     });
 
     if (solutions.length) {
-      solutions.sort((a, b) => a.surplus - b.surplus || a.spread - b.spread);
+      solutions.sort((a, b) => a.soft - b.soft || a.surplus - b.surplus || a.spread - b.spread);
       return {
         ok: true,
         checked,
@@ -243,7 +287,7 @@
       };
     }
 
-    const diag = diagnose(closest.group, closest);
+    const diag = diagnose(closest.group, closest, floors);
     return {
       ok: false,
       reason: "deficit",
@@ -288,6 +332,7 @@
     const opts = options || {};
     const slots = Math.max(1, Math.floor(num(opts.slots) || DEFAULT_SLOTS));
     const limit = Math.max(1, Math.floor(num(opts.limit) || 300));
+    const floors = nutrientFloors(opts);
     const picks = (Array.isArray(locked) ? locked : [])
       .filter(item => item && item.crop && num(item.count) > 0)
       .map(item => ({ crop: item.crop, count: Math.floor(num(item.count)) }));
@@ -319,12 +364,18 @@
 
     const record = net => {
       checked += 1;
-      const def = deficitOf(net);
+      const def = deficitOf(net, floors);
       if (def.total === 0) {
         total += 1;
         const parts = [];
         counts.forEach((c, i) => { if (c > 0) parts.push({ group: groups[i], count: c }); });
-        plans.push({ parts, net, surplus: surplusOf(net), kinds: parts.length });
+        plans.push({
+          parts,
+          net,
+          surplus: surplusOf(net),
+          soft: softDeficitOf(net, floors),
+          kinds: parts.length
+        });
         return;
       }
       if (!closestScore || def.total < closestScore[0] || (def.total === closestScore[0] && def.max < closestScore[1])) {
@@ -354,18 +405,23 @@
     }
 
     if (plans.length) {
-      plans.sort((a, b) => a.surplus - b.surplus || a.kinds - b.kinds);
+      plans.sort((a, b) => a.soft - b.soft || a.surplus - b.surplus || a.kinds - b.kinds);
       return Object.assign(head, { ok: true, checked, total, groups, plans: plans.slice(0, limit) });
     }
 
     const deficits = NUTRIENTS
-      .filter(key => closest && closest.net[key] < 0)
+      .filter(key => {
+        if (!closest) return false;
+        const floor = floors[key] != null ? floors[key] : 0;
+        return closest.net[key] < floor;
+      })
       .map(key => {
+        const floor = floors[key] != null ? floors[key] : 0;
         const consumers = picks
           .filter(item => item.crop.delta[key] < 0)
           .map(item => ({ crop: item.crop, amount: -item.crop.delta[key] * item.count }))
           .sort((a, b) => b.amount - a.amount);
-        return { key, name: nutrientName(key), amount: -closest.net[key], consumers };
+        return { key, name: nutrientName(key), amount: floor - closest.net[key], consumers };
       });
     const message = deficits.map(def => {
       const who = def.consumers.map(c => c.crop.name).join("、");
@@ -392,14 +448,19 @@
     };
   }
 
-  /** 与 crop 各 1 株时，三种肥料都不为负的其他种子 */
-  function solvePair(crop, pool) {
+  /** 与 crop 各 1 株时，三种肥料都不低于 floors 的其他种子 */
+  function solvePair(crop, pool, options) {
     if (!crop) return { ok: false, mode: "1-1", reason: "empty", message: "请先选择一种作物" };
+    const floors = nutrientFloors(options);
     const mates = (Array.isArray(pool) ? pool : []).filter(other => {
       if (!other || other.id === crop.id) return false;
       const net = pairNet(crop.delta, other.delta);
-      return NUTRIENTS.every(key => net[key] >= 0);
-    }).map(other => ({ crop: other, net: pairNet(crop.delta, other.delta) }));
+      return deficitOf(net, floors).total === 0;
+    }).map(other => {
+      const net = pairNet(crop.delta, other.delta);
+      return { crop: other, net, soft: softDeficitOf(net, floors), surplus: surplusOf(net) };
+    });
+    mates.sort((a, b) => a.soft - b.soft || a.surplus - b.surplus);
     return {
       ok: true,
       mode: "1-1",
@@ -465,6 +526,7 @@
   function solveTriple(locked, pool, options) {
     const opts = options || {};
     const limit = Math.max(1, Math.floor(num(opts.limit) || 300));
+    const floors = nutrientFloors(opts);
     const picks = (Array.isArray(locked) ? locked : [])
       .filter(item => item && item.crop)
       .map(item => ({ crop: item.crop, count: normalizeTripleCount(item.count) }));
@@ -487,11 +549,12 @@
     const consider = parts => {
       let net = lockedNet;
       parts.forEach(part => { net = addNet(net, part.group.delta, part.count); });
-      if (NUTRIENTS.some(key => net[key] < 0)) return;
+      if (deficitOf(net, floors).total !== 0) return;
       plans.push({
         parts: parts.map(part => ({ group: part.group, count: part.count })),
         net: Object.assign({}, net),
-        surplus: surplusOf(net)
+        surplus: surplusOf(net),
+        soft: softDeficitOf(net, floors)
       });
     };
 
@@ -522,19 +585,22 @@
       return Object.assign(head, {
         ok: false,
         reason: "deficit",
-        message: "没有在 3+3+3 / 3+6 规则下肥料不为负的配比"
+        message: "没有在 3+3+3 / 3+6 规则下符合肥料下限的配比"
       });
     }
-    plans.sort((a, b) => a.surplus - b.surplus || a.parts.length - b.parts.length);
+    plans.sort((a, b) => a.soft - b.soft || a.surplus - b.surplus || a.parts.length - b.parts.length);
     return Object.assign(head, { ok: true, total: plans.length, plans: plans.slice(0, limit) });
   }
 
   return {
     NUTRIENTS,
+    NUTRIENT_NAMES,
+    DEFICIT_FLOOR,
     MAX_CROPS,
     DEFAULT_SLOTS,
     FAMILY,
     nutrientName,
+    nutrientFloors,
     cropFromEntry,
     groupByDelta,
     solve,

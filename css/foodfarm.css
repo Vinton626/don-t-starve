@@ -963,6 +963,7 @@ body.food-modal-open { overflow: hidden; }
   position: relative;
   z-index: 3;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
@@ -1133,6 +1134,18 @@ body.food-modal-open { overflow: hidden; }
   flex: 0 0 auto;
   margin-left: 4px;
   font-size: 13px;
+}
+.calc-deficit-checks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  flex: 0 1 auto;
+  margin-left: 4px;
+}
+.calc-deficit-check {
+  flex: 0 0 auto;
+  font-size: 12px;
 }
 .calc-config[hidden] { display: none; }
 .calc-config {
