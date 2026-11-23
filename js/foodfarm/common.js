@@ -892,18 +892,22 @@ function itemIdentityScopes(item) {
 
 /**
  * 跨模组同 id / 同名时：模组条目 id 加 tag_ 前缀，名字加「模组名·」前缀。
- * 原版（origin 为空）保持原样；仅出现在同一模组内的重复（如多种作物共用烤种子）不改。
+ * 原版保持原样。模组侧若与原版同 id，视为指向原版（如烤种子 seeds_cooked），不加前缀。
+ * 仅出现在同一模组内的重复也不改。
  */
 function disambiguateCollidingItems(items) {
   const list = Array.isArray(items) ? items : [];
   const idMap = new Map();
   const nameMap = new Map();
+  const vanillaIds = new Set();
 
   list.forEach(item => {
+    const isVanilla = !String(item.origin || "").trim();
     itemIdentityScopes(item).forEach(scope => {
       const id = scope.id != null ? String(scope.id).trim() : "";
       const name = scope.name != null ? String(scope.name).trim() : "";
       if (id) {
+        if (isVanilla) vanillaIds.add(id);
         if (!idMap.has(id)) idMap.set(id, []);
         idMap.get(id).push({ item, scope });
       }
@@ -922,6 +926,8 @@ function disambiguateCollidingItems(items) {
 
   idMap.forEach((entries, id) => {
     if (originsOf(entries).size < 2) return;
+    // 与原版同 id → 指原版，模组不加前缀
+    if (vanillaIds.has(id)) return;
     entries.forEach(({ item, scope }) => {
       const tag = String(item.origin || "").trim();
       if (!tag) return;
@@ -935,6 +941,11 @@ function disambiguateCollidingItems(items) {
     entries.forEach(({ item, scope }) => {
       const tag = String(item.origin || "").trim();
       if (!tag) return;
+      const scopeId = scope.id != null ? String(scope.id).trim() : "";
+      const rawId = scope.baseId != null ? String(scope.baseId).trim() : scopeId;
+      // 该节点 id 在原版存在 → 指原版，名字也不加前缀
+      if (rawId && vanillaIds.has(rawId)) return;
+      if (scopeId && vanillaIds.has(scopeId)) return;
       const label = modDisplayName(tag);
       if (scope.baseName == null) scope.baseName = name;
       const cur = String(scope.name || "");
