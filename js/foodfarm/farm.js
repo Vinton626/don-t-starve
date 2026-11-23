@@ -100,6 +100,23 @@ function commonFitSeasonHTML(crops) {
   return `<div class="plan-seasons">共同适合：${esc(seasonText(new Set(keys)))}</div>`;
 }
 
+/** 勾选「考虑季节」时：无共同适合季节的方案不展示 */
+function planHasCommonSeason(plan, result) {
+  return commonFitSeasonKeys(cropsFromPlanParts(plan, result)).length > 0;
+}
+
+function pairHasCommonSeason(mate) {
+  return commonFitSeasonKeys(cropsFromPair(mate)).length > 0;
+}
+
+function visiblePlanEntries(plans, result) {
+  const list = Array.isArray(plans) ? plans : [];
+  if (!farm.considerSeason) return list.map((plan, index) => ({ plan, index }));
+  return list
+    .map((plan, index) => ({ plan, index }))
+    .filter(entry => planHasCommonSeason(entry.plan, result));
+}
+
 function cropsFromPair(mate) {
   const focus = farm.result && farm.result.focus;
   return [focus, mate && mate.crop].filter(Boolean);
@@ -790,12 +807,19 @@ function renderResult() {
     netHost.innerHTML =
       fertStatesHTML(r.focus && r.focus.delta) +
       `<div class="calc-net-note">${esc(r.focus ? r.focus.name : "")} 的 1:1 互补种子</div>`;
-    const cards = (r.mates || []).map(pairCardHTML).join("");
+    const mates = farm.considerSeason
+      ? (r.mates || []).filter(pairHasCommonSeason)
+      : (r.mates || []);
+    const cards = mates.map(pairCardHTML).join("");
     body.innerHTML =
       modeNoteHTML() +
       (cards
-        ? `<div class="plan-head">共 <b>${r.mates.length}</b> 种</div><div class="plan-list${r.mates.length > 4 ? " is-two" : ""}">${cards}</div>`
-        : `<p class="muted">${esc(r.message || "没有 1:1 互补种子")}</p>`);
+        ? `<div class="plan-head">共 <b>${mates.length}</b> 种</div><div class="plan-list${mates.length > 4 ? " is-two" : ""}">${cards}</div>`
+        : `<p class="muted">${esc(
+          farm.considerSeason && (r.mates || []).length
+            ? "有互补种子，但没有共同适合季节"
+            : (r.message || "没有 1:1 互补种子")
+        )}</p>`);
     Foodfarm.bindContentTags(netHost);
     Foodfarm.bindContentTags(body);
     return;
@@ -809,12 +833,17 @@ function renderResult() {
     if (!r.ok) {
       body.innerHTML = note + `<p class="calc-warn"><warn>${esc(r.message || "没有配比")}</warn></p>`;
     } else {
-      const shown = r.plans.length;
-      const more = r.total > shown ? `，显示前 <b>${shown}</b> 种` : "";
+      const entries = visiblePlanEntries(r.plans, r);
+      const shown = entries.length;
+      const more = !farm.considerSeason && r.total > (r.plans || []).length
+        ? `，显示前 <b>${(r.plans || []).length}</b> 种`
+        : "";
       body.innerHTML =
         note +
-        `<div class="plan-head">共 <b>${r.total}</b> 种配比${more}</div>` +
-        `<div class="plan-list${shown > 4 ? " is-two" : ""}">${r.plans.map((p, i) => tripleCardHTML(p, i, r)).join("")}</div>`;
+        (shown
+          ? `<div class="plan-head">共 <b>${shown}</b> 种配比${more}</div>` +
+            `<div class="plan-list${shown > 4 ? " is-two" : ""}">${entries.map(e => tripleCardHTML(e.plan, e.index, r)).join("")}</div>`
+          : `<p class="muted">有肥料配比，但没有共同适合季节的方案</p>`);
     }
     Foodfarm.bindContentTags(netHost);
     Foodfarm.bindContentTags(body);
@@ -829,17 +858,22 @@ function renderResult() {
 
   if (!r.ok) {
     let extra = "";
-    if (r.reason === "deficit" && r.closest) {
+    if (r.reason === "deficit" && r.closest && (!farm.considerSeason || planHasCommonSeason(r.closest, r))) {
       extra = `<div class="plan-head">最接近的补齐方案</div><div class="plan-list">${planCardHTML(r.closest, -1, r)}</div>`;
     }
     body.innerHTML = notice + `<p class="calc-warn"><warn>${esc(r.message)}</warn></p>` + extra;
   } else {
-    const shown = r.plans.length;
-    const more = r.total > shown ? `，显示前 <b>${shown}</b> 种` : "";
+    const entries = visiblePlanEntries(r.plans, r);
+    const shown = entries.length;
+    const more = !farm.considerSeason && r.total > (r.plans || []).length
+      ? `，显示前 <b>${(r.plans || []).length}</b> 种`
+      : "";
     body.innerHTML =
       notice +
-      `<div class="plan-head">共 <b>${r.total}</b> 种配比${more}</div>` +
-      `<div class="plan-list${shown > 4 ? " is-two" : ""}">${r.plans.map((p, i) => planCardHTML(p, i, r)).join("")}</div>`;
+      (shown
+        ? `<div class="plan-head">共 <b>${shown}</b> 种配比${more}</div>` +
+          `<div class="plan-list${shown > 4 ? " is-two" : ""}">${entries.map(e => planCardHTML(e.plan, e.index, r)).join("")}</div>`
+        : `<p class="muted">有肥料配比，但没有共同适合季节的方案</p>`);
   }
   Foodfarm.bindContentTags(netHost);
   Foodfarm.bindContentTags(body);

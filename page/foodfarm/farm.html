@@ -136,7 +136,7 @@
     <button type="button" class="page-overview-btn" id="page-overview-btn" aria-expanded="false" aria-controls="page-overview-panel" title="概述">概述</button>
     <div class="page-overview-panel" id="page-overview-panel" hidden>
       <div class="page-overview-title" id="page-overview-title">概述</div>
-      <div class="page-overview-body tag-text" id="page-overview-body">看作物每阶段三肥净值、耗水/阶段与适宜季节。左侧配比计算器只按三肥凑中性（耗水不参与）；勾选「考虑季节」后，每条配比会标出各作物共同适合的季节（由各自不喜季节取并集后，看四季里还剩哪些；没有共同季节则不显示）。勾选「不缺催长剂/堆肥/粪肥」表示该肥自己够用，配比时该项允许为负（最低到 -16，再低不收录）。右侧按季节与肥料筛选。</div>
+      <div class="page-overview-body tag-text" id="page-overview-body">看作物每阶段三肥净值、耗水/阶段与适宜季节。左侧配比计算器只按三肥凑中性（耗水不参与）；勾选「考虑季节」后，只保留有共同适合季节的配比，并标出季节（由各自不喜季节取并集后，看四季里还剩哪些；无共同季节的方案直接不展示）。勾选「不缺催长剂/堆肥/粪肥」表示该肥自己够用，配比时该项允许为负（最低到 -16，再低不收录）。右侧按季节与肥料筛选。</div>
     </div>
   </aside>
 
@@ -145,6 +145,6 @@
   <script src="../../js/common/tags.js?v=13"></script>
   <script src="../../js/foodfarm/common.js?v=21"></script>
   <script src="../../js/foodfarm/farm-calc.js?v=14"></script>
-  <script src="../../js/foodfarm/farm.js?v=23"></script>
+  <script src="../../js/foodfarm/farm.js?v=24"></script>
 </body>
 </html>
