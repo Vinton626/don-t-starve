@@ -236,10 +236,10 @@
         "foodtype": "veggie",
         "health": 20,
         "hunger": 25,
-        "sanity": 0,
+      "sanity": 0,
         "spoilDays": 6,
-        "degrees": {
-          "veg": 1
+      "degrees": {
+        "veg": 1
         }
       },
       "seed": {
@@ -480,8 +480,8 @@
         "desc": "",
         "fertilizer": {
           "formula": -4,
-          "compost": 2,
-          "manure": 2
+            "compost": 2,
+            "manure": 2
         },
         "cooked": {
           "id": "seeds_cooked",

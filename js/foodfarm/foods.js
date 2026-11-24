@@ -273,7 +273,7 @@ function openFoodModal(food, form) {
       (Foodfarm.spoilLabel(view.spoilDays)
         ? `<span class="meta-short">保质期：<b>${Foodfarm.escapeHTML(Foodfarm.spoilLabel(view.spoilDays))}</b></span>`
         : "") +
-      (fx ? `<span class="meta-long tag-text">效果：${fx}</span>` : "") +
+      (fx ? `<div class="meta-long tag-text food-effect">效果：${fx}</div>` : "") +
       (drops != null ? `<span class="meta-long">掉落：${Foodfarm.escapeHTML(drops)}</span>` : "");
   }
   if (degrees) degrees.innerHTML = Foodfarm.foodDegreesHTML(view);

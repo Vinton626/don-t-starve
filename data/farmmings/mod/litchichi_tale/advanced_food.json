@@ -1,6 +1,176 @@
 {
   "items": [
     {
+      "id": "all_litchi_support",
+      "name": "全荔支持",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 35,
+      "hunger": 80,
+      "sanity": 30,
+      "spoilDays": 52,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "荔只只",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "鸟腿",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "树枝",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后移速提高<b>25%</b>，持续<b>1天</b>。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "litchi_crucible",
+      "name": "荔只坩埚",
+      "hide": false,
+      "foodtype": "goodies",
+      "health": 35,
+      "hunger": 80,
+      "sanity": 30,
+      "spoilDays": 52,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "荔只只",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "肉",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "浆果",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后持续<b>3分钟</b><notice text=\"不能免疫环境高温\">免疫火焰伤害</notice>、冰冻、催眠和通常的击退(吞食类击退除外)"
+    },
+    {
+      "id": "litchi_bomb",
+      "name": "荔只炸弹",
+      "hide": false,
+      "foodtype": "goodies",
+      "health": 10,
+      "hunger": 40,
+      "sanity": -20,
+      "spoilDays": 52,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "荔只只",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "噩梦燃料",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "鸟蛋",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "火龙果",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后攻击伤害倍率提升至<b>1.25</b>，持续<b>0.5天</b>。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "litchi_heart",
+      "name": "倾心荔只只",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 99,
+      "hunger": 99,
+      "sanity": 99,
+      "spoilDays": 52,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "荔只只",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "蜂蜜",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "<冷食>持续15秒，招募半径3个地皮内没有主任的可跟随生物，跟随时间增加16分钟，不抢走已有主人的随从"
+    },
+    {
+      "id": "litchi_suck_freeze",
+      "name": "荔只吸吸冻",
+      "hide": false,
+      "foodtype": "goodies",
+      "health": 10,
+      "hunger": 20,
+      "sanity": 0,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "荔只只",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "深色花瓣",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后亲自击杀时会掉落额外材料，详情见下：<details><summary>掉落详情</summary><table><thead><tr><th>目标</th><th>额外掉落</th></tr></thead><tbody><tr><td>（待补充）</td><td>（待补充）</td></tr></tbody></table></details>"
+    },
+    {
       "id": "long_march",
       "name": "幽幽大行军",
       "hide": false,
@@ -30,7 +200,7 @@
         }
       ],
       "limit": [],
-      "effect": "食用时立即复活5个地皮范围内尚未开始复活的幽灵玩家，可同时救起多名队友"
+      "effect": "食用时立即复活<b>5个</b>地皮范围内尚未开始复活的幽灵玩家，可同时救起多名队友"
     }
   ]
 }

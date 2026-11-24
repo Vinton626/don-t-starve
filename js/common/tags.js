@@ -59,6 +59,27 @@
     "hotfood"
   ];
 
+  /** 效果文案等富文本额外保留：折叠块与表格（仍走 escapeKeepingTags） */
+  const STRUCTURE_TAGS = [
+    "details",
+    "summary",
+    "table",
+    "thead",
+    "tbody",
+    "tfoot",
+    "tr",
+    "th",
+    "td",
+    "caption",
+    "br",
+    "p",
+    "ul",
+    "ol",
+    "li"
+  ];
+
+  const EFFECT_TAGS = INLINE_TAGS.concat(STRUCTURE_TAGS);
+
   const TAG_COLORS = {
     b: "#7fd4ff",
     health: "#ff6b78",
@@ -403,6 +424,8 @@
 
   return {
     INLINE_TAGS,
+    STRUCTURE_TAGS,
+    EFFECT_TAGS,
     TAG_COLORS,
     escapeHTML,
     escapeKeepingTags,

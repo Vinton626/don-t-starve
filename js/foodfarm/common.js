@@ -581,7 +581,8 @@ function effectHTML(raw) {
     .replace(/\0COLD\0/g, `<coldfood>冷食</coldfood>:${COLD_FOOD_EFFECT}`)
     .replace(/\0HOT\0/g, `<hotfood>热食</hotfood>:${HOT_FOOD_EFFECT}`);
   if (window.CommonTags && typeof CommonTags.escapeKeepingTags === "function") {
-    return CommonTags.escapeKeepingTags(out);
+    const keep = CommonTags.EFFECT_TAGS || CommonTags.INLINE_TAGS;
+    return CommonTags.escapeKeepingTags(out, keep);
   }
   return out;
 }

@@ -119,6 +119,7 @@
   <li>热食：在角色个体温度低于62°时生效，提升个体体感温度40°(提升效果会随新鲜度减少而减少)，</li>
 </ul>
 <p>词条「冷食」「热食」带颜色（冷 <code>#6ec8f0</code>，热 <code>#e4572e</code>）。烤/晾子对象若未单独写 <code>effect</code>，不继承生的效果。</p>
+<p><code>effect</code> 还可写折叠与表格：<code>&lt;details&gt;&lt;summary&gt;标题&lt;/summary&gt;…&lt;/details&gt;</code>，表用 <code>table / thead / tbody / tr / th / td</code>（宽表会套横向滚动）。也可继续用 <code>b</code>、<code>notice</code>、三维等白名单标签。不要写未列入白名单的其它 HTML。</p>
 <p><code>hide</code>：布尔。为 <code>true</code> 时不出现在普通食物图鉴卡片里，但仍可作为料理篇锅原料（噩梦燃料、树枝这类非食用原料用它）。鱼类常用它从图鉴藏掉。默认 / 省略视为 <code>false</code>。</p>
 <p><code>degrees</code>：烹饪度对象。不写该字段时，普通食物图鉴的「烹饪度」位置显示「该食物不可放入烹饪锅」，且不会出现在烹饪锅选择栏 / 补格 / 举例里（死龙虾这类可食用但不能入锅的用它）。写了空对象 <code>{}</code> 则仍显示「无烹饪度」，但算写了字段。烤/晾子对象若未单独写 <code>degrees</code>，不继承生的度。</p>
 <p><code>noCook</code>：布尔。为 <code>true</code> 时不能放进烹饪锅（选择栏、补格、举例配方都不会用到）。与 <code>hide</code> 互不干涉：图鉴显隐只看 <code>hide</code>，入锅看 <code>noCook</code>、<code>plantOnly</code>，以及是否写了 <code>degrees</code>。特殊内容既不是料理、又不能入锅时，仍写在基础食物里，标 <code>noCook: true</code>；需要从普通食物图鉴藏掉就再加 <code>hide: true</code>。默认 / 省略视为 <code>false</code>。</p>

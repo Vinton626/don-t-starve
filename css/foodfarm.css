@@ -1552,6 +1552,41 @@ body.food-modal-open { overflow: hidden; }
   font-size: 13px;
   line-height: 1.5;
 }
+.dish-effect,
+.food-effect {
+  margin: 6px 0;
+  line-height: 1.6;
+}
+.dish-effect details,
+.food-effect details {
+  margin-top: 8px;
+  border: 1px solid rgba(201, 162, 39, .4);
+  background: rgba(20, 14, 8, .72);
+  padding: 0 8px 8px;
+}
+.dish-effect summary,
+.food-effect summary {
+  cursor: pointer;
+  color: #f0d060;
+  padding: 8px 0;
+  list-style: none;
+}
+.dish-effect summary::-webkit-details-marker,
+.food-effect summary::-webkit-details-marker {
+  display: none;
+}
+.dish-effect summary::before,
+.food-effect summary::before {
+  content: "▸ ";
+}
+.dish-effect details[open] > summary::before,
+.food-effect details[open] > summary::before {
+  content: "▾ ";
+}
+.dish-effect .table-scroll,
+.food-effect .table-scroll {
+  margin-top: 6px;
+}
 .cook-result-dish {
   width: 100%;
   border: 0;

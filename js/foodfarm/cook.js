@@ -166,7 +166,7 @@ function dishInfoHTML(dish, opts) {
     limit ? `<p>限制：${limit}</p>` : "",
     (() => {
       const fx = Foodfarm.effectHTML(dish.effect);
-      return fx ? `<p class="tag-text">效果：${fx}</p>` : "";
+      return fx ? `<div class="tag-text dish-effect">效果：${fx}</div>` : "";
     })()
   ].join("");
 }
