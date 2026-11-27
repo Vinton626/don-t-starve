@@ -168,7 +168,380 @@
         }
       ],
       "limit": [],
-      "effect": "食用后亲自击杀时会掉落额外材料，详情见下：<details><summary>掉落详情</summary><table><thead><tr><th>目标</th><th>额外掉落</th></tr></thead><tbody><tr><td>（待补充）</td><td>（待补充）</td></tr></tbody></table></details>"
+      "effect": "食用后亲自击杀时会掉落额外材料，固定数量，不受幸运值影响。重复食用仅刷新时间不叠加效果，死亡后结束效果<details><summary>掉落详情</summary><table><thead><tr><th>目标</th><th>额外掉落</th></tr></thead><tbody><tr><td>龙蝇</td><td>岩浆虫卵<b>×1</b>、紫宝石<b>×1</b></td></tr><tr><td>熊獾</td><td>熊皮<b>×1</b></td></tr><tr><td>麋鹿鹅</td><td>麋鹿鹅羽毛<b>×3</b></td></tr><tr><td>蚁狮</td><td>沙之石<b>×3</b></td></tr><tr><td>海象</td><td>海象牙<b>×1</b></td></tr><tr><td>伏特羊</td><td>伏特羊角<b>×1</b></td></tr><tr><td>坎普斯</td><td>坎普斯背包</td></tr><tr><td>邪天翁</td><td>邪天翁喙<b>×1</b></td></tr><tr><td>远古守护者</td><td>守护者之角<b>×1</b></td></tr><tr><td>远古织影者</td><td>暗影香炉<b>×1</b>、骨头头盔<b>×1</b>、骨头盔甲<b>×1</b></td></tr><tr><td>暗影骑士、暗影主教、暗影战车</td><td>暗影心房<b>×1</b></td></tr><tr><td>座狼</td><td>犬牙<b>×4</b></td></tr><tr><td>装甲熊獾、晶体巨鹿、变异座狼</td><td>纯粹辉煌<b>×2</b></td></tr><tr><td>钢羊</td><td>钢丝棉<b>×2</b></td></tr><tr><td>洞穴蠕虫</td><td>发光浆果<b>×1</b></td></tr><tr><td>刮擦、尖叫、躁动</td><td>暗影碎布<b>×2</b>、纯粹恐惧<b>×1</b></td></tr><tr><td>蜘蛛女王</td><td>蜘蛛丝<b>×4</b></td></tr><tr><td>暴戾兔王</td><td>兔王棍<b>×1</b></td></tr><tr><td>梦魇疯猪</td><td>纯粹恐惧<b>×4</b></td></tr><tr><td>拾荒疯猪</td><td>废料<b>×4</b></td></tr><tr><td>激光眼</td><td>黄宝石<b>×1</b></td></tr><tr><td>魔焰眼</td><td>绿宝石<b>×1</b></td></tr><tr><td>恐怖之眼</td><td>乳白物<b>×3</b>、眼面具<b>×1</b></td></tr><tr><td>独眼巨鹿</td><td>独眼巨鹿眼球<b>×1</b></td></tr><tr><td>猪人</td><td>猪皮<b>×1</b></td></tr><tr><td>树精守卫(非毒桦栗树)</td><td>活木<b>×4</b></td></tr><tr><td>毒菌蟾蜍</td><td>蘑菇皮<b>×1</b></td></tr><tr><td>悲惨的毒菌蟾蜍</td><td>蘑菇皮<b>×2</b></td></tr><tr><td>金丝雀</td><td>黄色羽毛<b>×1</b></td></tr><tr><td>触手</td><td>触手皮<b>×1</b></td></tr></tbody></table></details>"
+    },
+    {
+      "id": "jealousy",
+      "name": "嫉妒",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": -25,
+      "hunger": 5,
+      "sanity": -30,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "樱桃",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "草莓",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "火荨麻叶",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后每<b>2秒</b>对半径<b>3个</b>地皮内最多<b>7个</b>可战斗的非玩家生物分别发起一次基础伤害为<b>5点</b><damage>伤害</damage>的攻击，不影响墙、建筑和栅栏。本次判定只要命中<b>至少1个</b>有效目标，自身便会恢复<b>1点</b><health>生命值</health>和<b>1点</b><sanity>理智值</sanity>；回复量不会随命中数量增加，也不是每秒恢复。周围没有目标时不恢复。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "peach_wine",
+      "name": "桃花醉",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 5,
+      "hunger": 5,
+      "sanity": 5,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>荔只只",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "冰",
+          "op": ">=",
+          "value": 1
+        },
+        {
+          "name": "<烤>玉米",
+          "op": ">=",
+          "value": 1
+        }
+      ],
+      "limit": [
+        {
+          "degree": "meat"
+        }
+      ],
+      "effect": "食用后可在水面行走<b>4分钟</b>，首次生效后剩余<b>30秒</b>后会提示，效果结束后会恢复正常落水规则。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "prudence",
+      "name": "普茹斯蒂司",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 13,
+      "hunger": 14,
+      "sanity": 57,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>荔枝",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "黄油",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "<烤>花生",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后立即<damage>攻击伤害翻倍</damage>，持续<b>2分钟</b>。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "peanut_jam",
+      "name": "花生酱",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 15,
+      "hunger": "37.5+240",
+      "sanity": 20,
+      "spoilDays": 18,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>花生",
+          "op": "=",
+          "value": 3
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后<b>120秒</b>内，每<b>1秒</b>恢复<b>2点</b><hunger>饥饿值</hunger>，受<hunger>饥饿值上限</hunger>限制。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "peanut_paste",
+      "name": "花生糊",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 5,
+      "hunger": 40,
+      "sanity": "<b>清0</b>",
+      "spoilDays": 12,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "<烤>花生",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "噩梦燃料",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "恶魔花瓣",
+          "op": "=",
+          "value": 1 
+        }
+      ],
+      "limit": [],
+      "effect": "食用后<sanity>理智值</sanity>立即降为<b>0</b>，并尝试在玩家附近生成<b>5只</b>恐怖尖喙"
+    },
+    {
+      "id": "cherry_cupcake",
+      "name": "樱桃纸杯蛋糕",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": "30+50",
+      "hunger": 20,
+      "sanity": 55,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "樱桃",
+          "op": "=",
+          "value": 3
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后额外持续治疗<b>25秒</b>，每秒恢复<b>2点</b><health>生命值</health>，受<health>生命值上限</health>限制。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "frost_snow_ice_cream",
+      "name": "冻雪冰淇淋",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 35,
+      "hunger": 10,
+      "sanity": 30,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "蜂蜜",
+          "op": "=",
+          "value": 2
+        }
+      ],
+      "limit": [],
+      "effect": "<冷食>持续15秒"
+    },
+    {
+      "id": "blueberry_shake_milk",
+      "name": "蓝莓兔兔奶昔",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 10,
+      "sanity": 100,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "蓝莓",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "带电的羊奶",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后每<b>0.1秒</b>将<sanity>理智值</sanity>向<notice text=\"进食后<sanity>理智值</sanity>的当时记录值\">记录值</notice>调整，单次最多调整<b>100点</b>，持续<b>240秒</b>；理智增加和减少都会被拉回记录值。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "strawberry_catty_pudding",
+      "name": "草莓猫猫布丁",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 10,
+      "hunger": 10,
+      "sanity": 10,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "草莓",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 2
+        }
+      ],
+      "limit": [],
+      "effect": "食用后每M<b>4秒</b>产生一个冰，持续<b>240秒</b>。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "cherry_shaved_ice",
+      "name": "樱桃穗穗刨冰",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 10,
+      "hunger": 10,
+      "sanity": 30,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "冰",
+          "op": "=",
+          "value": 3
+        },
+        {
+          "name": "樱桃",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后每次攻击对可冻结目标增加<b>1点</b>冰冻值，持续<b>4分钟</b>。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "peach_cake",
+      "name": "桃花酥",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 20,
+      "hunger": 20,
+      "sanity": 20,
+      "spoilDays": 8,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "荔只只",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "玉米",
+          "op": "=",
+          "value": 2
+        },
+        {
+          "name": "花瓣",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后每<b>4秒</b>像物品栏放入1片花瓣，持续<b>4分钟</b>。重复食用仅刷新时间不叠加效果，死亡后结束效果"
+    },
+    {
+      "id": "summer_love_breakfast",
+      "name": "夏以昼的爱心早餐",
+      "hide": false,
+      "foodtype": "meat",
+      "health": 200,
+      "hunger": 200,
+      "sanity": 200,
+      "spoilDays": 52,
+      "cookSeconds": "待补充",
+      "priority": "待补充",
+      "requires": [],
+      "must": [
+        {
+          "name": "带电的羊奶",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "蓝莓",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "鸟蛋",
+          "op": "=",
+          "value": 1
+        },
+        {
+          "name": "小肉",
+          "op": "=",
+          "value": 1
+        }
+      ],
+      "limit": [],
+      "effect": "食用后<b>8分钟</b>内，每次受到有伤害的战斗攻击时，有<b>30%</b>的概率完全挡下这次攻击，包括同时附带的特殊伤害。免伤不覆盖饥饿、过热等非战斗扣血。重复食用仅刷新时间不叠加效果，死亡后结束效果"
     },
     {
       "id": "long_march",

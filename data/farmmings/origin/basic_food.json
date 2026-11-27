@@ -1818,6 +1818,31 @@
       }
     },
     {
+      "id": "flower_petal",
+      "name": "花瓣",
+      "hide": false,
+      "foodtype": "veggie",
+      "health": 1,
+      "hunger": 0,
+      "sanity": 0,
+      "spoilDays": 6,
+      "degrees": {
+        "decoration": 1
+      },
+      "dried": {
+        "id": "flower_petal_dried",
+        "name": "干花瓣",
+        "foodtype": "veggie",
+        "health": 1,
+        "hunger": 0,
+        "sanity": 0,
+        "spoilDays": "永久",
+        "degrees": {
+          "decoration": 1
+        }
+      }
+    },
+    {
       "id": "purple_flower",
       "name": "深色花瓣",
       "hide": false,
